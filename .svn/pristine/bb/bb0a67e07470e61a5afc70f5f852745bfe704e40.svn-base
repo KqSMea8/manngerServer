@@ -1,0 +1,248 @@
+[文件路径: grid/load/remote.html]
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid如何动态加载远程数据，对请求参数和返回数据格式进行详细说明。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="remote_rowed"></table>
+                       <div id="remote_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none"  name="gridSource_remote">
+<pre>
+<font color=red>此示例中心为静态示例，没有给出server端返回数据示例，请根据说明对照studio单表生成向导生成的grid代码学习。</font>
+<font color='#027DD1'>1.请求参数：</font>
+    server端根据client端请求参数进行数据查找，并按照client端规定的格式返回数据，因此请求参数至关重要,默认如下：
+
+    参数名	    说明	                                            值类型
+    _search	    是否查询数据	                                    boolean
+    nd		    当前时间的秒数值（1970年1月1号以来所积累的毫秒总数）  number
+    pageSize	    每页显示的记录条数	                            number
+    pageNo	    查询第几页的数据	                            number
+    orderFields	    查询排序的条件，列名	                            string
+    order	    查询排序的方式，可能的值是ASC和DESC	            string
+
+如果希望改变请求参数名，可通过grid属性<font color='red'>prmNames</font>设置，如初始化grid时做如下设置prmNames:{page:"page",rows:"rows",sort:"sort",order:"order"},
+    请求参数名变更为：
+    参数名	    说明	                                            值类型
+    _search	    是否查询数据	                                    boolean
+    nd		    当前时间的秒数值（1970年1月1号以来所积累的毫秒总数）  number
+    rows	    每页显示的记录条数	                            number
+    page	    查询第几页的数据	                            number
+    sort	    查询排序的条件，列名	                            string
+    order	    查询排序的方式，可能的值是ASC和DESC	            string
+
+    如server端需要client端传递更多参数，可通过grid属性<font color='red'>postData</font>设置传递自定义参数，postData:{name1:value1,name2:value2……}
+
+<font color='#027DD1'>2.返回数据：</font>
+    server端返回数据默认格式如下：
+    { page:"xxx", //当前页
+      total:"yyy",//总页数
+      records:"zzz",//总记录数
+      rows:[//详细行数据
+       {列名1:列值1, 列名2:列值2……},
+       {列名1:列值1, 列名2:列值2……}
+        ……]
+    }
+    <font color='red'>返回数据与grid列是通过列名对应的，因此返回的行数据包含列不必要与定义的列一一对应，例如返回行数据包含10列数据，实际只使用了其中5列，不影响grid生成。</font>
+
+    可通过grid属性<font color='red'>jsonReader</font>设置server端返回json属性名，初始化设置jsonReader:{page:"pageNo",root:"invdata",total:"totalpages", records:"totalrecords"}
+    返回数据格式应为：
+    { pageNo :"xxx", //当前页
+      totalpages :"yyy",//总页数
+      totalrecords :"zzz",//总记录数
+      invdata :[//详细数据
+        {列名1:列值1, 列名2:列值2……},
+        {列名1:列值1, 列名2:列值2……}
+        ……]
+    }
+
+<font color='#027DD1'>2.grid初始化：</font>
+<strong>html部分:</strong>
+ <xmp class="xmp">
+    <table id="remote_rowed"></table>
+    <div id="remote_prowed"></div>
+ </xmp>
+<strong>js部分:</strong>
+     var remoteGridObj = new biz.grid({
+          id:"#remote_rowed",/*html部分table id*/
+          <font color='red'>url: "http://localhost:8080/get/",/*请求数据的远程地址*/</font>
+          <font color='red'>datatype: "json",/*数据类型，设置为json数据，默认为json*/</font>
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+               edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"text",
+             formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         sortname:"ids",
+         sortorder:"desc",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#remote_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+    });
+</pre>
+    </div>
+
+<div class="barTitle2">
+	<div class="content">远程加载请求数据格式说明</div>
+</div>
+<div class="content">
+		 对于远程数据加载：客户端把想要获取数据信息提供给服务器，服务器端根据客户端请求组织数据并返回给客户端，客户端显示服务器端返回数据。 
+		 因此客户端请求参数和服务器端返回数据格式至关重要。
+1.	请求数据地址：
+Ajax在请求数据时会把请求参数传递给server端，参数通过&间隔，如下:<br>
+http://localhost:8080/test/omOrder/listPmOrderItem?&_search=false&nd=1308737633405&rows=10&page=1&sidx=id&sord=desc
+2.	请求参数说明:
+
+<iframe src="./grid/load/requestPara.htm" width="100%" scrolling="no" frameborder="0" height="260px;"></iframe>
+
+3.	自定义请求参数:<br>
+grid提供了自定义请求参数的属性postData：{name1:value1…}，如需传递name:王二，age：25<br>
+可设置postData：{name:”王二”,age:”25”}，value也可调用函数设置动态值。<br>
+
+4.	Server端返回数据:<br>
+返回数据为json格式字符串，默认如下：<br>
+{page:"1", //当前页 <br>
+total:”1”,//总页数<br>
+records:"2",//总记录数<br>
+rows:[//详细数据<br>
+{列名1:列值11, 列名2:列值21……},<br>
+{列名1:列值12, 列名2:列值22……}<br>
+……]<br>
+}<br>
+5.	Grid设置远程加载数据：
+<iframe src="./grid/load/remoteCodeDemo.htm" width="100%" scrolling="no" frameborder="0" height="280px;"></iframe>
+
+
+</div>
+
+						
+
+<script type="text/javascript">
+
+     var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+         ];
+
+
+
+      var remoteGridObj = new biz.grid({
+          id:"#remote_rowed",/*html部分table id*/
+          url: "http://localhost:8080/get/",/*请求数据的远程地址*/
+          datatype: "json",/*数据类型，设置为json数据，默认为json*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+               edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"text",
+              formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         sortname:"ids",
+         sortorder:"desc",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#remote_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+ 
+            resize:false,
+            recreateForm:true
+          },
+           pAdd:{ 
+                top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+                resize:true,/*弹出框可缩放大小*/
+                url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         resize:true,recreateForm:true}
+    });
+
+</script>

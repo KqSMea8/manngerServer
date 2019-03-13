@@ -1,0 +1,12 @@
+<div class="apiDetail">
+<div>
+	<h2><span>JSON</span><span class="path">treeObj.</span>setting</h2>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>tree 对象使用的 setting 配置数据，详细请参考 “setting 配置详解”中的各个属性详细说明</p>
+			<p class="highlight_red">注意，对于 tree 初始化有影响的参数后期修改是不会起作用的，请对各个属性有较深入的了解以后再考虑进行修改。</p>
+		</div>
+	</div>
+</div>
+</div>

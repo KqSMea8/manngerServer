@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SupplyProduct">
+
+	<resultMap type="com.lmxf.post.entity.supply.SupplyProduct" id="supplyProductResultMap">
+		<id property="logid" column="logid" />
+		<result property="sProductId" column="sProductId" />
+		<result property="sOrderId" column="sOrderId" />
+		<result property="corpId" column="corpId" />
+		<result property="supplyId" column="supplyId" />
+		<result property="productId" column="productId" />
+		<result property="supplyNum" column="supplyNum" />
+		<result property="outNum" column="outNum" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="buyPrice" column="buyPrice" />
+		<result property="createTime" column="createTime" />
+		<result property="supplyRNum" column="supplyRNum" />
+		<result property="supplyNNum" column="supplyNNum" />
+		<result property="supplyDNum" column="supplyDNum" />
+		<result property="supplyLNum" column="supplyLNum" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="supplyProductResultMap">
+		select * from as_supply_product where 1=1
+		<if test="sOrderId != null and sOrderId != ''">
+			and sOrderId=#{sOrderId} 
+	    </if>
+	    <if test="supplyId != null and supplyId != ''">
+			and supplyId=#{supplyId} 
+	    </if>
+	    <if test="curState != null and curState != ''">
+			and curState=#{curState} 
+	    </if>
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.supply.SupplyProduct" resultMap="supplyProductResultMap">
+		select * from as_supply_product where sOrderId=#{sOrderId} and productId=#{productId}
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.supply.SupplyProduct">
+		update as_supply_product set 
+		curState=#{curState},
+		supplyRNum=#{supplyRNum},
+		stateTime=#{stateTime}
+		<if test="outNum != null and outNum != ''">
+			,outNum=#{outNum} 
+	    </if>
+		where sProductId=#{sProductId}
+	</update>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.supply.SupplyProduct">
+	   insert into as_supply_product(logid,sOrderId,corpId,sProductId,supplyId,productId,supplyNum,outNum,curState,stateTime,buyPrice,createTime) values(
+	   #{logid},#{sOrderId},#{corpId},#{sProductId},#{supplyId},#{productId},#{supplyNum},#{outNum},#{curState},#{stateTime},#{buyPrice},#{createTime})
+	</insert>
+	
+</mapper> 

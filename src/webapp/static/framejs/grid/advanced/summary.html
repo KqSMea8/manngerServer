@@ -1,0 +1,351 @@
+[文件路径: grid/advanced/summary.html]
+
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid分组功能，灵活设置分组字段、排序方式、分组标题格式，同时支持动态修改分组字段。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1：普通grid数据汇总</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <font color="red">&nbsp&nbsp&nbsp&nbsp&nbsp在grid底部增加一行，显示数据汇总信息</font>
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                       <table id="summary_rowed"></table>
+                       <div id="summary_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_summary_1">
+<pre>
+<font color='#027DD1'>1.初始化分组grid：</font>
+<strong>js部分:</strong>
+      <font color='#027DD1'>1）静态数据信息</font>
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+      ];
+
+      <font color="#027DD1">2）组织汇总行数据</font>
+      function <font color="red">sum(Data)</font>{
+          var amountSum=0,taxSum=0,totalSum=0,nameSum=0;
+          for(var i=0;i< Data.length;i++){
+              <font color="red">amountSum = amountSum + parseFloat(Data[i].amount);</font>/*对amount列数据求和*/
+              <font color="red">taxSum =taxSum+ parseFloat(Data[i].tax);</font>/*对tax列数据求和*/
+              <font color="red">totalSum =totalSum + parseFloat(Data[i].total);</font>/*对total列数据求和*/
+          }
+          return <font color="red">{"amount":amountSum,"tax":taxSum,"total":totalSum,"name":"Totals:"}</font>/*汇总行数据格式与普通列数据格式一致*/
+      }
+      <font color="#027DD1">3）初始化grid</font>
+      var summaryObj = new biz.grid({
+          id:"#summary_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1},summaryType:'count', summaryTpl : '({0}) total'},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1},formatter:'number''},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                 formoptions:{ rowpos:2, colpos:2},formatter:'number},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,
+                 formoptions:{ rowpos:3, colpos:1},formatter:'number'},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">userData:sum(testData),</font>/*设置汇总行数据*/
+         <font color="red">footerrow:true,</font>/*显示grid底部行*/
+         <font color="red">userDataOnFooter: true,</font>/*在grid底部行显示userData数据信息*/
+         navtype:"top" /*导航栏类型*/,
+         pager: '#summary_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+          },
+          pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+      });
+      
+      <font color="#027DD1">4）url获取数据如何设置汇总数据</font>
+      如用户通过设置url属性，汇总数据在server端组织好后通过server返回数据，设置格式如下：
+      { page:"xxx", //当前页
+        total:"yyy",//总页数
+        records:"zzz",//总记录数
+        rows:[//详细行数据
+         {列名1:列值1, 列名2:列值2……},
+         {列名1:列值1, 列名2:列值2……}
+          ……],
+        userdata:{汇总列名1：汇总列值1，汇总列名2：汇总列值2……}
+      }
+      <font color="red">通过url返回汇总数据时，不需设置grid属性userData，其他属性配置一致！</font>
+</pre>
+    </div>
+
+<!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">示例1：分组grid数据汇总</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <font color="red">&nbsp&nbsp&nbsp&nbsp&nbsp在grid每个分组底部增加一行，显示数据汇总信息</font>
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                       <table id="summary_rowed2"></table>
+                       <div id="summary_prowed2"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_summary_2">
+<pre>
+<font color='#027DD1'>1.初始化分组grid：</font>
+<strong>js部分:</strong>
+      var summaryObj2 = new biz.grid({
+          id:"#summary_rowed2",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,sorttype:"int",formoptions:{ rowpos:1, colpos:1},
+                 <font color="red">summaryType:'count'</font>/*汇总类型，数据数量*/, 
+                 <font color="red">summaryTpl: '({0}) 汇总信息'</font> /*定义显示汇总内容*/},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1},formatter:'number',
+                 <font color="red">summaryType:'avg'</font>/*汇总类型，平均值*/,
+                 <font color="red">summaryTpl : '平均值({0}) '</font>},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                 formoptions:{ rowpos:2, colpos:2},formatter:'number',
+                 <font color="red">summaryType:'max'</font>/*汇总类型，最大值*/,
+                 <font color="red">summaryTpl : '最大值({0}) '</font>},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,
+                 formoptions:{ rowpos:3, colpos:1},formatter:'number',
+                 <font color="red">summaryType:'sum'</font>/*汇总类型，总和*/,
+                 <font color="red">summaryTpl : '总和({0}) '</font>},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">grouping:true,</font>/*grid可进行分组*/
+         groupingView : {
+             <font color="red">groupField : ['name'],</font>/*分组字段*/
+             <font color="red">groupColumnShow : [true],</font>/*分组字段显示*/
+             <font color="red">groupText: ['<b>{0}</b>'],</font>/*定义分组标题文字格式*/
+             <font color="red">groupCollapse:false,</font>/*分组数据初始化展开*/
+             <font color="red">groupSummary : [true],</font>/*分组数据进行汇总*/
+             <font color="red">groupOrder: ['desc']</font>/*分组数据排序方式*/
+         },
+         navtype:"top" /*导航栏类型*/,
+         pager: '#summary_prowed2' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+          },
+          pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+      });
+</pre>
+    </div>
+
+ <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">数据汇总相关属性说明</div>
+	</div>
+	<div class="content">
+
+	<iframe src="./grid/advanced/summary_prop.html" width="100%" scrolling="no" frameborder="0" height="300px;"></iframe>
+		
+    </div>	
+						
+
+<script type="text/javascript">
+
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+      ];
+      function sum(Data){
+          var amountSum=0,taxSum=0,totalSum=0,nameSum=0;
+          for(var i=0;i<Data.length;i++){
+              amountSum = amountSum + parseFloat(Data[i].amount);
+              taxSum =taxSum+ parseFloat(Data[i].tax);
+              totalSum =totalSum + parseFloat(Data[i].total);
+          }
+          return {"amount":amountSum,"tax":taxSum,"total":totalSum,"name":"Totals:"}
+      }
+      var summaryObj = new biz.grid({
+          id:"#summary_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:55,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1},summaryType:'count', summaryTpl : '({0}) total'},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1},formatter:'number',summaryType:'sum'},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                 formoptions:{ rowpos:2, colpos:2},formatter:'number',summaryType:'sum'},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,
+                 formoptions:{ rowpos:3, colpos:1},formatter:'number',summaryType:'sum'},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         userData:sum(testData),
+         //grouping: true,
+        // groupingView : { groupField : ['name'], groupColumnShow : [true,true], groupText : ['<b>{0}</b>'], groupCollapse : false, groupOrder: ['asc'], groupSummary : [true,true], groupDataSorted : true },
+         footerrow: true,
+         userDataOnFooter: true,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#summary_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+ 
+            resize:false,
+            recreateForm:true
+          },
+           pAdd:{ 
+                top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+                resize:true,/*弹出框可缩放大小*/
+                url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         resize:true,recreateForm:true}
+      });
+
+    var summaryObj2 = new biz.grid({
+          id:"#summary_rowed2",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:55,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1},summaryType:'count', summaryTpl : '({0}) 汇总信息'},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1},formatter:'number',summaryType:'avg',summaryTpl : '平均值({0}) '},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                 formoptions:{ rowpos:2, colpos:2},formatter:'number',summaryType:'max',summaryTpl : '最大值({0}) '},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,
+                 formoptions:{ rowpos:3, colpos:1},formatter:'number',summaryType:'sum',summaryTpl : '总和({0}) '},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         grouping: true,
+         groupingView : {
+              groupField : ['name'],
+              groupColumnShow : [true],
+              groupText : ['<b>{0}</b>'],
+              groupCollapse : false,
+              groupOrder: ['desc'],
+              groupSummary : [true] },
+         navtype:"top" /*导航栏类型*/,
+         pager: '#summary_prowed2' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+ 
+            resize:false,
+            recreateForm:true
+          },
+           pAdd:{ 
+                top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+                resize:true,/*弹出框可缩放大小*/
+                url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         resize:true,recreateForm:true}
+      });
+
+</script>

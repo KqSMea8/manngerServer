@@ -1,0 +1,64 @@
+[文件路径: layout/column.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("layout_column_1");
+SyntaxHighlighter.highlight("layout_column_2");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		竖栏布局即通过纵向划分布局页面，例如把整个页面划分为左、中、右三栏或者左、右两栏。可以使用绝对值，也可以使用百分比进行布局。竖栏布局完，要换行时需要使用&lt;div class=&quot;clear&quot;&gt&lt;/div&gt，
+		所有布局都要放置在&lt;div class=&quot;main&quot;&gt&lt;/div&gt容器内。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1</div>
+	</div>
+	<div class="content">
+		<div>三栏布局：左（20%）中（60%）右（20%）,实际效果如下：</div>
+		<div class="effect">
+			<div class="dp20" style="background-color:#999;">左20%</div>
+			<div class="dp60" style="background-color:#888;">中60%</div>
+			<div class="dp20" style="background-color:#777;">右20%</div>
+		</div>
+		<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div  class="code" style="display: none" name="layout_column_1">
+			<pre class="brush: js;">
+ <!--html部分-->
+ &lt;div class=&quot;dp20&quot; style=&quot;background-color:#999;&quot;&gt20%&lt;/div&gt
+ &lt;div class=&quot;dp60&quot; style=&quot;background-color:#888;&quot;&gt60%&lt;/div&gt
+ &lt;div class=&quot;dp20" style="background-color:#777;"&gt20%&lt;/div&gt
+ </pre>
+		</div>
+	</div>
+	<!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">示例2</div>
+	</div>
+	<div class="content">
+		<div>三栏布局：左（10em）中（20em）右（10em）,实际效果如下：</div>
+		<div class="effect">
+			<div class="dl10" style="background-color:#999;">左10em</div>
+			<div class="dl20" style="background-color:#888;">中20em</div>
+			<div class="dl10" style="background-color:#777;">右10em</div>
+		</div>
+		<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div  class="code" style="display: none" name="layout_column_2">
+			<pre class="brush: js;">
+ <!--html部分-->
+ &lt;div class=&quot;dl10&quot; style=&quot;background-color:#999;&quot;&gt10em&lt;/div&gt
+ &lt;div class=&quot;dl20&quot; style=&quot;background-color:#888;&quot;&gt20em&lt;/div&gt
+ &lt;div class=&quot;dl10" style="background-color:#777;"&gt10em&lt;/div&gt
+ </pre>
+ 			</div>
+		</div>
+   <!-- 布局组件样式列表 -->
+	<div class="barTitle2">
+		<div class="content">样式列表（适用横栏、竖组栏、复杂布局）</div>
+	</div>
+	<div class="content">
+	<iframe src="./layout/layoutField.htm" width="100%" scrolling="no" frameborder="0" height="400px;"></iframe>
+	</div>

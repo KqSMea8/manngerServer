@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/xml; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="../lib/style/reset.css" media="screen, projection"/>
+<link rel="stylesheet" type="text/css" href="../lib/style/layout.css" media="screen, projection"/>
+<link rel="stylesheet" type="text/css" href="../lib/style/skin/default/theme.css"/>
+<link rel="stylesheet" type="text/css" href="../lib/style/skin/default/components/jqgrid/jquery.jqgrid.css"/>
+<link rel="stylesheet" type="text/css" href="../lib/style/skin/default/components/tree/zTreeStyle.css"/>
+
+<script type="text/javascript" src="../lib/js/lib/jquery-all.js"></script>
+<script type="text/javascript" src="../lib/js/lib/WdatePicker.js"></script>
+<script type="text/javascript" src="../lib/js/lib/widgets.js"></script>
+<script type="text/javascript" src="../lib/js/i18n/i18n_zh.js"></script>
+<script type="text/javascript" src="../lib/js/lib/tree.js"></script>
+<script type="text/javascript" src="../lib/js/lib/grid.js"></script>
+<script type="text/javascript" src="../lib/js/lib/validate.js"></script>
+<script type="text/javascript" src="../lib/js/lib/biz.js"></script>
+</head>
+<body>
+ <div>
+		<ul id="treeDemo_checkbox" class="ztree"></ul>
+</div>
+</body>
+<script language="javascript"> 
+
+
+/*
+*
+*   判断在数组中是否含有给定的一个变量值
+*   参数：
+*   needle：需要查询的值
+*   haystack：被查询的数组
+*   在haystack中查询needle是否存在，如果找到返回true，否则返回false。
+*   此函数只能对字符和数字有效
+*
+*/
+function in_array(needle, haystack){
+ // 得到needle的类型
+    var type = typeof needle;
+    if(type == 'string' || type =='number'){
+        for(var i in haystack){
+            if(haystack[i] == needle) {return true;}
+        }
+    }
+    return false;
+}
+//数组现删除
+function arrayIndexOf(arr,val) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == val) return i;
+            }
+            return -1;
+ };
+ function arrayRemove(arr,val) {
+            var index = arrayIndexOf(arr,val);
+            if (index > -1) {
+                arr.splice(index, 1);
+            }
+ };
+
+
+//根据父页面中上次选择的值初始化tree
+ var lastChoosed = window.parent.result;
+var zNodes =[
+	{ id:'res', pId:0, name:"技术研发部",nocheck:true,  open:true},
+	{ id:'res_001', pId:'res', name:"小王"},
+	{ id:'res_002', pId:'res', name:"小李"},
+	{ id:'hr', pId:0, name:"人力资源部",nocheck:true,  open:true},
+	{ id:'hr_001', pId:'hr', name:"张三"},
+	{ id:'hr_002', pId:'hr', name:"李四"},
+	{ id:'hr_003', pId:'hr', name:"王五"}
+];
+
+ if(lastChoosed!=null && lastChoosed.length>0){
+    for(var i=0;i<lastChoosed.length;i++){
+        var temp = lastChoosed[i];
+       
+        for(var j=0;j<zNodes.length;j++){
+          var tempNode = zNodes[j];
+          if(tempNode.name==temp){
+              tempNode.checked = true;
+          }
+        }
+    }
+ }
+
+function onCheck(e, treeId, treeNode) {
+	//alert(treeNode.tId + ", " + treeNode.name + "," + treeNode.checked);
+	if(treeNode.checked){
+	   if(!in_array(treeNode.name,window.parent.result)){
+	      window.parent.result.push(treeNode.name); 
+	      window.parent.resultNodeId.push(treeNode.id); 
+	   }
+	  
+    }else{
+       if(in_array(treeNode.name,window.parent.result)){
+	       arrayRemove(window.parent.result,treeNode.name);
+	        arrayRemove(window.parent.resultNodeId,treeNode.id);
+	       
+	   }
+    }
+}
+
+var setting_checkbox = {
+    id:"#treeDemo_checkbox",
+    nodes:zNodes,  //数据节点指定
+	check: {
+		enable: true
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},callback: {
+		onCheck: onCheck
+	}
+	
+};
+$(document).ready(function(){
+	window.parent.treeObj =  new biz.tree(setting_checkbox);//创建树
+});
+
+
+
+
+</script> 
+</html>

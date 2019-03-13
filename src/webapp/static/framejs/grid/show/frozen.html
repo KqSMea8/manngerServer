@@ -1,0 +1,140 @@
+[文件路径: grid/show/frozen.html]
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid锁定列功能，指定“标识”、“有效期”、“名称”列锁定，不随滚动条移动；如果多列设置了锁定，以最右边列为基准，其左边所有列都锁定；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="frozen_rowed"></table>
+                       <div id="frozen_prowed"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_frozen">
+<pre>
+<font color='#027DD1'>1.锁定列：</font>
+<strong>js部分:</strong>
+ var frozenObj = new biz.grid({
+          id:"#frozen_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}
+                },
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false,
+               <font color='red'>frozen:true</font>/*设置此列左边所有列锁定*/
+               },
+               {name:'amount',label:"收入",index:'amount', width:200, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:200,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:200, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color='red'>shrinkToFit:false</font> /*grid总宽度等于各列设置宽度之和*/,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#frozen_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+        pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,url:" http://localhost",recreateForm:true}
+      });
+      frozenObj.setFrozenColumns();<font color='red'>/*锁定列生效*/</font>
+      frozenObj.trigger("jqGridAfterGridComplete");<font color='red'>/*部分锁定列功能绑定在jqGridAfterGridComplete事件上，需触发此事件*/</font>
+</pre>
+    </div>
+
+
+						
+
+<script type="text/javascript">
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",amount:"30000.00",tax:"1000.00",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"}
+      ];
+
+      var frozenObj = new biz.grid({
+          id:"#frozen_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:100,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:150,editable:false,frozen:true},
+               {name:'amount',label:"收入",index:'amount', width:200, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:280, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:200,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:200, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         shrinkToFit:false,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#frozen_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+ 
+            resize:false,
+            recreateForm:true
+          },
+           pAdd:{ 
+                top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+                resize:true,/*弹出框可缩放大小*/
+                url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         resize:true,url:" http://localhost",recreateForm:true}
+      });
+      frozenObj.setFrozenColumns();
+      frozenObj.trigger("jqGridAfterGridComplete");
+</script>

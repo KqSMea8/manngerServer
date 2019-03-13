@@ -1,0 +1,107 @@
+[文件路径: window/alert.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_alert");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		弹出框包含提示信息框组件、确认信息框、提示输入框组件。
+	</div>
+	<!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+	<div class="content">
+			<div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<tr>
+						<td class="inputLabelTd">提示信息：</td><td class="inputTd"><button id="alert_button"></button></td>
+						<td class="inputLabelTd">自动隐藏：</td><td class="inputTd"><button id="hidenauto_button"></button></td>
+					</tr>
+					<tr>
+					    <td class="inputLabelTd">询问信息：</td><td class="inputTd"><button id="confirm_button"></button></td>
+						<td class="inputLabelTd">输入提示：</td><td class="inputTd"><button id="prompt_button"></button></td>
+						
+					</tr>
+	
+			   </table>
+		</div>
+<!--源代码部分start-->
+   <div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div  class="code" style="display: none"  name="source_alert">
+	<pre class="brush: js;">
+ <!-----------------------1.提示信息：--------------------->
+js部分:
+new biz.button({id:"#alert_button",label: "信息提示" }).click(function() {
+   new biz.alert({type:"alert",message:"这是一个信息提醒对话框！",title:"注 意"}) ;
+   //调用alert组件，type：类型，分为alert、confirm、prompt
+   //message:提示信息
+   //titile：提示框标题
+});
+
+ <!-----------------------2.自动隐藏：--------------------->
+js部分:
+new biz.button({id:"#hidenauto_button",label: "信息提示" }).click(function() {
+	new biz.alert({type:"alert",message:"我会在2秒后自动消失！",title:"注 意"}) ;
+	new biz.alert({type:"hide",times:2000}) ;//调用hide命令，times：持久时间
+});
+ <!-----------------------3.询问信息：--------------------->
+js部分:
+new biz.button({id:"#confirm_button",label: "信息确认" }).click(function() {
+	   var msg = "确定执行操作?",tit="确认信息提示",
+	   fuc =  function(r) {
+		  new biz.alert({type:"alert",message:'确定信息: ' + r,title:"提示"}) ;
+	   }
+	   new biz.alert({type:"confirm",message:msg,title:tit,callback:fuc}) ;
+	   //callback：回调函数，参数r，true（点击了“确定”）或false（点击了“取消”）
+});
+ <!-----------------------4.输入提示：--------------------->
+js部分:
+new biz.button({id:"#prompt_button",label: "输入提示" }).click(function() {
+        new biz.alert({type:"prompt",message:"输入信息:",value:'请在这输入..',title:"信息输入提示",
+             callback:function(r) {if( r ) alert('您输入了： ' + r);}
+         }) ;
+		//value:输入框默认显示内容
+		//callback：回调函数。参数r：输入的内容
+});
+
+
+
+	</pre>
+		</div>
+<!--源代码部分end-->
+	</div>
+<div class="barTitle2">
+		<div class="content">属性列表</div>
+</div>
+<div class="content">
+<iframe src="./window/alertField.htm" width="100%" scrolling="no" frameborder="0" height="300px;"></iframe>
+</div>
+<script type="text/javascript">
+   /*弹窗提示信息*/
+    new biz.button({id:"#alert_button",label: "信息提示" }).click(function() {
+	   new biz.alert({type:"alert",message:"这是一个信息提醒对话框！",title:"注 意"}) ;
+	});
+
+	new biz.button({id:"#hidenauto_button",label: "信息提示" }).click(function() {
+	   new biz.alert({type:"alert",message:"我会在2秒后自动消失！",title:"注 意"}) ;
+	   new biz.alert({type:"hide",times:2000}) ;
+	});
+    new biz.button({id:"#confirm_button",label: "信息确认" }).click(function() {
+ 	       var msg = "确定执行操作?",tit="确认信息提示",
+           fuc =  function(r) {
+			  new biz.alert({type:"alert",message:'确定信息: ' + r,title:"提示"}) ;
+		   }
+           new biz.alert({type:"confirm",message:msg,title:tit,callback:fuc}) ;
+	});
+
+    new biz.button({id:"#prompt_button",label: "输入提示" }).click(function() {
+	   new biz.alert({type:"prompt",message:"输入信息:",value:'请在这输入..',title:"信息输入提示",
+                           callback:function(r) {if( r ) alert('您输入了： ' + r);}
+           }) ;
+	});
+
+</script>

@@ -1,0 +1,86 @@
+[文件路径: form/component/file.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_file");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		本组件在文本上传框基础上增强了上传类型、文件名限定设置，如果选择文本不符合设置则提示用户。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+	<div class="content">
+		<div>实际效果如下：</div>
+		<div class="ui-table ui-widget ui-corner-all ui-border">    
+	
+			<table class="table">
+				<tr>
+					<td class="inputLabelTd">限定文件后缀</td>
+					<td class="inputTd" colspan="2"><input id="file1" type="file" /></td>
+					<td class="inputLabelTd">限定文件名</td>
+					<td class="inputTd" colspan="2"><input id="file2" type="file" /></td>
+				</tr>
+				
+			</table>
+		
+			
+		</div>
+		<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div  class="code" style="display: none"  name="source_file">
+		<pre class="brush: js;">
+<!-----------------------html部分：----------------------->  
+  &lt;input id=&quot;file1&quot; type=&quot;file&quot; /&gt;
+  &lt;input id=&quot;file2&quot; type=&quot;file&quot; /&gt;
+  //特别提示：如果file组件放在form表单中，必须要在form加上enctype="multipart/form-data"属性，否则数据无法正常提交到后台
+ 
+<!-----------------------js部分：----------------------->   
+	new biz.file({
+		  id:"#file1",
+		  buttonText: "上传",
+		  accept: "jpg|png|gif" ,//后缀名限制
+		  denied:"只允许上传后缀格式：{0}"//错误提示信息，参数｛0｝与accept的值对应，参数详细说明参见下面的属性列表
+	 });
+
+
+	new biz.file({
+	  id:"#file2",
+	  buttonText: "上传",
+	  filename: "file.zip" ,//文件名限制
+	  wrongname:"只允许上传文件：{0}"//错误提示信息，参数｛0｝与filename的值对应。
+
+	});
+
+
+	</pre>
+		</div>
+	</div>
+	
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">属性列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/fileFiled.htm" width="100%" scrolling="no" frameborder="0" height="500px;"></iframe>
+	</div>
+<script type="text/javascript">
+    new biz.file({
+		  id:"#file1",
+		  buttonText: "上传",
+		  accept: "jpg|png|gif" ,
+		  denied:"只允许上传后缀格式：{0}"
+     });
+
+
+    new biz.file({
+      id:"#file2",
+      buttonText: "上传",
+      filename: "file.zip" ,
+      wrongname:"只允许上传文件：{0}"
+ 
+    });
+</script>

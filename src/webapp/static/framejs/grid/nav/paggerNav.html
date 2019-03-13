@@ -1,0 +1,218 @@
+[文件路径: grid/nav/paggerNav.html]
+
+
+     <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid分页栏设置功能：导航栏属性值为none、top、bottom、both时，已对分页栏进行相应处理，因此navtype属性设置为空时分页栏设置才有效；
+		 导航栏属性设置空时可以通过navGrid方法设置导航栏；分页栏提供两种模式(pagerType)：simple和full，simple模式提供两个按钮翻页（上一页、下一页），full模式提供完整分页栏功能（输入框跳转、下拉框选择单页数量、总页码信息、跳转到首页尾页）。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1：分页栏位置设置</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+             <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                   <table id="paggerNav_rowed"></table>
+                   <div id="paggerNav_prowed"></div>
+             </div>
+        </div>
+    </div>
+<!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_paggerNav_1">
+<pre>
+
+<strong>js部分:</strong>
+    var paggerNavObj = new biz.grid({
+          id:"#paggerNav_rowed",
+          data: mydata,
+          datatype: "local",
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+             formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+             edittype:'datepicker', editoptions:
+                {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",
+             editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+             editable:true,formoptions:{ rowpos:2, colpos:1}},
+            {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"text",
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},
+             formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", 
+             editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"" /*导航栏设置为空*/,
+         <font color="red">pagerType: "simple"</font>,/*设置分页栏为simple模式，即上一页、下一页*/
+         <font color="red">toppager:false</font>,/*是否在grid top位置处显示分页栏，默认为true*/
+         <font color="red">pagerpos:"left"</font>,/*分页栏位置为左边*/
+         <font color="red">recordpos:"right"</font>,/*当前页数据信息位置为右边*/
+         <font color="red">pager: '#paggerNav_prowed'</font>/*分页栏位置*/
+    });
+</pre>
+    </div>
+
+<!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">示例2：通过navGrid设置在分页栏上设置导航栏</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+             <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                   <table id="paggerNav_rowed2"></table>
+                   <div id="paggerNav_prowed2"></div>
+             </div>
+        </div>
+    </div>
+<!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_paggerNav_2">
+<pre>
+
+<strong>js部分:</strong>
+    var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+    var paggerNavObj2 = new biz.grid({
+          id:"#paggerNav_rowed2",
+          data: mydata,
+          datatype: "local",
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},edittype:'datepicker', editoptions:
+                {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">navtype:"" </font>/*导航栏类型*/,
+         <font color="red">pgbuttons:true</font>,/*显示分页栏按钮*/
+         <font color="red">pginput:true</font>,/*显示分页栏按输入框*/
+         <font color="red">viewrecords:false</font>,/*不显示分页栏当前页信息*/
+         <font color="red">toppager:false</font>,/*是否在grid top位置处显示分页栏，默认为true*/
+         <font color="red">pagerpos:"right"</font>,/*分页栏位置为右边*/
+         <font color="red">pager: '#paggerNav_prowed'</font>/*分页栏位置*/
+     });
+     <font color="red">paggerNavObj2.navGrid('#paggerNav_prowed2');</font>/*分页栏上渲染导航栏*/
+</pre>
+    </div>
+
+
+    <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">分页栏属性说明</div>
+	</div>
+	<div class="content">
+
+	<iframe src="./grid/nav/paggerNavField.html" width="100%" scrolling="no" frameborder="0" height="450px;"></iframe>
+			
+</div>			
+					
+
+<script type="text/javascript">
+
+     var paggerNavvObj, mydata = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"14",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"15",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"16",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"17",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"18",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"19",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"21",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"22",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"23",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"24",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"25",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"26",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"27",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"28",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"29",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+         ];
+
+
+
+     paggerNavObj = new biz.grid({
+          id:"#paggerNav_rowed",
+          data: mydata,
+          datatype: "local",
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},edittype:'datepicker', editoptions:
+                {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"" /*导航栏类型*/,
+         pagerType: "simple",/*设置分页栏为simple模式，即上一页、下一页*/
+         toppager:false,
+         pagerpos:"left",
+         recordpos:"right",
+         pager: '#paggerNav_prowed'
+     });
+     var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+     paggerNavObj2 = new biz.grid({
+          id:"#paggerNav_rowed2",
+          data: mydata,
+          datatype: "local",
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},edittype:'datepicker', editoptions:
+                {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"" /*导航栏类型*/,
+         pgbuttons:true,
+         pginput:true,
+         viewrecords:false,
+         toppager:false,
+         pagerpos:"right",
+         pager: '#paggerNav_prowed2'
+     });
+     paggerNavObj2.navGrid('#paggerNav_prowed2');
+</script>

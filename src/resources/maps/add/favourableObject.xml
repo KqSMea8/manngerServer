@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FavourableObject">
+
+	<resultMap type="com.lmxf.post.entity.add.FavourableObject" id="favourableObjectResultMap">
+		<id property="logid" column="logid" />
+		<result property="favObjectId" column="favObjectId" />
+		<result property="corpId" column="corpId" />
+		<result property="favType" column="favType" />
+		<result property="favObjId" column="favObjId" />
+		<result property="favWay" column="favWay" />
+		<result property="payType" column="payType" />
+		<result property="validSTime" column="validSTime" />
+		<result property="validETime" column="validETime" />
+		<result property="discount" column="discount" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+
+	<select id="findOne" parameterType="com.lmxf.post.entity.add.FavourableObject" resultMap="favourableObjectResultMap">
+		select * from as_favourable_object where corpId=#{corpId} 
+		and favType=#{favType} 
+		and favObjId=#{favObjId} 
+		and validSTime <![CDATA[<=]]> #{validSTime}
+		and validETime <![CDATA[>=]]> #{validSTime} 
+		<if test="payType != null and payType != ''">
+			and find_in_set(#{payType}, payType) 
+	    </if>
+		limit 0,1
+	</select>
+	
+</mapper> 

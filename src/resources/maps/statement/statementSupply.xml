@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="StatementSupply">
+
+	<resultMap type="com.lmxf.post.entity.statement.StatementSupply" id="statementSupplyResultMap">
+		<id property="logid" column="logid" />
+		<result property="sOrderId" column="sOrderId" />
+		<result property="siteId" column="siteId" />
+		<result property="corpId" column="corpId" />
+		<result property="name" column="name" />
+		<result property="districtId" column="districtId" />
+		<result property="lineId" column="lineId" />
+		<result property="wmId" column="wmId" />
+		<result property="tradeSTime" column="tradeSTime" />
+		<result property="tradeEtime" column="tradeEtime" />
+		<result property="supplyNum" column="supplyNum" />
+		<result property="saleNum" column="saleNum" />
+		<result property="underNum" column="underNum" />
+		<result property="abnomarlNum" column="abnomarlNum" />
+		<result property="buyMoney" column="buyMoney" />
+		<result property="salePMoney" column="salePMoney" />
+		<result property="saleRMoney" column="saleRMoney" />
+		<result property="saleFMoney" column="saleFMoney" />
+		<result property="saleUMoney" column="saleUMoney" />
+		<result property="abnomarlMoney" column="abnomarlMoney" />
+		<result property="salteState" column="salteState" />
+		<result property="statementState" column="statementState" />
+		<result property="curState" column="curState" />
+		<result property="sbalanceId" column="sbalanceId" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.statement.StatementSupply">
+	   insert into as_statement_supply(logid,sOrderId,siteId,corpId,districtId,lineId,name,wmId,tradeSTime,tradeEtime,supplyNum,saleNum,underNum,abnomarlNum,buyMoney,salePMoney,saleRMoney,saleFMoney,saleUMoney,abnomarlMoney,salteState,statementState,curState,sbalanceId,createTime) values(
+	   #{logid},#{sOrderId},#{siteId},#{corpId},#{districtId},#{lineId},#{name},#{wmId},#{tradeSTime},#{tradeEtime},#{supplyNum},#{saleNum},#{underNum},#{abnomarlNum},#{buyMoney},#{salePMoney},#{saleRMoney},#{saleFMoney},#{saleUMoney},#{abnomarlMoney},#{salteState},#{statementState},#{curState},#{sbalanceId},#{createTime})
+	</insert>
+	
+	<select id="findByInfo" parameterType="com.lmxf.post.entity.statement.StatementSupply" resultMap="statementSupplyResultMap">
+		select * from as_statement_supply where siteId=#{siteId} and (saleNum+underNum)<![CDATA[<]]>supplyNum
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.statement.StatementSupply" resultMap="statementSupplyResultMap">
+		select * from as_statement_supply where siteId=#{siteId} and sOrderId=#{sOrderId} limit 0,1
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.statement.StatementSupply">
+		update as_statement_supply set 
+		underNum=#{underNum},
+		saleUMoney=#{saleUMoney},
+		tradeSTime=#{tradeSTime},
+		salteState=#{salteState},
+		saleNum=#{saleNum},
+		salePMoney=#{salePMoney},
+		saleRMoney=#{saleRMoney},
+		statementState=#{statementState},
+		saleFMoney=#{saleFMoney}
+		where siteId=#{siteId} and sOrderId=#{sOrderId}
+	</update>
+	
+	<update id="updateUnder" parameterType="com.lmxf.post.entity.statement.StatementSupply">
+		update as_statement_supply set underNum=#{underNum},saleUMoney=#{saleUMoney},salteState=#{salteState},statementState=#{statementState} where siteId=#{siteId} and sOrderId=#{sOrderId}
+	</update>
+	
+</mapper> 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SupplyOrder">
+
+	<resultMap type="com.lmxf.post.entity.supply.SupplyOrder" id="supplyOrderResultMap">
+		<id property="logid" column="logid" />
+		<result property="sOrderId" column="sOrderId" />
+		<result property="corpId" column="corpId" />
+		<result property="supplyId" column="supplyId" />
+		<result property="supplyFTime" column="supplyFTime" />
+		<result property="name" column="name" />
+		<result property="lineId" column="lineId" />
+		<result property="siteId" column="siteId" />
+		<result property="wmId" column="wmId" />
+		<result property="productId" column="productId" />
+		<result property="supplierId" column="supplierId" />
+		<result property="num" column="num" />
+		<result property="type" column="type" />
+		<result property="supplyNum" column="supplyNum" />
+		<result property="curPNum" column="curPNum" />
+		<result property="maxPNum" column="maxPNum" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="finshState" column="finshState" />
+		<result property="stockState" column="stockState" />
+		<result property="sStateTime" column="sStateTime" />
+		<result property="checkId" column="checkId" />
+		<result property="createTime" column="createTime" />
+		<result property="outNum" column="outNum" />
+		<result property="supplyRNum" column="supplyRNum" />
+		<result property="surplyNNum" column="surplyNNum" />
+		<result property="surplyDNum" column="surplyDNum" />
+		<result property="surplyLNum" column="surplyLNum" />
+		<result property="supplyDType" column="supplyDType" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="supplyOrderResultMap">
+		select * from as_supply_order where 1=1
+		<if test="supplierId != null and supplierId != ''">
+			and supplierId=#{supplierId} 
+	    </if>
+	    <if test="curState != null and curState != ''">
+			and curState=#{curState} 
+	    </if>
+	    <if test="stockState != null and stockState != ''">
+			and stockState=#{stockState} 
+	    </if>
+	    <if test="stateTime != null and stateTime != ''">
+			and stateTime=#{stateTime} 
+	    </if>
+	    order by createTime desc
+	</select>
+	
+	<select id="findOneBySOrderId" parameterType="String" resultMap="supplyOrderResultMap">
+		select * from as_supply_order where sOrderId=#{sOrderId}
+	</select>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.statement.StatementProduct">
+	   insert into as_supply_order(logid,sOrderId,corpId,supplyId,supplyFTime,name,lineId,wmId,supplierId,num,type,supplyNum,curPNum,maxPNum,curState,stateTime,finshState,stockState,sStateTime,checkId,createTime) values(
+	   #{logid},#{sOrderId},#{corpId},#{supplyId},#{supplyFTime},#{name},#{lineId},#{wmId},#{supplierId},#{num},#{type},#{supplyNum},#{curPNum},#{maxPNum},#{curState},#{stateTime},#{finshState},#{stockState},#{sStateTime},#{checkId},#{createTime})
+	</insert>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.supply.SupplyOrder">
+		update as_supply_order set 
+		finshState=#{finshState},
+		curPNum=#{curPNum},
+		curState=#{curState},
+		supplyRNum=#{supplyRNum},
+		supplyDType=#{supplyDType},
+		stateTime=#{stateTime}
+		where sOrderId=#{sOrderId}
+	</update>
+	
+</mapper> 

@@ -1,0 +1,184 @@
+package com.lmxf.post.core.utils.pay;
+
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.JSONUtils;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.core.utils.SpringContextUtil;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.parameter.NsParameter;
+import com.lmxf.post.repository.parameter.NsParameterDao;
+
+import net.sf.json.JSONObject;
+
+/**
+ * 2018.12.17
+ * 
+ * @author zzw/思杰 处理订单申请退款工具类
+ * 
+ */
+public class OrderPayUtils {
+	private final static Log log = LogFactory.getLog(OrderPayUtils.class);
+
+	/**
+	 * 订单申请支付
+	 * 
+	 * @param orderApply
+	 * @return
+	 */
+	public static Map<String, String> applyOrderPayInfo(OrderApply orderApply) {
+		Map<String, String> result = new HashMap<String, String>();
+		try {
+			JSONObject root = new JSONObject();
+			JSONObject zmsg = new JSONObject();
+			// 头部信息
+			JSONObject zhead = new JSONObject();
+			zhead.put("BCode", "04");
+			zhead.put("TCode", "2500");
+			zhead.put("Version", "01");
+			zhead.put("IStart", "1");
+			// 主体
+			JSONObject zbody = new JSONObject();
+			zbody.put("CorpId", orderApply.getCorpId());
+			zbody.put("FeeType", GParameter.payFeeType_saleProduct);
+			zbody.put("PayType", orderApply.getPayType());
+			zbody.put("Price", (int) (orderApply.getPayPrice() * 100));
+			zbody.put("CurrencyType", GParameter.payCurrencyType_rmb);
+			zbody.put("TradeNo", orderApply.getOrderId());
+			zbody.put("TradeType", GParameter.payTradeType_order);
+			zbody.put("GenTime", DateUtil.getNow());
+			if (GParameter.payType_weChatG.equals(orderApply.getPayType()) || GParameter.payType_weChatApp.equals(orderApply.getPayType())) {
+				JSONObject weChatInfo = new JSONObject();
+				weChatInfo.put("OpenId", orderApply.getOpenId());
+				zbody.put("WeChatInfo", weChatInfo);
+			}
+			JSONObject orderDesc = new JSONObject();
+			orderDesc.put("siteId", orderApply.getSiteId());
+			zbody.put("OrderDesc", orderDesc);
+			zmsg.put("ZHEAD", zhead);
+			zmsg.put("ZBODY", zbody);
+			root.put("ZMSG", zmsg);
+			// 协议转换
+			String reqJson = root.toString();
+			// 向支付平台发送请求
+			NsParameter nsParameterP = new NsParameter();
+			nsParameterP.setName("payServer_url");
+			NsParameterDao nsParameterDao = (NsParameterDao) SpringContextUtil.getBean("nsParameterDao");
+			NsParameter nsParameter = nsParameterDao.findOne(nsParameterP);
+			String payUrl = "http://47.110.248.199:8086/ZhilaiPayPlat/shop.action?ZLJSONXML=";
+			if (nsParameter != null && nsParameter.getValue() != null && !"".equals(nsParameter.getValue())) {
+				payUrl = nsParameter.getValue();
+			}
+			// 微信返回
+			String respJson = MsgPushUtils.doGet(payUrl + URLEncoder.encode(reqJson.toString()));
+			JSONObject JSONHead = JSONUtils.getHeader(respJson);
+			if (JSONHead.getString("RetCode").equals("0000")) {
+				result.put("code", "0000");
+				JSONObject JSONBody = JSONUtils.getBody(respJson);
+				if (GParameter.payType_weChat.equals(orderApply.getPayType())) {
+					JSONObject wechatInfo = JSONBody.getJSONObject("WeChatInfo");
+					result.put("QRCode", wechatInfo.getString("QRCode"));
+					result.put("QRUrl", wechatInfo.getString("QRUrl"));
+				}
+				if (GParameter.payType_Alipay.equals(orderApply.getPayType())) {
+					JSONObject alipayInfo = JSONBody.getJSONObject("AlipayInfo");
+					result.put("QRCode", alipayInfo.getString("QRCode"));
+					result.put("QRUrl", alipayInfo.getString("QRUrl"));
+				}
+				if (GParameter.payType_weChatG.equals(orderApply.getPayType())) {
+					JSONObject weChatAppInfo = JSONBody.getJSONObject("WeChatGInfo");
+					result.put("AppId", (String) weChatAppInfo.get("AppId"));
+					result.put("TimeStamp", (String) weChatAppInfo.get("TimeStamp"));
+					result.put("NonceStr", (String) weChatAppInfo.get("NonceStr"));
+					result.put("Package", (String) weChatAppInfo.get("Package"));
+					result.put("SignType", (String) weChatAppInfo.get("SignType"));
+					result.put("PaySign", (String) weChatAppInfo.get("PaySign"));
+				}
+				if (GParameter.payType_weChatApp.equals(orderApply.getPayType())) {
+					JSONObject weChatAppInfo = JSONBody.getJSONObject("WeChatAppInfo");
+					result.put("AppId", (String) weChatAppInfo.get("AppId"));
+					result.put("TimeStamp", (String) weChatAppInfo.get("TimeStamp"));
+					result.put("NonceStr", (String) weChatAppInfo.get("NonceStr"));
+					result.put("Package", (String) weChatAppInfo.get("Package"));
+					result.put("SignType", (String) weChatAppInfo.get("SignType"));
+					result.put("PaySign", (String) weChatAppInfo.get("PaySign"));
+				}
+			} else {
+				result.put("code", JSONHead.getString("RetCode"));
+			}
+			return result;
+		} catch (Exception e) {
+			log.error("申请支付订单编号:" + orderApply.getOrderId() + " 支付方式:" + orderApply.getPayType() + " 访问支付服务器异常:" + e.getMessage());
+			result.put("code", "" + GConstent.OrderApply_PayInfo_Error);
+		}
+		return result;
+	}
+
+	/**
+	 * 订单申请退款
+	 * 
+	 * @param orderApply
+	 * @return
+	 */
+	public static Map<String, String> refundOrder(OrderApply orderApply) {
+		Map<String, String> result = new HashMap<String, String>();
+		try {
+			JSONObject root = new JSONObject();
+			JSONObject zmsg = new JSONObject();
+			// 头部信息
+			JSONObject zhead = new JSONObject();
+			zhead.put("BCode", "04");
+			zhead.put("TCode", "2503");
+			zhead.put("Version", "01");
+			zhead.put("IStart", "1");
+			// 主体
+			JSONObject zbody = new JSONObject();
+			zbody.put("TradeNo", orderApply.getOrderId());
+			zbody.put("OutTradeNo", orderApply.getpTradeNo());
+			zbody.put("FeeType", GParameter.payFeeType_saleProduct);
+			zbody.put("Price", (int) (orderApply.getPayPrice() * 100));
+			zbody.put("TradeType", GParameter.payTradeType_order);
+			zbody.put("GenTime", DateUtil.getNow());
+			JSONObject orderDesc = new JSONObject();
+			orderDesc.put("siteId", orderApply.getSiteId());
+			zbody.put("OrderDesc", orderDesc);
+			// 封装
+			zmsg.put("ZHEAD", zhead);
+			zmsg.put("ZBODY", zbody);
+			root.put("ZMSG", zmsg);
+			// 协议转换
+			String reqJson = root.toString();
+			// 向支付平台发送请求
+			NsParameter nsParameterP = new NsParameter();
+			nsParameterP.setName("payServer_url");
+			NsParameterDao nsParameterDao = (NsParameterDao) SpringContextUtil.getBean("nsParameterDao");
+			NsParameter nsParameter = nsParameterDao.findOne(nsParameterP);
+			String payUrl = "http://47.110.248.199:8086/ZhilaiPayPlat/shop.action?ZLJSONXML=";
+			if (nsParameter != null && nsParameter.getValue() != null && !"".equals(nsParameter.getValue())) {
+				payUrl = nsParameter.getValue();
+			}
+			// 微信返回
+			String respJson = MsgPushUtils.doGet(payUrl + URLEncoder.encode(reqJson.toString()));
+			;
+			JSONObject JSONHead = JSONUtils.getHeader(respJson);
+			if (JSONHead.getString("RetCode").equals("0000")) {
+				result.put("code", "0000");
+			} else {
+				result.put("code", JSONHead.getString("ReTCode"));
+			}
+			return result;
+		} catch (Exception e) {
+			log.error("申请退款订单编号:" + orderApply.getOrderId() + " 支付方式:" + orderApply.getPayType() + " 访问支付服务器异常:" + e.getMessage());
+			result.put("code", "" + GConstent.OrderApply_PayInfo_Error);
+		}
+		return result;
+	}
+}

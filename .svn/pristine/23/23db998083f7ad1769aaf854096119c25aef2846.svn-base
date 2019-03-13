@@ -1,0 +1,83 @@
+
+		<script type="text/javascript">
+			var ie = (function(){
+				var undef,
+				v = 3,
+				div = document.createElement('div'),
+				all = div.getElementsByTagName('i');
+				while (
+				    div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+				    all[0]
+			    );
+				return v > 4 ? v : undef;
+			}()),
+			ie6 = (ie === 6),
+			path = window.location.pathname.replace(/.*\/([^\/\.]*)\..*/g,"$1"),
+			langLib = [];
+			ie = ie<8;
+			if(ie) {
+				document.write('<link rel="stylesheet" href="tree/api/api/apiCss/common_ie6.css" type="text/css">');
+			}
+			var lang = "cn",
+			ajaxMsg = "如果你使用的是 Chrome 浏览器，那么请把 API 文档发布到 web 服务目录下访问。\n\n（Chrome 浏览器不支持本地 ajax 访问, 即：file://）";
+
+		</script>
+
+        <div id="header_wrap" class="header_wrap" style="padding-top: 30px;">
+		
+				<div class="ieSuggest">本页面的搜索功能只支持ie9及以上和FireFox版本。</div>
+		
+		</div>
+		<div id="content_wrap" class="content_wrap">
+			<div id="content" class="content">
+				<div class="nav_section">
+					<ul>
+						<li class="first">注释：</li>
+						<li><button class="ico16 z_core" onfocus="this.blur();"></button><span>core 核心包</span></li>
+						<li><button class="ico16 z_check" onfocus="this.blur();"></button><span>excheck 扩展</span></li>
+						<li><button class="ico16 z_edit" onfocus="this.blur();"></button><span>exedit 扩展</span></li>
+						<li class="noline">
+							<button class="ico16 z_search" onfocus="this.blur();" title="Enter 以及 左、右键可以快速定位查找结果"></button>
+							<input type="text" class="searchKey search empty" value=""><input type="text" class="searchResult search" value="">
+							<button class="ico16 searchPrev disabled" onfocus="this.blur();" title="Enter 以及 左、右键可以快速定位查找结果"></button>
+							<button class="ico16 searchNext disabled" onfocus="this.blur();" title="Enter 以及 左、右键可以快速定位查找结果"></button>
+						</li>
+					</ul>
+				</div>
+
+				<div id="contentBox" class="contentBox round clearfix">
+					<div id="apiContent" class="apiContent">
+						<div id="api_setting" class="api_setting left">
+							<ul class="api_content_title"><li>setting 配置详解</li></ul>
+							<ul id="settingTree" class="ztree"></ul>
+							<ul class="api_content_title"><li>tree 方法详解</li></ul>
+							<ul id="functionTree" class="ztree"></ul>
+							<ul class="api_content_title"><li>treeNode 节点数据详解</li></ul>
+							<ul id="treenodeTree" class="ztree"></ul>
+						</div>
+						
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+
+		<!-- overlayed -->
+		<div id="overlayDiv" class="baby_overlay">
+			<div id="overlayContent" class="content round clearfix">
+				<div class="overlaySearch">
+					<button class="ico16 z_search" onfocus="this.blur();" title="Enter 以及 左、右键可以快速定位查找结果"></button>
+					<input type="text" class="searchKey search empty" value=""><input type="text" class="searchResult search" value="">
+					<button class="ico16 searchPrev disabled" onfocus="this.blur();" title="Enter 以及 左、右键可以快速定位查找结果"></button><button class="ico16 searchNext disabled" onfocus="this.blur();" title="Enter 以及 左、右键可以快速定位查找结果"></button>
+				</div>
+				<a id="overlayDivCloseBtn" class="close"></a>
+				<div id="overlayDetailDiv" class="details"></div>
+			</div>
+			<div id="overlayDivArrow" class="baby_overlay_arrow"></div>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				apiContent._init();
+			});
+		</script>

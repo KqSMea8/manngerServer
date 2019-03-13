@@ -1,0 +1,274 @@
+package com.lmxf.post.web;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.core.utils.MyXmlUtil;
+import com.lmxf.post.core.utils.pay.SDKRuntimeException;
+import com.lmxf.post.core.web.BaseController;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.pay.Order;
+import com.lmxf.post.entity.pay.PayconfigWechat;
+import com.lmxf.post.service.core.OrderApplyService;
+
+/**
+ * 2018.12.19 微信支付反馈信息处理
+ * 
+ * @author 思杰
+ * 
+ */
+public class OrderPayNotifyController extends BaseController {
+	private static Logger log = Logger.getLogger(OrderPayNotifyController.class);
+	private OrderApplyService orderApplyService;
+
+	public void setOrderApplyService(OrderApplyService orderApplyService) {
+		this.orderApplyService = orderApplyService;
+	}
+
+	/**
+	 * 默认跳转的地址
+	 * 
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 * @throws IOException
+	 */
+	public void report(HttpServletRequest request, HttpServletResponse resp) throws IllegalAccessException, InvocationTargetException, Exception {
+		notify(request, resp);
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @param resp
+	 * @throws SDKRuntimeException
+	 * @throws Exception
+	 */
+	private void notify(HttpServletRequest request, HttpServletResponse resp) throws SDKRuntimeException, Exception {
+		// 获取请求数据
+		String json = request.getParameter("content");
+		log.info("收到支付平台支付通知信息:" + json);
+		JSONObject root = JSONObject.fromObject(json);
+		JSONObject zmsg = root.getJSONObject("ZMSG");
+		JSONObject JSONHead = zmsg.getJSONObject("ZHEAD");
+		JSONObject JSONBody = zmsg.getJSONObject("ZBODY");
+		// 响应成功
+		if (JSONHead.getString("RetCode").equals("0000")) {
+			// 检查是否是管理台测试支付信息
+			String orderId = JSONBody.getString("TradeNo");
+			String price = JSONBody.getString("Price");
+			String outTradeNo = JSONBody.getString("OutTradeNo");
+			String tradeType = JSONBody.getString("TradeType");
+			String payState = JSONBody.getString("PayState");
+			String genTime = JSONBody.getString("GenTime");
+			if (!GParameter.payTradeType_order.equals(tradeType)) {
+				respJson(resp, orderId, outTradeNo, tradeType);
+				return;
+			}
+			OrderApply orderApplyTest = GParameter.payOrderNoticeMap.get(orderId);
+			if (orderApplyTest != null) {
+				// 判断签名是否正确
+				OrderApply orderApply = orderApplyTest;
+				// 删除内存数据
+				GParameter.payOrderNoticeMap.remove(orderId);
+				// 商户订单号,商户系统内部的订单号，32 个字符内、可包含字母，确保在商户系统唯一
+				MsgPushUtils.doGet(orderApply.getNotice() + "?OrderId=" + orderApply.getOrderId() + "&PayState=1");
+				respJson(resp, orderId, outTradeNo, tradeType);
+			} else {// 正常商品购买支付处理
+				// 判断签名是否正确
+				try {
+					OrderApply orderApply = orderApplyService.findOneByOrderId(orderId);
+					if (orderApply != null && GParameter.payTradeTypeSuccess_pay.equals(payState)) {//支付成功
+						orderApply.setpTradeNo(outTradeNo);
+						orderApplyService.updateByNotify(orderApply, GParameter.payState_success);
+					} else if (orderApply != null && GParameter.payTradeTypeSuccess_refund.equals(payState)) {//退款成功
+						orderApplyService.updateByNotifyRefund(orderApply, outTradeNo);
+					} else {
+						log.error("响应支付平台收到支付结果出错:" + " 订单编号:" + orderId + "  通知类型:" + tradeType + " 支付流水号：" + outTradeNo + " 无法找到订单号.");
+					}
+				} catch (Exception e) {
+					log.error("响应支付平台收到支付结果出错:" + e.getMessage() + " 订单编号:" + orderId + "  通知类型:" + tradeType + " 支付流水号：" + outTradeNo);
+				}
+				// 响应成功信息
+				respJson(resp, orderId, outTradeNo, tradeType);
+			}
+		}
+	}
+
+	public void respJson(HttpServletResponse resp, String orderId, String outTradeId, String tradeType) {
+		JSONObject rootObject = new JSONObject();
+		JSONObject JSONObject = new JSONObject();
+
+		JSONObject JSONHeaderObject = new JSONObject();
+		JSONHeaderObject.put("RetCode", "0000");
+		JSONHeaderObject.put("RetMsg", "success");
+		JSONHeaderObject.put("TotNum", "1");
+		JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+		JSONObject JSONBodyR = new JSONObject();
+		JSONObject.put(GConstent.ZxmlBody, JSONBodyR);
+		rootObject.put(GConstent.ZxmlRoot, JSONObject);
+
+		resp.setContentType("text/json");
+		resp.setContentLength(rootObject.toString().length());
+		resp.setHeader("content-type", "text/xml;charset=UTF-8");
+		try {
+			resp.getOutputStream().write(rootObject.toString().getBytes());
+		} catch (IOException e) {
+			log.error("响应支付平台收到支付结果出错:" + e.getMessage() + " 订单编号:" + orderId + "  通知类型:" + tradeType + " 支付流水号：" + outTradeId);
+		}
+	}
+
+	/**
+	 * 获取签名进行比对，返回布尔值
+	 * 
+	 * @param wxPayHelper
+	 * @param winXin
+	 * @return
+	 */
+	private static boolean judgeAppSign(Order order, PayconfigWechat payconfigWechat) {
+		boolean tag = true;
+		String sign = null;
+		// 获取签名
+		try {
+			HashMap<String, String> nativeObj = new HashMap<String, String>();
+			nativeObj.put("appid", order.getAppid());
+			nativeObj.put("attach", order.getAttach());
+			nativeObj.put("bank_type", order.getBank_type());
+			nativeObj.put("cash_fee", order.getFee() + "");
+			nativeObj.put("device_info", order.getDevice_info() + "");
+			nativeObj.put("fee_type", order.getFee_type());
+			nativeObj.put("is_subscribe", order.getIs_subscribe());
+			nativeObj.put("mch_id", order.getMch_id());
+			nativeObj.put("nonce_str", order.getNonce_str());
+			nativeObj.put("openid", order.getOpenid());
+			nativeObj.put("out_trade_no", order.getOut_trade_no());
+			nativeObj.put("result_code", order.getReturn_code());
+			nativeObj.put("return_code", order.getReturn_code());
+			nativeObj.put("time_end", order.getTime_end());
+			nativeObj.put("total_fee", order.getTotal_fee() + "");
+			nativeObj.put("trade_type", order.getTrade_type());
+			nativeObj.put("transaction_id", order.getPrepay_id());
+			order.setAppKey(payconfigWechat.getAppSecret());
+			log.debug("微信支付反馈响应签名字符串" + nativeObj.toString());
+			sign = order.GetBizSign(nativeObj);
+			if (!sign.equals(order.getSign())) {
+				tag = false;
+				log.error("微信支付反馈响应签名字符串 发生错误 " + nativeObj.toString());
+			}
+		} catch (SDKRuntimeException e) {
+			tag = false;
+			e.printStackTrace();
+		}
+		sign = null;
+		return tag;
+	}
+
+	/**
+	 * 生成javabean
+	 * 
+	 */
+
+	private static Order getOrder(String xml) {
+		Order vo = new Order();
+		if (xml.contains("<appid>") && xml.contains("</appid>")) {
+			vo.setAppid(MyXmlUtil.xmlToString(xml, "<appid>"));
+		}
+		if (xml.contains("<attach>") && xml.contains("</attach>")) {
+			vo.setAttach(MyXmlUtil.xmlToString(xml, "<attach>"));
+		}
+		if (xml.contains("<bank_type>") && xml.contains("</bank_type>")) {
+			vo.setBank_type(MyXmlUtil.xmlToString(xml, "<bank_type>"));
+		}
+		if (xml.contains("<cash_fee>") && xml.contains("</cash_fee>")) {
+			vo.setFee(MyXmlUtil.xmlToString(xml, "<cash_fee>"));
+		}
+		if (xml.contains("<device_info>") && xml.contains("</device_info>")) {
+			vo.setFee(MyXmlUtil.xmlToString(xml, "<device_info>"));
+		}
+		if (xml.contains("<fee_type>") && xml.contains("</fee_type>")) {
+			vo.setFee_type(MyXmlUtil.xmlToString(xml, "<fee_type>"));
+		}
+		if (xml.contains("<is_subscribe>") && xml.contains("</is_subscribe>")) {
+			vo.setIs_subscribe(MyXmlUtil.xmlToString(xml, "<is_subscribe>"));
+		}
+		if (xml.contains("<mch_id>") && xml.contains("</mch_id>")) {
+			vo.setMch_id(MyXmlUtil.xmlToString(xml, "<mch_id>"));
+		}
+		if (xml.contains("<nonce_str>") && xml.contains("</nonce_str>")) {
+			vo.setNonce_str(MyXmlUtil.xmlToString(xml, "<nonce_str>"));
+		}
+		if (xml.contains("<openid>") && xml.contains("</openid>")) {
+			vo.setOpenid(MyXmlUtil.xmlToString(xml, "<openid>"));
+		}
+		if (xml.contains("<out_trade_no>") && xml.contains("</out_trade_no>")) {
+			vo.setOut_trade_no(MyXmlUtil.xmlToString(xml, "<out_trade_no>"));
+		}
+		if (xml.contains("<result_code>") && xml.contains("</result_code>")) {
+			vo.setResult_code(MyXmlUtil.xmlToString(xml, "<result_code>"));
+			if ("SUCCESS".equals(vo.getResult_code())) {
+				vo.setPay_state("01");
+			}
+		}
+		if (xml.contains("<return_code>") && xml.contains("</return_code>")) {
+			vo.setReturn_code(MyXmlUtil.xmlToString(xml, "<return_code>"));
+		}
+		if (xml.contains("<sign>") && xml.contains("</sign>")) {
+			vo.setSign(MyXmlUtil.xmlToString(xml, "<sign>"));
+		}
+		if (xml.contains("<time_end>") && xml.contains("</time_end>")) {
+			vo.setTime_end(MyXmlUtil.xmlToString(xml, "<time_end>"));
+		}
+		if (xml.contains("<total_fee>") && xml.contains("</total_fee>")) {
+			vo.setTotal_fee(MyXmlUtil.xmlToString(xml, "<total_fee>"));
+		}
+		if (xml.contains("<trade_type>") && xml.contains("</trade_type>")) {
+			vo.setTrade_type(MyXmlUtil.xmlToString(xml, "<trade_type>"));
+		}
+		if (xml.contains("<transaction_id>") && xml.contains("</transaction_id>")) {
+			vo.setPrepay_id(MyXmlUtil.xmlToString(xml, "<transaction_id>"));
+		}
+
+		if (xml.contains("<sub_mch_id>") && xml.contains("</sub_mch_id>")) {
+			vo.setSub_mch_id(MyXmlUtil.xmlToString(xml, "<sub_mch_id>"));
+		}
+		return vo;
+	}
+
+	public static String ArrayToXml(HashMap<String, String> arr) {
+		String xml = "<xml>";
+
+		Iterator<Entry<String, String>> iter = arr.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, String> entry = iter.next();
+			String key = entry.getKey();
+			String val = entry.getValue();
+			if (IsNumeric(val)) {
+				xml += "<" + key + ">" + val + "</" + key + ">";
+			} else
+				xml += "<" + key + "><![CDATA[" + val + "]]></" + key + ">";
+		}
+
+		xml += "</xml>";
+		return xml;
+	}
+
+	public static boolean IsNumeric(String str) {
+		if (str.matches("\\d *")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}

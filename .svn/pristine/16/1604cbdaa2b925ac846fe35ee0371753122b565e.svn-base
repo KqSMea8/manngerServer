@@ -1,0 +1,259 @@
+[文件路径: grid/show/format.html]
+
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		展示grid格式化数据能力，格式化数据能让数据更多样化形式展现，格式化类型和格式化属性分别通过列属性formatter、formatoptions设置。
+        例如：对名为“缴税”的列进行格式化，格式化类为“currency”，初始值为“1000.00”格式化后显示为“$ 1,000.00”； <br/>
+        格式化数据类型支持：integer、number、currency、date、email、link、showlink、checkbox、select、button、img;
+        其中showlink、button、img支持格式化为多个组件能力，例如一个单元格内容格式化为多个按钮；
+
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <font color="red"> &nbsp&nbsp&nbsp&nbsp&nbsp sholink、button、img这三种类型支持所有对应标签属性、jquery事件绑定和格式化为多个组件，所有绑定事件参数分别为：所在行id、单元格值value;</font>
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                       <table id="format_rowed"></table>
+                       <div id="format_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_format">
+<pre>
+<font color='#027DD1'>1、格式化指定列数据、绑定事件：</font>
+<strong>js部分:</strong>
+
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",birthland:"guandong",sex:"yes",img:"00.jpg",tax:"300.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",birthland:"shanxi",sex:"no",img:"01.jpg",tax:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",birthland:"beijing",sex:"yes",img:"02.jpg",tax:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",birthland:"guandong",sex:"yes",img:"03.jpg",tax:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",birthland:"sichuan",sex:"yes",img:"04.jpg",tax:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",birthland:"beijing",sex:"no",img:"05.jpg",tax:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",birthland:"chongqing",sex:"no",img:"06.jpg",tax:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",birthland:"guangxi",sex:"no",img:"07.jpg",tax:"320.00"}
+      ];
+      var selectArr = [
+             { name: '广西',value:'guangxi'},{name:'广东',value:'guandong'},{ name: '北京',value:'beijing'},
+             {name:'浙江',value:'zhejiang'},{ name: '陕西',value:'shanxi'},{name:'四川',value:'sichuan'},
+             { name: '重庆',value:'chongqing'},{name:'上海',value:'shanghai'}
+      ] ;
+      function nameelem (cellvalue, options, rowObject) {
+          var string = '&lt;select id='+rowObject.ids+'_'+options.colModel.name + '  class="select"&gt;&lt;/select&gt;';
+          return string;
+      }
+      function namevalue(cellvalue, options, cell) {
+          return $("select",cell).val();
+      }
+      function imgClick(id,value){
+          new biz.alert({type:"alert",message:"触发了img单击事件；此单元格所在行id为"+id+";单元格值为"+value,title:"注 意"});}
+      function buttonClick(id,value){
+          new biz.alert({type:"alert",message:"触发了button单击事件；此单元格所在行id为"+id+";单元格值为"+value,title:"注 意"});}
+      function buttonDbclick(id,value){
+          new biz.alert({type:"alert",message:"触发了button双击事件；此单元格所在行id为"+id+";单元格值为"+value,title:"注 意"});}
+      var formatGridObj = new biz.grid({
+          id:"#format_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+               {name:'ids',index:'ids',label:"标识",key:true,width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false,
+                   <font color="red">formatter:'showlink'/*格式化为showlink类型*/</font>,
+                   formatoptions:{
+                     <font color="red">baseLinkUrl:"http://www.chinasofti.com"/*设置showlink url地址*/</font>
+                     }
+               },
+               {name:'birthland',label:"出生地",index:'birthland', width:150,align:"right",editable:false,
+                   <font color="red">formatter:nameelem,/*自定义格式化为select类型*/</font>
+                   <font color="red">unformat:namevalue</font>,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,formoptions:{ rowpos:2, colpos:2},
+                   <font color="red">formatter:'currency'/*格式化为currency类型*/,</font>
+                   formatoptions:{<font color="red">decimalSeparator:'.'/*小数位分隔符*/,
+                                  thousandsSeparator: ','/*千分位分隔符*/ 
+                                  decimalPlaces: 2/*小数位数*/, 
+                                  prefix: '$ '/*前缀*/</font>}
+                },
+               {name:'sex',label:"性别",index:'sex', width:70,align:"right",editable:false,
+                     <font color="red">formatter:'checkbox',/*格式化为checkbox*/</font>
+                     formatoptions:{<font color="red">disabled:false</font>},
+                     formoptions:{ rowpos:3, colpos:1}
+                },
+               {name:'img',index:'img',label:"缴税人",align:"center",width:200,
+                  <font color="red">formatter:'img'/*格式化为img*/,</font>
+                   formatoptions:{
+                      <font color="red">baseUrl:"./indexDepend/images/"/*img基础url地址*/,
+                     class:"pic"/*img样式*/,width:"60"/*宽度*/,
+                     click:imgClick/*单击事件*/,
+                     showAction:"img"/*img地址的附加信息，会附加到baseUrl后面*/</font>
+                    }
+               },
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}},
+               {name:'operate',index:'operate',
+                   <font color="red">formatter:'button'/*格式化为button*/</font>,
+                   formatoptions:{<font color="red">
+                                 dblclick:buttonDbclick/*双击事件*/,
+                                 buttonsOptions:[{value:"操作1"/*按钮名称*/},{value:"操作2",click:buttonClick/*按钮单击事件*/}]/*用于设置格式化多个按钮，每个值对应一个按钮*/</font>
+                                 }
+               }
+         ],
+         <font color="red">
+         loadComplete:function(data){
+             for(var i=0;i < data.rows.length;i++){
+               /*给格式化的select标签渲染*/
+               new biz.select({id:"#format_rowed #"+data.rows[i].ids+"_birthland",
+                        value:data.rows[i].birthland,
+                        data:selectArr
+               });
+ 
+               /*给select组件绑定change事件给所在tr添加edited,单元格所在行（tr）有样式edited表示编辑过；*/
+               $("#format_rowed td select").bind("change.edit",function(){
+               	$(this).parent().addClass("dirty-cell");
+               	$(this).parent().parent().addClass("edited")});
+             }
+         }</font>,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#format_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:"http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,url:"http://localhost",recreateForm:true}
+      });
+
+</pre>
+</div>
+
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">格式化数据属性列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./grid/show/formatField.htm" width="100%" scrolling="no" frameborder="0" height="200px;"></iframe>
+	支持格式化类型详细列表：
+	<iframe src="./grid/show/formatTypeDetail.htm" width="100%" scrolling="no" frameborder="0" height="1600px;"></iframe>
+	
+	</div>
+
+<script type="text/javascript">
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",birthland:"guandong",sex:"yes",img:"00.jpg",tax:"300.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",birthland:"shanxi",sex:"no",img:"01.jpg",tax:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",birthland:"beijing",sex:"yes",img:"02.jpg",tax:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",birthland:"guandong",sex:"yes",img:"03.jpg",tax:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",birthland:"sichuan",sex:"yes",img:"04.jpg",tax:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",birthland:"beijing",sex:"no",img:"05.jpg",tax:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",birthland:"chongqing",sex:"no",img:"06.jpg",tax:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",birthland:"guangxi",sex:"no",img:"07.jpg",tax:"320.00"}
+      ];
+      var selectArr = [
+             { name: '广西',value:'guangxi'},{name:'广东',value:'guandong'},{ name: '北京',value:'beijing'},
+             {name:'浙江',value:'zhejiang'},{ name: '陕西',value:'shanxi'},{name:'四川',value:'sichuan'},
+             { name: '重庆',value:'chongqing'},{name:'上海',value:'shanghai'}
+      ] ;
+      function nameelem (cellvalue, options, rowObject) {
+          var string = '<select id='+rowObject.ids+'_'+options.colModel.name + '  class="select"></select>';
+          return string;
+      }
+      function namevalue(cellvalue, options, cell) {
+          return $("select",cell).val();
+      }
+      function imgClick(id,value){new biz.alert({type:"alert",message:"触发了img单击事件；此单元格所在行id为"+id+";单元格值为"+value,title:"注 意"});}
+      function buttonClick(id,value){new biz.alert({type:"alert",message:"触发了button单击事件；此单元格所在行id为"+id+";单元格值为"+value,title:"注 意"});}
+      function buttonDbclick(id,value){new biz.alert({type:"alert",message:"触发了button双击事件；此单元格所在行id为"+id+";单元格值为"+value,title:"注 意"});}
+      var formatGridObj = new biz.grid({
+          id:"#format_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+               {name:'ids',index:'ids',label:"标识",key:true,width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:80,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false,formatter:'showlink',
+                   formatoptions:{baseLinkUrl:"http://www.chinasofti.com"}},
+               {name:'birthland',label:"出生地",index:'birthland', width:150,align:"right",editable:true,formatter:nameelem,unformat:namevalue,
+                   formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,formoptions:{ rowpos:2, colpos:2},
+                   formatter:'currency',formatoptions:{decimalSeparator:'.',thousandsSeparator: ',', decimalPlaces: 2, prefix: '$ '}},
+               {name:'sex',label:"性别",index:'sex', width:70,align:"right",editable:true,formatter:'checkbox',formatoptions:{disabled:false},
+                   formoptions:{ rowpos:3, colpos:1}},
+               {name:'img',index:'img',label:"缴税人",align:"center",width:200, formatter:'img',
+            	   formatoptions:{baseUrl:"./indexDepend/images/",click:imgClick,height:60,width:60,showAction:"{img}"}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}},
+               {name:'operate',index:'operate' ,formatter:'button',
+                   formatoptions:{dblclick:buttonDbclick,buttonsOptions:[{value:"操作1"},{value:"操作2",click:buttonClick}]}}
+         ],
+         loadComplete:function(data){
+             for(var i=0;i<data.rows.length;i++){
+               //给格式化的select标签渲染
+               new biz.select({id:"#format_rowed #"+data.rows[i].ids+"_birthland",
+                        value:data.rows[i].birthland,
+                        data:selectArr
+               });
+ 
+               //给select组件绑定change事件给所在tr添加edited,单元格所在行（tr）有样式edited表示编辑过；
+               $("#format_rowed td select").bind("change.edit",function(){
+               	$(this).parent().addClass("dirty-cell");
+               	$(this).parent().parent().addClass("edited")});
+             }
+         },
+         navtype:"top" /*导航栏类型*/,
+         pager: '#format_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:"http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,url:"http://localhost",recreateForm:true}
+      });
+
+</script>

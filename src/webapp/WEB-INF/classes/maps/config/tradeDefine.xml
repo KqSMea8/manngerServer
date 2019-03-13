@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TradeDefine">
+
+	<resultMap type="com.lmxf.post.entity.config.TradeDefine" id="tradeDefineResultMap">
+		<id property="logid" column="logid" />
+		<result property="tradeId" column="tradeId" />
+		<result property="platCode" column="platCode" />
+		<result property="tradeCode" column="tradeCode" />
+		<result property="tradeName" column="tradeName" />
+		<result property="tradeDesc" column="tradeDesc" />
+		<result property="version" column="version" />
+	</resultMap>
+	
+	<select id="findOne" parameterType="String" resultMap="tradeDefineResultMap">
+		select * from sys_trade_define where tradeCode= #{tradeCode}
+	</select>
+ 
+</mapper> 
+

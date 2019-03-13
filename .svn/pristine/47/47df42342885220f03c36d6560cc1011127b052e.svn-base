@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/xml; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="../lib/style/reset.css" media="screen, projection"/>
+<link rel="stylesheet" type="text/css" href="../lib/style/layout.css" media="screen, projection"/>
+<link rel="stylesheet" type="text/css" href="../lib/style/skin/default/theme.css"/>
+<link rel="stylesheet" type="text/css" href="../lib/style/skin/default/components/jqgrid/jquery.jqgrid.css"/>
+<link rel="stylesheet" type="text/css" href="../lib/style/skin/default/components/tree/zTreeStyle.css"/>
+
+<script type="text/javascript" src="../lib/js/lib/jquery-all.js"></script>
+<script type="text/javascript" src="../lib/js/lib/WdatePicker.js"></script>
+<script type="text/javascript" src="../lib/js/lib/widgets.js"></script>
+<script type="text/javascript" src="../lib/js/i18n/i18n_zh.js"></script>
+<script type="text/javascript" src="../lib/js/lib/tree.js"></script>
+<script type="text/javascript" src="../lib/js/lib/grid.js"></script>
+<script type="text/javascript" src="../lib/js/lib/validate.js"></script>
+<script type="text/javascript" src="../lib/js/lib/biz.js"></script>
+</head>
+<body>
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			<table class="table">
+					<tr>
+						<td class="inputLabelTd" style="width:600px;">
+						   <div width="600px" align="center" id="list2rg"></div>
+						</td>	
+					</tr>
+				<!--  
+					<tr>
+						<td class="inputTd"> 
+						   <button id="getvaluebtn">获取选中值</button>
+						</td>		
+					</tr>
+				-->	
+			   </table>
+     </div>
+</body>
+<script language="javascript"> 
+
+ var s= $("#text_chooseModules",window.parent.document).val(); //父页面中上一次选择的值
+var items = 
+[ 
+  [ "test", "测试管理", false, "001", 1],
+  [ "system", "系统管理", false, "002", 1],
+  [ "org", "组织管理", false, "003", 1],
+  [ "position", "职务管理", false, "004", 1],
+  [ "user", "用户管理", false, "005", 1],
+  [ "audit", "行为审核", false, "006", 1],
+  [ "process", "流程管理", false, "007", 1]
+];
+ if(s!=null && s!=""){
+    for(var i=0;i<items.length;i++){
+        var temp = items[i];
+        var arr = s.split(","); 
+        for(var j=0;j<arr.length;j++){
+          var tempSelected = arr[j];
+          if(temp[0]== tempSelected){
+              items[i][2] = true;
+          }
+        }
+       
+    }
+ }
+var setting = {
+        id:"list2rg",
+        data:items,
+        size:10,
+        isTreeStyle:0,
+        isShowCode:0,
+        width:600
+}
+
+window.parent.gbp_sl_list = new biz.doubleselect(setting);
+
+function getselectVal(){
+       return window.parent.gbp_sl_list.getSelectedValues();
+}
+function getselectDisplay(){
+     var infoArray = window.parent.gbp_sl_list.getRows();//获取右侧
+     var returnResult = new Array();
+     if(infoArray!=null && infoArray.length>0){
+       for(var i = 0 ; i<infoArray.length;i++){
+          returnResult.push(infoArray[i][1]);
+       }
+     }
+       return returnResult;
+}
+/*
+  new biz.button({id:"#getvaluebtn"}).click(function() {
+          //alert(getselectVal());
+          alert(getselectDisplay());
+          
+  });
+*/
+
+</script> 
+</html>

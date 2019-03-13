@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductLunder">
+
+	<resultMap type="com.lmxf.post.entity.product.ProductLunder" id="productLunderResultMap">
+		<id property="logid" column="logid" />
+		<result property="lunderId" column="lunderId" />
+		<result property="underId" column="underId" />
+		<result property="vUnderId" column="vUnderId" />
+		<result property="districtId" column="districtId" />
+		<result property="lineId" column="lineId" />
+		<result property="pointId" column="pointId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="productId" column="productId" />
+		<result property="underNum" column="underNum" />
+		<result property="laneSId" column="laneSId" />
+		<result property="laneEId" column="laneEId" />
+		<result property="corpId" column="corpId" />
+		<result property="createTime" column="createTime" />
+		<result property="curState" column="curState" />
+	</resultMap>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.product.ProductLunder" resultMap="productLunderResultMap">
+		select * from as_product_lunder where underId=#{underId} and siteId=#{siteId} and productId=#{productId} and laneSId=#{laneSId} and laneEId=#{laneEId}
+		limit 0,1
+	</select>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.product.ProductLunder">
+		insert into
+		as_product_lunder(logid,lunderId,underId,districtId,lineId,pointId,siteId,siteName,productId,underNum,laneSId,laneEId,corpId,createTime)
+		values(#{logid},#{lunderId},#{underId},#{districtId},#{lineId},#{pointId},#{siteId},#{siteName},#{productId},#{underNum},#{laneSId},#{laneEId},#{corpId},#{createTime})
+	</insert>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.product.ProductLunder">
+	update as_product_lunder set
+underNum=#{underNum},
+curState=#{curState} where
+		lunderId=#{lunderId}
+	</update>
+	
+	<select id="findAll" parameterType="com.lmxf.post.entity.product.ProductLunder" resultMap="productLunderResultMap">																						
+		select * from as_product_lunder t where 1=1
+		<if test="vUnderId != null and vUnderId != '' ">
+			AND vUnderId=#{vUnderId}
+		</if>
+		
+	</select>
+</mapper> 

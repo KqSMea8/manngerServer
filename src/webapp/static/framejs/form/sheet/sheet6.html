@@ -1,0 +1,337 @@
+[文件路径: form/sheet/sheet6.html] 
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_sheet6");
+</script>
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		grid页面，通常用于数据列表的查询结果。<font color='red'>（本示例主要说明表单整体布局，对于表单内部具体组件可能采用原始用法，规范的封装后用法请参见各组件详细说明）</font>
+	</div>
+
+
+<div class="main" >
+    <div class="barTitle">
+		<div class="content">
+		    <a href= "#"> </a> <span>查询列表</span><a class="displayHidden" id="querya"  onfocus="this.blur()" href= "javascript:;">隐藏查询条件</a>
+		</div>
+	</div>
+   <hr class="barTitleHr"/>
+    
+    <div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block">
+      <form id="conditionform">
+		   <div class="equal"> 
+				<div class="row"> 
+					<div class="cell">
+							 <div class="labelcell">查询条件1：</div>             
+							 <div class="valuecell"><input  name="condition1" class="text" type="text"/> </div> 
+					</div>
+					
+					<div class="cell">
+							 <div class="labelcell">查询条件2：</div>             
+							 <div class="valuecell"><input name="condition2"   class="text" type="text"/> </div> 
+					</div>
+
+					<div class="querycell">
+						 <button id="search_btn"></button>
+					</div>
+					 
+				</div> 
+			</div>
+		  </form>
+		  </div>
+    <div class="ui-table ui-widget ui-corner-all ui-margin">
+		  	
+				   <div class="nav">
+					   <button  id="addbtn" ></button>
+					   <button id="editbtn">编辑</button>
+					   <button id="viewbtn" >查看</button>
+					   <button id="delebtn" >删除</button>
+					   <button id="refreshbtn" >刷新</button>
+				   </div>
+				   <table id="rowed"></table>
+				   <div id="prowed"></div>
+
+	</div>
+
+</div>
+<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"  name="source_sheet6">
+           <pre class="brush: js;">
+ <!--html部分-->
+ &lt;div class="main" &gt;
+    &lt;div class="barTitle"&gt;
+		&lt;div class="content"&gt;
+		    &lt;a href= "#"&gt; &lt;/a&gt; &lt;span&gt;查询列表&lt;/span&gt;&lt;a class="displayHidden" id="querya"  
+			onfocus="this.blur()" href= "javascript:;"&gt;隐藏查询条件&lt;/a&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+   &lt;hr class="barTitleHr"/&gt;
+    
+    &lt;div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block"&gt;
+      &lt;form id="conditionform"&gt;
+		   &lt;div class="equal"&gt; 
+				&lt;div class="row"&gt; 
+					&lt;div class="cell"&gt;
+							 &lt;div class="labelcell"&gt;查询条件1：&lt;/div&gt;             
+							 &lt;div class="valuecell"&gt;&lt;input  name="condition1" class="text" type="text"/&gt; &lt;/div&gt; 
+					&lt;/div&gt;
+					
+					&lt;div class="cell"&gt;
+							 &lt;div class="labelcell"&gt;查询条件2：&lt;/div&gt;             
+							 &lt;div class="valuecell"&gt;&lt;input  name="condition2" class="text" type="text"/&gt; &lt;/div&gt; 
+					&lt;/div&gt;
+
+					&lt;div class="querycell"&gt;
+						 &lt;button id="search_btn"&gt;&lt;/button&gt;
+					&lt;/div&gt;
+					 
+				&lt;/div&gt; 
+			&lt;/div&gt;
+		  &lt;/form&gt;
+		  &lt;/div&gt;
+    &lt;div class="ui-table ui-widget ui-corner-all ui-margin"&gt;
+		    	
+				   &lt;div class="nav"&gt;
+					   &lt;button  id="addbtn" &gt;&lt;/button&gt;
+					   &lt;button id="editbtn"&gt;&lt;/button&gt;
+					   &lt;button id="viewbtn" &gt;&lt;/button&gt;
+					   &lt;button id="delebtn" &gt;&lt;/button&gt;
+					   &lt;button id="refreshbtn" &gt;&lt;/button&gt;
+				   &lt;/div&gt;
+				   &lt;table id="rowed"&gt;&lt;/table&gt;
+				   &lt;div id="prowed"&gt;&lt;/div&gt;
+			
+	&lt;/div&gt;
+&lt;/div&gt;
+ 
+
+ <!--js部分-->
+/*grid数据*/   
+ var mydata = [
+	 {name:"应用系统管理",createdate:"2010-05-24",compoent:"管理控制台",amount:"357",error:"0",note:"所有功能模块的入口"} ,
+	 {name:"数据实体维护",createdate:"2010-05-25",compoent:"业务流程定制",amount:"398",error:"0",note:"数据库中对应的实体的维护"},
+	 {name:"信任域管理",createdate:"2007-09-01",compoent:"管理控制台",amount:"423",error:"3",note:"如可信任站点维护"},
+	 {name:"资源注册",createdate:"2007-10-04",compoent:"管理控制台",amount:"34",error:"1",note:"资源注册到管理的入口"},
+	 {name:"表单管理",createdate:"2007-10-05",compoent:"业务流程定制",amount:"365",error:"0",note:"工作流表单的注册地址"},
+	 {name:"表单分类维护",createdate:"2007-09-06",compoent:"业务流程定制",amount:"412",error:"8",note:"实现表单资源的分类管理"},
+	 {name:"表单权限设置",createdate:"2007-10-04",compoent:"业务流程定制",amount:"32",error:"0",note:"实现表单访问权限管理"},
+	 {name:"人事管理",createdate:"2007-10-03",compoent:"管理控制台",amount:"312",error:"2",note:"人事管理"},
+	 {name:"委托设置",createdate:"2007-09-01",compoent:"办公应用系统",amount:"1234",error:"0",note:"工作流中的委托设置"},
+	 {name:"组织管理",createdate:"2007-10-01",compoent:"管理控制台",amount:"567",error:"0",note:"组织人员管理"},
+	 {name:"固定资产管理",createdate:"2007-10-02",compoent:"办公应用系统",amount:"322",error:"0",note:"固定资产维护"},
+	 {name:"全局变量管理",createdate:"2007-09-01",compoent:"管理控制台",amount:"421",error:"0",note:"全局变量维护"},
+	 {name:"任务列表管理",createdate:"2007-10-04",compoent:"业务流程定制",amount:"265",error:"0",note:"工作流任务列表定制入口"},
+	 {name:"用户管理",createdate:"2007-10-05",compoent:"管理控制台",amount:"341",error:"0",note:"人员信息维护"},
+	 {name:"模块管理",createdate:"2007-09-06",compoent:"管理控制台",amount:"414",error:"0",note:"注册模块的管理"},
+	 {name:"授权管理",createdate:"2007-10-04",compoent:"管理控制台",amount:"225",error:"1",note:"授权管理"},
+	 {name:"角色管理",createdate:"2007-10-03",compoent:"管理控制台",amount:"313",error:"0",note:"角色管理"},
+	 {name:"客户端管理",createdate:"2007-09-01",compoent:"管理控制台",amount:"432",error:"0",note:"客户端管理"}
+         ];
+     /*grid创建*/    
+          obj1 = new biz.grid({
+          id:"#rowed",
+          data: mydata,
+          datatype: "local",
+		   editurl:"http://localhost:8080/test/omOrder",
+          rownumbers:false,
+          rowcontent:true,
+		   height:220,
+          colModel:[
+		     {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+			 {label:"模块名称",name:'name',index:'name',key:true,width:110,editable:true,editoptions:{readonly:false}},
+			 {label:"创建日期",name:'createdate',index:'createdate',align:"left",width:100,editable:true,edittype:'datepicker', editoptions:
+	{dateFormat:"yy-mm-dd"}},
+			 {label:"所属构件",name:'compoent',index:'compoent', width:100,editable:false},
+			 {label:"访问总量(每月)",name:'amount',index:'amount', width:80, editrules:
+	{required:true},editable:true},
+			 {label:"问题统计",name:'error',index:'error', width:80, editable:true},
+			 {label:"备注",name:'note',index:'note', width:180, sortable:false,editable:true,edittype:"textarea"}
+         ],
+         serializeGridData:function(postData){//添加查询条件值
+     		var queryvalue = getQueryFilter();
+ 			var obj = {queryFilters:queryvalue};
+ 			$.extend(true,obj,postData);//合并查询条件值与grid的默认传递参数
+ 			return obj;
+ 		},
+         pager: '#prowed'
+       });
+       
+       
+    function getQueryFilter() {
+		var searchStr = '';
+		var form = document.getElementById("conditionform");
+	    for (var i = 0; i < form.elements.length; i++) {
+	        var element = form.elements[i];
+	        if(element.name == 'condition1'){
+				searchStr += 'LIKES_' + element.name + ':' + '%' + element.value + '%' + ',';
+			}
+			if(element.name == 'condition2'){
+				searchStr += 'LIKES_' + element.name + ':' + '%' + element.value + '%' + ',';
+			}				
+	    }
+	    searchStr = searchStr.substr(0, searchStr.length - 1);
+	    return searchStr;
+	}
+
+
+   /*按钮栏*/
+   new biz.button({id:"#search_btn", icons: {primary:'ui-icon-search'},label: "查 询" }).click(function() {
+	   obj1.trigger("reloadGrid");
+   });
+
+    new biz.button({id:"#addbtn", icons: {primary:'ui-icon-plus'},label: "新 增" }).click(function() {
+	   obj1.editGridRow('new');
+   });
+   new biz.button({id:"#editbtn", icons: {primary:'ui-icon-pencil'},label: "编 辑" }).click(function() {
+	    var sr = obj1[0].p.selrow;
+		if(sr){
+			obj1.editGridRow(sr);
+		}else{
+			alert("请选择数据！");
+		}
+   });
+   new biz.button({id:"#viewbtn", icons: {primary:'ui-icon-document'},label: "查 看" }).click(function() {
+       var sr = obj1[0].p.selrow;
+		if(sr){
+			obj1.viewGridRow(sr);
+		}else{
+			alert("请选择数据！");
+		}
+   });
+    new biz.button({id:"#delebtn", icons: {primary:'ui-icon-trash'},label: "删 除" }).click(function() {
+        var sr = obj1[0].p.selrow;
+		if(sr){
+			obj1.delGridRow(sr);
+		}else{
+			alert("请选择数据！");
+		}
+   });
+   new biz.button({id:"#refreshbtn", icons: {primary:'ui-icon-refresh'},label: "刷 新" }).click(function() {
+            obj1.trigger("reloadGrid", [{page:1}]);
+   });
+
+  <!--源代码部分end-->		
+<script type="text/javascript">
+$(document).ready(function(){
+		$("#querya").click(function(){
+		       var divQuery = document.getElementById("querydiv");
+		       var queryaDisplay = document.getElementById("querya");
+		       if(divQuery.style["display"]=="block"){
+		          divQuery.style["display"]="none";
+		          queryaDisplay.innerHTML='展开查询条件';
+		       }else if(divQuery.style["display"]=="none"){
+		          divQuery.style["display"]="block";
+		          queryaDisplay.innerHTML='隐藏查询条件';
+		          
+		       }
+		       
+		}); 
+});
+
+	var mydata = [
+	 {name:"应用系统管理",createdate:"2010-05-24",compoent:"管理控制台",amount:"357",error:"0",note:"所有功能模块的入口"} ,
+	 {name:"数据实体维护",createdate:"2010-05-25",compoent:"业务流程定制",amount:"398",error:"0",note:"数据库中对应的实体的维护"},
+	 {name:"信任域管理",createdate:"2007-09-01",compoent:"管理控制台",amount:"423",error:"3",note:"如可信任站点维护"},
+	 {name:"资源注册",createdate:"2007-10-04",compoent:"管理控制台",amount:"34",error:"1",note:"资源注册到管理的入口"},
+	 {name:"表单管理",createdate:"2007-10-05",compoent:"业务流程定制",amount:"365",error:"0",note:"工作流表单的注册地址"},
+	 {name:"表单分类维护",createdate:"2007-09-06",compoent:"业务流程定制",amount:"412",error:"8",note:"实现表单资源的分类管理"},
+	 {name:"表单权限设置",createdate:"2007-10-04",compoent:"业务流程定制",amount:"32",error:"0",note:"实现表单访问权限管理"},
+	 {name:"人事管理",createdate:"2007-10-03",compoent:"管理控制台",amount:"312",error:"2",note:"人事管理"},
+	 {name:"委托设置",createdate:"2007-09-01",compoent:"办公应用系统",amount:"1234",error:"0",note:"工作流中的委托设置"},
+	 {name:"组织管理",createdate:"2007-10-01",compoent:"管理控制台",amount:"567",error:"0",note:"组织人员管理"},
+	 {name:"固定资产管理",createdate:"2007-10-02",compoent:"办公应用系统",amount:"322",error:"0",note:"固定资产维护"},
+	 {name:"全局变量管理",createdate:"2007-09-01",compoent:"管理控制台",amount:"421",error:"0",note:"全局变量维护"},
+	 {name:"任务列表管理",createdate:"2007-10-04",compoent:"业务流程定制",amount:"265",error:"0",note:"工作流任务列表定制入口"},
+	 {name:"用户管理",createdate:"2007-10-05",compoent:"管理控制台",amount:"341",error:"0",note:"人员信息维护"},
+	 {name:"模块管理",createdate:"2007-09-06",compoent:"管理控制台",amount:"414",error:"0",note:"注册模块的管理"},
+	 {name:"授权管理",createdate:"2007-10-04",compoent:"管理控制台",amount:"225",error:"1",note:"授权管理"},
+	 {name:"角色管理",createdate:"2007-10-03",compoent:"管理控制台",amount:"313",error:"0",note:"角色管理"},
+	 {name:"客户端管理",createdate:"2007-09-01",compoent:"管理控制台",amount:"432",error:"0",note:"客户端管理"}
+         ];
+	
+		function getQueryFilter() {
+			var searchStr = '';
+			var form = document.getElementById("conditionform");
+		    for (var i = 0; i < form.elements.length; i++) {
+		        var element = form.elements[i];
+		        if(element.name == 'condition1'){
+					searchStr += 'LIKES_' + element.name + ':' + '%' + element.value + '%' + ',';
+				}
+				if(element.name == 'condition2'){
+					searchStr += 'LIKES_' + element.name + ':' + '%' + element.value + '%' + ',';
+				}				
+		    }
+		    searchStr = searchStr.substr(0, searchStr.length - 1);
+		    return searchStr;
+		}
+         
+     obj1 = new biz.grid({
+          id:"#rowed",
+          data: mydata,
+          datatype: "local",
+		   editurl:"http://localhost:8080/test/omOrder",
+          rownumbers:false,
+          rowcontent:true,
+		   height:220,
+          colModel:[
+		     {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+			 {label:"模块名称",name:'name',index:'name',key:true,width:110,editable:true,editoptions:{readonly:false}},
+			 {label:"创建日期",name:'createdate',index:'createdate',align:"left",width:100,editable:true,edittype:'datepicker', editoptions:
+	{dateFormat:"yy-mm-dd"}},
+			 {label:"所属构件",name:'compoent',index:'compoent', width:100,editable:false},
+			 {label:"访问总量(每月)",name:'amount',index:'amount', width:80, editrules:
+	{required:true},editable:true},
+			 {label:"问题统计",name:'error',index:'error', width:80, editable:true},
+			 {label:"备注",name:'note',index:'note', width:180, sortable:false,editable:true,edittype:"textarea"}
+         ],
+         serializeGridData:function(postData){//添加查询条件值
+     		var queryvalue = getQueryFilter();
+ 			var obj = {queryFilters:queryvalue};
+ 			$.extend(true,obj,postData);//合并查询条件值与grid的默认传递参数
+ 			return obj;
+ 		},
+         pager: '#prowed'
+       });
+
+
+   /*查询按钮*/
+   new biz.button({id:"#search_btn", icons: {primary:'ui-icon-search'},label: "查 询" }).click(function() {
+	   obj1.trigger("reloadGrid");
+	   
+   });
+
+    new biz.button({id:"#addbtn", icons: {primary:'ui-icon-plus'},label: "新 增" }).click(function() {
+	   obj1.editGridRow('new');
+   });
+   new biz.button({id:"#editbtn", icons: {primary:'ui-icon-pencil'},label: "编 辑" }).click(function() {
+	    var sr = obj1[0].p.selrow;
+		if(sr){
+			obj1.editGridRow(sr);
+		}else{
+			alert("请选择数据！");
+		}
+   });
+   new biz.button({id:"#viewbtn", icons: {primary:'ui-icon-document'},label: "查 看" }).click(function() {
+	   var sr = obj1[0].p.selrow;
+		if(sr){
+			obj1.viewGridRow(sr);
+		}else{
+			alert("请选择数据！");
+		}
+   });
+    new biz.button({id:"#delebtn", icons: {primary:'ui-icon-trash'},label: "删 除" }).click(function() {
+        var sr = obj1[0].p.selrow;
+		if(sr){
+			obj1.delGridRow(sr);
+		}else{
+			alert("请选择数据！");
+		}
+   });
+   new biz.button({id:"#refreshbtn", icons: {primary:'ui-icon-refresh'},label: "刷 新" }).click(function() {
+            obj1.trigger("reloadGrid", [{page:1}]);
+   });
+         
+</script>

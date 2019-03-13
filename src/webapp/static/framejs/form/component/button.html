@@ -1,0 +1,324 @@
+[文件路径: form/component/button.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_button_1");
+SyntaxHighlighter.highlight("source_button_2");
+SyntaxHighlighter.highlight("source_button_3");
+</script>
+	<div class="content">
+		<p>除了基本的按钮，单选按钮、复选框（类型为radio、checkbox）可以转换为按钮，同时能分别在左右侧自定义图标；</p>
+	
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+	     <fieldset > 
+						<legend>普通按钮</legend> 
+						<table class="table infieldset">
+							<tr>
+								<td class="inputLabelTd">普通按钮：</td>
+								<td class="inputTd">
+										<button id='btn0_button'></button>
+								</td>
+								<td class="inputLabelTd">不可用按钮：</td>
+								<td class="inputTd">
+										<button id='btn1_button'></button>
+								</td>
+								
+							</tr>
+							<tr>
+								<td class="inputLabelTd">提交按钮：</td>
+								<td class="inputTd">
+									    <input id="submit_button_1" type="submit" value="提交按钮"/>
+								</td>
+								<td class="inputLabelTd">默认按钮：</td>
+								<td class="inputTd">
+									    <input id="default_button" type="button" class="button" value="默认样式按钮"/>
+								</td>
+								
+							</tr>
+							<tr>
+							    <td class="inputLabelTd">带图标的按钮(左)：</td>
+								<td class="inputTd">
+										<button id='btn2_button'></button>
+								 </td>
+								<td class="inputLabelTd">带图标的按钮(右)：</td>
+								<td class="inputTd">
+										<button id='btn3_button'></button>
+								</td>
+							</tr>
+							
+						</table>
+        <!--源代码部分-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"  name="source_button_1">
+<pre class="brush: js;">
+ <!-----------------------1.普通按钮------------------------>
+  html部分：
+  
+  &lt;button id='btn0_button'/&gt;&lt;/button&gt;&lt;!--区别于通用的input元素，这里使用button元素--&gt;
+   
+   js部分：
+   
+   new biz.button({id:"#btn0_button",label: "普通按钮" });//id:页面中button元素的id，label:按钮上显示的文字。
+   
+ <!-----------------------2.不可用按钮------------------------>
+  js部分:
+  var btndis =  new biz.button({id:"#btn1_button",label: "不可用按钮",disabled:true});
+  //disabled为true为不可用状态。一般的使用场景是设置已经创建的按钮的属性，用法：btndis.option("disabled",true);
+
+ <!-----------------------3.提交按钮------------------------>
+   html部分:
+   &lt;input id="submit_button_1" type="submit" value="提交按钮"/&gt;
+   
+   js部分:
+   new biz.button({id:"#submit_button"});//该类型按钮区别于普通按钮是用于提交表单，后台可以直接获取页面控件的值。
+   
+ <!-----------------------4.默认按钮样式------------------------>
+
+  html部分:
+  &lt;input id="default_button" type="button" class="button" value="默认样式按钮"/&gt;
+   //只要添加class="button"，就会渲染成默认样式的按钮，推荐使用上述js的创建按钮的方式，会自动渲染，而且配置属性和添加事件都很方便
+
+ <!-----------------------5.带图标的按钮(左)----------------------->
+
+   js部分:
+   new biz.button({id:"#btn2_button", icons: {primary: "ui-icon-disk"},label: "提交"}).click(function() {});
+   //icons属性设置给按钮加图标，primary:左侧图标，图标使用jquery UI的素材，具体可参见图标资源说明。
+   
+ <!-----------------------6.带图标的按钮(右)----------------------->
+ js部分:
+  new biz.button({id:"#btn3_button",icons: {secondary:'ui-icon-triangle-1-s'},label: "选择" , text: true}).click(function() {});
+   //secondary:右侧图标
+</pre>
+ 		</div>	
+		 <!--源代码部分end-->
+		</fieldset> 
+		 <fieldset > 
+						<legend>单选按钮</legend> 
+						<table class="table infieldset">
+							<tr>
+							    <td class="inputLabelTd">单选按钮：</td>
+								<td class="inputTd">		
+									 <div id="radio_button"></div>
+								 </td>
+							</tr>
+							
+						</table>
+ <!--源代码部分-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="source_button_2">
+           <pre class="brush: js;">
+ <!-----------------------单选按钮----------------------->
+   html部分:
+   &lt;div id="radio_button" &gt;&lt;/div&gt;
+   
+   js部分:
+  var radioArr = [
+    {label: "研发经理", name: "position", value: "researchManager"},
+    {label: "产品经理", name: "position", value: "productManager"}
+  ];//radio元数据，一组的button的name属性要一样，vaue：实际的值，label：显示的值
+
+   new biz.radio({id:"#radio_button",data: radioArr})//创建radio，data：数据源
+          </pre>
+ 	   </div>	
+	    <!--源代码部分end-->
+		</fieldset> 
+         <fieldset > 
+					<legend>多选按钮</legend> 
+					<table class="table infieldset">	
+							<tr>  
+								<td class="inputLabelTd">多选按钮：</td>
+								<td class="inputTd">
+										 <div id="checkbox_button">
+										 </div>
+								</td>
+							</tr>
+							<tr>  
+					
+								<td class="inputTd" colspan="2">
+								      <button id="getUncheckValues" type="button">getUncheckValues</button>
+                                      <button id="getCheckValues" type="button">getCheckValues</button>
+									  <button id="check" type="button">check</button>
+									  <button id="uncheck" type="button">uncheck</button>
+									  <button id="checkAll" type="button">checkAll</button>
+									  <button id="uncheckAll" type="button">uncheckAll</button>
+									  <button id="toggle" type="button">toggle</button>
+									  <button id="enable" type="button">enable</button>
+									  <button id="disable" type="button">disable</button>
+									  <button id="enableAll" type="button">enableAll</button>
+									  <button id="disableAll" type="button">disableAll</button>
+								</td>				
+							</tr>
+						</table>
+ <!--源代码部分-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="source_button_3">
+           <pre class="brush: js;">
+ <!-----------------------多选按钮----------------------->
+  html部分:
+   &lt;div id="checkbox_button"&gt; &lt;/div&gt;
+   
+  js部分:
+	var checkboxArr = [
+		{label: "踢足球", name: "intrest", value: "football"},
+		{label: "打篮球", name: "intrest", value: "basketball"},
+		{label: "打乒乓球", name: "intrest", value: "pingpong"},
+		{label: "跳舞 ", name: "intrest", value: "dance"}
+	];
+	//这是使用里jquery选择器功能在id为checkbox_button的div里渲染checkbox还可以通过外部调用结构实现对其操作:
+	var obj = new biz.checkbox({id:"#checkbox_button",data:checkboxArr});
+	new biz.button({id:"#getUncheckValues"}).click(function() {
+        alert(obj.getUncheckValues());
+	});
+	new biz.button({id:"#getCheckValues"}).click(function() {
+        alert(obj.getCheckValues());
+	});
+	new biz.button({id:"#check"}).click(function() {
+        obj.check("input[name='intrest'][value='football']");
+	});
+	new biz.button({id:"#uncheck"}).click(function() {
+        obj.uncheck("input[name='intrest'][value='football']");
+	});
+	new biz.button({id:"#checkAll"}).click(function() {
+        obj.checkAll();
+	});
+	new biz.button({id:"#uncheckAll"}).click(function() {
+         obj.uncheckAll();
+	});
+	new biz.button({id:"#toggle"}).click(function() {
+         obj.toggles();
+	});
+	new biz.button({id:"#enable"}).click(function() {
+        obj.enable("input[name='intrest'][value='football']");
+	});
+	new biz.button({id:"#disable"}).click(function() {
+        obj.disable("input[name='intrest'][value='football']");
+	});
+	new biz.button({id:"#enableAll"}).click(function() {
+         obj.enableAll();
+	});
+	new biz.button({id:"#disableAll"}).click(function() {
+         obj.disableAll();
+	});
+          </pre>
+ 	   </div>	
+	    <!--源代码部分end-->
+		</fieldset>
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">普通按钮属性列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/buttonField.htm" width="100%" scrolling="no" frameborder="0" height="200px;"></iframe>
+	</div> 
+	<!-- botton方法列表 -->
+	<div class="barTitle2">
+		<div class="content">普通按钮方法列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/buttonMethod.htm" width="100%" scrolling="no" frameborder="0" height="192px;"></iframe>
+	</div>
+
+    <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">单选框按钮属性列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/radioField.htm" width="100%" scrolling="no" frameborder="0" height="170px;"></iframe>
+	</div>			
+	<!-- radio方法列表 -->
+	<div class="barTitle2">
+		<div class="content">单选框按钮方法列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/radioMethod.htm" width="100%" scrolling="no" frameborder="0" height="250px;"></iframe>
+	</div>
+
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">复选框按钮属性列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/checkboxField.htm" width="100%" scrolling="no" frameborder="0" height="200px;"></iframe>
+	</div>		
+   	<!-- checkbox方法列表 -->
+	<div class="barTitle2">
+		<div class="content">复选框按钮方法列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/checkboxMethod.htm" width="100%" scrolling="no" frameborder="0" height="280px;"></iframe>
+	</div>
+	
+
+<script type="text/javascript">
+
+new biz.button({id:"#btn0_button",label: "普通按钮" });
+var btndis = new biz.button({id:"#btn1_button",label: "不可用按钮",disabled:true});
+
+ new biz.button({id:"#submit_button_1"}).click(function() {
+    alert("提交成功");
+ });
+
+ new biz.button({id:"#btn2_button",icons: {primary: "ui-icon-disk"},label: "提交" , text: true}).click(function() {
+     alert( "primary代表左图标" );
+  });
+
+ new biz.button({id:"#btn3_button",icons: {secondary:'ui-icon-note'},label: "选择" , text: true}).click(function() {
+     alert( "secondary代表右图标" );
+  });
+
+/*radio button*/
+var radioArr = [
+    {label: "研发经理", name: "position", value: "researchManager"},
+    {label: "产品经理", name: "position", value: "productManager"}
+  ];
+var checkboxArr = [
+   {label: "踢足球", name: "intrest", value: "football"},
+   {label: "打篮球", name: "intrest", value: "basketball"},
+   {label: "打乒乓球", name: "intrest", value: "pingpong"},
+   {label: "跳舞 ", name: "intrest", value: "dance"}
+ ];
+
+    new biz.radio({id:"#radio_button",data: radioArr})
+
+/*checkbox button*/
+    var obj = new biz.checkbox({id:"#checkbox_button",data:checkboxArr});
+    new biz.button({id:"#getUncheckValues"}).click(function() {
+        alert(obj.getUncheckValues());
+    });
+     new biz.button({id:"#getCheckValues"}).click(function() {
+        alert(obj.getCheckValues());
+    });
+    new biz.button({id:"#check"}).click(function() {
+        obj.check("input[name='intrest'][value='football']");
+    });
+     new biz.button({id:"#uncheck"}).click(function() {
+        obj.uncheck("input[name='intrest'][value='football']");
+    });
+    new biz.button({id:"#checkAll"}).click(function() {
+        obj.checkAll();
+    });
+    new biz.button({id:"#uncheckAll"}).click(function() {
+         obj.uncheckAll();
+    });
+    new biz.button({id:"#toggle"}).click(function() {
+         obj.toggles();
+    });
+     new biz.button({id:"#enable"}).click(function() {
+        obj.enable("input[name='intrest'][value='football']");
+    });
+    new biz.button({id:"#disable"}).click(function() {
+        obj.disable("input[name='intrest'][value='football']");
+    });
+    new biz.button({id:"#enableAll"}).click(function() {
+         obj.enableAll();
+    });
+    new biz.button({id:"#disableAll"}).click(function() {
+         obj.disableAll();
+    });
+
+</script>

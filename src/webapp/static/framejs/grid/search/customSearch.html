@@ -1,0 +1,171 @@
+[文件路径: grid/search/customSearch.html]
+
+
+    <div class="barTitle">
+		<div class="content">
+		    <a href= "#"> </a> <span>查询列表</span><a class="displayHidden" id="querya"  onfocus="this.blur()" href= "javascript:;">隐藏查询条件</a>
+		</div>
+	</div>
+   <hr class="barTitleHr"/>
+    
+    <div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block">
+      <form>
+		   <div class="equal"> 
+				<div class="row"> 
+					<div class="cell">
+							 <div class="labelcell">条件1：</div>             
+							 <div class="valuecell"><input   class="text" type="text"/> </div> 
+					</div>
+					
+					<div class="cell">
+							<div class="labelcell">条件2：</div>             
+							 <div class="valuecell">
+								 <input type="checkbox" class="checkbox" id="checkbox-1" value="选项1"/>
+									唱 歌
+								 <input  type="checkbox"  class="checkbox" id="checkbox-2" value="选项2" />
+									跳 舞
+							</div> 
+					</div>
+					<div class="querycell">
+						 <button id="customSearch_btn"></button>
+					</div>
+					 
+				</div> 
+			</div>
+		  </form>
+		  </div>
+    <div class="ui-table ui-widget ui-corner-all ui-margin">
+		     <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom">
+				
+
+				   <table id="customSearch_rowed"></table>
+				   <div id="customSearch_prowed"></div>
+				   <div id="mysearch"></div>
+			 </div> 
+	   
+	</div>
+<!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none">
+<pre>
+<font color='#027DD1'>1.设置列数据查找属性：</font>
+<strong>js部分:</strong>
+     function <font color="red">datePick</font>(elem){
+          new biz.datepicker({id:elem});
+     }
+
+     var gridObj = new biz.grid({
+          id:"#search_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,sorttype:"int",<font color="red">search:false/*此列不能查找*/</font>,
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,sorttype:"date",formoptions:{ rowpos:1, colpos:2},
+               <font color="red">search:true/*此列能查找*/</font>, <font color="red">stype:'text'/*查找框类型*/</font>,
+               searchoptions:{<font color="red">dataInit:datePick/*将查找框渲染为datepiker*/</font>, <font color="red">attr:{title:'Select Date'}/*查找框属性*/</font>}/*查找框属性*/},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+               editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         navtype:"top" /*导航栏类型*/,
+         pager: '#search_prowed' /*分页栏id*/
+     });
+    <font color="red">各列的search默认为true,stype为text，更详细属性请参考列属性searchoptions、searchrules相关说明文档；</font>
+<font color='#027DD1'>2.在表头处显示查找框：</font>
+<strong>js部分:</strong>
+     gridObj.filterToolbar({
+        searchOnEnter:true,/*是否通过按Enter触发查找，为falce则每次查找框值改变触发*/
+        groupOp:"OR" /*各查找条件间的关系*/
+     });
+    <font color="red">/*调用此api即可，更多属性事件参加filterToolbar说明文档*/</font>
+</pre>
+
+						
+
+<script type="text/javascript">
+     var lastid ,obj1;
+     var lastiCol;
+     
+     var mydata = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"14",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"15",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"16",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"17",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"18",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"19",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"21",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"22",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"23",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"24",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"25",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"26",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"27",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"28",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"29",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+         ];
+
+
+
+      obj1 = new biz.grid({
+          id:"#customSearch_rowed",
+          data: mydata,
+          datatype: "local",
+          rownumbers:false,
+          rowcontent:true,
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},edittype:'datepicker', editoptions:
+                {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",editoptions:
+                {value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"top" /*导航栏类型*/,
+       //  toppager:false,
+         pager: '#customSearch_prowed'
+		// pagerpos: 'left'
+         });
+
+       $( "#customSearch_btn" ).button({ icons: {primary:'ui-icon-refresh'},label: "重新加载" }).click(function() {
+                gridObj.setGridParam({"sortname":$("#sorting_sortname").val(),"sortorder":$("#sorting_order").val()});
+                gridObj.trigger("reloadGrid");
+	    });
+       $("#querya").click(function(){
+		$("#querydiv").slideToggle("slow");
+		$("#querya").html()=='隐藏查询条件'?$("#querya").html('展开查询条件'):$("#querya").html('隐藏查询条件');
+		});
+ 
+</script>

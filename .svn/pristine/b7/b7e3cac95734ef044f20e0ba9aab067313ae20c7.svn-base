@@ -1,0 +1,187 @@
+package com.lmxf.post.service.partner;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.exception.SystemException;
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingCmd;
+import com.lmxf.post.entity.vending.VendingLanep;
+import com.lmxf.post.entity.vending.VendingLsdiffer;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.repository.vending.VendingCmdDao;
+import com.lmxf.post.repository.vending.VendingDao;
+import com.lmxf.post.repository.vending.VendingLanepDao;
+import com.lmxf.post.repository.vending.VendingLsdifferDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.partner.SiteLanelsdifferResp;
+import com.lmxf.post.tradepkg.partner.SiteLanelsdifferReq;
+
+/**
+ * 货道库存矫正
+ * 
+ * @author Administrator
+ * 
+ */
+public class TradeSiteLanelsdifferService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeOrderApplyService.class);
+	private SiteLanelsdifferReq siteLanelsdifferReq;
+	private SiteLanelsdifferResp siteLanelsdifferResp;
+	private VendingLsdifferDao vendingLsdifferDao;
+	private VendingDao vendingDao;
+	private VendingLanepDao vendingLanepDao;
+	private SequenceIdDao sequenceIdDao;
+	private VendingCmdDao vendingCmdDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) throws SystemException {
+		List<VendingLsdiffer> vendingLsdifferList = null;
+		Map ret = null;
+		try {
+			ret = siteLanelsdifferReq.parseXml(apply_xml);
+			if (ret.get("code") == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+			} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+				log.error("siteLanelsdifferReq.parseXml is error!");
+				return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+			}
+		} catch (Exception e) {
+			log.error("---parseXml  error-----", e);
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		}
+		vendingLsdifferList = (List<VendingLsdiffer>) ret.get("vendingLsdifferList");
+		String siteId = (String) ret.get("siteId");
+		String operId = (String) ret.get("operId");
+		Vending vending = vendingDao.findBySiteId(siteId);
+		if (vending == null) {
+			return errorCodeDao.getErrorRespJson(GConstent.Site_No_Define);
+		}
+		for (VendingLsdiffer vendingLsdiffer : vendingLsdifferList) {
+			VendingLanep vendingLanepP = new VendingLanep();
+			vendingLanepP.setSiteId(siteId);
+			vendingLanepP.setLaneSId(vendingLsdiffer.getLaneSId());
+			vendingLanepP.setLaneEId(vendingLsdiffer.getLaneEId());
+			VendingLanep vendingLanep = vendingLanepDao.findOne(vendingLanepP);
+			if (vendingLanep == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Site_Lane_No_Found);
+			}
+			if (vendingLanep.getCurCap() != vendingLsdiffer.getCurCap()) {
+				return errorCodeDao.getErrorRespJson(GConstent.VendingLsdifferCurStockDiffer);
+			}
+			vendingLsdiffer.setLogid(DateUtil.getLogid());
+			vendingLsdiffer.setCorpId(vending.getCorpId());
+			vendingLsdiffer.setCreaterId(operId);
+			vendingLsdiffer.setCreateTime(DateUtil.getNow());
+			vendingLsdiffer.setCurState(GParameter.VendingLsdifferCurState_waithandle);
+			vendingLsdiffer.setHandlerNum(0);
+			vendingLsdiffer.setLsdifferId(vending.getCorpId() + "-" + sequenceIdDao.findNextVal(vending.getCorpId(), "as_vending_lsdiffer", 7));
+			vendingLsdiffer.setProductId(vendingLanep.getProductId());
+			vendingLsdiffer.setOperTime(DateUtil.getNow());
+			vendingLsdiffer.setSiteId(siteId);
+			vendingLsdiffer.setStateTime(DateUtil.getNow());
+			vendingLsdiffer.setVendingLanep(vendingLanep);
+		}
+		for (VendingLsdiffer vendingLsdiffer : vendingLsdifferList) {
+			vendingLsdifferDao.insert(vendingLsdiffer);
+			// 修改库存
+			VendingLanep vendingLanep = vendingLsdiffer.getVendingLanep();
+			vendingLanep.setCurCap(vendingLsdiffer.getCurCap());
+			vendingLanep.setLaneSate(GParameter.vendingLanepLaneState_nomarl);
+			this.vendingLanepDao.update(vendingLanep);
+		}
+		// 推送货道商品库存信息
+		VendingCmd vendingCmdP = new VendingCmd();
+		vendingCmdP.setCmd("0205");
+		vendingCmdP.setCmdCode(vending.getSiteId());
+		vendingCmdP.setCmdId(vending.getCorpId() + "-" + this.sequenceIdDao.findNextVal(vending.getCorpId(), "as_vending_cmd", 7));
+		vendingCmdP.setCmdLazy("1");
+		vendingCmdP.setCmdType("02");
+		vendingCmdP.setCont("");
+		vendingCmdP.setCorpId(vending.getCorpId());
+		vendingCmdP.setCreateTime(DateUtil.getNow());
+		vendingCmdP.setLogid(DateUtil.getLogid());
+		vendingCmdP.setResult("wait");
+		vendingCmdP.setSiteId(vending.getSiteId());
+		vendingCmdP.setState("0");
+		vendingCmdP.setStateTime(DateUtil.getNow());
+		this.vendingCmdDao.insert(vendingCmdP);
+		MsgPushUtils.push(CreateIssueJson(vendingCmdP), vending.getSiteId(), DateUtil.getLogid());
+		return siteLanelsdifferResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1);
+	}
+
+	public String CreateIssueJson(VendingCmd vendingCmdP) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1227");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("SiteId", vendingCmdP.getSiteId());
+			JSONBody.put("CmdId", vendingCmdP.getCmdId());
+			JSONBody.put("CmdCode", vendingCmdP.getCmdCode());
+			JSONBody.put("CmdType", vendingCmdP.getCmdType());
+			JSONBody.put("Cmd", vendingCmdP.getCmd());
+			JSONBody.put("Cont", vendingCmdP.getCont());
+			JSONBody.put("CreateTime", vendingCmdP.getCreateTime());
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	public void setVendingDao(VendingDao vendingDao) {
+		this.vendingDao = vendingDao;
+	}
+
+	public void setVendingLanepDao(VendingLanepDao vendingLanepDao) {
+		this.vendingLanepDao = vendingLanepDao;
+	}
+
+	public void setSiteLanelsdifferReq(SiteLanelsdifferReq siteLanelsdifferReq) {
+		this.siteLanelsdifferReq = siteLanelsdifferReq;
+	}
+
+	public void setSiteLanelsdifferResp(SiteLanelsdifferResp siteLanelsdifferResp) {
+		this.siteLanelsdifferResp = siteLanelsdifferResp;
+	}
+
+	public void setVendingLsdifferDao(VendingLsdifferDao vendingLsdifferDao) {
+		this.vendingLsdifferDao = vendingLsdifferDao;
+	}
+
+	public void setVendingCmdDao(VendingCmdDao vendingCmdDao) {
+		this.vendingCmdDao = vendingCmdDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+}

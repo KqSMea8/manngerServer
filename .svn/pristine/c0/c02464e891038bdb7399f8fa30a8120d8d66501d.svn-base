@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingCmd">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingCmd" id="vendingCmdResultMap">
+		<id property="logid" column="logid" />
+		<result property="cmdId" column="cmdId" />
+		<result property="cmdCode" column="cmdCode" />
+		<result property="cmdType" column="cmdType" />
+		<result property="cmdLazy" column="cmdLazy" />
+		<result property="cmd" column="cmd" />
+		<result property="cont" column="cont" />
+		<result property="createTime" column="createTime" />
+		<result property="state" column="state" />
+		<result property="stateTime" column="stateTime" />
+		<result property="result" column="result" />
+		<result property="corpId" column="corpId" />
+	</resultMap>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.vending.VendingCmd" resultMap="vendingCmdResultMap">
+		select *
+		from as_vending_cmd where cmdCode=#{cmdCode} and state=#{state} and stateTime=#{stateTime} and result=#{result} and cmdId=#{cmdId} and cmdType=#{cmdType} and cmd=#{cmd} and cont=#{cont} and createTime=#{createTime}
+	</select>
+	
+	<select id="findOneByObject" parameterType="com.lmxf.post.entity.vending.VendingCmd" resultMap="vendingCmdResultMap">
+		select * from as_vending_cmd where cmdCode=#{cmdCode} and cmdType=#{cmdType} and cmd=#{cmd} and cont=#{cont} order by createTime desc limit 0,1
+	</select>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.vending.VendingCmd">
+	   insert into as_vending_cmd(logid,cmdId,cmdCode,cmdType,cmdLazy,cmd,cont,createTime,result,corpId,state,stateTime) values(
+	   #{logid},#{cmdId},#{cmdCode},#{cmdType},#{cmdLazy},#{cmd},#{cont},#{createTime},#{result},#{corpId},#{state},#{stateTime})
+	</insert>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.vending.VendingCmd">
+		update as_vending_cmd set state=#{state},stateTime=#{stateTime},result=#{result}
+		where cmdId=#{cmdId}
+	</update>
+	
+	<select id="findByCmdId" parameterType="String" resultMap="vendingCmdResultMap">
+		select * from as_vending_cmd where cmdId=#{cmdId}
+	</select>
+</mapper>

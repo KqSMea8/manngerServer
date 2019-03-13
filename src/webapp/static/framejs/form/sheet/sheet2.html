@@ -1,0 +1,361 @@
+  [文件路径: form/sheet/sheet2.html]
+ <script type="text/javascript">
+SyntaxHighlighter.highlight("source_sheet2");
+</script>
+   <div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		双列表单，主要用于信息稍微多一些时的录入场景，整体效果比较简洁美观。<font color='red'>（本示例主要说明表单整体布局，对于表单内部具体组件可能采用原始用法，规范的封装后用法请参见各组件详细说明）</font>
+	</div>
+<div class="main">
+    <div class="barTitle">
+		<div class="content">
+	         <a href= "javascript:;" onfocus="this.blur()" > </a> <span>双列表单</span>			
+		</div>
+	</div>
+   <hr class="barTitleHr"/>
+     <div class="ui-table ui-widget ui-corner-all ui-border">    
+	   <table class="table" >
+				      <tr>
+							<td class="inputLabelTd">姓名：</td>
+							<td class="inputTd">
+							   <input type="text"  class="text"/> </td>
+
+							<td class="inputLabelTd">性别：</td>
+							<td class="inputTd">
+						        	<input type="radio" class="radio" id="radio-1" name="ra" value="radio-1" />
+								 <label for="radio-1">男</label>
+									<input type="radio" class="radio" id="radio-2" name="ra" value="radio-2"/>
+								 <label for="radio-2">女</label>
+									
+					     	</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">曾用名：</td>
+							<td class="inputTd"><input  class="text" type="text"/></td>
+							<td class="inputLabelTd">婚姻状况：</td>
+							<td class="inputTd">
+							        <input type="radio" class="radio" id="radio-3" name="ra2" value="radio-3" />
+								<label for="radio-3">已 婚</label> 
+                                    <input type="radio" class="radio"  id="radio-4" name="ra2" value="radio-4"/>
+								<label for="radio-4">未 婚</label> 
+								  
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">出生日期：</td>
+							<td class="inputTd">
+						          <input id="birthday_sheet2" type="text" class="Wdate"  onFocus="WdatePicker({skin:'default',dateFmt:'yyyy-MM-dd'})"/>
+						    </td>
+							<td class="inputLabelTd">爱好：</td>
+							<td  class="inputTd">
+							         <input type="checkbox" class="checkbox" id="checkbox-1" value="选项1"/>
+							    <label>唱 歌</label>
+								     <input type="checkbox" class="checkbox"  id="checkbox-2" value="选项2" />
+								<label>跳 舞</label>
+								    
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">籍贯：</td>
+							<td  class="inputTd">
+								<select id="sel2" class="select">
+									<option>北京市</option>
+									<option>天津市</option>
+									<option>河北省</option>
+									<option>山西省</option>
+									<option>内蒙古自治区</option>
+									<option>辽宁省</option>
+									<option>吉林省</option>
+									<option>黑龙江省</option>
+									<option>上海市</option>
+									<option>江苏省</option>
+									<option>浙江省</option>
+									<option>安徽省</option>
+									<option>福建省</option>
+									<option>江西省</option>
+									<option>山东省</option>
+									<option>湖南省</option>
+									<option>湖北省</option>
+									<option>河南省</option>
+									<option>广东省</option>
+									<option>广西壮族自治区</option>
+									<option>海南省</option>
+									<option>重庆市</option>
+									<option>四川省</option>
+									<option>贵州省</option>
+									<option>云南省</option>
+									<option>西藏自治区</option>
+									<option>陕西省</option>
+									<option>甘肃省</option>
+									<option>青海省</option>
+									<option>宁夏回族自治区</option>
+									<option>新疆维吾尔自治区</option>
+									<option>香港特别行政区</option>
+									<option>澳门特别行政区</option>
+									<option>台湾省</option>
+									<option>其他</option>
+								 </select>
+							</td>
+							<td class="inputLabelTd">密码：</td>
+							<td  class="inputTd">
+								<input id="userAccount_password" name="userAccount.password" type="password" class="password" />
+
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">学历：</td>
+							<td  class="inputTd">
+							<select id="sel2" class="select">
+									<option>博士毕业</option>
+									<option>博士结业</option>
+									<option>博士肄业</option>
+									<option selected="selected">硕士毕业</option>
+									<option>硕士结业</option>
+									<option>硕士肄业</option>
+									<option>相当硕士毕业</option>
+									<option>研究生班毕业</option>
+									<option>研究生班结业</option>
+									<option>研究生班肄业</option>
+									<option>本科毕业</option>
+									<option>本科结业</option>
+									<option>本科肄业</option>
+									<option>相当本科毕业</option>
+									<option>大专毕业</option>
+									<option>大专结业</option>
+									<option>大专肄业</option>
+									<option>相当大专毕业</option>
+									<option>中专毕业</option>
+									<option>中专结业</option>
+									<option>中专肄业</option>
+									<option>相当中专毕业</option>
+									<option>其它</option>
+								 </select>				
+							</td>
+							<td class="inputLabelTd">电话：</td>
+							<td class="inputTd">
+                                  <input type="text"  class="text" />		
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">邮政编码：</td>
+							<td class="inputTd"><input type="text"  class="text"/></td>
+							<td class="inputLabelTd">上传附件：</td>
+								 <td class="inputTd">  
+									  <input id="file2_sheet2" type="file" />
+								 </td>
+						</tr>
+		  </table>
+		  <table class="table foottable">
+						<tfoot class="footTd" >
+							<tr>
+							  <td class="inputTd">
+							        <button id="sub_button_sheet2"></button>
+								    <button id="reset_btn_sheet2" ></button>
+									<button id="cancel_button_sheet2" ></button>
+
+								</td>
+							</tr>
+						</tfoot>
+		
+			 </table>
+	</div>
+
+</div>
+
+<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"    name="source_sheet2">
+           <pre class="brush: js;">
+ <!--html部分-->
+ &lt;div class="main"&gt;
+   &lt;div class="barTitle"&gt;
+	 &lt;div class="content"&gt;
+	       &lt;a href= "javascript:;" onfocus="this.blur()" &gt; &lt;/a&gt; &lt;span&gt;双列表单&lt;/span&gt;			
+	&lt;/div&gt;
+	&lt;/div&gt;
+   &lt;hr class="barTitleHr"/&gt;
+     &lt;div class="<font color='red'>ui-table ui-widget ui-corner-all ui-border</font>"&gt;    
+		&lt;table <font color='red'>class="table"</font> &gt;
+		 &lt;tr&gt;
+		    &lt;td class="inputLabelTd"&gt;姓名：&lt;/td&gt;
+			&lt;td class="inputTd"&gt;
+				 &lt;input type="text"  class="text"/&gt; &lt;/td&gt;
+            &lt;td class="inputLabelTd"&gt;性别：&lt;/td&gt;
+				 &lt;td class="inputTd"&gt;
+					&lt;input type="radio" class="radio" id="radio-1" name="ra" value="radio-1" /&gt;
+					 &lt;label for="radio-1"&gt;男&lt;/label&gt;
+					&lt;input type="radio" class="radio" id="radio-2" name="ra" value="radio-2"/&gt;
+					 &lt;label for="radio-2"&gt;女&lt;/label&gt;
+				 &lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td class="inputLabelTd"&gt;曾用名：&lt;/td&gt;
+			&lt;td class="inputTd"&gt;&lt;input  class="text" type="text"/&gt;&lt;/td&gt;
+			&lt;td class="inputLabelTd"&gt;婚姻状况：&lt;/td&gt;
+			&lt;td class="inputTd"&gt;
+				 &lt;input type="radio" class="radio" id="radio-3" name="ra2" value="radio-3" /&gt;
+					&lt;label for="radio-3"&gt;已 婚&lt;/label&gt; 
+                       &lt;input type="radio" class="radio"  id="radio-4" name="ra2" value="radio-4"/&gt;
+					&lt;label for="radio-4"&gt;未 婚&lt;/label&gt; 
+			&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td class="inputLabelTd"&gt;出生日期：&lt;/td&gt;
+			&lt;td class="inputTd"&gt;
+				 &lt;input id="birthday_sheet2" type="text" class="Wdate" 
+				 onFocus="WdatePicker({skin:'default',dateFmt:'yyyy-MM-dd'})"/&gt;
+			 &lt;/td&gt;
+			&lt;td class="inputLabelTd"&gt;爱好：&lt;/td&gt;
+			&lt;td  class="inputTd"&gt;
+				 &lt;input type="checkbox" class="checkbox" id="checkbox-1" value="选项1"/&gt;
+				 &lt;label&gt;唱 歌&lt;/label&gt;
+				 &lt;input type="checkbox" class="checkbox"  id="checkbox-2" value="选项2" /&gt;
+				&lt;label&gt;跳 舞&lt;/label&gt;
+			&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td class="inputLabelTd"&gt;籍贯：&lt;/td&gt;
+			&lt;td  class="inputTd"&gt;
+				&lt;select id="sel2" class="select"&gt;
+					&lt;option&gt;北京市&lt;/option&gt;
+					&lt;option&gt;天津市&lt;/option&gt;
+					&lt;option&gt;河北省&lt;/option&gt;
+					&lt;option&gt;山西省&lt;/option&gt;
+					&lt;option&gt;内蒙古自治区&lt;/option&gt;
+					&lt;option&gt;辽宁省&lt;/option&gt;
+					&lt;option&gt;吉林省&lt;/option&gt;
+					&lt;option&gt;黑龙江省&lt;/option&gt;
+					&lt;option&gt;上海市&lt;/option&gt;
+					&lt;option&gt;江苏省&lt;/option&gt;
+					&lt;option&gt;浙江省&lt;/option&gt;
+					&lt;option&gt;安徽省&lt;/option&gt;
+					&lt;option&gt;福建省&lt;/option&gt;
+					&lt;option&gt;江西省&lt;/option&gt;
+					&lt;option&gt;山东省&lt;/option&gt;
+					&lt;option&gt;湖南省&lt;/option&gt;
+					&lt;option&gt;湖北省&lt;/option&gt;
+					&lt;option&gt;河南省&lt;/option&gt;
+					&lt;option&gt;广东省&lt;/option&gt;
+					&lt;option&gt;广西壮族自治区&lt;/option&gt;
+					&lt;option&gt;海南省&lt;/option&gt;
+					&lt;option&gt;重庆市&lt;/option&gt;
+					&lt;option&gt;四川省&lt;/option&gt;
+					&lt;option&gt;贵州省&lt;/option&gt;
+					&lt;option&gt;云南省&lt;/option&gt;
+					&lt;option&gt;西藏自治区&lt;/option&gt;
+					&lt;option&gt;陕西省&lt;/option&gt;
+					&lt;option&gt;甘肃省&lt;/option&gt;
+					&lt;option&gt;青海省&lt;/option&gt;
+					&lt;option&gt;宁夏回族自治区&lt;/option&gt;
+					&lt;option&gt;新疆维吾尔自治区&lt;/option&gt;
+					&lt;option&gt;香港特别行政区&lt;/option&gt;
+					&lt;option&gt;澳门特别行政区&lt;/option&gt;
+					&lt;option&gt;台湾省&lt;/option&gt;
+					&lt;option&gt;其他&lt;/option&gt;
+			    &lt;/select&gt;
+			&lt;/td&gt;
+			&lt;td class="inputLabelTd"&gt;密码：&lt;/td&gt;
+			&lt;td  class="inputTd"&gt;
+				&lt;input id="userAccount_password" name="userAccount.password" type="password" class="password" /&gt;
+            &lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td class="inputLabelTd"&gt;学历：&lt;/td&gt;
+			&lt;td  class="inputTd"&gt;
+				&lt;select id="sel2" class="select"&gt;
+					&lt;option&gt;博士毕业&lt;/option&gt;
+					&lt;option&gt;博士结业&lt;/option&gt;
+					&lt;option&gt;博士肄业&lt;/option&gt;
+					&lt;option selected="selected"&gt;硕士毕业&lt;/option&gt;
+					&lt;option&gt;硕士结业&lt;/option&gt;
+					&lt;option&gt;硕士肄业&lt;/option&gt;
+					&lt;option&gt;相当硕士毕业&lt;/option&gt;
+					&lt;option&gt;研究生班毕业&lt;/option&gt;
+					&lt;option&gt;研究生班结业&lt;/option&gt;
+					&lt;option&gt;研究生班肄业&lt;/option&gt;
+					&lt;option&gt;本科毕业&lt;/option&gt;
+					&lt;option&gt;本科结业&lt;/option&gt;
+					&lt;option&gt;本科肄业&lt;/option&gt;
+					&lt;option&gt;相当本科毕业&lt;/option&gt;
+					&lt;option&gt;大专毕业&lt;/option&gt;
+					&lt;option&gt;大专结业&lt;/option&gt;
+					&lt;option&gt;大专肄业&lt;/option&gt;
+					&lt;option&gt;相当大专毕业&lt;/option&gt;
+					&lt;option&gt;中专毕业&lt;/option&gt;
+					&lt;option&gt;中专结业&lt;/option&gt;
+					&lt;option&gt;中专肄业&lt;/option&gt;
+					&lt;option&gt;相当中专毕业&lt;/option&gt;
+					&lt;option&gt;其它&lt;/option&gt;
+				 &lt;/select&gt;				
+			&lt;/td&gt;
+			&lt;td class="inputLabelTd"&gt;电话：&lt;/td&gt;
+			&lt;td class="inputTd"&gt;
+				  &lt;input type="text"  class="text" /&gt;		
+			&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td class="inputLabelTd"&gt;邮政编码：&lt;/td&gt;
+			&lt;td class="inputTd"&gt;&lt;input type="text"  class="text"/&gt;&lt;/td&gt;
+			&lt;td class="inputLabelTd"&gt;上传附件：&lt;/td&gt;
+				 &lt;td class="inputTd"&gt;  
+					  &lt;input id="file2_sheet2" type="file" /&gt;
+				 &lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/table&gt;
+    &lt;table class="table foottable"&gt;
+		&lt;tfoot class="footTd" &gt;
+		 &lt;tr&gt;
+			  &lt;td class="inputTd"&gt;
+					&lt;button id="sub_button_sheet2"&gt;&lt;/button&gt;
+					&lt;button id="reset_btn_sheet2" &gt;&lt;/button&gt;
+					&lt;button id="cancel_button_sheet2" &gt;&lt;/button&gt;
+             &lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tfoot&gt;
+	 &lt;/table&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+
+ <!--js部分-->
+ 	 new biz.file({
+		  id:"#file2_sheet2",
+		  buttonText: "上传",
+		  accept: "jpg|png|gif" ,
+		  denied:"只允许上传后缀为{0}格式的文件"
+     });
+
+    new biz.button({id:"#sub_button_sheet2",icons: {primary: "ui-icon-disk"},label: "提 交" ,text: true }).click(function() {
+	    
+	});
+	new biz.button({id:"#reset_btn_sheet2",icons: {primary: "ui-icon-refresh"},label: "重 置" ,text: true }).click(function() {
+	   
+	});
+    new biz.button({id:"#cancel_button_sheet2",icons: {primary: "ui-icon-close"},label: "取 消" ,text: true }).click(function() {
+	   
+	});
+          </pre>
+ 	   </div>
+       <!--源代码部分end-->
+		
+<script type="text/javascript">
+
+	 new biz.file({
+		  id:"#file2_sheet2",
+		  buttonText: "上传",
+		  accept: "jpg|png|gif" ,
+		  denied:"只允许上传后缀为{0}格式的文件"
+     });
+
+    new biz.button({id:"#sub_button_sheet2",icons: {primary: "ui-icon-disk"},label: "提 交" ,text: true }).click(function() {
+	    
+	});
+	new biz.button({id:"#reset_btn_sheet2",icons: {primary: "ui-icon-refresh"},label: "重 置" ,text: true }).click(function() {
+	   
+	});
+    new biz.button({id:"#cancel_button_sheet2",icons: {primary: "ui-icon-close"},label: "取 消" ,text: true }).click(function() {
+	   
+	});
+</script>

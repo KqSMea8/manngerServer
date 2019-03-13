@@ -1,0 +1,177 @@
+[文件路径: grid/show/selfAdaption.html]
+
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid自适应容器大小功能，设置grid容器大小为父容器的百分比；同时能指定固定值，不管父容器是否改变大小，grid大小始终不变；grid高宽默认为auto；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block">
+		   <div class="equal">
+				<div class="row">
+					<div class="cell">
+							 <div class="labelcell">grid宽度：</div>
+							 <div class="valuecell">
+                                 <select  id="selfAdaption_width" class="select">
+                                     <option value="60%">60%</option>
+                                     <option value="100%">100%</option>
+                                     <option value="600">600px</option>
+							     </select>
+                             </div>
+					</div>
+
+					<div class="cell">
+							<div class="labelcell">grid高度：</div>
+							 <div class="valuecell">
+								 <select  id="selfAdaption_height" class="select">
+                                     <option value="30%">30%</option>
+                                     <option value="40%">40%</option>
+                                     <option value="400">400px</option>
+							     </select>
+							</div>
+					</div>
+					<div class="querycell">
+						 <button id="selfAdaption_load_btn"></button>
+					</div>
+
+				</div>
+			</div>
+		  </div>
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="selfAdaption_rowed"></table>
+                       <div id="selfAdaption_prowed"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none"  name="gridSource_selfAdaption">
+<pre>
+<font color='#027DD1'>1.自适应大小：</font>
+<strong>js部分:</strong>
+ var selfAdaptionObj = new biz.grid({
+          id:"#selfAdaption_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:200, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:200,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:200, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">width:"auto"</font>/*默认宽度设置*/,
+         <font color="red">height:"100%"</font>/*默认高度设置*/,     
+         navtype:"top" /*导航栏类型*/,
+         pager: '#selfAdaption_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,url:" http://localhost",recreateForm:true}
+      });
+      $( "#selfAdaption_load_btn" ).button({ icons: {primary:'ui-icon-refresh'},label: "重新加载" }).click(function() {
+              <font color="red">selfAdaptionObj.setGridWidth($("#selfAdaption_width").val());</font> /*重新设置grid宽度*/
+              <font color="red">selfAdaptionObj.setGridHeight($("#selfAdaption_height").val());</font> /*重新设置grid高度*/
+      });
+</pre>
+    </div>
+
+
+						
+
+<script type="text/javascript">
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",amount:"30000.00",tax:"1000.00",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"}
+      ];
+
+      var selfAdaptionObj = new biz.grid({
+          id:"#selfAdaption_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:50,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         width:"auto"/*默认宽度设置*/,
+         height:"100%"/*默认高度设置*/,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#selfAdaption_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+ 
+            resize:false,
+            recreateForm:true
+          },
+           pAdd:{ 
+                top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+                resize:true,/*弹出框可缩放大小*/
+                url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         resize:true,url:" http://localhost",recreateForm:true}
+      });
+      $( "#selfAdaption_load_btn" ).button({ icons: {primary:'ui-icon-refresh'},label: "重新加载" }).click(function() {
+              selfAdaptionObj.setGridWidth($("#selfAdaption_width").val());
+              selfAdaptionObj.setGridHeight($("#selfAdaption_height").val());
+      });
+
+</script>

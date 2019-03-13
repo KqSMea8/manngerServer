@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductVUnder">
+
+	<resultMap type="com.lmxf.post.entity.product.ProductVUnder" id="productVUnderResultMap">
+		<id property="vUnderId" column="vUnderId" />
+		<result property="logid" column="logid" />
+		<result property="loginId" column="loginId" />
+   		<result property="siteId" column="siteId" />
+   		<result property="lineId" column="lineId" />
+		<result property="underNum" column="underNum" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="createTime" column="createTime" />	
+	</resultMap>
+	
+	<select id="findAll" resultMap="productVUnderResultMap">
+		select * from as_product_vunder where 1=1
+		<if test="loginId != null and loginId != ''">
+			and loginId=#{loginId} 
+	    </if>
+	    <if test="siteId != null and siteId != ''">
+			and siteId=#{siteId} 
+	    </if>
+	    <if test="curState != null and curState != ''">
+			and curState=#{curState} 
+	    </if>
+	    <if test="lineId != null and lineId != ''">
+			and lineId=#{lineId} 
+	    </if>
+	    order by createTime
+	</select>
+	
+	
+	<select id="findOneByVUnderId" parameterType="String" resultMap="productVUnderResultMap">
+		select * from as_product_vunder where vUnderId=#{vUnderId}
+	</select>
+	
+	<select id="findPageGroupLine" resultMap="productVUnderResultMap">
+		select lineId from as_product_vunder where 1=1
+		<if test="loginId != null and loginId != ''">
+			and loginId=#{loginId} 
+	    </if>
+	    <if test="curState != null and curState != ''">
+			and curState=#{curState} 
+	    </if>
+	    group by lineId limit 0,10
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.product.ProductVUnder">
+		update as_product_vunder set 
+			underNum=#{underNum},
+			curState=#{curState},
+			stateTime=#{stateTime}
+			where vUnderId=#{vUnderId}
+	</update>
+	
+	
+</mapper> 

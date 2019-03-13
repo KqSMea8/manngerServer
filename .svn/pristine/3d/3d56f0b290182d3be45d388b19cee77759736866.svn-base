@@ -1,0 +1,97 @@
+package com.lmxf.post.service.partner;
+
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.lmxf.post.core.exception.SystemException;
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.pay.OrderPayUtils;
+import com.lmxf.post.core.utils.pay.PayUtils;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.partner.OrderPayReq;
+import com.lmxf.post.tradepkg.partner.OrderPayResp;
+
+public class TradeOrderPayService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeOrderPayService.class);
+	private OrderPayReq orderPayReq;
+	private OrderPayResp orderPayResp;
+	private OrderApplyDao orderApplyDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		OrderApply orderApply = null;
+		Map ret = null;
+		try {
+			ret = orderPayReq.parseXml(apply_xml);
+			if (ret.get("code") == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+			} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+				log.error("orderPayReq.parseXml is error!");
+				return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+			}
+		} catch (Exception e) {
+			log.error("---parseXml  error-----", e);
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		}
+		orderApply = (OrderApply) ret.get("orderApply");
+		OrderApply orderApplyR = this.orderApplyDao.findOneByOrderId(orderApply);
+		if (null == orderApplyR) {
+			return errorCodeDao.getErrorRespJson(GConstent.Order_No_Exsit);
+		}
+		if (!orderApplyR.getPayState().equals(GParameter.payState_wait)) {
+			return errorCodeDao.getErrorRespJson(GConstent.Pay_State_No_Change);
+		}
+		orderApplyR.setOpenId(orderApply.getOpenId());
+		if (orderApplyR.getSaleChannel().equals(GParameter.saleChannel_weChat) && orderApplyR.getPayType().equals(GParameter.payType_weChatG)) {
+			// 申请支付
+			Map<String, String> payResult = OrderPayUtils.applyOrderPayInfo(orderApply);
+			if (payResult.get("code").equals("0000")) {
+				if (orderApply.getPayType().equals(GParameter.payType_weChat)) {
+					orderApply.setImgUrl(payResult.get("QRUrl"));
+					orderApply.setCodeUrl(payResult.get("QRCode"));
+				}
+				if (orderApply.getPayType().equals(GParameter.payType_Alipay)) {
+					orderApply.setImgUrl(payResult.get("QRUrl"));
+					orderApply.setCodeUrl(payResult.get("QRCode"));
+				}
+				if (orderApply.getPayType().equals(GParameter.payType_weChatG)) {
+					orderApply.setAppId(payResult.get("AppId"));
+					orderApply.setTimeStamp(payResult.get("TimeStamp"));
+					orderApply.setNonceStr(payResult.get("NonceStr"));
+					orderApply.setPckage(payResult.get("Pckage"));
+					orderApply.setSignType(payResult.get("SignType"));
+					orderApply.setPaySign(payResult.get("PaySign"));
+				}
+				if (orderApply.getPayType().equals(GParameter.payType_weChatApp)) {
+					orderApply.setAppId(payResult.get("AppId"));
+					orderApply.setTimeStamp(payResult.get("TimeStamp"));
+					orderApply.setNonceStr(payResult.get("NonceStr"));
+					orderApply.setPckage(payResult.get("Pckage"));
+					orderApply.setSignType(payResult.get("SignType"));
+					orderApply.setPaySign(payResult.get("PaySign"));
+				}
+			} else {
+				throw new SystemException(GConstent.OrderApply_PayInfo_Error, "" + GConstent.OrderApply_PayInfo_Error);
+			}
+		}
+		return orderPayResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1, orderApplyR);
+	}
+
+	public void setOrderPayReq(OrderPayReq orderPayReq) {
+		this.orderPayReq = orderPayReq;
+	}
+
+	public void setOrderPayResp(OrderPayResp orderPayResp) {
+		this.orderPayResp = orderPayResp;
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+}

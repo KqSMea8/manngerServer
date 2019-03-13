@@ -1,0 +1,205 @@
+[文件路径: grid/load/local.html]
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid如何加载本地静态数据，对数据格式进行详细说明。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="local_rowed"></table>
+                       <div id="local_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none"  name="source_alert">
+<pre>
+<font color=red>此示例为弹出框编辑方式，提交数据仅支持url方式，不支持保持到本地，详情请参考弹出框编辑demo。</font>
+<font color='#027DD1'>1.数据格式：</font>
+    本地数据为数组数据，数组长度为grid行数，每个数组值对应一行数据，数据与grid列通过列属性中name值一一对应。
+     var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"1",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {<font color='red'>ids</font>:"13",<font color='red'>invdate</font>:"2007-09-01",<font color='red'>name</font>:"test3",<font color='red'>note</font>:"note",<font color='red'>amount</font>:"400.00",<font color='red'>tax</font>:"30.00",<font color='red'>total</font>:"430.00"}
+    ];
+
+<font color='#027DD1'>2.grid初始化：</font>
+<strong>html部分:</strong>
+ <xmp class="xmp">
+    <table id="local_rowed"></table>
+    <div id="local_prowed"></div>
+ </xmp>
+<strong>js部分:</strong>
+     var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+      var localGridObj = new biz.grid({
+          id:"#local_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" /*新增、编辑、删除数据交互地址，默认传递的参数：
+           新增：用户填写的记录；oper：add
+           编辑：用户修改的记录；oper：edit
+           删除：记录id；oper：del
+          */
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:140,editable:true,editrules:{date:true},
+               edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         navtype:"top" /*导航栏类型*/,
+         pager: '#local_prowed' /*分页栏id*/,
+         pAdd:{ 
+              top:0, /*弹出框top位置*/
+              left:0,/*弹出框left位置*/
+              width:700,/*宽度*/
+              dataheight:180,/*数据区域高度*/
+              resize:true,/*弹出框可缩放大小*/
+              url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+              recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+              top:0, /*弹出框top位置*/
+              left:0,/*弹出框left位置*/
+              width:700,/*宽度*/
+              dataheight:180,/*数据区域高度*/
+              resize:true,
+              url:" http://localhost",
+              recreateForm:true
+         },
+         pView:{
+              top:0, /*弹出框top位置*/
+              left:0,/*弹出框left位置*/
+              width:700,/*宽度*/
+              dataheight:110,/*数据区域高度*/
+              resize:false,recreateForm:true}
+    });
+</pre>
+    </div>
+
+
+						
+
+<script type="text/javascript">
+     var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+     var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"1",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+         ];
+
+
+
+      var localGridObj = new biz.grid({
+          id:"#local_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址，默认传递的参数：
+           新增：用户填写的记录；oper：add
+           编辑：用户修改的记录；oper：edit
+           删除：记录id；oper：del
+          */
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:140,editable:true,editrules:{date:true},
+               edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:'select',/*编辑类型为select*/
+                   editoptions:{data:taxArr},formatter:false,formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         navtype:"top" /*导航栏类型*/,
+         pager: '#local_prowed' /*分页栏id*/,
+         pAdd:{ 
+              top:0, /*弹出框top位置*/
+              left:0,/*弹出框left位置*/
+              width:700,/*宽度*/
+              dataheight:180,/*数据区域高度*/
+              resize:true,/*弹出框可缩放大小*/
+              url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+              recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+	          top:0, /*弹出框top位置*/
+	          left:0,/*弹出框left位置*/
+	          width:700,/*宽度*/
+	          dataheight:180,/*数据区域高度*/
+	          resize:true,
+	          url:" http://localhost",
+	          recreateForm:true
+         },
+         pView:{
+	          top:0, /*弹出框top位置*/
+	          left:0,/*弹出框left位置*/
+	          width:700,/*宽度*/
+	          dataheight:110,/*数据区域高度*/
+	          resize:false,recreateForm:true}
+    });
+
+</script>

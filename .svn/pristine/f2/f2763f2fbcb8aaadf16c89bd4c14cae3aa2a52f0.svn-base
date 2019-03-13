@@ -1,0 +1,293 @@
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="69%"
+ style='width:69.2%;border-collapse:collapse;border:none'>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><a
+  name="OLE_LINK132"></a><a name="OLE_LINK131"><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>属性</span></b></a></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>含义</span></b></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>值</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>groupField</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>分组字段</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>[]</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>mergeCell</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>分组模式</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true(true为合并单元格分组，false为添加行分组)</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>groupOrder</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>分组数据排序方式</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>[]</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>groupText</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>定义分组标题文字格式</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>[]({0}</span><span
+  style='font-size:9.0pt;font-family:黑体'>能获取分组的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>name</span><span
+  style='font-size:9.0pt;font-family:黑体'>，</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>{1}</span><span
+  style='font-size:9.0pt;font-family:黑体'>获取分组行数量</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>)</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>groupColumnShow</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>分组字段是否显示</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>[]</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>groupSummary</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否使用分组汇总功能</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>[]</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>showSummaryOnHide</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>折叠分组时是否显示汇总行</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>False</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>groupCollapse</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>初始化时是否折叠分组</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>False</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>plusicon</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>折叠分组图标</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ui-icon-circlesmall-plus</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="19%" valign=top style='width:19.74%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>minusicon</span></p>
+  </td>
+  <td width="29%" valign=top style='width:29.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>展开分组图标</span></p>
+  </td>
+  <td width="50%" valign=top style='width:50.58%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ui-icon-circlesmall-minus</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+style='font-size:9.0pt;line-height:150%'>&nbsp;</span></p>
+
+</div>

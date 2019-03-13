@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="StockWarehouse">
+
+	<resultMap type="com.lmxf.post.entity.stock.StockWarehouse" id="stockWarehouseResultMap">
+		<id property="logid" column="logid" />
+		<result property="wstockId" column="wstockId" />
+		<result property="stockId" column="stockId" />
+		<result property="stokcName" column="stokcName" />
+		<result property="productId" column="productId" />
+		<result property="productName" column="productName" />
+		<result property="totalNum" column="totalNum" />
+		<result property="curNum" column="curNum" />
+		<result property="overNum" column="overNum" />
+		<result property="warnNum" column="warnNum" />
+		<result property="corpId" column="corpId" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+
+	<update id="update" parameterType="com.lmxf.post.entity.stock.StockWarehouse">
+		update as_stock_warehouse set 
+		curNum=#{curNum},
+		createTime=#{createTime}
+		where productId=#{productId} and corpId=#{corpId}
+	</update>
+	
+	<update id="updateAddStock" parameterType="com.lmxf.post.entity.stock.StockWarehouse">
+		update as_stock_warehouse set curNum=curNum+#{curNum} where productId=#{productId} and corpId=#{corpId} and stockId=#{stockId}
+	</update>
+	
+	<select id="findByProductId" parameterType="String" resultMap="stockWarehouseResultMap">
+		select * from as_stock_warehouse where productId=#{productId} 
+	</select>
+</mapper> 

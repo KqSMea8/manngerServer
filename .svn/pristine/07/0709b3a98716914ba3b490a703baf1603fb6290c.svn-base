@@ -1,0 +1,679 @@
+>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=678
+ style='width:508.65pt;border-collapse:collapse;border:none'>
+ <tr style='height:25.6pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:25.6pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span lang=EN-US
+  style='font-size:9.0pt;line-height:150%'>Api</span></b></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:25.6pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>参数</span></b></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:25.6pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>说明</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>addChildNode</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>nodeid</span><span
+  style='font-size:9.0pt;font-family:黑体'>：节点</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>parentid,</span><span
+  style='font-size:9.0pt;font-family:黑体'>：父节点</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>data</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行数据值</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>添加</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>tree</span><span
+  style='font-size:9.0pt;font-family:黑体'>节点</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="_Hlk330477036"><span lang=EN-US style='font-size:9.0pt;font-family:
+  "Tahoma","sans-serif"'>collapseNode</span></a></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK141"></a><a name="OLE_LINK140"><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></a></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>折叠节点</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>collapseRow</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>折叠当前行</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>delTreeNode</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>rowid</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>删除节点</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>expandNode</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>展开节点</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>expandRow</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK145"></a><a name="OLE_LINK144"><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></a></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>展开当前行</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>getNodeAncestors</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>返回节点的祖先节点</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>getNodeDepth</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>返回节点深度</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>getNodeParent</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK147"></a><a name="OLE_LINK146"><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></a></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>返回节点父节点</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>getNodeChildren</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>获取孩子节点</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>getRootNodes</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>none</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>获取根节点</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isNodeLoaded</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>判断节点是否下载，返回</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>则为已经下载</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isVisibleNode</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>record</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>判断节点是否可见，返回</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>则为可见</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>setTreeRow</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>rowid</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id,</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>data</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行数据</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>同</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>setRowData</span></p>
+  </td>
+ </tr>
+ <tr style='height:16.75pt'>
+  <td width=187 valign=top style='width:140.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>SortTree</span></p>
+  </td>
+  <td width=198 valign=top style='width:148.8pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>direction</span><span
+  style='font-size:9.0pt;font-family:黑体'>（值包括</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>1</span><span
+  style='font-size:9.0pt;font-family:黑体'>、</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>-1</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+  <td width=293 valign=top style='width:219.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:16.75pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>设置排序方式</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span lang=X-NONE
+style='font-size:9.0pt;line-height:150%'>treegrid </span><span
+style='font-size:9.0pt;line-height:150%;font-family:宋体'>数据格式在基本数据格式上增加几个属性描述节点间的关系和状</span></p>
+
+<p class=MsoNormal style='text-indent:0cm'><span style='font-size:9.0pt;
+line-height:150%;font-family:宋体'>态，通过</span><span lang=X-NONE style='font-size:
+9.0pt;line-height:150%'>treeGridModel</span><span style='font-size:9.0pt;
+line-height:150%;font-family:宋体'>能设置两种</span><span lang=X-NONE
+style='font-size:9.0pt;line-height:150%'>tree</span><span style='font-size:
+9.0pt;line-height:150%;font-family:宋体'>模型，不同模型增加的描述属性不一样，下面分别介绍：</span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+style='font-size:9.0pt;line-height:150%'>adjacency</span><span
+style='font-size:9.0pt;line-height:150%;font-family:宋体'>模型：</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="54%"
+ style='width:54.74%;border-collapse:collapse;border:none'>
+ <tr style='height:17.65pt'>
+  <td width="24%" valign=top style='width:24.94%;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>属性</span></b></p>
+  </td>
+  <td width="36%" valign=top style='width:36.12%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>含义</span></b></p>
+  </td>
+  <td width="38%" valign=top style='width:38.94%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>默认值</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="24%" valign=top style='width:24.94%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="_Hlk330478856"><span lang=EN-US style='font-size:9.0pt;font-family:
+  "Tahoma","sans-serif"'>level</span></a></p>
+  </td>
+  <td width="36%" valign=top style='width:36.12%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>当前节点</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>level</span><span
+  style='font-size:9.0pt;font-family:黑体'>值，如为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>0</span><span
+  style='font-size:9.0pt;font-family:黑体'>则为根节点</span></p>
+  </td>
+  <td width="38%" valign=top style='width:38.94%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="24%" valign=top style='width:24.94%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>parent</span></p>
+  </td>
+  <td width="36%" valign=top style='width:36.12%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>指定当前节点父节点，应为</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>值。如父节点为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span><span
+  style='font-size:9.0pt;font-family:黑体'>，则此节点为根节点</span></p>
+  </td>
+  <td width="38%" valign=top style='width:38.94%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="24%" valign=top style='width:24.94%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="_Hlk330478901"><span lang=EN-US style='font-size:9.0pt;font-family:
+  "Tahoma","sans-serif"'>isLeaf</span></a></p>
+  </td>
+  <td width="36%" valign=top style='width:36.12%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否叶子节点</span></p>
+  </td>
+  <td width="38%" valign=top style='width:38.94%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><span lang=EN-US style='font-size:
+  9.0pt;line-height:150%;font-family:"Tahoma","sans-serif"'>null</span><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>（</span><span
+  lang=EN-US style='font-size:9.0pt;line-height:150%;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>、</span><span
+  lang=EN-US style='font-size:9.0pt;line-height:150%;font-family:"Tahoma","sans-serif"'>false</span><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="24%" valign=top style='width:24.94%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>expanded</span></p>
+  </td>
+  <td width="36%" valign=top style='width:36.12%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>是否展开，此值不设置则默认为</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span></p>
+  </td>
+  <td width="38%" valign=top style='width:38.94%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>False</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>、</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+style='font-size:9.0pt;line-height:150%'>nested</span><span style='font-size:
+9.0pt;line-height:150%;font-family:宋体'>模型：</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="54%"
+ style='width:54.74%;border-collapse:collapse;border:none'>
+ <tr style='height:17.65pt'>
+  <td width="22%" valign=top style='width:22.16%;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>属性</span></b></p>
+  </td>
+  <td width="34%" valign=top style='width:34.76%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>含义</span></b></p>
+  </td>
+  <td width="43%" valign=top style='width:43.08%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>默认值</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="22%" valign=top style='width:22.16%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>level</span></p>
+  </td>
+  <td width="34%" valign=top style='width:34.76%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>当前节点</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>level</span><span
+  style='font-size:9.0pt;font-family:黑体'>值，如为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>0</span><span
+  style='font-size:9.0pt;font-family:黑体'>则为根节点</span></p>
+  </td>
+  <td width="43%" valign=top style='width:43.08%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="22%" valign=top style='width:22.16%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>lft</span></p>
+  </td>
+  <td width="34%" valign=top style='width:34.76%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><span style='font-size:9.0pt;
+  line-height:150%;font-family:黑体'>此节点左边节点值</span></p>
+  </td>
+  <td width="43%" valign=top style='width:43.08%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+  style='font-size:9.0pt;line-height:150%;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="22%" valign=top style='width:22.16%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>rgt</span></p>
+  </td>
+  <td width="34%" valign=top style='width:34.76%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><span style='font-size:9.0pt;
+  line-height:150%;font-family:黑体'>此节点右边节点值</span></p>
+  </td>
+  <td width="43%" valign=top style='width:43.08%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+  style='font-size:9.0pt;line-height:150%;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="22%" valign=top style='width:22.16%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isLeaf</span></p>
+  </td>
+  <td width="34%" valign=top style='width:34.76%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否叶子节点</span></p>
+  </td>
+  <td width="43%" valign=top style='width:43.08%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+  style='font-size:9.0pt;line-height:150%;font-family:"Tahoma","sans-serif"'>null</span><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>（</span><span
+  lang=EN-US style='font-size:9.0pt;line-height:150%;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>、</span><span
+  lang=EN-US style='font-size:9.0pt;line-height:150%;font-family:"Tahoma","sans-serif"'>false</span><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="22%" valign=top style='width:22.16%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>expanded</span></p>
+  </td>
+  <td width="34%" valign=top style='width:34.76%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span style='font-size:9.0pt;font-family:黑体'>是否展开，此值不设置则默认为</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span></p>
+  </td>
+  <td width="43%" valign=top style='width:43.08%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>False</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>、</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+style='font-size:9.0pt;line-height:150%'>&nbsp;</span></p>
+
+</div>

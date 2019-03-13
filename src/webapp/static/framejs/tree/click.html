@@ -1,0 +1,178 @@
+[文件路径: tree/click.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("ts_click");
+</script>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo_click" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、beforeClick / onClick 事件回调函数控制</h2>
+				<ul class="list">
+				<li>利用 click 事件回调函数 可以进行各种其他的附加操作，这里简单演示如何监控此事件</li>
+				<li><p><span class="highlight_red">请尝试按下 <b>Ctrl</b> 键进行 多节点选择 和 取消选择</span><br/>
+					click log:<br/>
+					<ul id="log_click" class="log"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、setting 配置信息说明</h2>
+				<ul class="list">
+				<li class="highlight_red">需要设置 setting.callback.beforeClick 和  setting.callback.onClick 属性</li>
+				</ul>
+			</li>
+			<li class="title"><h2>3、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li>对节点数据没有特殊要求，用户可以根据自己的需求添加自定义属性</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+			
+			<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="ts_click">
+    <pre class="brush: js;">
+html部分:
+
+&lt;ul id="treeDemo_click" class="ztree"&gt;&lt;/ul&gt;
+
+js部分:
+		var zNodes =[
+			{ id:1, pId:0, name:"普通的父节点", t:"我很普通，随便点我吧", open:true},
+			{ id:11, pId:1, name:"叶子节点 - 1", t:"我很普通，随便点我吧"},
+			{ id:12, pId:1, name:"叶子节点 - 2", t:"我很普通，随便点我吧"},
+			{ id:13, pId:1, name:"叶子节点 - 3", t:"我很普通，随便点我吧"},
+			{ id:2, pId:0, name:"NB的父节点", t:"点我可以，但是不能点我的子节点，有本事点一个你试试看？", open:true},
+			{ id:21, pId:2, name:"叶子节点2 - 1", t:"你哪个单位的？敢随便点我？小心点儿..", click:false},
+			{ id:22, pId:2, name:"叶子节点2 - 2", t:"我有老爸罩着呢，点击我的小心点儿..", click:false},
+			{ id:23, pId:2, name:"叶子节点2 - 3", t:"好歹我也是个领导，别普通群众就来点击我..", click:false},
+			{ id:3, pId:0, name:"郁闷的父节点", t:"别点我，我好害怕...我的子节点随便点吧...", open:true, click:false },
+			{ id:31, pId:3, name:"叶子节点3 - 1", t:"唉，随便点我吧"},
+			{ id:32, pId:3, name:"叶子节点3 - 2", t:"唉，随便点我吧"},
+			{ id:33, pId:3, name:"叶子节点3 - 3", t:"唉，随便点我吧"}
+		];
+
+		var log_click, className = "dark";
+		function beforeClick(treeId, treeNode, clickFlag) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeClick ]&nbsp;&nbsp;" + treeNode.name );
+			return (treeNode.click != false);
+		}
+		function onClick(event, treeId, treeNode, clickFlag) {
+			showLog("[ "+getTime()+" onClick ]&nbsp;&nbsp;clickFlag = " + clickFlag + " (" + (clickFlag===1 ? "普通选中": (clickFlag===0 ? "&lt;b&gt;取消选中&lt;/b&gt;" : "&lt;b&gt;追加选中&lt;/b&gt;")) + ")");
+		}		
+		function showLog(str) {
+			if (!log_click) log_click = $("#log_click");
+			log_click.append("&lt;li class='"+className+"'&gt;"+str+"&lt;/li&gt;");
+			if(log_click.children("li").length &gt; 8) {
+				log_click.get(0).removeChild(log_click.children("li")[0]);
+			}
+		}
+		function getTime() {
+			var now= new Date(),
+			h=now.getHours(),
+			m=now.getMinutes(),
+			s=now.getSeconds();
+			return (h+":"+m+":"+s);
+		}
+		
+		var setting_click = {
+	        id:"#treeDemo_click",//容器id
+	        nodes:zNodes,  //数据节点指定
+			data: {
+				key: {
+					title:"t"
+				},
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeClick: beforeClick,
+				onClick: onClick
+			}
+        };
+      $(document).ready(function(){
+		 new biz.tree(setting_click);//创建树
+		
+	 });
+           </pre>
+
+       </div>
+</div>
+
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+		var zNodes =[
+			{ id:1, pId:0, name:"普通的父节点", t:"我很普通，随便点我吧", open:true},
+			{ id:11, pId:1, name:"叶子节点 - 1", t:"我很普通，随便点我吧"},
+			{ id:12, pId:1, name:"叶子节点 - 2", t:"我很普通，随便点我吧"},
+			{ id:13, pId:1, name:"叶子节点 - 3", t:"我很普通，随便点我吧"},
+			{ id:2, pId:0, name:"NB的父节点", t:"点我可以，但是不能点我的子节点，有本事点一个你试试看？", open:true},
+			{ id:21, pId:2, name:"叶子节点2 - 1", t:"你哪个单位的？敢随便点我？小心点儿..", click:false},
+			{ id:22, pId:2, name:"叶子节点2 - 2", t:"我有老爸罩着呢，点击我的小心点儿..", click:false},
+			{ id:23, pId:2, name:"叶子节点2 - 3", t:"好歹我也是个领导，别普通群众就来点击我..", click:false},
+			{ id:3, pId:0, name:"郁闷的父节点", t:"别点我，我好害怕...我的子节点随便点吧...", open:true, click:false },
+			{ id:31, pId:3, name:"叶子节点3 - 1", t:"唉，随便点我吧"},
+			{ id:32, pId:3, name:"叶子节点3 - 2", t:"唉，随便点我吧"},
+			{ id:33, pId:3, name:"叶子节点3 - 3", t:"唉，随便点我吧"}
+		];
+
+		var log_click, className = "dark";
+		function beforeClick(treeId, treeNode, clickFlag) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeClick ]&nbsp;&nbsp;" + treeNode.name );
+			return (treeNode.click != false);
+		}
+		function onClick(event, treeId, treeNode, clickFlag) {
+			showLog("[ "+getTime()+" onClick ]&nbsp;&nbsp;clickFlag = " + clickFlag + " (" + (clickFlag===1 ? "普通选中": (clickFlag===0 ? "<b>取消选中</b>" : "<b>追加选中</b>")) + ")");
+		}		
+		function showLog(str) {
+			if (!log_click) log_click = $("#log_click");
+			log_click.append("<li class='"+className+"'>"+str+"</li>");
+			if(log_click.children("li").length > 8) {
+				log_click.get(0).removeChild(log_click.children("li")[0]);
+			}
+		}
+		function getTime() {
+			var now= new Date(),
+			h=now.getHours(),
+			m=now.getMinutes(),
+			s=now.getSeconds();
+			return (h+":"+m+":"+s);
+		}
+		
+		var setting_click = {
+	        id:"#treeDemo_click",//容器id
+	        nodes:zNodes,  //数据节点指定
+			data: {
+				key: {
+					title:"t"
+				},
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeClick: beforeClick,
+				onClick: onClick
+			}
+        };
+      $(document).ready(function(){
+		 new biz.tree(setting_click);//创建树
+		
+	 });
+      
+
+</script>

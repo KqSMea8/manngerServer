@@ -1,0 +1,52 @@
+<form onsubmit="${formVarName}.goPage($(this).find('input').val(),$(this).find('select').val());return false;">
+<div style='width: 100%;'
+	class='ui-state-default ui-jqgrid-pager ui-corner-bottom ui-jqgrid-pager-nonav'
+	dir='ltr'>
+	<div  class='ui-pager-control' role='group'>
+		<table cellspacing='0' cellpadding='0' border='0' class='ui-pg-table'
+			style='width: 100%; height: 100%;' role='row'>
+			<tbody>
+				<tr>
+					<td align='left'></td>
+					<td align='right'
+						style='width: 245px;'><table
+							cellspacing='0' cellpadding='0' border='0'
+							style='table-layout: auto;' class='ui-pg-table'>
+							<tbody>
+								<tr>
+									<td onclick="${formVarName}.goPage(1);" class='ui-pg-button ui-corner-all'><span
+										class='ui-icon ui-icon-seek-first' style='cursor: pointer;'></span></td>
+									<td onclick="${formVarName}.goPage(${page.prePage});" class='ui-pg-button ui-corner-all'
+										style='cursor: pointer;'><span
+										class='ui-icon ui-icon-seek-prev'></span></td>
+									<td class='ui-pg-button ui-state-disabled'
+										style='width: 4px; cursor: pointer;'><span
+										class='ui-separator'></span></td>
+									<td dir='ltr'><input class='ui-pg-input' type='text'
+										size='2' maxlength='7' value='${page.pageNo}' role='textbox'> 共 <span
+										>${page.totalPages} 页</td>
+									<td class='ui-pg-button ui-state-disabled'
+										style='width: 4px; cursor: pointer;'><span
+										class='ui-separator'></span></td>
+									<td onclick="${formVarName}.goPage(${page.nextPage});" class='ui-pg-button ui-corner-all'
+										style='cursor: pointer;'><span
+										class='ui-icon ui-icon-seek-next'></span></td>
+									<td onclick="${formVarName}.goPage(${page.totalPages});" class='ui-pg-button ui-corner-all'
+										style='cursor: pointer;'><span
+										class='ui-icon ui-icon-seek-end'></span></td>
+									<td dir='ltr'><select onchange="${formVarName}.goPage(undefined,$(this).val());">
+#foreach(${pageSize} in ${sizes})
+	<option value="${pageSize}" #if(${pageSize} == ${page.pageSize})selected='selected'#end>${pageSize}</option>
+#end
+									</select></td>
+								</tr>
+							</tbody>
+						</table></td>
+					<td align='right' style='width: 150px;'><div
+							dir='ltr' style='text-align: center;' class='ui-paging-info'></div></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</form>

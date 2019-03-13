@@ -1,0 +1,226 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 14 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+.MsoChpDefault
+	{font-family:"Calibri","sans-serif";}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=ZH-CN style='text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr style='height:17.65pt'>
+  <td width=109 valign=top style='width:82.0pt;border:solid black 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:18.05pt'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>属性名称</span></b></p>
+  </td>
+  <td width=316 valign=top style='width:236.9pt;border:solid black 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:18.05pt'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>含义</span></b></p>
+  </td>
+  <td width=143 valign=top style='width:107.2pt;border:solid black 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:18.05pt'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:黑体'>默认值</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=109 valign=top style='width:82.0pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>width</span></p>
+  </td>
+  <td width=316 valign=top style='width:236.9pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>宽度</span></p>
+  </td>
+  <td width=143 valign=top style='width:107.2pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>200</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=109 valign=top style='width:82.0pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>height</span></p>
+  </td>
+  <td width=316 valign=top style='width:236.9pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>高度</span></p>
+  </td>
+  <td width=143 valign=top style='width:107.2pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>Auto</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=109 valign=top style='width:82.0pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>selected</span></p>
+  </td>
+  <td width=316 valign=top style='width:236.9pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>默认值选中值（<span lang=EN-US>value</span>），通过逗号分隔多个值，例如<span
+  lang=EN-US>&quot;shangdong,guangxi&quot;</span></span></p>
+  </td>
+  <td width=143 valign=top style='width:107.2pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>“”</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=109 valign=top style='width:82.0pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>valueName</span></p>
+  </td>
+  <td width=316 valign=top style='width:236.9pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>指定<span lang=EN-US>value</span>值字段<span
+  lang=EN-US>name</span>，即树节点对象中作为<span lang=EN-US>value</span>的字段名；</span></p>
+  </td>
+  <td width=143 valign=top style='width:107.2pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>如<span lang=EN-US>tree</span>数据为简单<span
+  lang=EN-US>json</span>数据，即<span lang=EN-US>simpleData</span>中的<span
+  lang=EN-US>enable</span>为<span lang=EN-US>true,</span>默认为<span lang=EN-US>id</span>；如为标准<span
+  lang=EN-US>json</span>数据，默认为<span lang=EN-US>name</span>；</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=109 valign=top style='width:82.0pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>zindex</span></p>
+  </td>
+  <td width=316 valign=top style='width:236.9pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>下拉框<span lang=EN-US>zindex</span>属性值</span></p>
+  </td>
+  <td width=143 valign=top style='width:107.2pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>2000</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=109 valign=top style='width:82.0pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>其他</span></p>
+  </td>
+  <td width=316 valign=top style='width:236.9pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>其他属性包含<span lang=EN-US>tree</span>组件所有属性、事件</span></p>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:黑体'>&nbsp;</span></p>
+  </td>
+  <td width=143 valign=top style='width:107.2pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>请参见<span lang=EN-US>tree</span>组件</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:24.0pt'><span lang=EN-US>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>

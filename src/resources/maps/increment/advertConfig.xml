@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdvertConfig">
+
+	<resultMap type="com.lmxf.post.entity.increment.AdvertConfig" id="advertConfigResultMap">
+		<id property="logid" column="logid" />
+		<result property="advertId" column="advertId" />
+		<result property="corpId" column="corpId" />
+		<result property="name" column="name" />
+		<result property="deliveryType" column="deliveryType" />
+		<result property="lazyTime" column="lazyTime" />
+		<result property="operType" column="operType" />
+		<result property="materialNum" column="materialNum" />
+		<result property="playerNum" column="playerNum" />
+		<result property="playerPlat" column="playerPlat" />
+		<result property="curState" column="curState" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.increment.AdvertConfig" resultMap="advertConfigResultMap">
+		select * from as_advert_config where advertId=#{advertId}
+	</select>
+	<select id="findAll" parameterType="com.lmxf.post.entity.increment.AdvertConfig" resultMap="advertConfigResultMap">
+		select * from as_advert_config where advertId=#{advertId} 
+	</select>
+</mapper> 

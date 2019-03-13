@@ -1,0 +1,112 @@
+[文件路径: form/component/doubleselect.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_doubleselect");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+            双向选择器
+	</div>
+	<!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+	<div class="ui-table ui-widget ui-corner-all ui-border">    
+			<table class="table">
+					<tr>
+						<td class="inputLabelTd" style="width:600px;">
+						   <div width="600px" align="center" id="listorg"></div>
+						</td>
+						<td class="inputTd"> 
+						   <button id="getvaluebtn">获取选中值</button>
+						</td>		
+					</tr>
+			   </table>
+     </div>
+<!--源代码部分start-->
+	<div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+	<div  class="code" style="display: none"  name="source_doubleselect">
+		<pre class="brush: js;">
+  <!-----------------------html部分：----------------------->  
+&lt;div width="600px" align="center" id="listorg"&gt;
+  
+  <!-----------------------js部分：----------------------->  
+//数据项分别是：选中时的值（内码），显示名，是否选中，排序码（外码，用户树形层级显示，规则是前几位是父节点），级次 
+var items = 
+[ 
+  [ "21", "测试管理", true, "200", 1],
+  [ "22", "测试单表", false, "200001", 2],
+  [ "23", "系统管理", true, "800", 1],
+  [ "24", "组织管理", true, "800800", 2],
+  [ "25", "基本机构信息", false, "800800700", 3],
+  [ "26", "组织机构维护", false, "800800800", 3],
+  [ "27", "职务管理", false, "800800900", 3],
+  [ "28", "用户管理", false, "800900", 2],
+  [ "29", "增加用户信息", false, "800900700", 3],
+  [ "30", "用户信息维护", false, "800900800", 3]
+];
+var setting = {
+        id:"listorg",//容器Id
+        data:items, //存放所有选择元素的数组
+        size:10,//选择框的长度,默认20
+        isTreeStyle:1,//是否用树状形式显示数据
+        isShowCode:0,//如果是树状形式，是否显示层次码
+        width:600
+}
+var gbp_sl_list = new biz.doubleselect(setting);
+
+
+  new biz.button({id:"#getvaluebtn"}).click(function() {
+       alert(gbp_sl_list.getSelectedValues());
+  });
+	</pre>
+ </div>
+<!--源代码部分end-->
+<div class="barTitle2">
+		<div class="content">api列表</div>
+</div>
+<div class="content">
+<iframe src="./form/component/doubleselectMethod.htm" width="100%" scrolling="no" frameborder="0" height="200px;"></iframe>
+</div>
+<div class="barTitle2">
+		<div class="content">属性列表</div>
+</div>
+<div class="content">
+<iframe src="./form/component/doubleselectField.htm" width="100%" scrolling="no" frameborder="0" height="500px;"></iframe>
+</div>
+<script language="javascript">
+
+//准备组件数据 
+//数据项分别是：选中时的值（内码），显示名，是否选中，排序码（外码），级次 
+var items = 
+[ 
+  [ "21", "测试管理", true, "200", 1],
+  [ "22", "测试单表", true, "200001", 2],
+  [ "23", "系统管理", false, "800", 1],
+  [ "24", "组织管理", false, "800800", 2],
+  [ "25", "基本机构信息", false, "800800700", 3],
+  [ "26", "组织机构维护", false, "800800800", 3],
+  [ "27", "职务管理", false, "800800900", 3],
+  [ "28", "用户管理", false, "800900", 2],
+  [ "29", "增加用户信息", false, "800900700", 3],
+  [ "30", "用户信息维护", false, "800900800", 3]
+];
+var setting = {
+        id:"listorg",
+        data:items,
+        size:10,
+        isTreeStyle:1,
+        isShowCode:0,
+        width:600
+}
+var gbp_sl_list = new biz.doubleselect(setting);
+
+
+  new biz.button({id:"#getvaluebtn"}).click(function() {
+       alert(gbp_sl_list.getSelectedValues());
+  });
+
+</script> 

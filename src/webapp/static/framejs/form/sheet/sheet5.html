@@ -1,0 +1,855 @@
+[文件路径: form/sheet/sheet5.html] 	
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_sheet5");
+</script>
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		多标签页面，使用场景和分组类似，多个tab页面内容一起提交。<font color='red'>（本示例主要说明表单整体布局，对于表单内部具体组件可能采用原始用法，规范的封装后用法请参见各组件详细说明）</font>
+	</div>
+
+	<div class="main">
+	   <div class="ui-table ui-widget ui-corner-all ui-noborder">    
+			<div id="tabs_sheet5">
+				<ul>
+					<li><a href="#tabs-1">分组列表</a></li>
+					<li><a href="#tabs-2">单列表单</a></li>
+					<li><a href="#tabs-3">双列表单</a></li>
+				</ul>
+				<div id="tabs-1">
+						<fieldset > 
+							<legend>用户基本信息</legend> 
+							<table class="table infieldset">
+								<tr>
+									<td class="inputLabelTd">姓名：</td>
+									<td class="inputTd"><input type="text" class="text"/></td>
+
+									<td class="inputLabelTd">英文名：</td>
+									<td class="inputTd"><input type="text" class="text"/></td>
+								</tr>
+								<tr>
+									<td class="inputLabelTd">曾用名：</td>
+									<td class="inputTd"><input type="text" class="text"/></td>
+									<td class="inputLabelTd">婚姻状况：</td>
+									<td class="inputTd">
+										<label >已婚</label>
+											 <input type="radio"  class="radio" id="radio-3" name="ra2" value="radio-3" />
+										<label >未婚</label>
+											 <input type="radio"  class="radio" id="radio-4" name="ra2" value="radio-4"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="inputLabelTd">出生日期：</td>
+									<td class="inputTd">
+									   <input id="birthday_sheet5_1" type="text" class="Wdate"  onFocus="WdatePicker({skin:'default',dateFmt:'yyyy-MM-dd'})"/>
+									  </td>
+									<td class="inputLabelTd">爱好：</td>
+									<td class="inputTd">
+										<label  >唱歌</label>
+											<input type="checkbox" class="checkbox" id="checkbox-1" value="选项1"/>
+										<label >跳舞</label>
+											<input type="checkbox" class="checkbox" id="checkbox-2" value="选项2" />
+									</td>
+								</tr>
+							</table>
+						</fieldset> 
+
+						<fieldset> 
+							<legend>用户详细信息</legend> 
+							<table class="table infieldset">
+								<tr>
+									<td class="inputLabelTd">籍贯：</td>
+									<td class="inputTd">
+										<select id="sel2" colNum="3"  class="select">
+											<option>北京市</option>
+											<option>天津市</option>
+											<option>河北省</option>
+											<option>山西省</option>
+											<option>内蒙古自治区</option>
+											<option>辽宁省</option>
+											<option>吉林省</option>
+											<option>黑龙江省</option>
+											<option>上海市</option>
+											<option>江苏省</option>
+											<option>浙江省</option>
+											<option>安徽省</option>
+											<option>福建省</option>
+											<option>江西省</option>
+											<option>山东省</option>
+											<option>湖南省</option>
+											<option>湖北省</option>
+											<option>河南省</option>
+											<option>广东省</option>
+											<option>其他</option>
+										 </select>
+									</td>
+									<td class="inputLabelTd">民族：</td>
+									<td class="inputTd">
+										<select id="sel"  class="select">
+											<option value="1">汉族</option>
+											<option value="2">满族</option>
+											<option value="3">维吾尔族</option>
+										 </select>
+									</td>
+								</tr>
+								<tr>
+									<td class="inputLabelTd">学历：</td>
+									<td class="inputTd">
+									<select id="sel2" colNum="3"  class="select">
+											<option>博士毕业</option>
+											<option>博士结业</option>
+											<option>博士肄业</option>
+											<option selected="selected">硕士毕业</option>
+											<option>硕士结业</option>
+											<option>硕士肄业</option>
+											<option>相当硕士毕业</option>
+											<option>研究生班毕业</option>
+											<option>研究生班结业</option>
+											<option>研究生班肄业</option>
+											<option>本科毕业</option>
+											<option>本科结业</option>
+											<option>本科肄业</option>
+											<option>相当本科毕业</option>
+											<option>大专毕业</option>
+											<option>大专结业</option>
+											<option>大专肄业</option>
+											<option>相当大专毕业</option>
+											<option>中专毕业</option>
+											<option>中专结业</option>
+											<option>中专肄业</option>
+											<option>相当中专毕业</option>
+											<option>其它</option>
+										 </select>				
+									</td>
+									<td class="inputLabelTd">选择权限：</td>
+									<td class="inputTd">
+										<select id="sel2"   class="select">
+											<option>系统管理</option>
+											<option>文件上传</option>
+											<option>组织人员管理</option>
+											
+										 </select>		
+									
+									</td>
+								</tr>
+							</table>
+						</fieldset> 
+						
+						
+						<fieldset> 
+							<legend>用户其他信息</legend> 
+							<table class="table infieldset">
+								<tr>
+									<td class="inputLabelTd">邮政编码：</td>
+									   <td class="inputTd"><input type="text" class="text"/></td>
+									<td class="inputLabelTd">详细住址：</td>
+										<td class="inputTd"><input type="text" class="text"/></td>
+								</tr>
+						
+
+							</table>
+						</fieldset>
+									
+				</div>
+				<div id="tabs-2">
+					<table class="table">
+						 <tr >
+							 <td class="inputLabelTd">姓名：</td> <td class="inputTd"><input type="text" class="text"/></td>
+						 </tr>
+						 <tr>
+							 <td class="inputLabelTd">曾用名：</td><td class="inputTd"><input type="text" class="text"/></td>
+						 </tr>
+						 <tr>
+							<td class="inputLabelTd">密码：</td>
+							<td class="inputTd">
+							<input id="password" type="password" class="password" />
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">性别：</td>
+							<td class="inputTd">
+								
+									<input type="radio" class="radio" id="radio-1" name="ra" value="radio-1" />
+									   <label>男</label>
+								
+									<input type="radio" class="radio"  id="radio-2" name="ra" value="radio-2"/>
+									   <label>女</label>
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">婚姻状况：</td>
+							<td class="inputTd">
+							   
+									<input type="radio" class="radio"  id="radio-3" name="ra2" value="radio-3" />
+									   <label>已&nbsp婚</label>
+									<input type="radio" class="radio"  id="radio-4" name="ra2" value="radio-4"/>
+									   <label>未&nbsp婚</label>
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">爱好：</td>
+							<td class="inputTd">
+								
+									<input type="checkbox" class="checkbox"  id="checkbox-1" value="选项1"/>
+									<label>唱&nbsp歌</label>
+								
+									<input type="checkbox"  class="checkbox" id="checkbox-2" value="选项2" />
+									<label>跳&nbsp舞</label>
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">出生日期：</td>
+							<td class="inputTd">
+							 <input id="birthday_sheet5_2" type="text" class="Wdate"  onFocus="WdatePicker({skin:'default',dateFmt:'yyyy-MM-dd'})"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">民族：</td>
+							<td class="inputTd">
+								<select id="sel"  class="select">
+									<option value="1">汉族</option>
+									<option value="2">满族</option>
+									<option value="3">维吾尔族</option>
+								 </select>
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">籍贯：</td>
+							<td class="inputTd">
+									<input id='s22_sheet5' type="text" class="text"/>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="inputLabelTd">学历：</td>
+							<td class="inputTd">
+							<select id="sel2" class="select">
+									<option>博士毕业</option>
+									<option>博士结业</option>
+									<option>博士肄业</option>
+									<option selected="selected">硕士毕业</option>
+									<option>硕士结业</option>
+									<option>硕士肄业</option>
+									<option>相当硕士毕业</option>
+									<option>研究生班毕业</option>
+									<option>研究生班结业</option>
+									<option>研究生班肄业</option>
+									<option>本科毕业</option>
+									<option>本科结业</option>
+									<option>本科肄业</option>
+									<option>相当本科毕业</option>
+									<option>大专毕业</option>
+									<option>大专结业</option>
+									<option>大专肄业</option>
+									<option>相当大专毕业</option>
+									<option>中专毕业</option>
+									<option>中专结业</option>
+									<option>中专肄业</option>
+									<option>相当中专毕业</option>
+									<option>其它</option>
+								 </select>				
+							</td>
+						</tr>
+						
+				   </table>
+				</div>
+				<div id="tabs-3">
+					 <table class="table" >
+						  <tr>
+								<td class="inputLabelTd">姓名：</td>
+								<td class="inputTd">
+								   <input type="text"  class="text"/> </td>
+
+								<td class="inputLabelTd">性别：</td>
+								<td class="inputTd">
+										<input type="radio" class="radio" id="radio-1" name="ra" value="radio-1" />
+									 <label for="radio-1">男</label>
+										<input type="radio" class="radio" id="radio-2" name="ra" value="radio-2"/>
+									 <label for="radio-2">女</label>
+										
+								</td>
+							</tr>
+							<tr>
+								<td class="inputLabelTd">曾用名：</td>
+								<td class="inputTd"><input  class="text" type="text"/></td>
+								<td class="inputLabelTd">婚姻状况：</td>
+								<td class="inputTd">
+										<input type="radio" class="radio" id="radio-3" name="ra2" value="radio-3" />
+									<label for="radio-3">已 婚</label> 
+										<input type="radio" class="radio" id="radio-4" name="ra2" value="radio-4"/>
+									<label for="radio-4">未 婚</label> 
+									  
+								</td>
+							</tr>
+							<tr>
+								<td class="inputLabelTd">出生日期：</td>
+								<td class="inputTd">
+									  <input id="birthday_sheet5_3" type="text" class="Wdate"  onFocus="WdatePicker({skin:'default',dateFmt:'yyyy-MM-dd'})"/>
+								</td>
+								<td class="inputLabelTd">爱好：</td>
+								<td  class="inputTd">
+										 <input type="checkbox" class="checkbox" id="checkbox-1" value="选项1"/>
+									<label>唱 歌</label>
+										 <input type="checkbox" class="checkbox"  id="checkbox-2" value="选项2" />
+									<label>跳 舞</label>
+										
+								</td>
+							</tr>
+							<tr>
+								<td class="inputLabelTd">籍贯：</td>
+								<td  class="inputTd">
+									<select id="sel2" class="select">
+										<option>北京市</option>
+										<option>天津市</option>
+										<option>河北省</option>
+										<option>山西省</option>
+										<option>内蒙古自治区</option>
+										<option>辽宁省</option>
+										<option>吉林省</option>
+										<option>黑龙江省</option>
+										<option>上海市</option>
+										<option>江苏省</option>
+										<option>浙江省</option>
+										<option>安徽省</option>
+										<option>福建省</option>
+										<option>江西省</option>
+										<option>山东省</option>
+										<option>湖南省</option>
+										<option>湖北省</option>
+										<option>河南省</option>
+										<option>广东省</option>
+										<option>广西壮族自治区</option>
+										<option>海南省</option>
+										<option>重庆市</option>
+										<option>四川省</option>
+										<option>贵州省</option>
+										<option>云南省</option>
+										<option>西藏自治区</option>
+										<option>陕西省</option>
+										<option>甘肃省</option>
+										<option>青海省</option>
+										<option>宁夏回族自治区</option>
+										<option>新疆维吾尔自治区</option>
+										<option>香港特别行政区</option>
+										<option>澳门特别行政区</option>
+										<option>台湾省</option>
+										<option>其他</option>
+									 </select>
+								</td>
+								<td class="inputLabelTd">民族：</td>
+								<td  class="inputTd">
+									<input id="userAccount_password" name="userAccount.password"  class="text" />
+
+								</td>
+							</tr>
+							<tr>
+								<td class="inputLabelTd">学历：</td>
+								<td  class="inputTd">
+								<select id="sel2" class="select" >
+										<option>博士毕业</option>
+										<option>博士结业</option>
+										<option>博士肄业</option>
+										<option selected="selected">硕士毕业</option>
+										<option>硕士结业</option>
+										<option>硕士肄业</option>
+										<option>相当硕士毕业</option>
+										<option>研究生班毕业</option>
+										<option>研究生班结业</option>
+										<option>研究生班肄业</option>
+										<option>本科毕业</option>
+										<option>本科结业</option>
+										<option>本科肄业</option>
+										<option>相当本科毕业</option>
+										<option>大专毕业</option>
+										<option>大专结业</option>
+										<option>大专肄业</option>
+										<option>相当大专毕业</option>
+										<option>中专毕业</option>
+										<option>中专结业</option>
+										<option>中专肄业</option>
+										<option>相当中专毕业</option>
+										<option>其它</option>
+									 </select>				
+								</td>
+								<td class="inputLabelTd">电话：</td>
+								<td class="inputTd">
+									  <input type="text"  class="text" />		
+								
+								</td>
+							</tr>
+							<tr>
+								<td class="inputLabelTd">邮政编码：</td>
+								<td class="inputTd"><input type="text"  class="text"/></td>
+								<td class="inputLabelTd">上传附件：</td>
+									 <td class="inputTd">  
+										  <input id="file2_sheet5" type="file" />
+									 </td>
+							</tr>
+							
+			  </table>
+				</div>
+			</div>
+			<table class="table foottable">
+					<tfoot class="footTd" >
+						<tr>
+						  <td class="inputTd">
+								 <button id="sub_button_sheet5"></button>
+								<button id="reset_btn_sheet5" ></button>
+								<button id="cancel_button_sheet5" ></button>
+							</td>
+						</tr>
+					</tfoot>
+			   </table>
+	  </div>
+    </div>
+
+<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"  name="source_sheet5">
+          <pre class="brush: js;">
+ <!--html部分-->
+ 	&lt;div class="main">
+	   &lt;div class="ui-table ui-widget ui-corner-all ui-noborder">    
+			&lt;div id="tabs_sheet5">
+				&lt;ul&gt;
+					&lt;li>&lt;a href="#tabs-1">分组列表&lt;/a>&lt;/li&gt;
+					&lt;li>&lt;a href="#tabs-2">单列表单&lt;/a>&lt;/li&gt;
+					&lt;li>&lt;a href="#tabs-3">双列表单&lt;/a>&lt;/li&gt;
+				&lt;/ul&gt;
+				&lt;div id="tabs-1">
+						&lt;fieldset &gt; 
+							&lt;legend&gt;用户基本信息&lt;/legend&gt; 
+							&lt;table class="<font color='red'>table infieldset</font>">
+								&lt;tr&gt;
+									&lt;td class="inputLabelTd">姓名：&lt;/td&gt;
+									&lt;td class="inputTd">&lt;input type="text" class="text"/>&lt;/td&gt;
+
+									&lt;td class="inputLabelTd">英文名：&lt;/td&gt;
+									&lt;td class="inputTd">&lt;input type="text" class="text"/>&lt;/td&gt;
+								&lt;/tr&gt;
+								&lt;tr&gt;
+									&lt;td class="inputLabelTd">曾用名：&lt;/td&gt;
+									&lt;td class="inputTd">&lt;input type="text" class="text"/>&lt;/td&gt;
+									&lt;td class="inputLabelTd">婚姻状况：&lt;/td&gt;
+									&lt;td class="inputTd">
+										&lt;label &gt;已婚&lt;/label&gt;
+											 &lt;input type="radio"  class="radio" id="radio-3" name="ra2" value="radio-3" />
+										&lt;label &gt;未婚&lt;/label&gt;
+											 &lt;input type="radio"  class="radio" id="radio-4" name="ra2" value="radio-4"/>
+									&lt;/td&gt;
+								&lt;/tr&gt;
+								&lt;tr&gt;
+									&lt;td class="inputLabelTd">出生日期：&lt;/td&gt;
+									&lt;td class="inputTd">
+									   &lt;input id="birthday_sheet5_1" type="text" class="Wdate"  onFocus="WdatePicker({skin:'default',dateFmt:'yyyy-MM-dd'})"/>
+									  &lt;/td&gt;
+									&lt;td class="inputLabelTd">爱好：&lt;/td&gt;
+									&lt;td class="inputTd">
+										&lt;label  &gt;唱歌&lt;/label&gt;
+											&lt;input type="checkbox" class="checkbox" id="checkbox-1" value="选项1"/>
+										&lt;label &gt;跳舞&lt;/label&gt;
+											&lt;input type="checkbox" class="checkbox" id="checkbox-2" value="选项2" />
+									&lt;/td&gt;
+								&lt;/tr&gt;
+							&lt;/table&gt;
+						&lt;/fieldset&gt; 
+
+						&lt;fieldset&gt; 
+							&lt;legend&gt;用户详细信息&lt;/legend&gt; 
+							&lt;table class="table infieldset">
+								&lt;tr&gt;
+									&lt;td class="inputLabelTd">籍贯：&lt;/td&gt;
+									&lt;td class="inputTd">
+										&lt;select id="sel2" colNum="3"  class="select">
+											&lt;option&gt;北京市&lt;/option&gt;
+											&lt;option&gt;天津市&lt;/option&gt;
+											&lt;option&gt;河北省&lt;/option&gt;
+											&lt;option&gt;山西省&lt;/option&gt;
+											&lt;option&gt;内蒙古自治区&lt;/option&gt;
+											&lt;option&gt;辽宁省&lt;/option&gt;
+											&lt;option&gt;吉林省&lt;/option&gt;
+											&lt;option&gt;黑龙江省&lt;/option&gt;
+											&lt;option&gt;上海市&lt;/option&gt;
+											&lt;option&gt;江苏省&lt;/option&gt;
+											&lt;option&gt;浙江省&lt;/option&gt;
+											&lt;option&gt;安徽省&lt;/option&gt;
+											&lt;option&gt;福建省&lt;/option&gt;
+											&lt;option&gt;江西省&lt;/option&gt;
+											&lt;option&gt;山东省&lt;/option&gt;
+											&lt;option&gt;湖南省&lt;/option&gt;
+											&lt;option&gt;湖北省&lt;/option&gt;
+											&lt;option&gt;河南省&lt;/option&gt;
+											&lt;option&gt;广东省&lt;/option&gt;
+											&lt;option&gt;其他&lt;/option&gt;
+										 &lt;/select&gt;
+									&lt;/td&gt;
+									&lt;td class="inputLabelTd">民族：&lt;/td&gt;
+									&lt;td class="inputTd">
+										&lt;select id="sel"  class="select">
+											&lt;option value="1">汉族&lt;/option&gt;
+											&lt;option value="2">满族&lt;/option&gt;
+											&lt;option value="3">维吾尔族&lt;/option&gt;
+										 &lt;/select&gt;
+									&lt;/td&gt;
+								&lt;/tr&gt;
+								&lt;tr&gt;
+									&lt;td class="inputLabelTd">学历：&lt;/td&gt;
+									&lt;td class="inputTd">
+									&lt;select id="sel2" colNum="3"  class="select">
+											&lt;option&gt;博士毕业&lt;/option&gt;
+											&lt;option&gt;博士结业&lt;/option&gt;
+											&lt;option&gt;博士肄业&lt;/option&gt;
+											&lt;option selected="selected">硕士毕业&lt;/option&gt;
+											&lt;option&gt;硕士结业&lt;/option&gt;
+											&lt;option&gt;硕士肄业&lt;/option&gt;
+											&lt;option&gt;相当硕士毕业&lt;/option&gt;
+											&lt;option&gt;研究生班毕业&lt;/option&gt;
+											&lt;option&gt;研究生班结业&lt;/option&gt;
+											&lt;option&gt;研究生班肄业&lt;/option&gt;
+											&lt;option&gt;本科毕业&lt;/option&gt;
+											&lt;option&gt;本科结业&lt;/option&gt;
+											&lt;option&gt;本科肄业&lt;/option&gt;
+											&lt;option&gt;相当本科毕业&lt;/option&gt;
+											&lt;option&gt;大专毕业&lt;/option&gt;
+											&lt;option&gt;大专结业&lt;/option&gt;
+											&lt;option&gt;大专肄业&lt;/option&gt;
+											&lt;option&gt;相当大专毕业&lt;/option&gt;
+											&lt;option&gt;中专毕业&lt;/option&gt;
+											&lt;option&gt;中专结业&lt;/option&gt;
+											&lt;option&gt;中专肄业&lt;/option&gt;
+											&lt;option&gt;相当中专毕业&lt;/option&gt;
+											&lt;option&gt;其它&lt;/option&gt;
+										 &lt;/select&gt;				
+									&lt;/td&gt;
+									&lt;td class="inputLabelTd">选择权限：&lt;/td&gt;
+									&lt;td class="inputTd">
+										&lt;select id="sel2"   class="select">
+											&lt;option&gt;系统管理&lt;/option&gt;
+											&lt;option&gt;文件上传&lt;/option&gt;
+											&lt;option&gt;组织人员管理&lt;/option&gt;
+											
+										 &lt;/select&gt;		
+									
+									&lt;/td&gt;
+								&lt;/tr&gt;
+							&lt;/table&gt;
+						&lt;/fieldset&gt; 
+						
+						
+						&lt;fieldset&gt; 
+							&lt;legend&gt;用户其他信息&lt;/legend&gt; 
+							&lt;table class="table infieldset">
+								&lt;tr&gt;
+									&lt;td class="inputLabelTd">邮政编码：&lt;/td&gt;
+									   &lt;td class="inputTd">&lt;input type="text" class="text"/>&lt;/td&gt;
+									&lt;td class="inputLabelTd">详细住址：&lt;/td&gt;
+										&lt;td class="inputTd">&lt;input type="text" class="text"/>&lt;/td&gt;
+								&lt;/tr&gt;
+						
+
+							&lt;/table&gt;
+						&lt;/fieldset&gt;
+									
+				&lt;/div&gt;
+				&lt;div id="tabs-2">
+					&lt;table class="table">
+						 &lt;tr &gt;
+							 &lt;td class="inputLabelTd">姓名：&lt;/td&gt; &lt;td class="inputTd">&lt;input type="text" class="text"/>&lt;/td&gt;
+						 &lt;/tr&gt;
+						 &lt;tr&gt;
+							 &lt;td class="inputLabelTd">曾用名：&lt;/td>&lt;td class="inputTd">&lt;input type="text" class="text"/>&lt;/td&gt;
+						 &lt;/tr&gt;
+						 &lt;tr&gt;
+							&lt;td class="inputLabelTd">密码：&lt;/td&gt;
+							&lt;td class="inputTd">
+							&lt;input id="password" type="password" class="password" />
+							&lt;/td&gt;
+						&lt;/tr&gt;
+						&lt;tr&gt;
+							&lt;td class="inputLabelTd">性别：&lt;/td&gt;
+							&lt;td class="inputTd">
+								
+									&lt;input type="radio" class="radio" id="radio-1" name="ra" value="radio-1" />
+									   &lt;label&gt;男&lt;/label&gt;
+								
+									&lt;input type="radio" class="radio"  id="radio-2" name="ra" value="radio-2"/>
+									   &lt;label&gt;女&lt;/label&gt;
+							&lt;/td&gt;
+						&lt;/tr&gt;
+						&lt;tr&gt;
+							&lt;td class="inputLabelTd">婚姻状况：&lt;/td&gt;
+							&lt;td class="inputTd">
+							   
+									&lt;input type="radio" class="radio"  id="radio-3" name="ra2" value="radio-3" />
+									   &lt;label&gt;已&nbsp婚&lt;/label&gt;
+									&lt;input type="radio" class="radio"  id="radio-4" name="ra2" value="radio-4"/>
+									   &lt;label&gt;未&nbsp婚&lt;/label&gt;
+							&lt;/td&gt;
+						&lt;/tr&gt;
+						&lt;tr&gt;
+							&lt;td class="inputLabelTd">爱好：&lt;/td&gt;
+							&lt;td class="inputTd">
+								
+									&lt;input type="checkbox" class="checkbox"  id="checkbox-1" value="选项1"/>
+									&lt;label&gt;唱&nbsp歌&lt;/label&gt;
+								
+									&lt;input type="checkbox"  class="checkbox" id="checkbox-2" value="选项2" />
+									&lt;label&gt;跳&nbsp舞&lt;/label&gt;
+							&lt;/td&gt;
+						&lt;/tr&gt;
+						&lt;tr&gt;
+							&lt;td class="inputLabelTd">出生日期：&lt;/td&gt;
+							&lt;td class="inputTd">
+							 &lt;input id="birthday_sheet5_2" type="text" class="Wdate"  onFocus="WdatePicker({skin:'default',dateFmt:'yyyy-MM-dd'})"/>
+							&lt;/td&gt;
+						&lt;/tr&gt;
+						&lt;tr&gt;
+							&lt;td class="inputLabelTd">民族：&lt;/td&gt;
+							&lt;td class="inputTd">
+								&lt;select id="sel"  class="select">
+									&lt;option value="1">汉族&lt;/option&gt;
+									&lt;option value="2">满族&lt;/option&gt;
+									&lt;option value="3">维吾尔族&lt;/option&gt;
+								 &lt;/select&gt;
+							&lt;/td&gt;
+						&lt;/tr&gt;
+						&lt;tr&gt;
+							&lt;td class="inputLabelTd">籍贯：&lt;/td&gt;
+							&lt;td class="inputTd">
+									&lt;input id='s22_sheet5' type="text" class="text"/>
+							&lt;/td&gt;
+						&lt;/tr&gt;
+						
+						&lt;tr&gt;
+							&lt;td class="inputLabelTd">学历：&lt;/td&gt;
+							&lt;td class="inputTd">
+							&lt;select id="sel2" class="select">
+									&lt;option&gt;博士毕业&lt;/option&gt;
+									&lt;option&gt;博士结业&lt;/option&gt;
+									&lt;option&gt;博士肄业&lt;/option&gt;
+									&lt;option selected="selected">硕士毕业&lt;/option&gt;
+									&lt;option&gt;硕士结业&lt;/option&gt;
+									&lt;option&gt;硕士肄业&lt;/option&gt;
+									&lt;option&gt;相当硕士毕业&lt;/option&gt;
+									&lt;option&gt;研究生班毕业&lt;/option&gt;
+									&lt;option&gt;研究生班结业&lt;/option&gt;
+									&lt;option&gt;研究生班肄业&lt;/option&gt;
+									&lt;option&gt;本科毕业&lt;/option&gt;
+									&lt;option&gt;本科结业&lt;/option&gt;
+									&lt;option&gt;本科肄业&lt;/option&gt;
+									&lt;option&gt;相当本科毕业&lt;/option&gt;
+									&lt;option&gt;大专毕业&lt;/option&gt;
+									&lt;option&gt;大专结业&lt;/option&gt;
+									&lt;option&gt;大专肄业&lt;/option&gt;
+									&lt;option&gt;相当大专毕业&lt;/option&gt;
+									&lt;option&gt;中专毕业&lt;/option&gt;
+									&lt;option&gt;中专结业&lt;/option&gt;
+									&lt;option&gt;中专肄业&lt;/option&gt;
+									&lt;option&gt;相当中专毕业&lt;/option&gt;
+									&lt;option&gt;其它&lt;/option&gt;
+								 &lt;/select&gt;				
+							&lt;/td&gt;
+						&lt;/tr&gt;
+						
+				   &lt;/table&gt;
+				&lt;/div&gt;
+				&lt;div id="tabs-3">
+					 &lt;table class="table" &gt;
+						  &lt;tr&gt;
+								&lt;td class="inputLabelTd">姓名：&lt;/td&gt;
+								&lt;td class="inputTd">
+								   &lt;input type="text"  class="text"/> &lt;/td&gt;
+
+								&lt;td class="inputLabelTd">性别：&lt;/td&gt;
+								&lt;td class="inputTd">
+										&lt;input type="radio" class="radio" id="radio-1" name="ra" value="radio-1" />
+									 &lt;label for="radio-1">男&lt;/label&gt;
+										&lt;input type="radio" class="radio" id="radio-2" name="ra" value="radio-2"/>
+									 &lt;label for="radio-2">女&lt;/label&gt;
+										
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;tr&gt;
+								&lt;td class="inputLabelTd">曾用名：&lt;/td&gt;
+								&lt;td class="inputTd">&lt;input  class="text" type="text"/>&lt;/td&gt;
+								&lt;td class="inputLabelTd">婚姻状况：&lt;/td&gt;
+								&lt;td class="inputTd">
+										&lt;input type="radio" class="radio" id="radio-3" name="ra2" value="radio-3" />
+									&lt;label for="radio-3">已 婚&lt;/label&gt; 
+										&lt;input type="radio" class="radio" id="radio-4" name="ra2" value="radio-4"/>
+									&lt;label for="radio-4">未 婚&lt;/label&gt; 
+									  
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;tr&gt;
+								&lt;td class="inputLabelTd">出生日期：&lt;/td&gt;
+								&lt;td class="inputTd">
+									  &lt;input id="birthday_sheet5_3" type="text" class="Wdate"  onFocus="WdatePicker({skin:'default',dateFmt:'yyyy-MM-dd'})"/>
+								&lt;/td&gt;
+								&lt;td class="inputLabelTd">爱好：&lt;/td&gt;
+								&lt;td  class="inputTd">
+										 &lt;input type="checkbox" class="checkbox" id="checkbox-1" value="选项1"/>
+									&lt;label&gt;唱 歌&lt;/label&gt;
+										 &lt;input type="checkbox" class="checkbox"  id="checkbox-2" value="选项2" />
+									&lt;label&gt;跳 舞&lt;/label&gt;
+										
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;tr&gt;
+								&lt;td class="inputLabelTd">籍贯：&lt;/td&gt;
+								&lt;td  class="inputTd">
+									&lt;select id="sel2" class="select">
+										&lt;option&gt;北京市&lt;/option&gt;
+										&lt;option&gt;天津市&lt;/option&gt;
+										&lt;option&gt;河北省&lt;/option&gt;
+										&lt;option&gt;山西省&lt;/option&gt;
+										&lt;option&gt;内蒙古自治区&lt;/option&gt;
+										&lt;option&gt;辽宁省&lt;/option&gt;
+										&lt;option&gt;吉林省&lt;/option&gt;
+										&lt;option&gt;黑龙江省&lt;/option&gt;
+										&lt;option&gt;上海市&lt;/option&gt;
+										&lt;option&gt;江苏省&lt;/option&gt;
+										&lt;option&gt;浙江省&lt;/option&gt;
+										&lt;option&gt;安徽省&lt;/option&gt;
+										&lt;option&gt;福建省&lt;/option&gt;
+										&lt;option&gt;江西省&lt;/option&gt;
+										&lt;option&gt;山东省&lt;/option&gt;
+										&lt;option&gt;湖南省&lt;/option&gt;
+										&lt;option&gt;湖北省&lt;/option&gt;
+										&lt;option&gt;河南省&lt;/option&gt;
+										&lt;option&gt;广东省&lt;/option&gt;
+										&lt;option&gt;广西壮族自治区&lt;/option&gt;
+										&lt;option&gt;海南省&lt;/option&gt;
+										&lt;option&gt;重庆市&lt;/option&gt;
+										&lt;option&gt;四川省&lt;/option&gt;
+										&lt;option&gt;贵州省&lt;/option&gt;
+										&lt;option&gt;云南省&lt;/option&gt;
+										&lt;option&gt;西藏自治区&lt;/option&gt;
+										&lt;option&gt;陕西省&lt;/option&gt;
+										&lt;option&gt;甘肃省&lt;/option&gt;
+										&lt;option&gt;青海省&lt;/option&gt;
+										&lt;option&gt;宁夏回族自治区&lt;/option&gt;
+										&lt;option&gt;新疆维吾尔自治区&lt;/option&gt;
+										&lt;option&gt;香港特别行政区&lt;/option&gt;
+										&lt;option&gt;澳门特别行政区&lt;/option&gt;
+										&lt;option&gt;台湾省&lt;/option&gt;
+										&lt;option&gt;其他&lt;/option&gt;
+									 &lt;/select&gt;
+								&lt;/td&gt;
+								&lt;td class="inputLabelTd">民族：&lt;/td&gt;
+								&lt;td  class="inputTd">
+									&lt;input id="userAccount_password" name="userAccount.password"  class="text" />
+
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;tr&gt;
+								&lt;td class="inputLabelTd">学历：&lt;/td&gt;
+								&lt;td  class="inputTd">
+								&lt;select id="sel2" class="select" &gt;
+										&lt;option&gt;博士毕业&lt;/option&gt;
+										&lt;option&gt;博士结业&lt;/option&gt;
+										&lt;option&gt;博士肄业&lt;/option&gt;
+										&lt;option selected="selected">硕士毕业&lt;/option&gt;
+										&lt;option&gt;硕士结业&lt;/option&gt;
+										&lt;option&gt;硕士肄业&lt;/option&gt;
+										&lt;option&gt;相当硕士毕业&lt;/option&gt;
+										&lt;option&gt;研究生班毕业&lt;/option&gt;
+										&lt;option&gt;研究生班结业&lt;/option&gt;
+										&lt;option&gt;研究生班肄业&lt;/option&gt;
+										&lt;option&gt;本科毕业&lt;/option&gt;
+										&lt;option&gt;本科结业&lt;/option&gt;
+										&lt;option&gt;本科肄业&lt;/option&gt;
+										&lt;option&gt;相当本科毕业&lt;/option&gt;
+										&lt;option&gt;大专毕业&lt;/option&gt;
+										&lt;option&gt;大专结业&lt;/option&gt;
+										&lt;option&gt;大专肄业&lt;/option&gt;
+										&lt;option&gt;相当大专毕业&lt;/option&gt;
+										&lt;option&gt;中专毕业&lt;/option&gt;
+										&lt;option&gt;中专结业&lt;/option&gt;
+										&lt;option&gt;中专肄业&lt;/option&gt;
+										&lt;option&gt;相当中专毕业&lt;/option&gt;
+										&lt;option&gt;其它&lt;/option&gt;
+									 &lt;/select&gt;				
+								&lt;/td&gt;
+								&lt;td class="inputLabelTd">电话：&lt;/td&gt;
+								&lt;td class="inputTd">
+									  &lt;input type="text"  class="text" />		
+								
+								&lt;/td&gt;
+							&lt;/tr&gt;
+							&lt;tr&gt;
+								&lt;td class="inputLabelTd">邮政编码：&lt;/td&gt;
+								&lt;td class="inputTd">&lt;input type="text"  class="text"/>&lt;/td&gt;
+								&lt;td class="inputLabelTd">上传附件：&lt;/td&gt;
+									 &lt;td class="inputTd">  
+										  &lt;input id="file2_sheet5" type="file" />
+									 &lt;/td&gt;
+							&lt;/tr&gt;
+							
+			  &lt;/table&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;table class="table foottable">
+					&lt;tfoot class="footTd" &gt;
+						&lt;tr&gt;
+						  &lt;td class="inputTd">
+								 &lt;button id="sub_button_sheet5">&lt;/button&gt;
+								&lt;button id="reset_btn_sheet5" >&lt;/button&gt;
+								&lt;button id="cancel_button_sheet5" >&lt;/button&gt;
+							&lt;/td&gt;
+						&lt;/tr&gt;
+					&lt;/tfoot&gt;
+			   &lt;/table&gt;
+	  &lt;/div&gt;
+    &lt;/div&gt;
+	</pre>
+ <!--源代码部分end-->	
+       </div> 
+
+<script type="text/javascript">
+
+
+   new biz.tabs({
+                     id: "#tabs_sheet5",
+                     position:"top",
+                     collapsible:true//实现可折叠的标签页
+	});
+    new biz.button({id:"#sub_button_sheet5",icons: {primary: "ui-icon-disk"},label: "提 交" ,text: true }).click(function() {
+	    
+	});
+	new biz.button({id:"#reset_btn_sheet5",icons: {primary: "ui-icon-refresh"},label: "重 置" ,text: true }).click(function() {
+	   
+	});
+    new biz.button({id:"#cancel_button_sheet5",icons: {primary: "ui-icon-close"},label: "取 消" ,text: true }).click(function() {
+	   
+	});
+
+      /*下拉列表选择项(多列) */
+	  var setting_a =   {
+            id:"#s22_sheet5",
+			columns:4,
+			selectedtext:'',
+			checkbox:true,
+            maxchecked:3,
+			width:198,
+			listwidth:398,
+			usinglimit:true,
+			data:[{value:'1',name:'北京'},{value:'2',name:'上海'},{value:'3',name:'天津'},{value:'4',name:'沈阳'},
+			{value:'5',name:'内蒙古自治区'},{value:'6',name:'南京'},{value:'7',name:'广州'},{value:'8',name:'呼和浩特'},
+			{value:'9',name:'苏州'},{value:'10',name:'南京'},{value:'11',name:'大理'},{value:'12',name:'海南'}],//数据，格式：[{name:"",value:""}]
+			onchange:function(text,value){
+				//alert(value);
+			}
+      }
+   new biz.comboboxlist(setting_a);
+
+	 new biz.file({
+		  id:"#file2_sheet5",
+		  buttonText: "上传",
+		  accept: "jpg|png|gif" ,
+		  denied:"只允许上传后缀格式："
+     });
+
+</script>

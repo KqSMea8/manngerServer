@@ -1,0 +1,148 @@
+package com.lmxf.post.service.partner;
+
+import java.util.Map;
+import java.util.UUID;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.HttpUtils;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.entity.parameter.NsParameter;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingCmd;
+import com.lmxf.post.repository.parameter.NsParameterDao;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.repository.vending.VendingCmdDao;
+import com.lmxf.post.repository.vending.VendingDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.partner.DoorOpenReq;
+import com.lmxf.post.tradepkg.partner.DoorOpenResp;
+
+public class TradeDoorOpenService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeDoorOpenService.class);
+	private DoorOpenReq doorOpenReq;
+	private DoorOpenResp doorOpenResp;
+	private NsParameterDao nsParameterDao;
+	private VendingCmdDao vendingCmdDao;
+	private VendingDao vendingDao;
+	private SequenceIdDao sequenceIdDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		Map ret = doorOpenReq.parseXml(apply_xml);
+		if (ret.get("code") == null) {
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+			log.error("doorOpenReq.parseXml is error!");
+			return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+		}
+		String siteId = (String) ret.get("siteId");
+		String loginId = (String) ret.get("loginId");
+		String state = (String) ret.get("state");
+		NsParameter nsParameterP = new NsParameter();
+		nsParameterP.setName("msgServer_url");
+		NsParameter nsParameter = this.nsParameterDao.findOne(nsParameterP);
+		Map<String,Object> result = null;
+		String jsonR=null;
+		int response=-1;
+		if (nsParameter != null && nsParameter.getValue()!=null && !"".equals(nsParameter.getValue())) {
+			Vending vending=vendingDao.findBySiteId(siteId);
+			if (vending == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Site_No_Define);
+			}
+			if (!GParameter.siteNetState_online.equals(vending.getNetSate())) {
+				return errorCodeDao.getErrorRespJson(GConstent.Site_NetState_OffLine);
+			}
+			VendingCmd vendingCmd=new VendingCmd();
+			if(GParameter.vendingCmdSate_buy.equals(state)){
+			    vendingCmd.setCmd(GParameter.vendingdCmd_doorOpenSale);
+			}else{
+				vendingCmd.setCmd(GParameter.vendingdCmd_doorOpenRep);
+			}
+			vendingCmd.setCmdCode(siteId);
+			vendingCmd.setCmdLazy(GParameter.vendingCmdLazy_no);
+			vendingCmd.setCmdType(GParameter.vendingdCmdType_door);
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("LoginId", loginId);
+			vendingCmd.setCont(JSONHeaderObject.toString());
+			vendingCmd.setCorpId(vending.getCorpId());
+			vendingCmd.setCreateTime(DateUtil.getNow());
+			vendingCmd.setLogid(UUID.randomUUID().toString());
+			vendingCmd.setSiteId(siteId);
+			vendingCmd.setState(GParameter.vendingCmd_executing);
+			vendingCmd.setStateTime(DateUtil.getNow());
+			VendingCmd vendingCmdR=this.vendingCmdDao.findOneByObject(vendingCmd);
+			//命令在执行则只推送
+			if(vendingCmdR!=null){
+				//如果前一个命令已完成 则可在生成命令
+				if(GParameter.vendingCmd_failed.equals(vendingCmdR.getState())){
+					vendingCmd.setCmdId(vending.getCorpId()+"_"+this.sequenceIdDao.findNextVal(vending.getCorpId(), "as_vending_cmd", 7));
+			    	this.vendingCmdDao.insert(vendingCmd);
+				}else{
+					vendingCmd=vendingCmdR;
+				}
+			}else{
+		    	vendingCmd.setCmdId(vending.getCorpId()+"_"+this.sequenceIdDao.findNextVal(vending.getCorpId(), "as_vending_cmd", 7));
+		    	this.vendingCmdDao.insert(vendingCmd);
+		    }
+			JSONObject JSONbox = new JSONObject();
+			JSONObject zmsgJson = new JSONObject();
+			JSONObject zheadJson = new JSONObject();
+			zheadJson.put("BCode", "03");
+			zheadJson.put("TCode", "1227");
+			zheadJson.put("Version", "01");
+			zheadJson.put("IStart", "1");
+			JSONObject zbodyJson = new JSONObject();
+			zbodyJson.put("SiteId", vendingCmd.getSiteId());
+			zbodyJson.put("CmdId", vendingCmd.getCmdId());
+			zbodyJson.put("CmdCode", vendingCmd.getCmdCode());
+			zbodyJson.put("CmdType", vendingCmd.getCmdType());
+			zbodyJson.put("Cmd", vendingCmd.getCmd());
+			zbodyJson.put("Cont", vendingCmd.getCont());
+			zbodyJson.put("CreateTime", vendingCmd.getCreateTime());
+			zmsgJson.put("ZHEAD", zheadJson);
+			zmsgJson.put("ZBODY", zbodyJson);
+			JSONbox.put("ZMSG", zmsgJson);
+			String content = JSONbox.toString();
+			//拼接请求参数
+			int resultr = MsgPushUtils.push(content,siteId,vendingCmd.getLogid());
+			if(resultr!=0){
+				return errorCodeDao.getErrorRespJson(GConstent.Response_MsgServer_URL_Error);
+			}
+		} else {
+			return errorCodeDao.getErrorRespJson(GConstent.Config_MsgServer_URL_Error);
+		}
+		return doorOpenResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1);
+	}
+
+	public void setDoorOpenReq(DoorOpenReq doorOpenReq) {
+		this.doorOpenReq = doorOpenReq;
+	}
+
+	public void setDoorOpenResp(DoorOpenResp doorOpenResp) {
+		this.doorOpenResp = doorOpenResp;
+	}
+
+	public void setNsParameterDao(NsParameterDao nsParameterDao) {
+		this.nsParameterDao = nsParameterDao;
+	}
+
+	public void setVendingCmdDao(VendingCmdDao vendingCmdDao) {
+		this.vendingCmdDao = vendingCmdDao;
+	}
+
+	public void setVendingDao(VendingDao vendingDao) {
+		this.vendingDao = vendingDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+}

@@ -1,0 +1,194 @@
+
+[文件路径: tree/multiTree.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("ts_multiTree");
+</script>
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+
+<div class="content_wrap">
+		<div>
+		<ul class="info">
+			<li class="title"><h2>1、setting 配置信息说明</h2>
+				<ul class="list">
+				<li>zTree 对于多棵树之间拖拽的操作非常简单，只需要创建两棵可拖拽的树即可，同时可根据 各种事件回调函数 以及 zTree 的方法配合实现较复杂的操作规则，这里只是基本演示。</li>
+				<li class="highlight_red">关于配置信息请参考拖拽、编辑等 Demo 的详细说明</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li>对 节点数据 没有特殊要求，用户可以根据自己的需求添加自定义属性</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="left" >
+		<ul id="treeDemo_multiTree1" class="ztree" style="width:250px;height:362px;text-align:left;background-color:#F0F6E4;border:1px solid; #617775"></ul>
+	</div>
+	<div class="right" > 
+		<ul id="treeDemo_multiTree2" class="ztree" style="width:250px;height:362px;text-align:left;background-color:#F0F6E4;border:1px solid; #617775"></ul>
+	</div>
+</div>
+
+			<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="ts_multiTree">
+<pre class="brush: js;">
+html部分:
+
+	&lt;div class="left" &gt;
+		&lt;ul id="treeDemo_multiTree1" class="ztree" style="width:250px;height:362px;text-align:left;background-color:#F0F6E4;border:1px solid; #617775"&gt;&lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;div class="right" &gt; 
+		&lt;ul id="treeDemo_multiTree2" class="ztree" style="width:250px;height:362px;text-align:left;background-color:#F0F6E4;border:1px solid; #617775"&gt;&lt;/ul&gt;
+	&lt;/div&gt;
+
+js部分:
+
+var zNodes =[
+	{ id:1, pId:0, name:"父节点 1", open:true},
+	{ id:11, pId:1, name:"叶子节点 1-1"},
+	{ id:12, pId:1, name:"叶子节点 1-2"},
+	{ id:13, pId:1, name:"叶子节点 1-3"},
+	{ id:2, pId:0, name:"父节点 2", open:true},
+	{ id:21, pId:2, name:"叶子节点 2-1"},
+	{ id:22, pId:2, name:"叶子节点 2-2"},
+	{ id:23, pId:2, name:"叶子节点 2-3"},
+	{ id:3, pId:0, name:"父节点 3", open:true},
+	{ id:31, pId:3, name:"叶子节点 3-1"},
+	{ id:32, pId:3, name:"叶子节点 3-2"},
+	{ id:33, pId:3, name:"叶子节点 3-3"}
+];
+
+function beforeDrag(treeId, treeNodes) {
+	for (var i=0,l=treeNodes.length; i&lt;l; i++) {
+		if (treeNodes[i].drag === false) {
+			return false;
+		}
+	}
+	return true;
+}
+function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+	return targetNode ? targetNode.drop !== false : true;
+}
+var setting1 = {
+    id:"#treeDemo_multiTree1",
+    nodes:zNodes,  //数据节点指定
+	edit: {
+		enable: true,
+		showRemoveBtn: false,
+		showRenameBtn: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeDrag: beforeDrag,
+		beforeDrop: beforeDrop
+	}
+};
+var setting2 = {
+    id:"#treeDemo_multiTree2",
+   
+	edit: {
+		enable: true,
+		showRemoveBtn: false,
+		showRenameBtn: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeDrag: beforeDrag,
+		beforeDrop: beforeDrop
+	}
+};
+$(document).ready(function(){
+	 new biz.tree(setting1);//创建树
+	 new biz.tree(setting2);//创建树
+	
+});
+           </pre>
+
+       </div>
+</div>
+
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+var zNodes =[
+	{ id:1, pId:0, name:"父节点 1", open:true},
+	{ id:11, pId:1, name:"叶子节点 1-1"},
+	{ id:12, pId:1, name:"叶子节点 1-2"},
+	{ id:13, pId:1, name:"叶子节点 1-3"},
+	{ id:2, pId:0, name:"父节点 2", open:true},
+	{ id:21, pId:2, name:"叶子节点 2-1"},
+	{ id:22, pId:2, name:"叶子节点 2-2"},
+	{ id:23, pId:2, name:"叶子节点 2-3"},
+	{ id:3, pId:0, name:"父节点 3", open:true},
+	{ id:31, pId:3, name:"叶子节点 3-1"},
+	{ id:32, pId:3, name:"叶子节点 3-2"},
+	{ id:33, pId:3, name:"叶子节点 3-3"}
+];
+
+function beforeDrag(treeId, treeNodes) {
+	for (var i=0,l=treeNodes.length; i<l; i++) {
+		if (treeNodes[i].drag === false) {
+			return false;
+		}
+	}
+	return true;
+}
+function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+	return targetNode ? targetNode.drop !== false : true;
+}
+var setting1 = {
+    id:"#treeDemo_multiTree1",
+    nodes:zNodes,  //数据节点指定
+	edit: {
+		enable: true,
+		showRemoveBtn: false,
+		showRenameBtn: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeDrag: beforeDrag,
+		beforeDrop: beforeDrop
+	}
+};
+var setting2 = {
+    id:"#treeDemo_multiTree2",
+   
+	edit: {
+		enable: true,
+		showRemoveBtn: false,
+		showRenameBtn: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeDrag: beforeDrag,
+		beforeDrop: beforeDrop
+	}
+};
+$(document).ready(function(){
+	 new biz.tree(setting1);//创建树
+	 new biz.tree(setting2);//创建树
+	
+});
+</script>

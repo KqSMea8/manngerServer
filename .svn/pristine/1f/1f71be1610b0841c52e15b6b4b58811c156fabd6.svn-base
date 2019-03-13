@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="StockProduct">
+
+	<resultMap type="com.lmxf.post.entity.stock.StockProduct" id="stockProductResultMap">
+		<id property="logid" column="logid" />
+		<result property="pstockId" column="pstockId" />
+		<result property="productId" column="productId" />
+		<result property="productName" column="productName" />
+		<result property="totalNum" column="totalNum" />
+		<result property="curNum" column="curNum" />
+		<result property="overNum" column="overNum" />
+		<result property="corpId" column="corpId" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+
+	<update id="update" parameterType="com.lmxf.post.entity.stock.StockProduct">
+		update as_stock_product set 
+		curNum=#{curNum}
+		where productId=#{productId}
+	</update>
+	
+	<update id="updateAddStock" parameterType="com.lmxf.post.entity.stock.StockProduct">
+		update as_stock_product set curNum=curNum+#{curNum} where corpId=#{corpId} and productId=#{productId}
+	</update>
+	
+	<select id="findByProductId" parameterType="String" resultMap="stockProductResultMap">
+		select * from as_stock_product where productId=#{productId} 
+	</select>
+</mapper> 

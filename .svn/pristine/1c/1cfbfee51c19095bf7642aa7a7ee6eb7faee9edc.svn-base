@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<!-- 自动扫描且只扫描@Controller 
+	<context:component-scan base-package="com.lmxf.post" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>	
+	<mvc:annotation-driven/>
+	<mvc:default-servlet-handler/>
+-->
+	<!-- 方法解析器，controller根据页面传来的method的值决定调用哪个函数，默认调用list函数 -->
+	<bean id="methodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="method" />
+		<property name="defaultMethodName" value="report" />
+	</bean>
+
+	<!-- 视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<bean id="apiController" class="com.lmxf.post.web.ApiController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="errorCodeService">
+			<ref bean="errorCodeService" />
+		</property>
+		<property name="partnerProcess">
+			<ref bean="partnerProcess" />
+		</property>
+		<property name="initProcess">
+			<ref bean="initProcess" />
+		</property>
+		<property name="dataSynchProcess">
+			<ref bean="dataSynchProcess" />
+		</property>
+		<property name="orderProcess">
+			<ref bean="orderProcess" />
+		</property>
+		<property name="siteProcess">
+			<ref bean="siteProcess" />
+		</property>
+		<property name="genOrderService">
+			<ref bean="genOrderService" />
+		</property>
+		<property name="transferFailureProcess">
+			<ref bean="transferFailureProcess" />
+		</property>
+		
+	</bean>
+	<bean id="partnerController" class="com.lmxf.post.web.PartnerController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="partnerProcess">
+			<ref bean="partnerProcess" />
+		</property>
+		<property name="errorCodeService">
+			<ref bean="errorCodeService" />
+		</property>
+	</bean>
+	<bean id="initController" class="com.lmxf.post.web.InitController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="initProcess">
+			<ref bean="initProcess" />
+		</property>
+		<property name="errorCodeService">
+			<ref bean="errorCodeService" />
+		</property>
+	</bean>
+	<bean id="dataSynchController" class="com.lmxf.post.web.DataSynchController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="dataSynchProcess">
+			<ref bean="dataSynchProcess" />
+		</property>
+		<property name="errorCodeService">
+			<ref bean="errorCodeService" />
+		</property>
+	</bean>
+	<bean id="orderController" class="com.lmxf.post.web.OrderController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="orderProcess">
+			<ref bean="orderProcess" />
+		</property>
+		<property name="errorCodeService">
+			<ref bean="errorCodeService" />
+		</property>
+	</bean>
+	<bean id="siteController" class="com.lmxf.post.web.SiteController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="siteProcess">
+			<ref bean="siteProcess" />
+		</property>
+		<property name="errorCodeService">
+			<ref bean="errorCodeService" />
+		</property>
+	</bean>
+	<bean id="wxNotifyController" class="com.lmxf.post.core.utils.pay.wechat.WxNotifyController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="orderApplyService">
+			<ref bean="orderApplyService" />
+		</property>
+		<property name="payconfigWechatService">
+			<ref bean="payconfigWechatService" />
+		</property>
+	</bean>
+	<bean id="alipayNotifyController" class="com.lmxf.post.core.utils.pay.alipay.AlipayNotifyController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="orderApplyService">
+			<ref bean="orderApplyService" />
+		</property>
+	</bean>
+	<bean id="orderPayNotifyController" class="com.lmxf.post.web.OrderPayNotifyController">
+		<property name="methodNameResolver">
+			<ref bean="methodNameResolver" />
+		</property>
+		<property name="orderApplyService">
+			<ref bean="orderApplyService" />
+		</property>
+	</bean>
+	
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<value>
+				/api=apiController
+				/partner.htm=partnerController
+				/init.htm=initController
+				/dataSynch.htm=dataSynchController
+				/order.htm=orderController
+				/site.htm=siteController
+				/wxNotify=wxNotifyController 
+				/aliNotify=alipayNotifyController 
+				/orderPayNotify=orderPayNotifyController
+			</value>
+		</property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,206 @@
+[文件路径: grid/edit/lineEdit.html]
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid行编辑功能，对于编辑数据支持url远程数据提交和保存在本地；保存本地的数据可通过“单元格编辑”示例中的方法获取。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1：url数据提交</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                <font color="red">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp默认提交方式为url远程提交</font>
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="lineEdit_rowed"></table>
+                       <div id="lineEdit_prowed"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_lineEdit_1">
+<pre>
+<font color='#027DD1'>1、url提交编辑数据：</font>
+<strong>js部分:</strong>
+ var lineEditObj = new biz.grid({
+          id:"#lineEdit_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          <font color="red">editurl:"http://localhost:8080/edit/"</font> ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">editway:"row",</font>/*编辑方式为行编辑*/
+         navtype:"top" /*导航栏类型*/,
+         pager: '#lineEdit_prowed' /*分页栏id*/
+      });
+</pre>
+    </div>
+
+<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例2：保存本地</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="lineEdit_rowed2"></table>
+                       <div id="lineEdit_prowed2"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_lineEdit_2">
+<pre>
+<font color='#027DD1'>1、数据保存本地：</font>
+<strong>js部分:</strong>
+ var lineEditObj2 = new biz.grid({
+          id:"#lineEdit_rowed2",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">editway:"row",</font>/*编辑方式为行编辑*/
+         <font color="red">rownavopt:{editParams:{url:"clientArray"}},</font>/*增加、编辑数据时保持数据在本地*/
+         <font color="red">navopt:{delfunc:function(rowid){lineEditObj2.delLocalRow(rowid)}},</font>/*删除本地行数据*/
+         navtype:"top" /*导航栏类型*/,
+         pager: '#lineEdit_prowed2' /*分页栏id*/
+      });
+</pre>
+    </div>
+
+
+
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">新增功能API属性列表</div>
+	</div>
+	<div class="content">
+	新增功能使用到此api：addRow(rowid, options)， options内容请参见编辑功能属性说明。
+	<iframe src="./grid/edit/lineEdit_addPara.htm" width="100%" scrolling="no" frameborder="0" height="250px;"></iframe>
+	</div>
+
+   <div class="barTitle2">
+		<div class="content">编辑功能API属性列表</div>
+	</div>
+	<div class="content">
+	编辑功能使用到此api：editRow(rowid, keys, oneditfunc, succesfunc, url, extraparam, aftersavefunc,errorfunc, afterrestorefunc)， 各属性说明如下：
+	<iframe src="./grid/edit/lineEdit_editPara.htm" width="100%" scrolling="no" frameborder="0" height="350px;"></iframe>
+	</div>
+	
+	 <div class="barTitle2">
+		<div class="content">保存功能API属性列表</div>
+	</div>
+	<div class="content">
+	保存功能使用到此api：saveRow(rowid, succesfunc, url, extraparam, aftersavefunc,errorfunc, afterrestorefunc)， 各属性说明如下：
+	<iframe src="./grid/edit/lineEdit_savePara.htm" width="100%" scrolling="no" frameborder="0" height="300px;"></iframe>
+	</div>
+	
+    <div class="barTitle2">
+		<div class="content">取消功能</div>
+	</div>
+	<div class="content">
+	取消处理即只进行数据存储，不提交数据到server端。
+	</div>
+	
+	 <div class="barTitle2">
+		<div class="content">存储功能API属性列表</div>
+	</div>
+	<div class="content">
+	存储功能即存储数据到本地，使用到此api：restoreRow(rowid, afterrestorefunc)， 各属性说明如下：
+	<iframe src="./grid/edit/lineEdit_storePara.htm" width="100%" scrolling="no" frameborder="0" height="180px;"></iframe>
+	</div>
+
+<script type="text/javascript">
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",amount:"30000.00",tax:"1000.00",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"}
+      ];
+
+      var lineEditObj = new biz.grid({
+          id:"#lineEdit_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"row",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#lineEdit_prowed' /*分页栏id*/
+      });
+      var lineEditObj2 = new biz.grid({
+          id:"#lineEdit_rowed2",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"row",
+         rownavopt:{editParams:{url:"clientArray"}},
+         navopt:{delfunc:function(rowid){lineEditObj2.delLocalRow(rowid)}},
+         navtype:"top" /*导航栏类型*/,
+         pager: '#lineEdit_prowed2' /*分页栏id*/
+      });
+</script>

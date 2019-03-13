@@ -1,0 +1,330 @@
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=729
+ style='width:547.05pt;margin-left:5.4pt;border-collapse:collapse;border:none'>
+ <tr style='height:17.65pt'>
+  <td width=59 valign=top style='width:44.3pt;border:solid black 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><a
+  name="OLE_LINK35"></a><a name="OLE_LINK34"><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>类型</span></b></a></p>
+  </td>
+  <td width=94 valign=top style='width:70.4pt;border:solid black 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>属性名称</span></b></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border:solid black 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>含义</span></b></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border:solid black 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>默认值</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=59 rowspan=8 valign=top style='width:44.3pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>属性</span></p>
+  </td>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>data</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>此下拉框的数据数组</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>空，格式如</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>:</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>[{'first':'A','value':'A1','name':'A1'},{'first':'B','value':'B2','name':'B2'}]</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>url</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>此下拉框数据的来源，返回指定的</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>json</span><span
+  style='font-size:9.0pt;font-family:黑体'>格式。</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>空，格式如：</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>[{'first':'A','Value':'A1','name':'A1'},{'first':'B','Value':'B2','name':'B2'}]</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>value</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>默认值</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>空</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK31"></a><a name="OLE_LINK30"><span lang=EN-US style='font-size:
+  9.0pt;font-family:"Tahoma","sans-serif"'>isCascade</span></a></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否级联下拉框</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>parent</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>此下拉框级联的父下拉框</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ID</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>空，</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isCascade</span><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>有效</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>timeout</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>超时时间，单位为毫秒</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>空，</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isCascade</span><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>有效</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>event</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>触发事件，定义当何种事件被发生时触发级联操作</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>默认为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>change</span><span
+  style='font-size:9.0pt;font-family:黑体'>，</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isCascade</span><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>有效</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ajaxOptions</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ajax</span><span
+  style='font-size:9.0pt;font-family:黑体'>请求属性</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>{}</span><span
+  style='font-size:9.0pt;font-family:黑体'>，</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isCascade</span><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>有效</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=59 valign=top style='width:44.3pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>事件</span></p>
+  </td>
+  <td width=94 valign=top style='width:70.4pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>datafuc</span></p>
+  </td>
+  <td width=170 valign=top style='width:127.6pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Ajax</span><span
+  style='font-size:9.0pt;font-family:黑体'>请求时触发，参数处理函数</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>参数</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>data</span><span
+  style='font-size:9.0pt;font-family:黑体'>：已经存在的请求参数</span></p>
+  </td>
+  <td width=406 valign=top style='width:304.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>空，</span><span style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> <span lang=EN-US>isCascade</span></span><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>有效</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:0cm'><span lang=EN-US style='font-size:
+9.0pt;line-height:150%'>&nbsp;</span></p>
+
+</div>

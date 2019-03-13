@@ -1,0 +1,244 @@
+package com.lmxf.post.service.dataSynch;
+
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderBox;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingCmd;
+import com.lmxf.post.entity.vending.VendingLanep;
+import com.lmxf.post.entity.vending.VendingStock;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderBoxDao;
+import com.lmxf.post.repository.vending.VendingCmdDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.dataSynch.VendingCmdConfirmReq;
+import com.lmxf.post.tradepkg.dataSynch.VendingCmdConfirmResp;
+
+public class TradeVendingCmdConfirmService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeVendingCmdConfirmService.class);
+	private VendingCmdConfirmReq vendingCmdConfirmReq;
+	private VendingCmdConfirmResp vendingCmdConfirmResp;
+	private VendingCmdDao vendingCmdDao;
+	private OrderApplyDao orderApplyDao;
+	private OrderBoxDao orderBoxDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		Map ret = null;
+		VendingCmd vendingCmd = null;
+		try {
+			ret = vendingCmdConfirmReq.parseXml(apply_xml);
+			if (ret.get("code") == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+			} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+				log.error("vendingCmdConfirmReq.parseXml is error!");
+				return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+			}
+		} catch (Exception e) {
+			log.error("---parseXml  error-----", e);
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		}
+
+		vendingCmd = (VendingCmd) ret.get("vendingCmd");
+		VendingCmd vendingCmdR = vendingCmdDao.findByCmdId(vendingCmd.getCmdId());
+		if (null == vendingCmdR) {
+			return errorCodeDao.getErrorRespJson(GConstent.Vending_Cmd_No_Found);
+		}
+		if (vendingCmdR.getState().equals(GParameter.vendingCmd_success)) {
+			return errorCodeDao.getErrorRespJson(GConstent.Repeat_Confirm_Error);
+		}
+		vendingCmdR.setState(vendingCmd.getState());
+		vendingCmdR.setResult(vendingCmd.getResult());
+		vendingCmdR.setStateTime(vendingCmd.getStateTime());
+		int r = vendingCmdDao.update(vendingCmdR);
+		if (r < 0) {
+			return errorCodeDao.getErrorRespJson(GConstent.Confirm_Failed_Error);
+		}
+		// 单片机开箱确认命令
+		if (GParameter.vendingdCmd_boxOpen.equals(vendingCmdR.getCmd())) {
+			JSONObject json = JSONObject.fromObject(vendingCmdR.getCont());
+			String orderId = json.getString("OrderId");
+			OrderApply orderApplyP = new OrderApply();
+			orderApplyP.setOrderId(orderId);
+			OrderApply orderApply = this.orderApplyDao.findOneByOrderId(orderApplyP);
+			if (orderApply != null) {
+				// 查看申请状态的订单
+				OrderBox orderBoxP = new OrderBox();
+				orderBoxP.setOrderId(orderApply.getOrderId());
+				List<OrderBox> orderBoxList = this.orderBoxDao.findAll(orderBoxP);
+				for (OrderBox orderBox : orderBoxList) {
+					MsgPushUtils.pushVendingServer(genOutOrderJson(orderApply, orderBox, vendingCmdR.getState()));
+					MsgPushUtils.pushVendingServer(genFetchOrderJson(orderApply, orderBox));
+				}
+			} else {
+				log.error("单片机售货机反馈开箱成功，但订单信息无法找到:" + vendingCmdR.getCont());
+			}
+		}
+		return vendingCmdConfirmResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1, vendingCmdR);
+	}
+
+	/**
+	 * 生成1243的订单协议
+	 * 
+	 * @param vending
+	 * @param vendingStock
+	 * @return
+	 */
+	public String genOutOrderJson(OrderApply orderApply, OrderBox orderBox, String isExc) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1243");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("OrderId", orderApply.getOrderId());
+			JSONBody.put("OperTime", orderApply.getCreateTime());
+			JSONBody.put("OutId", "1");
+			JSONArray JSONArray = new JSONArray();
+
+			JSONObject JSONDetails = new JSONObject();
+			JSONDetails.put("ProductId", orderBox.getProductId());
+			JSONDetails.put("Index", "1");
+			JSONDetails.put("LaneSId", orderBox.getLaneSId());
+			JSONDetails.put("LaneEId", orderBox.getLaneEId());
+			if (GParameter.vendingCmd_success.equals(isExc)) {
+				JSONDetails.put("OutState", "2");
+			} else {
+				JSONDetails.put("OutState", "4");
+			}
+			JSONArray.add(JSONDetails);
+			JSONBody.put("ProductInfo", JSONArray);
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 生成1243的订单协议
+	 * 
+	 * @param vending
+	 * @param vendingStock
+	 * @return
+	 */
+	public String genOutOrderJson(Vending vending, VendingStock vendingStock, VendingLanep vendingLanep, String OrderId, String applyTime) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1243");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("OrderId", OrderId);
+			JSONBody.put("OperTime", applyTime);
+			JSONBody.put("OutId", "1");
+			JSONArray JSONArray = new JSONArray();
+
+			JSONObject JSONDetails = new JSONObject();
+			JSONDetails.put("ProductId", vendingLanep.getProductId());
+			JSONDetails.put("Index", "1");
+			JSONDetails.put("LaneSId", vendingLanep.getLaneSId());
+			JSONDetails.put("LaneEId", vendingLanep.getLaneEId());
+			JSONDetails.put("OutState", "2");
+			JSONArray.add(JSONDetails);
+			JSONBody.put("ProductInfo", JSONArray);
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 生成1244的订单协议
+	 * 
+	 * @param vending
+	 * @param vendingStock
+	 * @return
+	 */
+	public String genFetchOrderJson(OrderApply orderApply, OrderBox orderBox) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1244");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("OrderId", orderApply.getOrderId());
+			JSONBody.put("SiteId", orderApply.getSiteId());
+			JSONBody.put("OperTime", orderApply.getCreateTime());
+			JSONBody.put("FetchType", "1");
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	public void setVendingCmdConfirmReq(VendingCmdConfirmReq vendingCmdConfirmReq) {
+		this.vendingCmdConfirmReq = vendingCmdConfirmReq;
+	}
+
+	public void setVendingCmdConfirmResp(VendingCmdConfirmResp vendingCmdConfirmResp) {
+		this.vendingCmdConfirmResp = vendingCmdConfirmResp;
+	}
+
+	public void setVendingCmdDao(VendingCmdDao vendingCmdDao) {
+		this.vendingCmdDao = vendingCmdDao;
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setOrderBoxDao(OrderBoxDao orderBoxDao) {
+		this.orderBoxDao = orderBoxDao;
+	}
+
+}

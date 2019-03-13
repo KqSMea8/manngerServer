@@ -1,0 +1,285 @@
+[文件路径: grid/edit/cellEdit.html]
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid单元格编辑功能，包含设置编辑类型、标示编辑过的单元格、获取编辑数据（包含新增、编辑、删除）等相关内容；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                <font color="red">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp默认编辑类型为text；</font>单击可编辑单元格，单元格处于编辑状态，按TAB键保存当前单元格并跳转到下个可编辑单元格，按ENTER键，保存当前单元格；
+            <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="cellEdit_rowed"></table>
+                       <div id="cellEdit_prowed"></div>
+                 </div>
+
+        </div>
+        <div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block">
+		   <div class="equal">
+				<div class="row">
+					<div class="cell">
+							 <div class="labelcell">获取新增数据：</div>
+							 <div class="valuecell">
+                                 <button id="cellEdit_getadd">新增数据</button>
+                             </div>
+					</div>
+
+					<div class="cell">
+							<div class="labelcell">获取编辑数据：</div>
+							 <div class="valuecell">
+								 <button id="cellEdit_getedit">编辑数据</button>
+							</div>
+					</div>
+                    <div class="cell">
+							 <div class="labelcell">获取删除数据：</div>
+							 <div class="valuecell">
+                                 <button id="cellEdit_getdel">删除数据</button>
+                             </div>
+					</div>
+				</div>
+                <div class="row">
+					<div class="cell">
+							<div class="labelcell">获取所有数据：</div>
+							 <div class="valuecell">
+								 <button id="cellEdit_getall">所有数据</button>
+							</div>
+					</div>
+                    <div class="querycell">
+                         <div class="valuecell">
+                               <textarea id="cellEdit_string" class="textarea"></textarea>
+                         </div>
+                    </div>
+				</div>
+			</div>
+		  </div>
+
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_popupEdit">
+<pre>
+<font color='#027DD1'>1、单元格编辑数据：</font>
+<strong>js部分:</strong>
+  var testData = [
+         {ids:"1",birthday:"1975-05-24",name:"王室",note:"note",sex:"male",intrest:"basketball",birthland:"guandong"} ,
+         {ids:"2",birthday:"1980-05-25",name:"张图",note:"note2",sex:"male",intrest:"football",birthland:"guangxi"},
+         {ids:"3",birthday:"1987-09-01",name:"于海",note:"note3",sex:"male",intrest:"pingpong,dance",birthland:"beijing"},
+         {ids:"4",birthday:"1973-10-04",name:"李辉",note:"note",sex:"female",intrest:"dance,football",birthland:"zhejiang"},
+         {ids:"5",birthday:"1988-10-05",name:"张岚",note:"note2",sex:"female",intrest:"football",birthland:"shanxi"},
+         {ids:"6",birthday:"1978-09-06",name:"宋钟",note:"note3",sex:"male",intrest:"pingpong",birthland:"sichuan"},
+         {ids:"7",birthday:"1987-10-04",name:"聂田",note:"note",sex:"female",intrest:"basketball",birthland:"chongqing"},
+         {ids:"8",birthday:"1985-10-03",name:"钟宇飞",note:"note2",sex:"male",intrest:"dance,basketball",birthland:"shanghai"}
+  ];
+  var checkboxArr = [
+         {label: "踢足球", name: "intrest", value: "football"},
+         {label: "打篮球", name: "intrest", value: "basketball"},
+         {label: "打乒乓球", name: "intrest", value: "pingpong"},
+         {label: "跳舞 ", name: "intrest", value: "dance"}
+  ];
+  var radioArr = [
+        {label: "男", name: "sex", value: "male"},
+        {label: "女", name: "sex", value: "female"}
+  ];
+  var selectArr = [
+        { name: '广西',value:'guangxi'},{name:'广东',value:'guandong'},{ name: '北京',value:'beijing'},
+        {name:'浙江',value:'zhejiang'},{ name: '陕西',value:'shanxi'},{name:'四川',value:'sichuan'},
+        { name: '重庆',value:'chongqing'},{name:'上海',value:'shanghai'}
+  ] ;
+
+
+  var cellEditObj = new biz.grid({
+          id:"#cellEdit_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          editvalid:true,
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,
+                   editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'birthday',index:'birthday',label:"出生日期",key:false,width:100,
+                   <font color='red'>editrules:{date:true}</font>,/*校验必须为date类型*/
+                   editable:true,
+                   <font color='red'>edittype:'datepicker'</font>, 
+                   <font color='red'>editoptions:{dateFormat:"yy-mm-dd"}</font>,
+                   formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:70,editable:false},
+               {name:'sex',label:"性别",index:'sex', width:80, align:"right",
+                   <font color='red'>edittype:'radio',</font>
+                   <font color='red'>editoptions:{data:radioArr}</font>,
+                   editable:true,
+                   formoptions:{ rowpos:2, colpos:1}},
+               {name:'intrest',label:"兴趣",index:'intrest', width:180, align:"right",editable:true,
+                   <font color='red'>edittype:'checkbox'</font>,
+                   <font color='red'>editoptions:{data:checkboxArr}</font>,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'birthland',label:"出生地",index:'birthland', width:120,align:"right",editable:true,
+                   <font color='red'>edittype:'select'</font>,
+               	   <font color='red'>editoptions:{data:selectArr}</font>,
+               	   formatter:true,
+               	   formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,
+                   <font color='red'>edittype:"textarea"</font>,
+                   <font color='red'>editrules:{rangelength:[4,20]}</font>,/*校验长度为4-20个字符*/
+                   <font color='red'>editoptions:{rows:"2"}</font>,
+                   formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color='red'>editway:"cell"</font>,/*编辑类型为单元格*/
+         navtype:"top" /*导航栏类型*/,
+         pager: '#cellEdit_prowed' /*分页栏id*/
+  });
+<font color='#027DD1'>2、获取数据：</font>
+<strong>html部分:</strong>
+<xmp class="xmp">
+    <div class="row">
+        <div class="cell">
+             <div class="labelcell">获取新增数据：</div>
+             <div class="valuecell">
+                 <button id="cellEdit_getadd">新增数据</button>
+             </div>
+        </div>
+
+        <div class="cell">
+            <div class="labelcell">获取编辑数据：</div>
+             <div class="valuecell">
+                 <button id="cellEdit_getedit">编辑数据</button>
+            </div>
+        </div>
+        <div class="cell">
+             <div class="labelcell">获取删除数据：</div>
+             <div class="valuecell">
+                 <button id="cellEdit_getdel">删除数据</button>
+             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <div class="labelcell">获取所有数据：</div>
+             <div class="valuecell">
+                 <button id="cellEdit_getall">所有数据</button>
+            </div>
+        </div>
+        <div class="querycell">
+             <div class="valuecell">
+                   <textarea id="cellEdit_string" class="textarea"></textarea>
+             </div>
+        </div>
+    </div>
+</xmp>
+
+<strong>js部分:</strong>
+     new biz.button({id:"#cellEdit_getadd"}).click(function() {
+            var dataString = cellEditObj.getAdded();
+            $("#cellEdit_string").val(dataString);
+	 });
+     new biz.button({id:"#cellEdit_getedit"}).click(function() {
+            var dataString = cellEditObj.getEdited();
+            $("#cellEdit_string").val(dataString);
+	 });
+     new biz.button({id:"#cellEdit_getdel"}).click(function() {
+            var dataString = cellEditObj.getDeled();
+            $("#cellEdit_string").val(dataString);
+	 });
+     new biz.button({id:"#cellEdit_getall"}).click(function() {
+            var dataString = cellEditObj.getJsontosubmit();
+            $("#cellEdit_string").val(dataString);
+	 });
+</pre>
+    </div>
+
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">新增功能API属性列表</div>
+	</div>
+	<div class="content">
+	新增功能使用到此api：addLocalRow (options)，成功返回true，否则false。 options属性说明:
+	<iframe src="./grid/edit/cellEdit_add.htm" width="100%" scrolling="no" frameborder="0" height="250px;"></iframe>
+	</div>
+
+   <div class="barTitle2">
+		<div class="content">删除功能API属性列表</div>
+	</div>
+	<div class="content">
+	编辑功能使用到此api：delLocalRow (id)，成功返回true，否则false。 Multiselect为true时id为包含行id的数组，
+	可以同时删除多行数据；Multiselect为false时id为字符串。
+	</div>
+
+						
+
+<script type="text/javascript">
+      var testData = [
+             {ids:"1",birthday:"1975-05-24",name:"王室",note:"note",sex:"male",intrest:"basketball",birthland:"guandong"} ,
+             {ids:"2",birthday:"1980-05-25",name:"张图",note:"note2",sex:"male",intrest:"football",birthland:"guangxi"},
+             {ids:"3",birthday:"1987-09-01",name:"于海",note:"note3",sex:"male",intrest:"pingpong,dance",birthland:"beijing"},
+             {ids:"4",birthday:"1973-10-04",name:"李辉",note:"note",sex:"female",intrest:"dance,football",birthland:"zhejiang"},
+             {ids:"5",birthday:"1988-10-05",name:"张岚",note:"note2",sex:"female",intrest:"football",birthland:"shanxi"},
+             {ids:"6",birthday:"1978-09-06",name:"宋钟",note:"note3",sex:"male",intrest:"pingpong",birthland:"sichuan"},
+             {ids:"7",birthday:"1987-10-04",name:"聂田",note:"note",sex:"female",intrest:"basketball",birthland:"chongqing"},
+             {ids:"8",birthday:"1985-10-03",name:"钟宇飞",note:"note2",sex:"male",intrest:"dance,basketball",birthland:"shanghai"}
+      ];
+      var checkboxArr = [
+             {label: "踢足球", name: "intrest", value: "football"},
+             {label: "打篮球", name: "intrest", value: "basketball"},
+             {label: "打乒乓球", name: "intrest", value: "pingpong"},
+             {label: "跳舞 ", name: "intrest", value: "dance"}
+   	  ];
+      var radioArr = [
+            {label: "男", name: "sex", value: "male"},
+            {label: "女", name: "sex", value: "female"}
+      ];
+      var selectArr = [
+            { name: '广西',value:'guangxi'},{name:'广东',value:'guandong'},{ name: '北京',value:'beijing'},
+            {name:'浙江',value:'zhejiang'},{ name: '陕西',value:'shanxi'},{name:'四川',value:'sichuan'},
+            { name: '重庆',value:'chongqing'},{name:'上海',value:'shanghai'}
+      ] ;
+
+      var cellEditObj = new biz.grid({
+          id:"#cellEdit_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          editvalid:true,
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'birthday',index:'birthday',label:"出生日期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:70,editable:false},
+               {name:'sex',label:"性别",index:'sex', width:80, align:"right",edittype:'radio',editoptions:{data:radioArr},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'intrest',label:"兴趣",index:'intrest', width:180, align:"right",editable:true,edittype:'checkbox',editoptions:{data:checkboxArr},
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'birthland',label:"出生地",index:'birthland', width:120,align:"right",editable:true,edittype:'select',editoptions:{data:selectArr},
+                   formatter:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",editrules:{rangelength:[4,20]},
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"cell",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#cellEdit_prowed' /*分页栏id*/
+      });
+
+     new biz.button({id:"#cellEdit_getadd"}).click(function() {
+            var dataString = cellEditObj.getAdded();
+            $("#cellEdit_string").val(dataString);
+	 });
+     new biz.button({id:"#cellEdit_getedit"}).click(function() {
+            var dataString = cellEditObj.getEdited();
+            $("#cellEdit_string").val(dataString);
+	 });
+     new biz.button({id:"#cellEdit_getdel"}).click(function() {
+            var dataString = cellEditObj.getDeled();
+            $("#cellEdit_string").val(dataString);
+	 });
+     new biz.button({id:"#cellEdit_getall"}).click(function() {
+            var dataString = cellEditObj.getJsontosubmit();
+            $("#cellEdit_string").val(dataString);
+	 });
+</script>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+	default-lazy-init="false">
+	<description>验证第三方订单</description>
+	<!-- 验证规则 -->
+	<bean id="emptyVRule" class="com.lmxf.post.core.validate.EmptyVRule">
+	</bean>
+	<!-- 缓存规则对象 -->
+	<bean id="rules" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="emptyVRule" value-ref="emptyVRule" />
+			</map>
+		</constructor-arg>
+	</bean>
+	<!-- 规则工厂 -->
+	<bean id="vRuleAssemblerFactory" class="com.lmxf.post.core.validate.VRuleAssemblerFactory">
+		<property name="rules" ref="rules" />
+	</bean>
+	<!-- 规则验证器 -->
+	<bean id="assemblyValidator" class="com.lmxf.post.core.validate.AssemblyValidator">
+		<property name="vRuleAssemblerFactory" ref="vRuleAssemblerFactory" />
+	</bean>
+
+</beans>

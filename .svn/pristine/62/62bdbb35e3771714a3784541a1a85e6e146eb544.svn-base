@@ -1,0 +1,347 @@
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+pre
+	{mso-style-link:"HTML 预设格式 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:10.0pt;
+	font-size:12.0pt;
+	font-family:宋体;
+	color:black;}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+span.HTMLChar
+	{mso-style-name:"HTML 预设格式 Char";
+	mso-style-link:"HTML 预设格式";
+	font-family:宋体;
+	color:black;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=678
+ style='width:508.65pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>属性</span></b></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>类型</span></b></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>说明</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt'>dataUrl</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt'>string</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK86"></a><a name="OLE_LINK85"><span style='font-size:9.0pt;
+  font-family:黑体'>编辑类型为</span></a><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'>select</span><span style='font-size:9.0pt;
+  font-family:黑体'>时有效。</span><span style='font-size:9.0pt;font-family:黑体'>通过设置属性</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>dataUrl</span><span
+  style='font-size:9.0pt;font-family:黑体'>，返回值必须包含完整的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>html</span><span
+  style='font-size:9.0pt;font-family:黑体'>标签，例如：</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>&lt;select&gt;&lt;option
+  value=&quot;1&quot;&gt;One&lt;/option&gt;&lt;option
+  value=&quot;2&quot;&gt;Two&lt;/option&gt;&lt;/select&gt;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>buildSelect</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>function</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>dataUrl</span><span
+  style='font-size:9.0pt;font-family:黑体'>属性设置后有效。当</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>端没创建</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>select</span><span
+  style='font-size:9.0pt;font-family:黑体'>标签时，可通过在此自定义方法创建</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>select</span><span
+  style='font-size:9.0pt;font-family:黑体'>和其</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>option</span><span
+  style='font-size:9.0pt;font-family:黑体'>内容。参数为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>端返回数据，返回值为包含</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>select</span><span
+  style='font-size:9.0pt;font-family:黑体'>和</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>option</span><span
+  style='font-size:9.0pt;font-family:黑体'>值的字符串。</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>dataInit</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>function</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>元素创建时执行，例如指定查找框为</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>datepicker</span><span
+  style='font-size:9.0pt;font-family:黑体'>，可如下设置：</span></p>
+  <pre style='margin-left:19.5pt;text-indent:-13.5pt'><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif";color:windowtext'>dataInit : function (elem) {<br>
+new biz.datepicker({id:elem});</span></pre>
+  <p class=MsoNormal style='text-indent:8.55pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>}</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>dataEvents</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>array</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>元素通过</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>$(”#id”).bind(type,
+  [data], fn)</span><span style='font-size:9.0pt;font-family:黑体'>绑定事件列表，例如：</span></p>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>dataEvents:
+  [ <br>
+  { type: 'click', data: { i: 7 }, fn: function(e) { alert(e.data.i); }},<br>
+  { type: 'keypress', fn: function(e) { alert('keypress'); } } <br>
+  ]</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt'>attr</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt'>object</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>创建类型标签支持的属性，例如：</span><span
+  lang=EN-US style='font-size:9.0pt'>attr : { title: “Some title” }</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt'>searchhidden</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt'>boolean</span><span style='font-size:9.0pt;
+  font-family:宋体'>（</span><span lang=EN-US style='font-size:9.0pt'>false</span><span
+  style='font-size:9.0pt;font-family:宋体'>）</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否查找隐藏元素</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>sopt</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>array</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>定义查找操作类型：</span></p>
+  <p class=MsoNormal style='text-indent:8.55pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>['eq','ne','lt','le','gt','ge','bw','bn','in','ni','ew','en','cn','nc']</span><span
+  style='font-size:9.0pt;font-family:黑体'>。</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>defaultValue</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>String</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>默认值</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=99 valign=top style='width:74.15pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>value</span></p>
+  </td>
+  <td width=99 valign=top style='width:74.2pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>mixed</span></p>
+  </td>
+  <td width=480 valign=top style='width:360.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>编辑类型为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>select</span><span
+  style='font-size:9.0pt;font-family:黑体'>时且没设置</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>dataUrl</span><span
+  style='font-size:9.0pt;font-family:黑体'>时使用，设置</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>select</span><span
+  style='font-size:9.0pt;font-family:黑体'>值，可有两种类型：</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'><br>
+  &nbsp; </span><span style='font-size:9.0pt;font-family:黑体'>字符串：</span></p>
+  <p class=MsoNormal style='text-indent:8.55pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>value: </span><span
+  style='font-size:9.0pt;font-family:黑体'>“</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>1:One; 2:Two</span><span
+  style='font-size:9.0pt;font-family:黑体'>”</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> </span></p>
+  <p class=MsoNormal style='text-indent:8.55pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>对象：</span></p>
+  <p class=MsoNormal style='text-indent:8.55pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>value:{1:'One',2:'Two'}</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+style='font-size:9.0pt;line-height:150%'>&nbsp;</span></p>
+
+</div>

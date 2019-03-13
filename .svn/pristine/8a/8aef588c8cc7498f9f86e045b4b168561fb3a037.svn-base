@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PayconfigAlipay">
+
+	<resultMap type="com.lmxf.post.entity.pay.PayconfigAlipay" id="payconfigAlipayResultMap">
+		<id property="logid" column="logid" />
+		<result property="payConfigId" column="payConfigId" />
+		<result property="corpId" column="corpId" />
+		<result property="payAccept" column="payAccept" />
+		<result property="autoReturn" column="autoReturn" />
+		<result property="payType" column="payType" />
+		<result property="alipayVersion" column="alipayVersion" />
+		<result property="enType" column="enType" />
+		<result property="pid" column="pid" />
+		<result property="key" column="key" />
+		<result property="isCheckIn" column="isCheckIn" />
+		<result property="rate" column="rate" />
+		<result property="createTime" column="createTime" />
+		<result property="publKey" column="publKey" />
+		<result property="signType" column="signType" />
+		<result property="alipayApi" column="alipayApi" />
+		<result property="authBack" column="authBack" />
+		<result property="returnNotice" column="returnNotice" />
+		<result property="privKey" column="privKey" />
+		<result property="title" column="title" />
+		<result property="body" column="body" />
+		<result property="tradeType" column="tradeType" />
+	</resultMap>
+
+	<select id="findOneByCorpId" parameterType="String" resultMap="payconfigAlipayResultMap">
+		select * from as_payconfig_alipay where corpId=#{corpId}
+	</select>
+	
+</mapper> 

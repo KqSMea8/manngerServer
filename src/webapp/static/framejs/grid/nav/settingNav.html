@@ -1,0 +1,466 @@
+[文件路径: grid/nav/settingNav.html]
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid导航栏设置功能：通过设置属性navtype值即可灵活操作，值包括：none（没有导航栏）、top（导航栏在表头与数据区域之间）、bottom（导航栏在数据区域与分页栏之间）、both（导航栏在表头与数据区域之间，数据区域与分页栏之间都存在）四种方式；
+         通过navopt属性设置导航栏上按钮；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1：没有导航栏</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                <font color="red">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp默认导航栏类型为none；</font>
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="settingNav_rowed"></table>
+                        <div id="settingNav_prowed"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_settingNav_1">
+<pre>
+<font color='#027DD1'>1、没有导航栏：</font>
+<strong>js部分:</strong>
+ var  settingNavObj = new biz.grid({
+          id:"#settingNav_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">navtype:"none"</font> /*导航栏类型*/,
+         pager: '#settingNav_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+          },
+          pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+ });
+</pre>
+    </div>
+    <!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">示例2:导航栏在表头与数据区域之间</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="settingNav_rowed1"></table>
+                        <div id="settingNav_prowed1"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_settingNav_2">
+<pre>
+<font color='#027DD1'>1、导航栏在表头与数据区域之间：</font>
+<strong>js部分:</strong>
+ var  settingNavObj2 = new biz.grid({
+          id:"#settingNav_rowed1",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"popup",
+         <font color="red">navtype:"top"</font> /*导航栏类型*/,
+         <font color="red">navopt:{view:true,edit:true,add:true,del:true}</font>/*导航栏属性设置：哪些按钮显示*/,
+         pager: '#settingNav_prowed1' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+          },
+          pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+ });
+</pre>
+    </div>
+
+    <!-- 示例3 -->
+	<div class="barTitle2">
+		<div class="content">示例3:导航栏在数据区域与分页栏之间</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="settingNav_rowed2"></table>
+                        <div id="settingNav_prowed2"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_settingNav_3">
+<pre>
+<font color='#027DD1'>1、导航栏在数据区域与分页栏之间：</font>
+<strong>js部分:</strong>
+ var  settingNavObj3 = new biz.grid({
+          id:"#settingNav_rowed2",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"popup",
+         <font color="red">navtype:"bottom"</font> /*导航栏类型*/,
+         pager: '#settingNav_prowed2' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+ });
+</pre>
+    </div>
+<!-- 示例3 -->
+	<div class="barTitle2">
+		<div class="content">示例4:导航栏在grid上下都有</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="settingNav_rowed3"></table>
+                        <div id="settingNav_prowed3"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_settingNav_4">
+<pre>
+<font color='#027DD1'>1、导航栏在grid上下都有：</font>
+<strong>js部分:</strong>
+ var  settingNavObj4 = new biz.grid({
+          id:"#settingNav_rowed3",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"popup",
+         <font color="red">navtype:"both"</font>/*导航栏类型*/,
+         pager: '#settingNav_prowed3' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+ });
+</pre>
+    </div>
+
+    <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">导航栏属性列表</div>
+	</div>
+	<div class="content">
+	通过设置属性navtype值即可灵活操作导航栏所在位置，值包括：none（没有导航栏）、top（导航栏在表头与数据区域之间）、bottom（导航栏在数据区域与分页栏之间）、both（导航栏在表头与数据区域之间，数据区域与分页栏之间都存在）四种方式；通过navopt属性设置导航栏上按钮； 
+导航栏内容定义通过属性navopt（类型为objext{}）设置，包含属性如下：
+	<iframe src="./grid/nav/settingNav_navoptPara.htm" width="100%" scrolling="no" frameborder="0" height="1050px;"></iframe>
+navtype值设置为空（””）时，工具类不会生成操作按钮，可以通过调用api（navGrid）生成工具栏，其参数如下：
+		<iframe src="./grid/nav/settingNav_navGridPara.htm" width="100%" scrolling="no" frameborder="0" height="250px;"></iframe>
+						
+</div>
+<script type="text/javascript">
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",amount:"30000.00",tax:"1000.00",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"}
+      ];
+      var  settingNavObj = new biz.grid({
+          id:"#settingNav_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"none" /*导航栏类型*/,
+         pager: '#settingNav_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+          },
+          pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+      });
+
+      var  settingNavObj2 = new biz.grid({
+          id:"#settingNav_rowed1",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"popup",
+         navtype:"top" /*导航栏类型*/,
+         navopt:{view:true,edit:true,add:true,del:true}/*导航栏属性设置：哪些按钮显示*/,
+         pager: '#settingNav_prowed1' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+          },
+          pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+      });
+
+      var  settingNavObj3 = new biz.grid({
+          id:"#settingNav_rowed2",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"popup",
+         navtype:"bottom" /*导航栏类型*/,
+         pager: '#settingNav_prowed2' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+          },
+          pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+      });
+      var  settingNavObj4 = new biz.grid({
+          id:"#settingNav_rowed3",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"popup",
+         navtype:"both" /*导航栏类型*/,
+         pager: '#settingNav_prowed3' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+          },
+          pAdd:{ 
+             top:200, /*弹出框top位置*/
+             left:250,/*弹出框left位置*/
+             width:750,/*宽度*/
+             resize:true,/*弹出框可缩放大小*/
+             url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+             recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+      });
+</script>

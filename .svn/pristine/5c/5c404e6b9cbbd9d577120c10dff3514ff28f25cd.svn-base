@@ -1,0 +1,128 @@
+package com.lmxf.post.tradepkg.order;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.putils.utils.StringUtils;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.JSONUtils;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderBox;
+import com.lmxf.post.entity.order.OrderProduct;
+import com.lmxf.post.tradepkg.common.ReqHead;
+
+public class OrderDeliveryReq extends ReqHead {
+	@SuppressWarnings("unchecked")
+	public Map parseXml(String report_json) {
+		OrderApply orderApply = new OrderApply();
+		Map r = new HashMap();
+		try {
+			// json解析协议
+			JSONObject JSONBody = JSONUtils.getHeader(report_json);
+			String bcode = JSONBody.getString("BCode");
+
+			JSONBody = JSONUtils.getBody(report_json);
+			orderApply.setSaleChannel(GParameter.saleChannel_terminal);
+			orderApply.setSiteId(JSONBody.getString("SiteId"));
+			orderApply.setLoginId(JSONBody.getString("LoginId"));
+			orderApply.setLoginName(JSONBody.getString("LoginName"));
+			orderApply.setCreateTime(JSONBody.getString("ApplyTime"));
+			orderApply.setPayType(JSONBody.getString("PayType"));
+			if (orderApply.getSiteId() == null || "".equals(orderApply.getSiteId())) {
+				r.put("code", GConstent.Request_SiteId_No_Define);
+				return r;
+			}
+			if (orderApply.getLoginId() == null || "".equals(orderApply.getLoginId())) {
+				r.put("code", GConstent.Request_LoginId_No_Define);
+				return r;
+			}
+			if (orderApply.getLoginName() == null || "".equals(orderApply.getLoginName())) {
+				r.put("code", GConstent.Request_LoginName_No_Define);
+				return r;
+			}
+			if (orderApply.getCreateTime() == null || "".equals(orderApply.getCreateTime())) {
+				r.put("code", GConstent.Request_parameter_No_Define);
+				return r;
+			}
+			if (orderApply.getPayType() == null || "".equals(orderApply.getPayType())) {
+				r.put("code", GConstent.Request_parameter_No_Define);
+				return r;
+			}
+			JSONArray JSONArray = JSONBody.getJSONArray("ProductInfo");
+			if (JSONArray == null || JSONArray.size() <= 0) {
+				r.put("code", GConstent.Product_Info_No_Found);
+				return r;
+			}
+			List<OrderProduct> orderProductList = new ArrayList();
+			OrderProduct orderProduct = null;
+			int total_num = 0;
+			for (int i = 0; i < JSONArray.size(); i++) {
+				JSONObject jSONObject = (JSONObject) JSONArray.get(i);
+				orderProduct = new OrderProduct();
+				orderProduct.setProductId(jSONObject.getString("ProductId"));
+				if (StringUtils.isEmpty(orderProduct.getProductId())) {            
+ 					r.put("code", GConstent.Request_parameter_No_Define);
+					return r;
+				}
+				JSONArray JSONBoxArray = jSONObject.getJSONArray("LaneInfo");
+				if (JSONBoxArray == null || JSONBoxArray.size() <= 0) {
+					r.put("code", GConstent.Product_Info_No_Found);
+					return r;
+				}
+				int product_num = 0;
+				List<OrderBox> orderBoxList = new ArrayList();
+				OrderBox orderBox = null;
+				for (int j = 0; j < JSONBoxArray.size(); j++) {
+					JSONObject jSONBoxObject = (JSONObject) JSONBoxArray.get(j);
+					if (Integer.parseInt(jSONBoxObject.getString("LNum")) == 0 || "".equals(Integer.parseInt(jSONBoxObject.getString("LNum")))) {
+						r.put("code", GConstent.Request_parameter_No_Define);
+						return r;
+					}
+					int outIndex = 0;
+					for(int k = 0; k < Integer.parseInt(jSONBoxObject.getString("LNum")); k++){
+						orderBox = new OrderBox();
+						orderBox.setProductId(orderProduct.getProductId());
+						orderBox.setOutIndex(outIndex + 1);
+						orderBox.setLaneSId(Integer.parseInt(jSONBoxObject.getString("LaneSId")));
+						orderBox.setLaneEId(Integer.parseInt(jSONBoxObject.getString("LaneEId")));
+						if (orderBox.getLaneSId() == 0 || "".equals(orderBox.getLaneSId())) {
+							r.put("code", GConstent.Request_parameter_No_Define);
+							return r;
+						}
+						if (orderBox.getLaneEId()== 0 || "".equals(orderBox.getLaneEId())) {
+							r.put("code", GConstent.Request_parameter_No_Define);
+							return r;
+						}
+						orderBoxList.add(orderBox);
+					}
+					product_num = product_num + Integer.parseInt(jSONBoxObject.getString("LNum"));
+					total_num = total_num + Integer.parseInt(jSONBoxObject.getString("LNum"));
+				}
+				orderProduct.setSaleNum(product_num);
+				orderProduct.setOrderBoxList(orderBoxList);
+				orderProductList.add(orderProduct);
+			}
+			if (orderProductList.size() <= 0) {
+				r.put("code", GConstent.Request_parameter_No_Define);
+				return r;
+			}
+			orderApply.setpNum(total_num);
+			orderApply.setOrderProductList(orderProductList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			r.put("code", GConstent.Program_App_Execp);
+			return r;
+		}
+		r.put("code", 0);
+		r.put("orderApply", orderApply);
+		return r;
+	}
+
+}

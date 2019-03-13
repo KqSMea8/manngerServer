@@ -1,0 +1,116 @@
+[文件路径: tree/checkbox_nocheck.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("ts_checkbox_nocheck");
+</script>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo_checkbox_nocheck" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、setting 配置信息说明</h2>
+				<ul class="list">
+				<li>这个 Demo 只简单演示 nocheck 的使用方法.</li>
+				<li class="highlight_red">setting.check.nocheckInherit 可以设置子节点自动继承父节点的 nocheck 属性</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li class="highlight_red">1)、如果某节点不显示 checkbox，请设置 treeNode.nocheck 属性.</li>
+				<li>2)、其他请参考 ‘Checkbox 勾选操作’</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+			
+			<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="ts_checkbox_nocheck">
+    <pre class="brush: js;">
+html部分:
+
+&lt;ul id="treeDemo_checkbox_nocheck" class="ztree"&gt;&lt;/ul&gt;
+
+js部分:
+
+var zNodes =[
+	{ id:1, pId:0, name:"随意勾选 1", open:true},
+	{ id:11, pId:1, name:"随意勾选 1-1", open:true},
+	{ id:111, pId:11, name:"无 checkbox 1-1-1", nocheck:true},
+	{ id:112, pId:11, name:"随意勾选 1-1-2"},
+	{ id:12, pId:1, name:"无 checkbox 1-2", nocheck:true, open:true},
+	{ id:121, pId:12, name:"无 checkbox 1-2-1"},
+	{ id:122, pId:12, name:"无 checkbox 1-2-2"},
+	{ id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
+	{ id:21, pId:2, name:"随意勾选 2-1"},
+	{ id:22, pId:2, name:"随意勾选 2-2", open:true},
+	{ id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+	{ id:222, pId:22, name:"随意勾选 2-2-2"},
+	{ id:23, pId:2, name:"随意勾选 2-3"}
+];
+var setting_checkbox_nocheck = {
+    id:"#treeDemo_checkbox_nocheck",
+     nodes:zNodes,  //数据节点指定
+	check: {
+		enable: true,
+		nocheckInherit: true
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	}
+};
+var treeDemo;
+$(document).ready(function(){
+	treeDemo =  new biz.tree(setting_checkbox_nocheck);//创建树
+});
+           </pre>
+
+       </div>
+</div>
+
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+var zNodes =[
+	{ id:1, pId:0, name:"随意勾选 1", open:true},
+	{ id:11, pId:1, name:"随意勾选 1-1", open:true},
+	{ id:111, pId:11, name:"无 checkbox 1-1-1", nocheck:true},
+	{ id:112, pId:11, name:"随意勾选 1-1-2"},
+	{ id:12, pId:1, name:"无 checkbox 1-2", nocheck:true, open:true},
+	{ id:121, pId:12, name:"无 checkbox 1-2-1"},
+	{ id:122, pId:12, name:"无 checkbox 1-2-2"},
+	{ id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
+	{ id:21, pId:2, name:"随意勾选 2-1"},
+	{ id:22, pId:2, name:"随意勾选 2-2", open:true},
+	{ id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+	{ id:222, pId:22, name:"随意勾选 2-2-2"},
+	{ id:23, pId:2, name:"随意勾选 2-3"}
+];
+var setting_checkbox_nocheck = {
+    id:"#treeDemo_checkbox_nocheck",
+     nodes:zNodes,  //数据节点指定
+	check: {
+		enable: true,
+		nocheckInherit: true
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	}
+};
+var treeDemo;
+$(document).ready(function(){
+	treeDemo =  new biz.tree(setting_checkbox_nocheck);//创建树
+});
+</script>

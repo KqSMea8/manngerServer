@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingEvent">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingEvent" id="vendingEventResultMap">
+		<id property="logid" column="logid" />
+		<result property="eventId" column="eventId" />
+		<result property="districtId" column="districtId" />
+		<result property="lineId" column="lineId" />
+		<result property="pointId" column="pointId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="eventType" column="eventType" />
+		<result property="corpId" column="corpId" />
+		<result property="createTime" column="createTime" />
+		
+		<result property="eventTId" column="eventTId" />
+		<result property="eventCont" column="eventCont" />
+		<result property="evnentState" column="evnentState" />
+		<result property="eventTime" column="eventTime" />
+		<result property="eventTId" column="eventTId" />
+	</resultMap>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.vending.VendingEvent" resultMap="vendingEventResultMap">
+		select *
+		from as_vending_event where siteId=#{siteId} and eventTId=#{eventTId}
+	</select>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.vending.VendingEvent">
+	   insert into as_vending_event(logid,eventId,districtId,lineId,pointId,siteId,siteName,eventType,corpId,createTime,eventTId,eventCont,evnentState,eventTime) values(
+	   #{logid},#{eventId},#{districtId},#{lineId},#{pointId},#{siteId},#{siteName},#{eventType},#{corpId},#{createTime},#{eventTId},#{eventCont},#{evnentState},#{eventTime})
+	</insert>
+</mapper>

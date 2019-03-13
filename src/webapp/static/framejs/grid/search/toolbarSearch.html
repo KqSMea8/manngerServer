@@ -1,0 +1,207 @@
+[文件路径: grid/search/toolbarSearch.html]
+
+
+    <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid在导航栏处通过“查找”按钮进行数据查找功能，同时能设置多列多样化查找条件。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+
+                       <table id="toolbarSearch_rowed"></table>
+                       <div id="toolbarSearch_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+<!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_toolbarSearch">
+<pre>
+<font color='#027DD1'>1.设置列数据查找属性：</font>
+<strong>js部分:</strong>
+     var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+     function <font color="red">datePick</font>(elem){
+          new biz.datepicker({id:elem});
+     }
+     var toolbarSearchGridObj = new biz.grid({
+          id:"#toolbarSearch_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,sorttype:"int",
+                <font color="red">search:false</font>/*此列不能查找*/,
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,sorttype:"date",formoptions:{ rowpos:1, colpos:2},
+               <font color="red">search:true</font>/*此列能查找*/, 
+               <font color="red">stype:'text'</font>/*查找框类型*/,
+               searchoptions:{
+                 <font color="red">dataInit:datePick</font>/*将查找框渲染为datepiker*/, 
+                 <font color="red">attr:{title:'Select Date'}</font>/*查找框属性*/}/*查找框属性*/},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         navtype:"top" /*导航栏类型*/,
+         <font color="red">navopt:{search:true}</font> /*导航栏处显示查找按钮*/,
+         pager: '#toolbarSearch_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+     });
+<font color='#027DD1'>2.设置高级查找：</font>
+<strong>js部分:</strong>
+     toolbarSearchGridObj.searchGrid( {showQuery:false,
+                          multipleSearch:true,/*设置可以进行多列同时查找*/});
+    <font color="red">/*如不使用searchGrid，只能进行当列数据查找；*/</font>
+</pre>
+</div>
+    <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">工具栏查找API参数列表</div>
+	</div>
+	<div class="content">
+	工具栏查找通过在grid工具栏增加“查找“按钮进行操作，使用到此api：searchGrid(options)， options内容说明如下：
+	<iframe src="./grid/search/toolbarSearchPara.htm" width="100%" scrolling="no" frameborder="0" height="700px;"></iframe>
+
+	
+	</div>
+							
+
+<script type="text/javascript">
+      var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"14",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"15",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"16",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"17",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"18",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"19",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"21",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"22",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"23",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"24",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"25",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"26",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"27",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"28",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"29",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+      ];
+
+      function datePick(elem){
+          new biz.datepicker({id:elem});
+      }
+      var toolbarSearchGridObj = new biz.grid({
+          id:"#toolbarSearch_rowed",/*html部分table id*/
+          //url:"http://localhost:8080",
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,sorttype:"int",search:false,formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,sorttype:"date",
+                search:true, stype:'text', searchoptions:{dataInit:datePick, attr:{title:'Select Date'}}, formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+               index:'note',/*排序时使用名称*/
+               label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+               width:100, /*列宽度单位px*/
+               sortable:false,/*列是否可排序*/
+               editable:true, /*列是否可编辑*/
+               edittype:"textarea",/*以textarea方式编辑*/
+               editoptions:{rows:"2"},/*编辑属性*/
+               formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}],
+          navtype:"top" /*导航栏类型*/,
+          navopt:{search:true} /*导航栏处显示查找按钮*/,
+          pager: '#toolbarSearch_prowed' /*分页栏id*/,
+          pView:{
+              top:200, /*弹出框top位置*/
+              left:250,/*弹出框left位置*/
+              width:600,/*宽度*/
+              resize:false,
+              recreateForm:true
+           },
+           pAdd:{ 
+              top:200, /*弹出框top位置*/
+              left:250,/*弹出框left位置*/
+              width:750,/*宽度*/
+              resize:true,/*弹出框可缩放大小*/
+              url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+              recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+           pEdit:{
+              top:200, /*弹出框top位置*/
+              left:250,/*弹出框left位置*/
+              width:750,/*宽度*/
+              resize:true,recreateForm:true}
+      });
+      toolbarSearchGridObj.searchGrid( {multipleSearch:true,showQuery:false,showOnLoad:false} );
+</script>

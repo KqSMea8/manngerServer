@@ -1,0 +1,320 @@
+[文件路径: form/sheet/sheet1.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_sheet1");
+</script>
+   <div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		单列表单，主要用于信息较少时的录入时的场景。<font color='red'>（本示例主要说明表单整体布局，对于表单内部具体组件可能采用原始用法，规范的封装后用法请参见各组件详细说明）</font>
+	</div>
+
+
+	<div class="main">
+    <div class="barTitle"> 
+		<div class="content">		
+           <a href= "javascript:;" onfocus="this.blur()" > </a> <span>单列表单</span>		
+		</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					 <tr >
+						 <td class="inputLabelTd">姓名：</td> <td class="inputTd"><input type="text" class="text"/></td>
+					 </tr>
+					 <tr>
+						 <td class="inputLabelTd">曾用名：</td><td class="inputTd"><input type="text" class="text"/></td>
+					 </tr>
+					 <tr>
+						<td class="inputLabelTd">密码：</td>
+						<td class="inputTd">
+						<input id="password" type="password" class="password" />
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">性别：</td>
+						<td class="inputTd">
+						     <div id="radio_sex"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">婚姻状况：</td>
+						<td class="inputTd">
+						    <div id="hunyin"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">爱好：</td>
+						<td class="inputTd">
+							<div id="inst"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">出生日期：</td>
+						<td class="inputTd">
+						<input id="birthday_sheet1" type="text" class="Wdate"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">民族：</td>
+						<td class="inputTd">
+						    <select id="sel" name="sel" class="select" ></select>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">籍贯：</td>
+						<td class="inputTd">
+							<input id='s22_sheet1' type="text" class="text"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inputLabelTd">学历：</td>
+						<td class="inputTd">
+						    <select id="sel2" name="sel2" class="select" ></select>
+						</td>
+					</tr>
+			</table>
+			 <table class="table foottable">
+						<tfoot class="footTd" >
+							<tr>
+							  <td class="inputTd">
+							        <button id="sub_button_sheet1"></button>
+								    <button id="reset_btn_sheet1" ></button>
+									<button id="cancel_button_sheet1" ></button>
+
+								</td>
+							</tr>
+						</tfoot>
+		
+			 </table>
+		</div>
+	
+</div>
+
+
+<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"   name="source_sheet1">
+           <pre class="brush: js;">
+ <!--html部分-->
+ 	&lt;div class="main"&gt;
+    &lt;div class="barTitle"&gt; 
+		&lt;div class="content"&gt;		
+           &lt;a href= "javascript:;" onfocus="this.blur()" &gt; &lt;/a&gt; &lt;span&gt;单列表单&lt;/span&gt;
+		    &lt;!--href= "javascript:;" 防止点击图片表单出现其它动作 onfocus="this.blur()"去除点击图片时出现虚框--&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+    &lt;hr class="barTitleHr"/&gt;
+    &lt;div class="<font color='red'>ui-table ui-widget ui-corner-all ui-border</font>"&gt;    
+		&lt;table <font color='red'>class="table"</font> &gt;
+			&lt;tr &gt;
+			  &lt;td class="inputLabelTd"&gt;姓名：&lt;/td&gt; &lt;td class="inputTd"&gt;&lt;input type="text" class="text"/&gt;&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+			  &lt;td class="inputLabelTd"&gt;曾用名：&lt;/td&gt;&lt;td class="inputTd"&gt;&lt;input type="text" class="text"/&gt;&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+			  &lt;td class="inputLabelTd"&gt;密码：&lt;/td&gt;
+			  &lt;td class="inputTd"&gt;
+			    &lt;input id="password" type="password" class="password" /&gt;
+			  &lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;性别：&lt;/td&gt;
+				&lt;td class="inputTd"&gt;
+					  &lt;div id="radio_sex"&gt;&lt;/div&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;婚姻状况：&lt;/td&gt;
+				&lt;td class="inputTd"&gt;
+					 &lt;div id="hunyin"&gt;&lt;/div&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;爱好：&lt;/td&gt;
+				&lt;td class="inputTd"&gt;
+					&lt;div id="inst"&gt;&lt;/div&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;出生日期：&lt;/td&gt;
+				&lt;td class="inputTd"&gt;
+				&lt;input id="birthday_sheet1" type="text" class="Wdate"/&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;民族：&lt;/td&gt;
+				&lt;td class="inputTd"&gt;
+				  &lt;select id="sel" name="sel" class="select"&gt;&lt;/select&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;籍贯：&lt;/td&gt;
+				&lt;td class="inputTd"&gt;
+					&lt;input id='s22_sheet1' type="text" class="text"/&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;学历：&lt;/td&gt;
+				&lt;td class="inputTd"&gt;
+				&lt;select id="sel2" name="sel2" class="select"&gt;&lt;/select&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/table&gt;
+			 &lt;table class="table foottable"&gt;
+						&lt;tfoot class="footTd" &gt;
+							&lt;tr&gt;
+							  &lt;td class="inputTd"&gt;
+								&lt;button id="sub_button_sheet1"&gt;&lt;/button&gt;
+								&lt;button id="reset_btn_sheet1" &gt;&lt;/button&gt;
+								&lt;button id="cancel_button_sheet1" &gt;&lt;/button&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+						&lt;/tfoot&gt;
+			 &lt;/table&gt;
+		&lt;/div&gt;
+&lt;/div&gt;
+ <!--js部分-->
+ //性别。radio控件
+   var radioArr = [
+    {label: "男", name: "sex", value: "man"},
+    {label: "女", name: "position", value: "women"}
+  ];
+  new biz.radio({id:"#radio_sex",data: radioArr});
+ //婚姻。radio控件
+  var radioArr_hunyin = [
+    {label: "已婚", name: "hunyin", value: "yihun"},
+    {label: "未婚", name: "hunyin", value: "weihun"}
+  ];
+  new biz.radio({id:"#hunyin",data: radioArr_hunyin});
+  //爱好。checkbox控件
+  var checkboxArr_ins = [
+		{label: "踢足球", name: "intrest", value: "football"},
+		{label: "打篮球", name: "intrest", value: "basketball"},
+		{label: "打乒乓球", name: "intrest", value: "pingpong"},
+		{label: "跳舞 ", name: "intrest", value: "dance"}
+ ];
+  new biz.checkbox({id:"#inst",data:checkboxArr_ins});
+  //民族
+  new biz.select({
+		id:"#sel",
+		data:[{'name':'汉族','value':'han'},{'name':'满族','value':'man'},{'name':'维吾尔族','value':'weiwuer'}]
+	});
+  //学历
+  new biz.select({
+		id:"#sel2",
+		data:[
+		  {'name':'博士后','value':'degree_6'},
+		  {'name':'博士','value':'degree_5'},
+		  {'name':'硕士','value':'degree_4'},
+		  {'name':'本科','value':'degree_3'},
+		  {'name':'专科','value':'degree_2'},
+		  {'name':'高中','value':'degree_1'},
+		  {'name':'初中','value':'degree_0'}
+		],
+       value:'degree_1'
+	});
+ //出生日期。时间控件。详细参见“表单域组件”--->"时间日期"
+ new biz.datepicker({
+  id:"#birthday_sheet1"
+})
+ //籍贯。下拉有限项控件，详细参见“表单域组件”--->"下拉框"
+ var setting =   {
+        id:"#s22_sheet1",
+		columns:3,
+		checkbox:true,
+	    maxchecked:4,
+		listwidth:298,
+		usinglimit:true,
+		data:[{value:'1',name:'北京'},{value:'2',name:'上海'},{value:'3',name:'天津'},
+		{value:'4',name:'沈阳'},{value:'5',name:'内蒙古自治区'},{value:'6',name:'南京'},{value:'7',name:'广州'}],//数据，格式：{value:name}
+		onchange:function(text,value){
+		}
+    }
+     var list =    new biz.comboboxlist(setting);
+//按钮
+	new biz.button({id:"#sub_button_sheet1",icons: {primary: "ui-icon-disk"},label: "提 交" ,text: true }).click(function() {
+	    
+	});
+	new biz.button({id:"#reset_btn_sheet1",icons: {primary: "ui-icon-refresh"},label: "重 置" ,text: true }).click(function() {
+	   
+	});
+    new biz.button({id:"#cancel_button_sheet1",icons: {primary: "ui-icon-close"},label: "取 消" ,text: true }).click(function() {
+	   
+	});
+          </pre>
+ 	   </div>
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+
+   var radioArr = [
+    {label: "男", name: "sex", value: "man"},
+    {label: "女", name: "sex", value: "women"}
+  ];
+  new biz.radio({id:"#radio_sex",data: radioArr});
+
+   var radioArr_hunyin = [
+    {label: "已婚", name: "hunyin", value: "yihun"},
+    {label: "未婚", name: "hunyin", value: "weihun"}
+  ];
+  new biz.radio({id:"#hunyin",data: radioArr_hunyin});
+  
+   var checkboxArr_ins = [
+		{label: "踢足球", name: "intrest", value: "football"},
+		{label: "打篮球", name: "intrest", value: "basketball"},
+		{label: "打乒乓球", name: "intrest", value: "pingpong"},
+		{label: "跳舞 ", name: "intrest", value: "dance"}
+	];
+  new biz.checkbox({id:"#inst",data:checkboxArr_ins});
+ //民族
+ new biz.select({
+		id:"#sel",
+		data:[{'name':'汉族','value':'han'},{'name':'满族','value':'man'},{'name':'维吾尔族','value':'weiwuer'}]
+	});
+//学历
+  new biz.select({
+		id:"#sel2",
+		data:[
+		  {'name':'博士后','value':'degree_6'},
+		  {'name':'博士','value':'degree_5'},
+		  {'name':'硕士','value':'degree_4'},
+		  {'name':'本科','value':'degree_3'},
+		  {'name':'专科','value':'degree_2'},
+		  {'name':'高中','value':'degree_1'},
+		  {'name':'初中','value':'degree_0'}
+		],
+       value:'degree_1'
+	});
+ //出生日期时间控件
+ new biz.datepicker({
+  id:"#birthday_sheet1"
+})
+  /*下拉列表选择项(多列) */
+ var setting =   {
+        id:"#s22_sheet1",
+		columns:3,
+		checkbox:true,
+	    maxchecked:4,
+		listwidth:298,
+		usinglimit:true,
+		data:[{value:'1',name:'北京'},{value:'2',name:'上海'},{value:'3',name:'天津'},{value:'4',name:'沈阳'},{value:'5',name:'内蒙古自治区'},{value:'6',name:'南京'},{value:'7',name:'广州'}],//数据，格式：{value:name}
+		onchange:function(text,value){
+		}
+    }
+     var list =    new biz.comboboxlist(setting);
+
+	new biz.button({id:"#sub_button_sheet1",icons: {primary: "ui-icon-disk"},label: "提 交" ,text: true }).click(function() {
+	    
+	});
+	new biz.button({id:"#reset_btn_sheet1",icons: {primary: "ui-icon-refresh"},label: "重 置" ,text: true }).click(function() {
+	   
+	});
+    new biz.button({id:"#cancel_button_sheet1",icons: {primary: "ui-icon-close"},label: "取 消" ,text: true }).click(function() {
+	   
+	});
+
+</script>

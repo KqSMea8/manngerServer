@@ -1,0 +1,345 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=ZH-CN style='text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=671
+ style='width:503.25pt;margin-left:5.4pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=63 valign=top style='width:47.35pt;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>类型</span></b></p>
+  </td>
+  <td width=130 valign=top style='width:97.3pt;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>属性</span></b></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:8.5pt'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>默认值</span></b></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>说明</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=63 rowspan=9 style='width:47.35pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>基本属性</span></p>
+  </td>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>rowid</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>&nbsp;</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>行的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>keys</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>False</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>如设置</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true,</span><span
+  style='font-size:9.0pt;font-family:黑体'>则可通过“</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>enter</span><span
+  style='font-size:9.0pt;font-family:黑体'>”保持数据，“</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>esc</span><span
+  style='font-size:9.0pt;font-family:黑体'>”取消保持。</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>oneditfunc</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>参数：行</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>获取编辑数据之后触发</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>succesfunc</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>参数：</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>端返回数据</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>函数返回值：返回</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>或者</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>请求成功触发</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>url</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>“”</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>设置此</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>url</span><span
+  style='font-size:9.0pt;font-family:黑体'>将覆盖</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>editurl</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>extraparam</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>{}</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>添加格外参数</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>aftersavefunc</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>参数</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Rowid</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>；</span><span style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> </span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>参数</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>response</span><span
+  style='font-size:9.0pt;font-family:黑体'>：</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>返回信息</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>数据保持到</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>后触发</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>errorfunc</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>参数</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Rowid</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>；</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>&nbsp;</span><span
+  style='font-size:9.0pt;font-family:黑体'>参数</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>response</span><span
+  style='font-size:9.0pt;font-family:黑体'>：</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>返回信息</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>数据保持到</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>端发生错误时触发</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=130 valign=top style='width:97.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>afterrestorefunc</span></p>
+  </td>
+  <td width=191 valign=top style='width:143.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>参数</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Rowid</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>；</span></p>
+  </td>
+  <td width=287 valign=top style='width:215.35pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>存储行数据后触发</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+style='font-size:9.0pt;line-height:150%'>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>

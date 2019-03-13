@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Dict">
+
+	<resultMap type="com.lmxf.post.entity.parameter.Dict" id="dictResultMap">
+		<id property="logid" column="logid" />
+		<result property="dictId" column="dictId"/>
+		<result property="dictKey" column="dictKey"/>
+		<result property="dictValue" column="dictValue"/>
+		<result property="description" column="description"/>
+
+	</resultMap>
+
+	<select id="findDataPage" parameterType="com.lmxf.post.entity.parameter.Dict" resultMap="dictResultMap">
+		select * from sys_dict 
+	</select>
+
+	<select id="findOne" parameterType="String" resultMap="dictResultMap">
+		select *
+		from sys_dict where logid= #{logid}
+	</select>
+    <select id="findOneByDictKey" parameterType="String" resultMap="dictResultMap">
+		select * from sys_dict where description= #{description}
+	</select>
+	<select id="findAll" resultMap="dictResultMap">
+		select * from sys_dict 
+	</select>
+
+	<delete id="delete" parameterType="String">
+		delete from sys_dict where logid=#{logid}
+	</delete>
+</mapper> 
+

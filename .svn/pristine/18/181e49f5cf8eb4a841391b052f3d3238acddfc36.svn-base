@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+	default-lazy-init="false">
+	<!--公共配置 -->
+	<bean id="commonResp" class="com.lmxf.post.tradepkg.common.CommonResp"
+		scope="prototype">
+	</bean>
+	<bean id="dictService" class="com.lmxf.post.service.core.DictService">
+		<property name="dictDao" ref="dictDao" />
+		<property name="errorCodeDao" ref="errorCodeDao" />
+	</bean>
+	<bean id="clientCallSoap" class="com.lmxf.post.core.utils.ClientCallSoap">
+	</bean>
+	<bean id="errorResp" class="com.lmxf.post.tradepkg.common.ErrorResp"
+		scope="prototype">
+	</bean>
+	<bean id="errorCodeService" class="com.lmxf.post.service.core.ErrorCodeService"
+		scope="prototype">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="errorResp" ref="errorResp" />
+	</bean>
+	<bean id="sequenceIdService" class="com.lmxf.post.service.core.SequenceIdService">
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+	</bean>
+	<bean id="xmlValidator" class="com.lmxf.post.core.utils.XmlValidator"
+		scope="prototype">
+	</bean>
+	<bean id="tradeDefineService" class="com.lmxf.post.service.core.TradeDefineService">
+		<property name="tradeDefineDao" ref="tradeDefineDao" />
+	</bean>
+	<bean id="payconfigWechatService" class="com.lmxf.post.service.core.PayconfigWechatService"
+		scope="prototype">
+		<property name="payconfigWechatDao" ref="payconfigWechatDao" />
+	</bean>
+	<bean id="orderApplyService" class="com.lmxf.post.service.core.OrderApplyService"
+		scope="prototype">
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderIssuedResp" ref="orderIssuedResp" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+	</bean>
+	<bean id="orderIssuedResp" class="com.lmxf.post.tradepkg.dataSynch.OrderIssuedResp"
+		scope="prototype">
+	</bean>
+	<bean id="alipaySubmitService" class="com.lmxf.post.service.core.AlipaySubmitService"
+		scope="prototype">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+	</bean>
+	<!-- 处理类配置 -->
+	<!-- 第三方接口模块服务 -->
+    <bean id="partnerEntry" class="com.lmxf.post.webservice.impl.PartnerEntryImpl">
+		<property name="partnerProcess" ref="partnerProcess" />
+		<property name="cxfClient" ref="cxfClient" />
+		<property name="springContextUtil" ref="SpringContextUtil" />
+	</bean>
+	<bean id="partnerProcess" class="com.lmxf.post.webservice.impl.PartnerProcess">
+		<property name="tradeDefineService" ref="tradeDefineService" />
+		<property name="errorCodeService" ref="errorCodeService" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="tradeVendingInfoService" ref="tradeVendingInfoService" />
+		<property name="tradeVendingProductInfoService" ref="tradeVendingProductInfoService" />
+		<property name="tradeOrderApplyService" ref="tradeOrderApplyService" />
+		<property name="tradeOrderCancelService" ref="tradeOrderCancelService" />
+		<property name="tradeOrderChangeService" ref="tradeOrderChangeService" />
+		<property name="tradeCustomerOrderInfoService" ref="tradeCustomerOrderInfoService" />
+		<property name="tradeLaneProductInfoService" ref="tradeLaneProductInfoService" />
+		<property name="tradeSupplyInfoService" ref="tradeSupplyInfoService" />
+		<property name="tradeSupplyResultService" ref="tradeSupplyResultService" />
+		<property name="tradeUnderInfoService" ref="tradeUnderInfoService" />
+		<property name="tradeUnderResultService" ref="tradeUnderResultService" />
+		<property name="tradeEmpInfoService" ref="tradeEmpInfoService" />
+		<property name="tradeUserInfoService" ref="tradeUserInfoService" />
+		<property name="tradeEmpAddService" ref="tradeEmpAddService" />
+		<property name="tradeEmpEditService" ref="tradeEmpEditService" />
+		<property name="tradeEmpDeleteService" ref="tradeEmpDeleteService" />
+		<property name="tradeDoorOpenService" ref="tradeDoorOpenService" />
+		<property name="tradeBoxOpenService" ref="tradeBoxOpenService" />
+		<property name="tradeBoxOpenStateService" ref="tradeBoxOpenStateService" />
+		<property name="tradeSiteNetStateService" ref="tradeSiteNetStateService" />
+		<property name="tradeProductInfoService" ref="tradeProductInfoService" />
+		<property name="tradeProductClassifyService" ref="tradeProductClassifyService" />
+		<property name="tradeSupplyEventService" ref="tradeSupplyEventService" />
+		<property name="tradeVendingPersonService" ref="tradeVendingPersonService" />
+		<property name="tradeVendingCmdService" ref="tradeVendingCmdService" />
+		<property name="tradeOrderOpenService" ref="tradeOrderOpenService" />
+		<property name="tradeOrderReportService" ref="tradeOrderReportService" />
+		<property name="tradeOrderPayService" ref="tradeOrderPayService" />
+		<property name="tradeOrderRefundService" ref="tradeOrderRefundService" />
+		<property name="tradePayTestService" ref="tradePayTestService" />
+		<property name="tradeSiteLanelsdifferService" ref="tradeSiteLanelsdifferService" />
+		<property name="tradeSitelsdhandleService" ref="tradeSitelsdhandleService" />
+		
+	</bean>
+	
+	<!-- 售货机信息查询 -->
+	<bean id="tradeSitelsdhandleService" class="com.lmxf.post.service.partner.TradeSitelsdhandleService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="sitelsdhandleReq" ref="sitelsdhandleReq" />
+		<property name="sitelsdhandleResp" ref="sitelsdhandleResp" />
+		<property name="vendingLsdifferDao" ref="vendingLsdifferDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+		<property name="vendingLsdhandleDao" ref="vendingLsdhandleDao" />
+	</bean>
+	<bean id="sitelsdhandleReq" class="com.lmxf.post.tradepkg.partner.SitelsdhandleReq"
+		scope="prototype">
+	</bean>
+	<bean id="sitelsdhandleResp" class="com.lmxf.post.tradepkg.partner.SitelsdhandleResp"
+		scope="prototype">
+	</bean>
+	<!-- 售货机信息查询 -->
+	<bean id="tradeSiteLanelsdifferService" class="com.lmxf.post.service.partner.TradeSiteLanelsdifferService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="siteLanelsdifferReq" ref="siteLanelsdifferReq" />
+		<property name="siteLanelsdifferResp" ref="siteLanelsdifferResp" />
+		<property name="vendingLsdifferDao" ref="vendingLsdifferDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="vendingCmdDao" ref="vendingCmdDao" />
+		
+	</bean>
+	<bean id="siteLanelsdifferReq" class="com.lmxf.post.tradepkg.partner.SiteLanelsdifferReq"
+		scope="prototype">
+	</bean>
+	<bean id="siteLanelsdifferResp" class="com.lmxf.post.tradepkg.partner.SiteLanelsdifferResp"
+		scope="prototype">
+	</bean>
+	<!-- 售货机信息查询 -->
+	<bean id="tradeVendingInfoService" class="com.lmxf.post.service.partner.TradeVendingInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingInfoReq" ref="vendingInfoReq" />
+		<property name="vendingInfoResp" ref="vendingInfoResp" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="favourableObjectDao" ref="favourableObjectDao" />
+		<property name="vendingStateDao" ref="vendingStateDao" />
+	</bean>
+	<bean id="vendingInfoReq" class="com.lmxf.post.tradepkg.partner.VendingInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingInfoResp" class="com.lmxf.post.tradepkg.partner.VendingInfoResp"
+		scope="prototype">
+	</bean>
+	<!-- 售货机商品信息查询 -->
+	<bean id="tradeVendingProductInfoService" class="com.lmxf.post.service.partner.TradeVendingProductInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingProductInfoReq" ref="vendingProductInfoReq" />
+		<property name="vendingProductInfoResp" ref="vendingProductInfoResp" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+	</bean>
+	<bean id="vendingProductInfoReq" class="com.lmxf.post.tradepkg.partner.VendingProductInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingProductInfoResp" class="com.lmxf.post.tradepkg.partner.VendingProductInfoResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单申请 -->
+	<bean id="tradeOrderApplyService" class="com.lmxf.post.service.partner.TradeOrderApplyService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderApplyReq" ref="orderApplyReq" />
+		<property name="orderApplyResp" ref="orderApplyResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="favourableObjectDao" ref="favourableObjectDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="productOnlineDao" ref="productOnlineDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+	</bean>
+	<bean id="orderApplyReq" class="com.lmxf.post.tradepkg.partner.OrderApplyReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderApplyResp" class="com.lmxf.post.tradepkg.partner.OrderApplyResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单取消 -->
+	<bean id="tradeOrderCancelService" class="com.lmxf.post.service.partner.TradeOrderCancelService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderCancelReq" ref="orderCancelReq" />
+		<property name="orderCancelResp" ref="orderCancelResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+		
+	</bean>
+	<bean id="orderCancelReq" class="com.lmxf.post.tradepkg.partner.OrderCancelReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderCancelResp" class="com.lmxf.post.tradepkg.partner.OrderCancelResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单退款 -->
+	<bean id="tradeOrderRefundService" class="com.lmxf.post.service.partner.TradeOrderRefundService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderRefundReq" ref="orderRefundReq" />
+		<property name="orderRefundResp" ref="orderRefundResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+	</bean>
+	<bean id="orderRefundReq" class="com.lmxf.post.tradepkg.partner.OrderRefundReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderRefundResp" class="com.lmxf.post.tradepkg.partner.OrderRefundResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单状态查询 -->
+	<bean id="tradeOrderChangeService" class="com.lmxf.post.service.partner.TradeOrderChangeService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderChangeReq" ref="orderChangeReq" />
+		<property name="orderChangeResp" ref="orderChangeResp" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+	</bean>
+	<bean id="orderChangeReq" class="com.lmxf.post.tradepkg.partner.OrderChangeReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderChangeResp" class="com.lmxf.post.tradepkg.partner.OrderChangeResp"
+		scope="prototype">
+	</bean>
+	<!-- 客户订单查询 -->
+	<bean id="tradeCustomerOrderInfoService" class="com.lmxf.post.service.partner.TradeCustomerOrderInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="customerOrderInfoReq" ref="customerOrderInfoReq" />
+		<property name="customerOrderInfoResp" ref="customerOrderInfoResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+	</bean>
+	<bean id="customerOrderInfoReq" class="com.lmxf.post.tradepkg.partner.CustomerOrderInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="customerOrderInfoResp" class="com.lmxf.post.tradepkg.partner.CustomerOrderInfoResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单支付 -->
+	<bean id="tradeOrderPayService" class="com.lmxf.post.service.partner.TradeOrderPayService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderPayReq" ref="orderPayReq" />
+		<property name="orderPayResp" ref="orderPayResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+	</bean>
+	<bean id="orderPayReq" class="com.lmxf.post.tradepkg.partner.OrderPayReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderPayResp" class="com.lmxf.post.tradepkg.partner.OrderPayResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单支付 -->
+	<bean id="tradePayTestService" class="com.lmxf.post.service.partner.TradePayTestService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="payTestReq" ref="payTestReq" />
+		<property name="payTestResp" ref="payTestResp" />
+	</bean>
+	<bean id="payTestReq" class="com.lmxf.post.tradepkg.partner.PayTestReq"
+		scope="prototype">
+	</bean>
+	<bean id="payTestResp" class="com.lmxf.post.tradepkg.partner.PayTestResp"
+		scope="prototype">
+	</bean>
+	<!-- 售货机货道商品查询 -->
+	<bean id="tradeLaneProductInfoService" class="com.lmxf.post.service.partner.TradeLaneProductInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="laneProductInfoReq" ref="laneProductInfoReq" />
+		<property name="laneProductInfoResp" ref="laneProductInfoResp" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="productOnlineDao" ref="productOnlineDao" />
+	</bean>
+	<bean id="laneProductInfoReq" class="com.lmxf.post.tradepkg.partner.LaneProductInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="laneProductInfoResp" class="com.lmxf.post.tradepkg.partner.LaneProductInfoResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员补货信息查询 -->
+	<bean id="tradeSupplyInfoService" class="com.lmxf.post.service.partner.TradeSupplyInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="supplyInfoReq" ref="supplyInfoReq" />
+		<property name="supplyInfoResp" ref="supplyInfoResp" />
+		<property name="supplyOrderDao" ref="supplyOrderDao" />
+		<property name="vendingLineDao" ref="vendingLineDao" />
+		<property name="vendingDistrictDao" ref="vendingDistrictDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="supplyVOrderDao" ref="supplyVOrderDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="productInfoDao" ref="productInfoDao" />
+	</bean>
+	<bean id="supplyInfoReq" class="com.lmxf.post.tradepkg.partner.SupplyInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="supplyInfoResp" class="com.lmxf.post.tradepkg.partner.SupplyInfoResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员补货信息上报 -->
+	<bean id="tradeSupplyResultService" class="com.lmxf.post.service.partner.TradeSupplyResultService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="supplyResultReq" ref="supplyResultReq" />
+		<property name="supplyResultResp" ref="supplyResultResp" />
+		<property name="supplyOrderDao" ref="supplyOrderDao" />
+		<property name="supplyConfigDao" ref="supplyConfigDao" />
+		<property name="supplyVendingDao" ref="supplyVendingDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="supplyProductDao" ref="supplyProductDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="supplyVOrderDao" ref="supplyVOrderDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="statementProductDao" ref="statementProductDao" />
+		<property name="statementSupplyDao" ref="statementSupplyDao" />
+		<property name="productInfoDao" ref="productInfoDao" />
+		<property name="vendingCmdDao" ref="vendingCmdDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+	</bean>
+	<bean id="supplyResultReq" class="com.lmxf.post.tradepkg.partner.SupplyResultReq"
+		scope="prototype">
+	</bean>
+	<bean id="supplyResultResp" class="com.lmxf.post.tradepkg.partner.SupplyResultResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员下架信息查询 -->
+	<bean id="tradeUnderInfoService" class="com.lmxf.post.service.partner.TradeUnderInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="underInfoReq" ref="underInfoReq" />
+		<property name="underInfoResp" ref="underInfoResp" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="vendingLineDao" ref="vendingLineDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="productLunderDao" ref="productLunderDao" />
+		<property name="productVUnderDao" ref="productVUnderDao" />
+		<property name="vendingDistrictDao" ref="vendingDistrictDao" />
+	</bean>
+	<bean id="underInfoReq" class="com.lmxf.post.tradepkg.partner.UnderInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="underInfoResp" class="com.lmxf.post.tradepkg.partner.UnderInfoResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员下架信息上报 -->
+	<bean id="tradeUnderResultService" class="com.lmxf.post.service.partner.TradeUnderResultService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="underResultReq" ref="underResultReq" />
+		<property name="underResultResp" ref="underResultResp" />
+		<property name="productUnderDao" ref="productUnderDao" />
+		<property name="productLunderDao" ref="productLunderDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="supplyVendingDao" ref="supplyVendingDao" />
+		<property name="supplyConfigDao" ref="supplyConfigDao" />
+		<property name="statementProductDao" ref="statementProductDao" />
+		<property name="statementSupplyDao" ref="statementSupplyDao" />
+		<property name="vendingCmdDao" ref="vendingCmdDao" />
+		<property name="supplyProductDao" ref="supplyProductDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="productVUnderDao" ref="productVUnderDao" />
+		<property name="stockProductDao" ref="stockProductDao" />
+		<property name="stockWarehouseDao" ref="stockWarehouseDao" />
+		<property name="stockInfoDao" ref="stockInfoDao" />
+	</bean>
+	<bean id="underResultReq" class="com.lmxf.post.tradepkg.partner.UnderResultReq"
+		scope="prototype">
+	</bean>
+	<bean id="underResultResp" class="com.lmxf.post.tradepkg.partner.UnderResultResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员查询 -->
+	<bean id="tradeEmpInfoService" class="com.lmxf.post.service.partner.TradeEmpInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="empInfoReq" ref="empInfoReq" />
+		<property name="empInfoResp" ref="empInfoResp" />
+		<property name="empDao" ref="empDao" />
+	</bean>
+	<bean id="empInfoReq" class="com.lmxf.post.tradepkg.partner.EmpInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="empInfoResp" class="com.lmxf.post.tradepkg.partner.EmpInfoResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员查询 -->
+	<bean id="tradeUserInfoService" class="com.lmxf.post.service.partner.TradeUserInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="userInfoReq" ref="userInfoReq" />
+		<property name="userInfoResp" ref="userInfoResp" />
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="userInfoReq" class="com.lmxf.post.tradepkg.partner.UserInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="userInfoResp" class="com.lmxf.post.tradepkg.partner.UserInfoResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员增加 -->
+	<bean id="tradeEmpAddService" class="com.lmxf.post.service.partner.TradeEmpAddService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="empAddReq" ref="empAddReq" />
+		<property name="empAddResp" ref="empAddResp" />
+		<property name="empDao" ref="empDao" />
+		<property name="corpDao" ref="corpDao" />
+	</bean>
+	<bean id="empAddReq" class="com.lmxf.post.tradepkg.partner.EmpAddReq"
+		scope="prototype">
+	</bean>
+	<bean id="empAddResp" class="com.lmxf.post.tradepkg.partner.EmpAddResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员修改 -->
+	<bean id="tradeEmpEditService" class="com.lmxf.post.service.partner.TradeEmpEditService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="empEditReq" ref="empEditReq" />
+		<property name="empEditResp" ref="empEditResp" />
+		<property name="empDao" ref="empDao" />
+	</bean>
+	<bean id="empEditReq" class="com.lmxf.post.tradepkg.partner.EmpEditReq"
+		scope="prototype">
+	</bean>
+	<bean id="empEditResp" class="com.lmxf.post.tradepkg.partner.EmpEditResp"
+		scope="prototype">
+	</bean>
+	<bean id="empIssuedResp" class="com.lmxf.post.tradepkg.dataSynch.EmpIssuedResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员删除 -->
+	<bean id="tradeEmpDeleteService" class="com.lmxf.post.service.partner.TradeEmpDeleteService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="empDeleteReq" ref="empDeleteReq" />
+		<property name="empDeleteResp" ref="empDeleteResp" />
+		<property name="empIssuedResp" ref="empIssuedResp" />
+		<property name="userDao" ref="userDao" />
+		<property name="vendingPersonDao" ref="vendingPersonDao" />
+	</bean>
+	<bean id="empDeleteReq" class="com.lmxf.post.tradepkg.partner.EmpDeleteReq"
+		scope="prototype">
+	</bean>
+	<bean id="empDeleteResp" class="com.lmxf.post.tradepkg.partner.EmpDeleteResp"
+		scope="prototype">
+	</bean>
+	<!-- 人员绑定 -->
+	<bean id="tradeVendingPersonService" class="com.lmxf.post.service.partner.TradeVendingPersonService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingPersonReq" ref="vendingPersonReq" />
+		<property name="vendingPersonResp" ref="vendingPersonResp" />
+		<property name="empIssuedResp" ref="empIssuedResp" />
+		<property name="userDao" ref="userDao" />
+		<property name="vendingPersonDao" ref="vendingPersonDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="vendingDao" ref="vendingDao" />
+	</bean>
+	<bean id="vendingPersonReq" class="com.lmxf.post.tradepkg.partner.VendingPersonReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingPersonResp" class="com.lmxf.post.tradepkg.partner.VendingPersonResp"
+		scope="prototype">
+	</bean>
+	<!-- RFID柜型开柜门事件 -->
+	<bean id="tradeDoorOpenService" class="com.lmxf.post.service.partner.TradeDoorOpenService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="doorOpenReq" ref="doorOpenReq" />
+		<property name="doorOpenResp" ref="doorOpenResp" />
+		<property name="nsParameterDao" ref="nsParameterDao" />
+		<property name="vendingCmdDao" ref="vendingCmdDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+	</bean>
+	<bean id="doorOpenReq" class="com.lmxf.post.tradepkg.partner.DoorOpenReq"
+		scope="prototype">
+	</bean>
+	<bean id="doorOpenResp" class="com.lmxf.post.tradepkg.partner.DoorOpenResp"
+		scope="prototype">
+	</bean>
+
+	<!-- 商品信息查询 -->
+	<bean id="tradeProductInfoService" class="com.lmxf.post.service.partner.TradeProductInfoService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="productInfoReq" ref="productInfoReq" />
+		<property name="productInfoResp" ref="productInfoResp" />
+		<property name="productInfoDao" ref="productInfoDao" />
+		<property name="productClassifyDao" ref="productClassifyDao" />
+	</bean>
+	<bean id="productInfoReq" class="com.lmxf.post.tradepkg.partner.ProductInfoReq"
+		scope="prototype">
+	</bean>
+	<bean id="productInfoResp" class="com.lmxf.post.tradepkg.partner.ProductInfoResp"
+		scope="prototype">
+	</bean>
+	
+	<!-- 商品分类信息查询 -->
+	<bean id="tradeProductClassifyService" class="com.lmxf.post.service.partner.TradeProductClassifyService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="productClassifyReq" ref="productClassifyReq" />
+		<property name="productClassifyResp" ref="productClassifyResp" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="productClassifyDao" ref="productClassifyDao" />
+	</bean>
+	<bean id="productClassifyReq" class="com.lmxf.post.tradepkg.partner.ProductClassifyReq"
+		scope="prototype">
+	</bean>
+	<bean id="productClassifyResp" class="com.lmxf.post.tradepkg.partner.ProductClassifyResp"
+		scope="prototype">
+	</bean>
+
+	<!-- Mini柜型格口开门事件 -->
+	<bean id="tradeBoxOpenService" class="com.lmxf.post.service.partner.TradeBoxOpenService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="boxOpenReq" ref="boxOpenReq" />
+		<property name="boxOpenResp" ref="boxOpenResp" />
+		<property name="nsParameterDao" ref="nsParameterDao" />
+		<property name="vendingCmdDao" ref="vendingCmdDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+	</bean>
+	<bean id="boxOpenReq" class="com.lmxf.post.tradepkg.partner.BoxOpenReq"
+		scope="prototype">
+	</bean>
+	<bean id="boxOpenResp" class="com.lmxf.post.tradepkg.partner.BoxOpenResp"
+		scope="prototype">
+	</bean>
+	<!-- 售货机格口状态查询 -->
+	<bean id="tradeBoxOpenStateService" class="com.lmxf.post.service.partner.TradeBoxOpenStateService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="boxOpenStateReq" ref="boxOpenStateReq" />
+		<property name="boxOpenStateResp" ref="boxOpenStateResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+	</bean>
+	<bean id="boxOpenStateReq" class="com.lmxf.post.tradepkg.partner.BoxOpenStateReq"
+		scope="prototype">
+	</bean>
+	<bean id="boxOpenStateResp" class="com.lmxf.post.tradepkg.partner.BoxOpenStateResp"
+		scope="prototype">
+	</bean>
+	<!-- 上报订单开箱成功 -->
+	<bean id="tradeOrderOpenService" class="com.lmxf.post.service.partner.TradeOrderOpenService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderOpenReq" ref="orderOpenReq" />
+		<property name="orderOpenResp" ref="orderOpenResp" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="statementProductDao" ref="statementProductDao" />
+		<property name="statementSupplyDao" ref="statementSupplyDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="supplyVendingDao" ref="supplyVendingDao" />
+		<property name="supplyConfigDao" ref="supplyConfigDao" />
+		<property name="vendingDao" ref="vendingDao" />
+	</bean>
+	<bean id="orderOpenReq" class="com.lmxf.post.tradepkg.partner.OrderOpenReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderOpenResp" class="com.lmxf.post.tradepkg.partner.OrderOpenResp"
+		scope="prototype">
+	</bean>
+	<!-- 上报订单信息 -->
+	<bean id="tradeOrderReportService" class="com.lmxf.post.service.partner.TradeOrderReportService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderReportReq" ref="orderReportReq" />
+		<property name="orderReportResp" ref="orderReportResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="favourableObjectDao" ref="favourableObjectDao" />
+		<property name="productOnlineDao" ref="productOnlineDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="productInfoDao" ref="productInfoDao" />
+	</bean>
+	<bean id="orderReportReq" class="com.lmxf.post.tradepkg.partner.OrderReportReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderReportResp" class="com.lmxf.post.tradepkg.partner.OrderReportResp"
+		scope="prototype">
+	</bean>
+	<!-- 站点网络状态事件上报 -->
+	<bean id="tradeSiteNetStateService" class="com.lmxf.post.service.partner.TradeSiteNetStateService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="siteNetStateReq" ref="siteNetStateReq" />
+		<property name="siteNetStateResp" ref="siteNetStateResp" />
+		<property name="vendingDao" ref="vendingDao" />
+	</bean>
+	<bean id="siteNetStateReq" class="com.lmxf.post.tradepkg.partner.SiteNetStateReq"
+		scope="prototype">
+	</bean>
+	<bean id="siteNetStateResp" class="com.lmxf.post.tradepkg.partner.SiteNetStateResp"
+		scope="prototype">
+	</bean>
+	<!-- 补货事件 -->
+	<bean id="tradeSupplyEventService" class="com.lmxf.post.service.partner.TradeSupplyEventService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="supplyEventReq" ref="supplyEventReq" />
+		<property name="supplyEventResp" ref="supplyEventResp" />
+		<property name="supplyOrderDao" ref="supplyOrderDao" />
+		<property name="supplyConfigDao" ref="supplyConfigDao" />
+		<property name="supplyVendingDao" ref="supplyVendingDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="supplyProductDao" ref="supplyProductDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="statementProductDao" ref="statementProductDao" />
+		<property name="statementSupplyDao" ref="statementSupplyDao" />
+	</bean>
+	<bean id="supplyEventReq" class="com.lmxf.post.tradepkg.partner.SupplyEventReq"
+		scope="prototype">
+	</bean>
+	<bean id="supplyEventResp" class="com.lmxf.post.tradepkg.partner.SupplyEventResp"
+		scope="prototype">
+	</bean>
+	<!-- 售货机命令推送 -->
+	<bean id="tradeVendingCmdService" class="com.lmxf.post.service.partner.TradeVendingCmdService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingCmdReq" ref="vendingCmdReq" />
+		<property name="vendingCmdResp" ref="vendingCmdResp" />
+		<property name="vendingIssuedResp" ref="vendingIssuedResp" />
+		<property name="vendingCmdDao" ref="vendingCmdDao" />
+	</bean>
+	<bean id="vendingCmdReq" class="com.lmxf.post.tradepkg.partner.VendingCmdReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingCmdResp" class="com.lmxf.post.tradepkg.partner.VendingCmdResp"
+		scope="prototype">
+	</bean>
+	<bean id="vendingIssuedResp" class="com.lmxf.post.tradepkg.partner.VendingIssuedResp"
+		scope="prototype">
+	</bean>
+	<!-- 终端初始化模块服务 -->
+    <bean id="initEntry" class="com.lmxf.post.webservice.impl.InitEntryImpl">
+		<property name="initProcess" ref="initProcess" />
+		<property name="cxfClient" ref="cxfClient" />
+		<property name="springContextUtil" ref="SpringContextUtil" />
+	</bean>
+	<bean id="initProcess" class="com.lmxf.post.webservice.impl.InitProcess">
+		<property name="tradeDefineService" ref="tradeDefineService" />
+		<property name="errorCodeService" ref="errorCodeService" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="tradeVendingQueryService" ref="tradeVendingQueryService" />
+		<property name="tradeLaneProductInfoService" ref="tradeLaneProductInfoService" />
+		<property name="tradeProductClassifyService" ref="tradeProductClassifyService" />
+		<property name="tradeEmpAllIssuedService" ref="tradeEmpAllIssuedService" />
+		<property name="tradeOrderAllIssuedService" ref="tradeOrderAllIssuedService" />
+	</bean>
+	<!-- 售货机基本信息查询 -->
+	<bean id="tradeVendingQueryService" class="com.lmxf.post.service.init.TradeVendingQueryService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingQueryReq" ref="vendingQueryReq" />
+		<property name="vendingQueryResp" ref="vendingQueryResp" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="favourableObjectDao" ref="favourableObjectDao" />
+		<property name="vendingStateDao" ref="vendingStateDao" />
+		
+	</bean>
+	<bean id="vendingQueryReq" class="com.lmxf.post.tradepkg.init.VendingQueryReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingQueryResp" class="com.lmxf.post.tradepkg.init.VendingQueryResp"
+		scope="prototype">
+	</bean>
+
+	<!-- 人员全量查询 -->
+	<bean id="tradeEmpAllIssuedService" class="com.lmxf.post.service.init.TradeEmpAllIssuedService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="empAllIssuedReq" ref="empAllIssuedReq" />
+		<property name="empAllIssuedResp" ref="empAllIssuedResp" />
+		<property name="userDao" ref="userDao" />
+		<property name="vendingDao" ref="vendingDao" />
+	</bean>
+	<bean id="empAllIssuedReq" class="com.lmxf.post.tradepkg.init.EmpAllIssuedReq"
+		scope="prototype">
+	</bean>
+	<bean id="empAllIssuedResp" class="com.lmxf.post.tradepkg.init.EmpAllIssuedResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单全量查询 -->
+	<bean id="tradeOrderAllIssuedService" class="com.lmxf.post.service.init.TradeOrderAllIssuedService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderAllIssuedReq" ref="orderAllIssuedReq" />
+		<property name="orderAllIssuedResp" ref="orderAllIssuedResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+	</bean>
+	<bean id="orderAllIssuedReq" class="com.lmxf.post.tradepkg.init.OrderAllIssuedReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderAllIssuedResp" class="com.lmxf.post.tradepkg.init.OrderAllIssuedResp"
+		scope="prototype">
+	</bean>
+	<!-- 数据推送模块服务 -->
+    <bean id="dataSynchEntry" class="com.lmxf.post.webservice.impl.DataSynchEntryImpl">
+		<property name="dataSynchProcess" ref="dataSynchProcess" />
+		<property name="cxfClient" ref="cxfClient" />
+		<property name="springContextUtil" ref="SpringContextUtil" />
+	</bean>
+	<bean id="dataSynchProcess" class="com.lmxf.post.webservice.impl.DataSynchProcess">
+		<property name="tradeDefineService" ref="tradeDefineService" />
+		<property name="errorCodeService" ref="errorCodeService" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="tradeEmpIssuedConfirmService" ref="tradeEmpIssuedConfirmService" />
+		<property name="tradeOrderIssuedConfirmService" ref="tradeOrderIssuedConfirmService" />
+		<property name="tradeVendingCmdConfirmService" ref="tradeVendingCmdConfirmService" />
+	</bean>
+	<!-- 人员信息确认 -->
+	<bean id="tradeEmpIssuedConfirmService" class="com.lmxf.post.service.dataSynch.TradeEmpIssuedConfirmService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="empIssuedConfirmReq" ref="empIssuedConfirmReq" />
+		<property name="empIssuedConfirmResp" ref="empIssuedConfirmResp" />
+		<property name="vendingPersonDao" ref="vendingPersonDao" />
+	</bean>
+	<bean id="empIssuedConfirmReq" class="com.lmxf.post.tradepkg.dataSynch.EmpIssuedConfirmReq"
+		scope="prototype">
+	</bean>
+	<bean id="empIssuedConfirmResp" class="com.lmxf.post.tradepkg.dataSynch.EmpIssuedConfirmResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单信息确认 -->
+	<bean id="tradeOrderIssuedConfirmService" class="com.lmxf.post.service.dataSynch.TradeOrderIssuedConfirmService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderIssuedConfirmReq" ref="orderIssuedConfirmReq" />
+		<property name="orderIssuedConfirmResp" ref="orderIssuedConfirmResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+	</bean>
+	<bean id="orderIssuedConfirmReq" class="com.lmxf.post.tradepkg.dataSynch.OrderIssuedConfirmReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderIssuedConfirmResp" class="com.lmxf.post.tradepkg.dataSynch.OrderIssuedConfirmResp"
+		scope="prototype">
+	</bean>
+	<!-- 售货机命令确认 -->
+	<bean id="tradeVendingCmdConfirmService" class="com.lmxf.post.service.dataSynch.TradeVendingCmdConfirmService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingCmdConfirmReq" ref="vendingCmdConfirmReq" />
+		<property name="vendingCmdConfirmResp" ref="vendingCmdConfirmResp" />
+		<property name="vendingCmdDao" ref="vendingCmdDao" />
+	</bean>
+	<bean id="vendingCmdConfirmReq" class="com.lmxf.post.tradepkg.dataSynch.VendingCmdConfirmReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingCmdConfirmResp" class="com.lmxf.post.tradepkg.dataSynch.VendingCmdConfirmResp"
+		scope="prototype">
+	</bean>
+	<!-- 终端订单模块服务 -->
+    <bean id="orderEntry" class="com.lmxf.post.webservice.impl.OrderEntryImpl">
+		<property name="orderProcess" ref="orderProcess" />
+		<property name="cxfClient" ref="cxfClient" />
+		<property name="springContextUtil" ref="SpringContextUtil" />
+	</bean>
+	<bean id="orderProcess" class="com.lmxf.post.webservice.impl.OrderProcess">
+		<property name="tradeDefineService" ref="tradeDefineService" />
+		<property name="errorCodeService" ref="errorCodeService" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="tradeOrderDeliveryService" ref="tradeOrderDeliveryService" />
+		<property name="tradeOrderInvalidService" ref="tradeOrderInvalidService" />
+		<property name="tradeOrderOutService" ref="tradeOrderOutService" />
+		<property name="tradeOrderFetchService" ref="tradeOrderFetchService" />
+		<property name="tradeOrderRecoverService" ref="tradeOrderRecoverService" />
+		<property name="tradeSCMOrderDeliveryService" ref="tradeSCMOrderDeliveryService" />
+		<property name="tradeSCMOrderDeliveryPayService" ref="tradeSCMOrderDeliveryPayService" />
+	</bean>
+		<!-- 终端订单申请 -->
+	<bean id="tradeOrderDeliveryService" class="com.lmxf.post.service.order.TradeOrderDeliveryService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderDeliveryReq" ref="orderDeliveryReq" />
+		<property name="orderDeliveryResp" ref="orderDeliveryResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="favourableObjectDao" ref="favourableObjectDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="productOnlineDao" ref="productOnlineDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+	</bean>
+	<bean id="orderDeliveryReq" class="com.lmxf.post.tradepkg.order.OrderDeliveryReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderDeliveryResp" class="com.lmxf.post.tradepkg.order.OrderDeliveryResp"
+		scope="prototype">
+	</bean>
+	<!-- 终端订单申请 -->
+	<bean id="tradeSCMOrderDeliveryService" class="com.lmxf.post.service.order.TradeSCMOrderDeliveryService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="sCMOrderDeliveryReq" ref="sCMOrderDeliveryReq" />
+		<property name="sCMOrderDeliveryResp" ref="sCMOrderDeliveryResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="favourableObjectDao" ref="favourableObjectDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="productOnlineDao" ref="productOnlineDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+	</bean>
+	<bean id="sCMOrderDeliveryReq" class="com.lmxf.post.tradepkg.order.SCMOrderDeliveryReq"
+		scope="prototype">
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+	</bean>
+	<bean id="sCMOrderDeliveryResp" class="com.lmxf.post.tradepkg.order.SCMOrderDeliveryResp"
+		scope="prototype">
+	</bean>
+	<!-- 终端订单申请 -->
+	<bean id="tradeSCMOrderDeliveryPayService" class="com.lmxf.post.service.order.TradeSCMOrderDeliveryPayService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderDeliveryPayReq" ref="orderDeliveryPayReq" />
+		<property name="orderDeliveryPayResp" ref="orderDeliveryPayResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="favourableObjectDao" ref="favourableObjectDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="productOnlineDao" ref="productOnlineDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+	</bean>
+	<bean id="orderDeliveryPayReq" class="com.lmxf.post.tradepkg.order.OrderDeliveryPayReq"
+		scope="prototype">
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+	</bean>
+	<bean id="orderDeliveryPayResp" class="com.lmxf.post.tradepkg.order.OrderDeliveryPayResp"
+		scope="prototype">
+	</bean>
+	<!-- 终端订单取消 -->
+	<bean id="tradeOrderInvalidService" class="com.lmxf.post.service.order.TradeOrderInvalidService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderInvalidReq" ref="orderInvalidReq" />
+		<property name="orderInvalidResp" ref="orderInvalidResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+	</bean>
+	<bean id="orderInvalidReq" class="com.lmxf.post.tradepkg.order.OrderInvalidReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderInvalidResp" class="com.lmxf.post.tradepkg.order.OrderInvalidResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单出柜 -->
+	<bean id="tradeOrderOutService" class="com.lmxf.post.service.order.TradeOrderOutService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderOutReq" ref="orderOutReq" />
+		<property name="orderOutResp" ref="orderOutResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+		<property name="supplyVproductDao" ref="supplyVproductDao" />
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="supplyVendingDao" ref="supplyVendingDao" />
+		<property name="statementProductDao" ref="statementProductDao" />
+		<property name="statementSupplyDao" ref="statementSupplyDao" />
+		<property name="supplyConfigDao" ref="supplyConfigDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="supplyProductDao" ref="supplyProductDao" />
+	</bean>
+	<bean id="orderOutReq" class="com.lmxf.post.tradepkg.order.OrderOutReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderOutResp" class="com.lmxf.post.tradepkg.order.OrderOutResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单客户已取走 -->
+	<bean id="tradeOrderFetchService" class="com.lmxf.post.service.order.TradeOrderFetchService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderFetchReq" ref="orderFetchReq" />
+		<property name="orderFetchResp" ref="orderFetchResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+	</bean>
+	<bean id="orderFetchReq" class="com.lmxf.post.tradepkg.order.OrderFetchReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderFetchResp" class="com.lmxf.post.tradepkg.order.OrderFetchResp"
+		scope="prototype">
+	</bean>
+	<!-- 订单正常回收 -->
+	<bean id="tradeOrderRecoverService" class="com.lmxf.post.service.order.TradeOrderRecoverService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="orderRecoverReq" ref="orderRecoverReq" />
+		<property name="orderRecoverResp" ref="orderRecoverResp" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="orderChangeDao" ref="orderChangeDao" />
+		<property name="orderProductDao" ref="orderProductDao" />
+		<property name="stockProductDao" ref="stockProductDao" />
+		<property name="stockWarehouseDao" ref="stockWarehouseDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+	</bean>
+	<bean id="orderRecoverReq" class="com.lmxf.post.tradepkg.order.OrderRecoverReq"
+		scope="prototype">
+	</bean>
+	<bean id="orderRecoverResp" class="com.lmxf.post.tradepkg.order.OrderRecoverResp"
+		scope="prototype">
+	</bean>
+	<!-- 上报模块服务 -->
+    <bean id="siteEntry" class="com.lmxf.post.webservice.impl.SiteEntryImpl">
+		<property name="siteProcess" ref="siteProcess" />
+		<property name="cxfClient" ref="cxfClient" />
+		<property name="springContextUtil" ref="SpringContextUtil" />
+	</bean>
+	<bean id="siteProcess" class="com.lmxf.post.webservice.impl.SiteProcess">
+		<property name="tradeDefineService" ref="tradeDefineService" />
+		<property name="errorCodeService" ref="errorCodeService" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="tradeVendingEventService" ref="tradeVendingEventService" />
+		<property name="tradeVendingStateService" ref="tradeVendingStateService" />
+		<property name="tradeVendingLaneService" ref="tradeVendingLaneService" />
+	</bean>
+	<!-- 售货机事件上报 -->
+	<bean id="tradeVendingEventService" class="com.lmxf.post.service.site.TradeVendingEventService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingEventReq" ref="vendingEventReq" />
+		<property name="vendingEventResp" ref="vendingEventResp" />
+		<property name="vendingEventDao" ref="vendingEventDao" />
+		<property name="sequenceIdDao" ref="sequenceIdDao" />
+		<property name="vendingDao" ref="vendingDao" />
+	</bean>
+	<bean id="vendingEventReq" class="com.lmxf.post.tradepkg.site.VendingEventReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingEventResp" class="com.lmxf.post.tradepkg.site.VendingEventResp"
+		scope="prototype">
+	</bean>
+	<!-- 售货机设备信息上报 -->
+	<bean id="tradeVendingStateService" class="com.lmxf.post.service.site.TradeVendingStateService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingStateReq" ref="vendingStateReq" />
+		<property name="vendingStateResp" ref="vendingStateResp" />
+		<property name="vendingStateDao" ref="vendingStateDao" />
+		<property name="vendingDao" ref="vendingDao" />
+	</bean>
+	<bean id="vendingStateReq" class="com.lmxf.post.tradepkg.site.VendingStateReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingStateResp" class="com.lmxf.post.tradepkg.site.VendingStateResp"
+		scope="prototype">
+	</bean>
+	<!-- 货道状态上报 -->
+	<bean id="tradeVendingLaneService" class="com.lmxf.post.service.site.TradeVendingLaneService">
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="xmlValidator" ref="xmlValidator" />
+		<property name="vendingLaneReq" ref="vendingLaneReq" />
+		<property name="vendingLaneResp" ref="vendingLaneResp" />
+		<property name="vendingLaneDao" ref="vendingLaneDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+	</bean>
+	<bean id="vendingLaneReq" class="com.lmxf.post.tradepkg.site.VendingLaneReq"
+		scope="prototype">
+	</bean>
+	<bean id="vendingLaneResp" class="com.lmxf.post.tradepkg.site.VendingLaneResp"
+		scope="prototype">
+	</bean>
+	<!-- 模拟运行客户端程序 -->
+	<bean id="genOrderService" class="com.lmxf.post.core.service.GenOrderService">
+		<property name="vendingDao" ref="vendingDao" />
+		<property name="vendingStockDao" ref="vendingStockDao" />
+		<property name="vendingLanepDao" ref="vendingLanepDao" />
+		<property name="orderApplyDao" ref="orderApplyDao" />
+		<property name="orderBoxDao" ref="orderBoxDao" />
+	</bean>
+	
+</beans>  
+ 
+  

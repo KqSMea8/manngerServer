@@ -1,0 +1,374 @@
+[文件路径: form/component/datetime.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_datetime");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		通过日期组件能动态选择年、月、日，也可以针对时、分、秒进行选择。
+		<li>日期组件主要用于对日期进行选择， 绑在一个标准的形式输入字段。聚焦在输入框时（点击，或使用tab键）打开一个互动式日历的一个小面板。选择一个日期，点击网页上的其他地方（输入框失去焦点），或击键关闭。如果选择一个日期，反馈显示为输入的值。</li>
+		<li>时间组件是对时间进行细粒度划分设置后方便用户选择的组件。支持12小时和24小时日期格式，自定义时分秒分隔符。</li>
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+	<div class="content">
+		<div>实际效果如下：</div>
+		<div class="ui-table ui-widget ui-corner-all ui-border">    
+				 <table class="table">
+						
+						<tr>
+							<td class="inputLabelTd">普通日期：</td>
+							<td class="inputTd">
+									<input id="date_0" type="text" class="Wdate"/>
+							</td>
+							<td class="inputLabelTd">带时间选择器的日期：</td>
+							<td class="inputTd">
+									<input id="date_1" type="text" class="Wdate"/>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="inputLabelTd">只选择时间：</td>
+							<td class="inputTd">
+									<input id="date_2" type="text" class="Wdate"/>
+							</td>
+							<td class="inputLabelTd">支持显示周的日期：</td>
+							<td class="inputTd">
+									<input id="date_3" type="text" class="Wdate"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">时间范围限定：</td>
+							<td class="inputTd">
+									
+									<input id="date_4" class="Wdate" type="text" title="只能选择6月1到15日"/>
+							
+							</td>
+							<td class="inputLabelTd">图标触发：</td>
+							<td class="inputTd">
+								
+									<input type="text" id="d07" class="text"/>
+									<img id="d07img" src="./lib/js/lib/skin/datePicker.gif" width="16"  height="22"  align="absmiddle">
+
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">日期选择联动：</td>
+							<td class="inputTd">
+									从<input id="date_5" type="text" class="Wdate" /><br/>
+									至<input id="date_6" type="text" class="Wdate"/>
+							</td>
+							<td class="inputLabelTd">后面日期不能小于前面：</td>
+							<td class="inputTd">
+							    从<input type="text" class="Wdate" id="d4321" /><br/>
+                                    至<input type="text" class="Wdate" id="d4322" />
+                            </td>
+							
+						</tr>
+						<tr>
+							<td class="inputLabelTd">自定义起始日期：</td>
+							<td class="inputTd">
+									<input id="date_8" type="text" class="Wdate"/>
+							</td>
+							<td class="inputLabelTd">文本显示：</td>
+							<td class="inputTd">
+								<span id="demospan">2012-05-11</span> 
+
+									<input id="date_9" type="text" class="Wdate" />
+								
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">双日历显示：</td>
+							<td class="inputTd">
+							       <input class="Wdate" id = "date_10" type="text"/>
+							</td>
+							<td class="inputLabelTd">中文日期格式：</td>
+							<td class="inputTd">
+								
+									<input id="date_11" type="text" class="Wdate"/>
+									<input id="date_11_1" type="text" title="实际的值在我这" />
+							</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">国际化显示：</td>
+							<td class="inputTd">
+							       <input class="Wdate" id = "date_12" type="text"/>
+							</td>
+							
+						</tr>
+				</table>
+				
+		</div>
+	</div>
+
+	<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"  name="source_datetime">
+           <pre class="brush: js;">
+注：控件是使用onfocus触发的,当快速选择后,焦点还在textbox(或input),此时点控件当然不会触发onfocus事件,这是正常现象,如果你不习惯这样,
+ 可以改为onclick触发,通过设置属性：  event:"focus",//focus or click 
+
+ <!-----------------------1.普通日期----------------------->
+ html部分:
+ &lt;input id="date_0" type="text" class="Wdate" /&gt;
+    &lt;!--只需指定样式和焦点事件； dateFmt:时间显示格式--&gt;
+    
+ js部分:
+ new biz.datepicker({
+  id:"#date_0",//容器Id
+  event:"focus",//focus or click 触发类型
+  dateFmt:'yyyy-MM-dd'
+ })
+
+<!-----------------------2.带时间选择器的日期-----------------------> 
+ html部分:
+  &lt;input id="date_1" type="text" class="Wdate"/&gt;
+
+ js部分:
+ 
+ new biz.datepicker({
+  id:"#date_1",
+  autoPickDate:true,//autoPickDate属性为false时 点日期的时候不自动输入,
+      //而是要通过确定才能输入为true时 即点击日期即可返回日期值
+      //为null时(推荐使用) 如果有时间置为false 否则置为true
+ dateFmt:'yyyy-MM-dd HH-mm-ss'
+ })
+ 
+<!-----------------------3.只选择时间-----------------------> 
+ html部分:
+   &lt;input id="date_2" type="text" class="Wdate" /&gt;
+
+ js部分:
+new biz.datepicker({
+  id:"#date_2",
+  dateFmt:'HH-mm-ss'
+ })
+ 
+<!-----------------------4.支持显示周的日期-----------------------> 
+ html部分:
+  &lt;input id="date_3" type="text" class="Wdate"/&gt;
+   
+ js部分:
+ 
+ new biz.datepicker({
+  id:"#date_3",
+  isShowWeek:true
+ })
+ 
+<!-----------------------5.时间范围限定-----------------------> 
+ html部分:
+  &lt;input id="date_4" type="text" class="Wdate" /&gt;
+   &lt;!-- minDate:起始日期；maxDate:结束日期--&gt;
+   
+ js部分:
+ 
+ new biz.datepicker({
+  id:"#date_4",
+  minDate:'2012-06-01',//起始日期
+  maxDate:'2012-06-15'//结束日期
+ })
+
+<!-----------------------6.图标触发----------------------->  
+ html部分:
+  &lt;input type="text"  id="d07" class="text"/&gt;
+  &lt;img id="d07img" src="./lib/js/lib/skin/datePicker.gif" width="16" height="22"  align="absmiddle"&gt;	
+
+ js部分:
+new biz.datepicker({
+  id:"#d07img",
+  event:"click",
+  el:'d07'//只需将el的值设置成实际时间值的目标控件
+ })
+<!-----------------------7.日期选择联动----------------------->  
+ js部分:
+ 
+ document.getElementById("date_5").onfocus=function(){
+	var date_6=$dp.$('date_6');
+	WdatePicker({
+	  onpicked:function(){
+	  date_6.focus();
+	  },
+	  maxDate:'#F{$dp.$D(\'date_6\')}'
+	})
+ }
+document.getElementById("date_6").onfocus=function(){
+	WdatePicker({minDate:'#F{$dp.$D(\'date_5\')}'})//后一个时间不能超过前一个选择的时间
+}
+<!-----------------------8.后面日期不能小于前面----------------------->  
+ html部分:
+ 从&lt;input type="text" class="Wdate" id="d4321" /&gt;&lt;br/&gt;
+ 至&lt;input type="text" class="Wdate" id="d4322"/&gt;
+
+ js部分:
+new biz.datepicker({
+   id:"#d4321",
+   maxDate:'#F{$dp.$D(\'d4322\',{d:0});}'
+ })
+new biz.datepicker({
+   id:"#d4322",
+   minDate:'#F{$dp.$D(\'d4321\',{d:0});}'
+ })
+
+<!-----------------------9.自定义起始日期----------------------->  
+ html部分:
+&lt;input id="date_8" type="text" class="Wdate"/&gt;
+
+ js部分: 
+new biz.datepicker({
+   id:"#date_8",
+   startDate:'2012-05-30' //通过设置startDate属性来设置只能从指定日期开始选择
+ })
+ 
+<!-----------------------10.文本显示----------------------->  
+html部分:
+&lt;span id="demospan"&gt;2012-05-11&lt;/span&gt; 
+&lt;input id="date_9" type="text" class="Wdate" /&gt;
+
+js部分:
+new biz.datepicker({
+   id:"#date_9",
+   startDate:'2012-05-01',
+   el:'demospan'//通过设置el，指向文本控件span即可
+ })
+ 
+<!-----------------------11.双日历显示----------------------->  
+ html部分:
+ &lt;input class="Wdate" type="text" id="date_10"/&gt;
+ 
+ js部分:
+ new biz.datepicker({
+   id:"#date_10",
+   doubleCalendar:true,//通过设置doubleCalendar:true实现双日历
+   dateFmt:'yyyy-MM-dd'
+ })
+
+<!-----------------------12.中文日期格式----------------------->  
+ html部分:
+&lt;input id="date_11" type="text" class="Wdate"/&gt;
+&lt;input id="date_11_1" type="text" title="实际的值在我这" /&gt;
+
+ js部分:
+ 
+ new biz.datepicker({
+   id:"#date_11",
+   dateFmt:'yyyy年M月d日',
+   vel:'date_11_1'//通过设置dateFmt:'yyyy年M月d日'实现显示中文格式，这时需要增加一个隐藏的text控件，
+ // 承载其实际的值否则还需要做转化的功能
+ })
+ 
+<!-----------------------13.国际化显示----------------------->  
+ js部分:
+ 
+ new biz.datepicker({
+   id:"#date_12",
+   lang:'en'// 只需设置lang参数为 en
+ })
+		  </pre>
+	   </div>
+	<!--源代码部分end-->
+	<!-- datetime方法列表 -->
+	<div class="barTitle2">
+		<div class="content">方法列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/datetimeMethod.htm" width="100%" scrolling="no" frameborder="0" height="790px;"></iframe>
+	</div>
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">属性&事件列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/datetimeField.htm" width="100%" scrolling="no" frameborder="0" height="1800px;"></iframe>
+	</div>
+	
+<script type="text/javascript">
+new biz.datepicker({
+  id:"#date_0",
+
+  event:"focus",//focus or click
+  skin:'default',dateFmt:'yyyy-MM-dd'})
+  
+new biz.datepicker({
+  id:"#date_1",
+  skin:'default',
+  autoPickDate:true,
+  dateFmt:'yyyy-MM-dd HH-mm-ss'
+ })
+
+new biz.datepicker({
+  id:"#date_2",
+  skin:'default',
+  dateFmt:'HH-mm-ss'
+ })
+ 
+new biz.datepicker({
+  id:"#date_3",
+  isShowWeek:true
+ })
+
+new biz.datepicker({
+  id:"#date_4",
+  minDate:'2012-06-01',
+  maxDate:'2012-06-15'
+ })
+ 
+new biz.datepicker({
+  id:"#d07img",
+  event:"click",
+  el:'d07'
+ })
+
+
+document.getElementById("date_5").onfocus=function(){
+	var date_6=$dp.$('date_6');
+	WdatePicker({onpicked:function(){date_6.focus();},maxDate:'#F{$dp.$D(\'date_6\')}'
+	})
+}
+document.getElementById("date_6").onfocus=function(){
+	WdatePicker({minDate:'#F{$dp.$D(\'date_5\')}'})
+}
+
+new biz.datepicker({
+   id:"#d4321",
+   maxDate:'#F{$dp.$D(\'d4322\',{d:0});}'
+ })
+
+new biz.datepicker({
+   id:"#d4322",
+   minDate:'#F{$dp.$D(\'d4321\',{d:0});}'
+ })
+
+new biz.datepicker({
+   id:"#date_8",
+   startDate:'2012-05-30'
+ })
+ 
+new biz.datepicker({
+   id:"#date_9",
+   startDate:'2012-05-01',
+   el:'demospan'
+ })
+
+new biz.datepicker({
+   id:"#date_10",
+   doubleCalendar:true,
+   dateFmt:'yyyy-MM-dd'
+ })
+
+new biz.datepicker({
+   id:"#date_11",
+   dateFmt:'yyyy年M月d日',
+   vel:'date_11_1'
+ })
+ new biz.datepicker({
+   id:"#date_12",
+  lang:'en'
+ })
+
+</script>

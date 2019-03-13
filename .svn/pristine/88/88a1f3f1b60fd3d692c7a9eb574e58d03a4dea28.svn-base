@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OrderChange">
+	<resultMap type="com.lmxf.post.entity.order.OrderChange" id="orderChangeResultMap">
+		<id property="logid" column="logid" />
+		<result property="changeId" column="changeId" />
+		<result property="corpId" column="corpId" />
+		<result property="orderId" column="orderId" />
+		<result property="operId" column="operId" />
+		<result property="operName" column="operName" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="operAction" column="operAction" />
+		<result property="operTime" column="operTime" />
+		<result property="operCont" column="operCont" />
+		<result property="pocState" column="pocState" />
+		<result property="pocTimes" column="pocTimes" />
+		<result property="pocResult" column="pocResult" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<select id="findAll" parameterType="com.lmxf.post.entity.order.OrderChange"
+		resultMap="orderChangeResultMap">
+		select * from as_order_change where 1=1
+		<if test="orderId != null and orderId != '' ">
+			and orderId = #{orderId}
+		</if>
+		order by operTime desc
+	</select>
+
+	<insert id="insert" parameterType="com.lmxf.post.entity.order.OrderChange">
+		insert into as_order_change(logid,changeId,corpId,orderId,operId,operName,siteId,siteName,operAction,operTime,operCont,pocState,pocTimes,pocResult,createTime)
+		values(#{logid},#{changeId},#{corpId},#{orderId},#{operId},#{operName},#{siteId},#{siteName},#{operAction},#{operTime},#{operCont},#{pocState},#{pocTimes},#{pocResult},#{createTime})
+	</insert>
+	<select id="findDataPage" parameterType="com.lmxf.post.entity.order.OrderChange"
+		resultMap="orderChangeResultMap">
+		select * from as_order_change where createTime<![CDATA[>]]>#{createTime}
+		order by createTime
+	</select>
+
+	<select id="findByOperTime" parameterType="com.lmxf.post.entity.order.OrderChange"
+		resultMap="orderChangeResultMap">
+		select * from as_order_change where operTime=#{operTime}
+	</select>
+
+</mapper> 
+

@@ -1,0 +1,228 @@
+
+/*Splitter style */
+
+#LeftPane {
+	overflow: auto;
+	border-right:0px ;
+}
+/*
+ * Right-side element of the splitter.
+*/
+
+#RightPane {
+	padding: 2px;
+	overflow: auto;
+	font-size: 12px;
+	border-left:0px ;
+}
+
+.ui-layout-toggler {background:#E17009;}
+.ui-layout-south {font-size:14px;color:#1864AC;text-align:center;padding:5px 0 ;
+	                background: url("../lib/style/skin/default/images/ui-bg_glass_85_dfeffc_1x400.png") repeat-x scroll 10% 10% #DFEFFC;}
+
+
+#menutabs{position:relative;}
+#menutabs ul{position:relative;width:auto}
+#menutabs.ui-widget-content{border:0;}
+
+
+
+ 
+
+/*.ui-tabs div {text-align: left;}*/ 
+.ui-tabs-nav li {position: relative;}
+.ui-tabs-selected a span {padding-right: 10px;}
+.ui-tabs-close {display: none;position: absolute;top: 3px;right: 0px;z-index: 800;width: 16px;height: 14px;font-size: 10px; font-style: normal;cursor: pointer;}
+.ui-tabs-selected .ui-tabs-close {display: block;}
+
+.ui-layout-west .ui-jqgrid tr.jqgrow td { border-bottom: 0px none;}
+
+
+#demotree.tree li button.ico_open {background-image: url('../lib/style/skin/default/images/ui-icons_217bc0_256x240.png');background-position: -16px -96px; }
+#demotree.tree li button.ico_close {background-image: url('../lib/style/skin/default/images/ui-icons_217bc0_256x240.png');background-position: 0 -96px;}
+
+.treeoption{float:left;width:500px;padding-bottom:1em;padding:5px;border:1px solid #ccc;}
+.treeview {float:left;width:300px;}
+.option {
+    border: 1px solid #CCCCCC;
+    float: left;
+    margin-top: 10px;
+    padding: 5px;
+    width: auto;
+}
+.content {line-height:150%;margin:5px;}
+/*********************************** 常用样式start *************************/
+
+/*
+ * 示例中心样式start
+ */
+ .title1 {
+	height: 66px;
+	width: 100%;
+	background: url(images/bgxiao.jpg);
+}
+
+.title1 .content {
+	padding-top: 1em;
+	text-align: center;
+	font-size: 2em;
+	color: #1864AC;
+}
+.barTitle1 {
+	margin-top: 1em;
+	height: 2em;
+	background-color: rgb(79,129,189);
+}
+.barTitle2 {
+	margin-top: 1em;
+	height: 2em;
+	background-color: rgb(149,179,215);
+}
+.barTitle3 {
+	margin-top: 1em;
+	height: 2em;
+	background-color: rgb(219,229,241);
+}
+.barTitle1 .content, .barTitle2 .content, .barTitle3 .content {
+	padding-top: 0.3em;
+	padding-left: 0.5em;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+
+.code {
+	background-color: white;
+	border: 1px dotted #CCCCCC;
+	overflow:auto;
+}
+
+/* Generic context menu styles */
+.contextMenu {
+	position: absolute;
+	width: 120px;
+	z-index: 99999;
+	border: solid 1px #CCC;
+	background: #EEE;
+	padding: 0px;
+	margin: 0px;
+	display: none;
+}
+
+.contextMenu LI {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.contextMenu A {
+	color: #333;
+	text-decoration: none;
+	display: block;
+	line-height: 20px;
+	height: 20px;
+	background-position: 6px center;
+	background-repeat: no-repeat;
+	outline: none;
+	padding: 1px 5px;
+	padding-left: 28px;
+}
+
+.contextMenu LI.hover A {
+	color: #FFF;
+	background-color: #3399FF;
+}
+
+.contextMenu LI.disabled A {
+	color: #AAA;
+	cursor: default;
+}
+
+.contextMenu LI.hover.disabled A {
+	background-color: transparent;
+}
+
+.contextMenu LI.separator {
+	border-top: solid 1px #CCC;
+}
+/*
+ * tree例子样式
+ */
+h1, h2, h3, h4, h5, h6 {color: #2f332a;font-weight: bold;font-family: Helvetica, Arial, sans-serif;padding-bottom: 5px;}
+h1 {font-size: 24px;line-height: 34px;text-align: center;}
+h2 {font-size: 14px;line-height: 24px;padding-top: 5px;}
+h6 {font-weight: normal;font-size: 12px;letter-spacing: 1px;line-height: 24px;text-align: center;}
+
+
+.ui-tabs-panel .ui-table .content_wrap {width: 600px;}
+.zTreeDemoBackground.left{float: left;width: 250px;}
+.ui-table .content_wrap .right{float: right;width: 340px;}
+
+ .ui-table .content_wrap .left{float: left;width: 250px;}
+
+
+
+div.zTreeDemoBackground {width:250px;text-align:left;}
+.highlight_red {color:#A60000;}
+.highlight_green {color:#A7F43D;}
+li {font-size: 12px;}
+li.title {list-style: none;}
+ul.list {margin-left: 17px;}
+ul.log {border: 1px solid #617775;background: #f0f6e4;width:300px;height:170px;overflow: hidden;}
+ul.log.small {height:45px;}
+ul.log li {color: #666666;list-style: none;padding-left: 10px;}
+ul.log li.dark {background-color: #E3E3E3;}
+
+/* ruler */
+div.ruler {height:20px; width:220px; background-color:#f0f6e4;border: 1px solid #333; margin-bottom: 5px; cursor: pointer}
+div.ruler div.cursor {height:20px; width:30px; background-color:#3C6E31; color:white; text-align: right; padding-right: 5px; cursor: pointer}
+/*
+ * 小图标start
+ */
+/*查看按钮*/
+.icon-search {
+    background: url("../lib/style/skin/default/images/search.png") no-repeat scroll 0 0 transparent ;
+}
+/*增加按钮*/
+.icon-add {
+    background: url("../lib/style/skin/default/images/add.png") no-repeat scroll 0 0 transparent ;
+}
+/*编辑按钮*/
+.icon-edit {
+    background: url("../lib/style/skin/default/images/edit.jpg") no-repeat scroll 0 0 transparent ;
+}
+/*删除按钮*/
+.icon-delete {
+    background: url("../lib/style/skin/default/images/delete.png") no-repeat scroll 0 0 transparent ;
+}
+.iconSave {
+    background: url("../lib/style/skin/default/images/save.png") no-repeat scroll 0 0 transparent ;
+}
+.iconReset {
+    background: url("../lib/style/skin/default/images/reset.png") no-repeat scroll 0 0 transparent ;
+}
+.iconBack {
+    background: url("../lib/style/skin/default/images/back.gif") no-repeat scroll 0 0 transparent ;
+}
+.iconMinus {
+    background: url("../lib/style/skin/default/images/minus.gif") no-repeat scroll 0 0 transparent ;
+}
+.iconPlus {
+    background: url("../lib/style/skin/default/images/plus.gif") no-repeat scroll 0 0 transparent ;
+}
+/*
+ * 小图标end
+ */
+ 
+ /*by jdh*/
+.xmp{margin:-20px 0pc;padding:-20px;}
+.row .cell .labelcell {width:100px}
+.backcolor1,.ui-jqgrid tr.jqgrow.backcolor1 {background-color: #ededfa;}
+.backcolor2,.ui-jqgrid tr.jqgrow.backcolor2 {background-color: #fafadc;}
+.backcolor3,.ui-jqgrid tr.jqgrow.backcolor3 {background-color: #fadbf7;}
+.backcolor4,.ui-jqgrid tr.jqgrow.backcolor4 {background-color: #dbf5fa;}
+/*
+ * 示例中心样式end
+ */
+
+/*********************************** 常用样式end *****************************/

@@ -1,0 +1,738 @@
+package com.lmxf.post.core.service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.web.Page;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.JSONUtils;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderBox;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingLanep;
+import com.lmxf.post.entity.vending.VendingStock;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderBoxDao;
+import com.lmxf.post.repository.vending.VendingDao;
+import com.lmxf.post.repository.vending.VendingLanepDao;
+import com.lmxf.post.repository.vending.VendingStockDao;
+
+/**
+ * 用于展览的定时器模拟客户端
+ * 
+ * 
+ * @author 思杰
+ * 
+ */
+public class GenOrderService {
+	private VendingDao vendingDao;
+	private VendingStockDao vendingStockDao;
+	private VendingLanepDao vendingLanepDao;
+	private Map<String, Integer> orderNumMap = new HashMap();
+	private Map<String, List<VendingStock>> vedingStockMap = new HashMap<String, List<VendingStock>>();
+	private Map<String, List<VendingLanep>> vedingLanepMap = new HashMap<String, List<VendingLanep>>();
+	private SimpleDateFormat dateTimeS = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final static Log log = LogFactory.getLog(GenOrderService.class);
+	private static Calendar nowCal = Calendar.getInstance();
+	private static int parseS = 75;
+	private static int parseSC = 25;
+	private OrderApplyDao orderApplyDao;
+	private OrderBoxDao orderBoxDao;
+
+	private static Calendar calendar = Calendar.getInstance();
+	static {
+		nowCal.set(2019, 0, 1, 0, 0, 0);
+		calendar.set(2018, 8, 30);
+	}
+
+	/**
+	 * 定时随机生成订单
+	 */
+	public void genOrder() {
+		Vending vendingP = new Vending();
+		Random rand = new Random();
+		vendingP.setCreateTime("2019-01-12 15:46:57");
+		List<Vending> vendingList = this.vendingDao.findAll(vendingP);
+		// 获取当前最新时间
+		Page page = new Page("PageAVA");
+		page.setPageNum(1);
+		page.setCurrentPage(1);
+		page.setPageNum(1);
+		List<OrderApply> orderApplyList = orderApplyDao.findAll(page, null);
+		if (orderApplyList != null) {
+			OrderApply orderApply = orderApplyList.get(0);
+			String createTime = orderApply.getCreateTime();
+			try {
+				String createTimeStr = dateTimeS.format(dateTime.parse(createTime));
+				orderApply.setCreateTime(createTimeStr);
+				OrderApply orderApplyR = orderApplyDao.findCountByDate(orderApply);
+				int num = orderApplyR.getpNum();
+				orderNumMap.put(createTimeStr, num);
+				calendar.setTime(dateTime.parse(createTime));
+			} catch (ParseException e) {
+				log.error("时间转换错误");
+			}
+
+		}
+		// 一个循环生成一个订单
+		while (true) {
+			try {
+				Calendar nowCalendar = Calendar.getInstance();
+				String applyTime = dateTimeS.format(calendar.getTime());
+				// 取订单的申请时间
+				String dateStr = dateTimeS.format(calendar.getTime());
+				Integer orderNum = orderNumMap.get(dateStr);
+				if (orderNum == null) {
+					orderNum = 0;
+				}
+				if (orderNum >= 680) {
+					log.error("模拟生成订单信息 日期:" + dateTimeS.format(calendar.getTime()) + " 订单量:" + orderNum + " 当天已执行完 睡眠1分钟.");
+					int nextday = calendar.get(Calendar.DATE) + 1;
+					if (calendar.get(Calendar.YEAR) >= nowCalendar.get(Calendar.YEAR) && calendar.get(Calendar.MONTH) >= nowCalendar.get(Calendar.MONTH) && nextday > (nowCalendar.get(Calendar.DATE) + 1)) {
+						parseGen(1000 * 300);
+						log.debug("超过当前日期 暂停执行,休眠5分钟");
+						continue;
+					}
+					calendar.set(Calendar.DATE, nextday);
+					parseGen(1000 * 300);
+				}
+				// 取订单登录账号
+				long before = nowCalendar.getTimeInMillis();
+				long after = nowCal.getTimeInMillis();
+				String loginId = String.valueOf(before - after);
+				log.debug("模拟生成订单信息 账户信息:" + loginId + " 日期:" + dateStr + " 订单量:" + orderNum);
+				int hour = rand.nextInt(23) + 1;
+				while (true) {
+					if (hour >= 23 || hour <= 5) {
+						hour = rand.nextInt(23) + 1;
+					} else {
+						break;
+					}
+				}
+				calendar.set(Calendar.HOUR_OF_DAY, hour);
+				calendar.set(Calendar.MINUTE, rand.nextInt(58) + 1);
+				calendar.set(Calendar.SECOND, rand.nextInt(58) + 1);
+				log.debug("订单生成时间:" + dateTime.format(calendar.getTime()));
+				// 随机取0-167之间的站点信息
+				if (vendingList != null && vendingList.size() == 0) {
+					log.error("没有站点要被模拟运行");
+					return;
+				}
+				Vending vending = vendingList.get(rand.nextInt(vendingList.size()));
+				if (vending != null) {
+					// 查看站点商品库存信息列表
+					List<VendingStock> vendingStockList = vedingStockMap.get(vending.getSiteId());
+					if (vendingStockList == null) {
+						VendingStock vendingStock = new VendingStock();
+						vendingStock.setSiteId(vending.getSiteId());
+						vendingStockList = this.vendingStockDao.findAll(vendingStock);
+						vedingStockMap.put(vending.getSiteId(), vendingStockList);
+					} else {
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 已从缓存获取网点商品库存信息");
+					}
+					// 查看站点货道库存列表
+					List<VendingLanep> vendingLanepList = vedingLanepMap.get(vending.getSiteId());
+					if (vendingLanepList == null) {
+						VendingLanep vendingLanepP = new VendingLanep();
+						vendingLanepP.setSiteId(vending.getSiteId());
+						vendingLanepList = this.vendingLanepDao.findAll(vendingLanepP);
+						vedingLanepMap.put(vending.getSiteId(), vendingLanepList);
+					} else {
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 已从缓存获取网点货道库存信息");
+					}
+					// 随机取一个货道商品出货
+					VendingLanep vendingLanep = null;
+					int index = 0;
+					if (vendingLanepList != null && vendingLanepList.size() > 0) {
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + "  " + vendingLanepList.size() + " 获取货道信息空:" + index);
+						index = rand.nextInt(vendingLanepList.size());
+						vendingLanep = vendingLanepList.get(index);
+						if (vendingLanep == null) {
+							log.error("模拟订单模块 网点:" + vending.getSiteId() + " 获取货道信息空:" + index);
+							continue;
+						}
+						if (vendingLanep == null || vendingLanep.getCurCap() <= 0) {
+							log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 货道号:" + vendingLanep.getLaneSId() + " 商品编号" + vendingLanep.getProductId() + " 缓存已经无数量");
+							vendingLanepList.remove(vendingLanep);
+							continue;
+						}
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 货道号:" + vendingLanep.getLaneSId() + " 商品编号" + vendingLanep.getProductId() + " 当前库存数量:" + vendingLanep.getCurCap());
+					} else {
+						vendingList.remove(vending);
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + "  " + vendingLanepList.size() + " 有库存的货道记录:" + 0);
+						continue;
+					}
+					// 查询出货商品的站点库存信息
+					VendingStock vendingStock = null;
+					for (VendingStock vendingStockR : vendingStockList) {
+						if (vendingStockR.getProductId().equals(vendingLanep.getProductId())) {
+							vendingStock = vendingStockR;
+							if (vendingStock == null || vendingStock.getNum() <= 0) {
+								log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 商品编号" + vendingStock.getProductId() + " 缓存已经无数量");
+								vendingLanepList.remove(vendingLanep);
+								continue;
+							}
+							break;
+						}
+					}
+					if (vendingStock == null) {
+						log.error("模拟订单模块 网点:" + vending.getSiteId() + " 获取商品库存信息空:" + vendingLanep.getProductId());
+						continue;
+					}
+					// 订单申请协议
+					String orderApplyJson = genApplyOrderJson(vending, vendingStock, vendingLanep, loginId, dateTime.format(calendar.getTime()));
+					log.debug("模拟订单模块 站点编号:" + vending.getSiteId() + " 订单申请协议:" + orderApplyJson);
+					String respJson = MsgPushUtils.pushVendingServer(orderApplyJson);
+					String orderId = null;
+					if (respJson != null && !"".equals(respJson)) {
+						JSONObject JSONHead = JSONUtils.getHeader(respJson);
+						if (JSONHead.getString("RetCode").equals("0000")) {
+							JSONObject JSONBody = JSONUtils.getBody(respJson);
+							orderId = JSONBody.getString("OrderId");
+							JSONArray laneInfoArray = JSONBody.getJSONArray("LaneInfo");
+							OrderBox orderBox = new OrderBox();
+							for (int i = 0; i < laneInfoArray.size(); i++) {
+								orderBox.setProboxId(laneInfoArray.getJSONObject(i).getString("ProboxId"));
+								orderBox.setProductId(laneInfoArray.getJSONObject(i).getString("ProductId"));
+								orderBox.setLaneSId(laneInfoArray.getJSONObject(i).getInt("LaneSId"));
+								orderBox.setLaneEId(laneInfoArray.getJSONObject(i).getInt("LaneEId"));
+							}
+							orderApplyJson = genOutOrderJson(vending, vendingStock, vendingLanep, orderId, dateTime.format(calendar.getTime()),orderBox);
+							log.debug("模拟订单模块 生成订单编号:" + orderId + " 出库协议:" + orderApplyJson);
+							respJson = MsgPushUtils.pushVendingServer(orderApplyJson);
+							if (respJson != null && !"".equals(respJson)) {
+								JSONHead = JSONUtils.getHeader(respJson);
+								if (JSONHead.getString("RetCode").equals("0000")) {
+									orderApplyJson = genFetchOrderJson(vending, vendingStock, vendingLanep, orderId, dateTime.format(calendar.getTime()));
+									log.debug("模拟订单模块 生成订单编号:" + orderId + " 取走协议:" + orderApplyJson);
+									respJson = MsgPushUtils.pushVendingServer(orderApplyJson);
+									if (respJson != null && !"".equals(respJson)) {
+										JSONHead = JSONUtils.getHeader(respJson);
+										if (JSONHead.getString("RetCode").equals("0000")) {
+											log.debug("模拟订单模块 流程成功 订单信息 站点编号:" + vending.getSiteId() + " 订单编号:" + orderId + " 商品编号:" + vendingLanep.getProductId() + " 货道号:" + vendingLanep.getLaneSId() + " 当天已执行任务数:" + orderNum);
+											orderNumMap.put(dateStr, ++orderNum);
+											log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 货道号:" + vendingLanep.getLaneSId() + " 商品编号" + vendingLanep.getProductId() + " 当前库存数量:" + vendingLanep.getCurCap());
+											vendingLanep.setCurCap(vendingLanep.getCurCap() - 1);
+											vendingStock.setNum(vendingStock.getNum() - 1);
+											VendingLanep vendingLanepR = vendingLanepList.get(index);
+											log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 货道号:" + vendingLanep.getLaneSId() + " 商品编号" + vendingLanep.getProductId() + " 修改当前库存数量:" + vendingLanepR.getCurCap());
+											boolean isS = rand.nextBoolean();
+											int j = rand.nextInt(parseSC);
+											int parseN = parseS;
+											if (isS) {
+												parseN += j;
+											} else {
+												parseN -= j;
+											}
+											log.debug("模拟订单模块 等待:" + " " + parseN + " 秒后执行购买任务.");
+											parseGen(parseN * 1000);
+											// parseGen(1);
+										} else {
+											log.error("模拟订单模块 发送1244协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+										}
+									} else {
+										log.error("模拟订单模块 发送1244协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+									}
+								} else {
+									log.error("模拟订单模块 发送1243协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+								}
+							} else {
+								log.error("模拟订单模块 发送1243协议:" + orderApplyJson + " 出错.");
+							}
+						} else if (JSONHead.getString("RetCode").equals("1900")) {
+							vendingLanepList.remove(vendingLanep);
+							log.error("模拟订单模块 发送1241协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+							continue;
+						} else {
+							log.error("模拟订单模块 发送1241协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+						}
+					} else {
+						log.error("模拟订单模块 发送1241协议:" + orderApplyJson + " 出错.");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}
+		}
+	}
+
+	/**
+	 * 定时随机生成订单
+	 */
+	public void genOrderNow() {
+		Vending vendingP = new Vending();
+		Random rand = new Random();
+		vendingP.setCreateTime("2019-01-12 15:46:57");
+		List<Vending> vendingList = this.vendingDao.findAll(vendingP);
+		// 一个循环生成一个订单
+		while (true) {
+			try {
+				Calendar nowCalendar = Calendar.getInstance();
+				calendar = nowCalendar;
+				String applyTime = dateTimeS.format(calendar.getTime());
+				// 取订单的申请时间
+				String dateStr = dateTimeS.format(calendar.getTime());
+				Integer orderNum = orderNumMap.get(dateStr);
+				if (orderNum == null) {
+					orderNum = 0;
+				}
+				// 取订单登录账号
+				long before = nowCalendar.getTimeInMillis();
+				long after = nowCal.getTimeInMillis();
+				String loginId = String.valueOf(before - after);
+				log.debug("模拟生成订单信息 账户信息:" + loginId + " 日期:" + dateStr + " 订单量:" + orderNum);
+				int hour = calendar.get(Calendar.HOUR_OF_DAY);
+				if (hour >= 23 || hour <= 5) {
+					int s = rand.nextInt(100);
+					if (s > 25) {
+						boolean isS = rand.nextBoolean();
+						int j = rand.nextInt(25);
+						int parseN = parseS;
+						if (isS) {
+							parseN += j;
+						} else {
+							parseN -= j;
+						}
+						log.debug("进入11点到5点之间模拟订单模块 等待:" + " " + parseN + " 秒后执行购买任务.");
+						parseGen(parseN * 1000);
+						continue;
+					}
+				}
+				log.debug("订单生成时间:" + dateTime.format(calendar.getTime()));
+				// 随机取0-167之间的站点信息
+				if (vendingList != null && vendingList.size() == 0) {
+					log.error("没有站点要被模拟运行");
+					return;
+				}
+				Vending vending = vendingList.get(rand.nextInt(vendingList.size()));
+				if (vending != null) {
+					// 查看站点商品库存信息列表
+					List<VendingStock> vendingStockList = vedingStockMap.get(vending.getSiteId());
+					if (vendingStockList == null) {
+						VendingStock vendingStock = new VendingStock();
+						vendingStock.setSiteId(vending.getSiteId());
+						vendingStockList = this.vendingStockDao.findAll(vendingStock);
+						vedingStockMap.put(vending.getSiteId(), vendingStockList);
+					} else {
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 已从缓存获取网点商品库存信息");
+					}
+					// 查看站点货道库存列表
+					List<VendingLanep> vendingLanepList = vedingLanepMap.get(vending.getSiteId());
+					if (vendingLanepList == null) {
+						VendingLanep vendingLanepP = new VendingLanep();
+						vendingLanepP.setSiteId(vending.getSiteId());
+						vendingLanepList = this.vendingLanepDao.findAll(vendingLanepP);
+						vedingLanepMap.put(vending.getSiteId(), vendingLanepList);
+					} else {
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 已从缓存获取网点货道库存信息");
+					}
+					// 随机取一个货道商品出货
+					VendingLanep vendingLanep = null;
+					int index = 0;
+					if (vendingLanepList != null && vendingLanepList.size() > 0) {
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + "  " + vendingLanepList.size() + " 获取货道信息空:" + index);
+						index = rand.nextInt(vendingLanepList.size());
+						vendingLanep = vendingLanepList.get(index);
+						if (vendingLanep == null) {
+							log.error("模拟订单模块 网点:" + vending.getSiteId() + " 获取货道信息空:" + index);
+							continue;
+						}
+						if (vendingLanep == null || vendingLanep.getCurCap() <= 0) {
+							log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 货道号:" + vendingLanep.getLaneSId() + " 商品编号" + vendingLanep.getProductId() + " 缓存已经无数量");
+							vendingLanepList.remove(vendingLanep);
+							continue;
+						}
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 货道号:" + vendingLanep.getLaneSId() + " 商品编号" + vendingLanep.getProductId() + " 当前库存数量:" + vendingLanep.getCurCap());
+					} else {
+						vendingList.remove(vending);
+						log.debug("模拟订单模块 网点:" + vending.getSiteId() + "  " + vendingLanepList.size() + " 有库存的货道记录:" + 0);
+						continue;
+					}
+					// 查询出货商品的站点库存信息
+					VendingStock vendingStock = null;
+					for (VendingStock vendingStockR : vendingStockList) {
+						if (vendingStockR.getProductId().equals(vendingLanep.getProductId())) {
+							vendingStock = vendingStockR;
+							if (vendingStock == null || vendingStock.getNum() <= 0) {
+								log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 商品编号" + vendingStock.getProductId() + " 缓存已经无数量");
+								vendingLanepList.remove(vendingLanep);
+								continue;
+							}
+							break;
+						}
+					}
+					if (vendingStock == null) {
+						log.error("模拟订单模块 网点:" + vending.getSiteId() + " 获取商品库存信息空:" + vendingLanep.getProductId());
+						continue;
+					}
+					// 订单申请协议
+					String orderApplyJson = genApplyOrderJson(vending, vendingStock, vendingLanep, loginId, dateTime.format(calendar.getTime()));
+					log.debug("模拟订单模块 站点编号:" + vending.getSiteId() + " 订单申请协议:" + orderApplyJson);
+					String respJson = MsgPushUtils.pushVendingServer(orderApplyJson);
+					String orderId = null;
+					if (respJson != null && !"".equals(respJson)) {
+						JSONObject JSONHead = JSONUtils.getHeader(respJson);
+						if (JSONHead.getString("RetCode").equals("0000")) {
+							JSONObject JSONBody = JSONUtils.getBody(respJson);
+							orderId = JSONBody.getString("OrderId");
+							JSONArray laneInfoArray = JSONBody.getJSONArray("LaneInfo");
+							OrderBox orderBox = new OrderBox();
+							for (int i = 0; i < laneInfoArray.size(); i++) {
+								orderBox.setProboxId(laneInfoArray.getJSONObject(i).getString("ProboxId"));
+								orderBox.setProductId(laneInfoArray.getJSONObject(i).getString("ProductId"));
+								orderBox.setLaneSId(laneInfoArray.getJSONObject(i).getInt("LaneSId"));
+								orderBox.setLaneEId(laneInfoArray.getJSONObject(i).getInt("LaneEId"));
+							}
+							orderApplyJson = genOutOrderJson(vending, vendingStock, vendingLanep, orderId, dateTime.format(calendar.getTime()), orderBox);
+							log.debug("模拟订单模块 生成订单编号:" + orderId + " 出库协议:" + orderApplyJson);
+							respJson = MsgPushUtils.pushVendingServer(orderApplyJson);
+							if (respJson != null && !"".equals(respJson)) {
+								JSONHead = JSONUtils.getHeader(respJson);
+								if (JSONHead.getString("RetCode").equals("0000")) {
+									orderApplyJson = genFetchOrderJson(vending, vendingStock, vendingLanep, orderId, dateTime.format(calendar.getTime()));
+									log.debug("模拟订单模块 生成订单编号:" + orderId + " 取走协议:" + orderApplyJson);
+									respJson = MsgPushUtils.pushVendingServer(orderApplyJson);
+									if (respJson != null && !"".equals(respJson)) {
+										JSONHead = JSONUtils.getHeader(respJson);
+										if (JSONHead.getString("RetCode").equals("0000")) {
+											log.debug("模拟订单模块 流程成功 订单信息 站点编号:" + vending.getSiteId() + " 订单编号:" + orderId + " 商品编号:" + vendingLanep.getProductId() + " 货道号:" + vendingLanep.getLaneSId() + " 当天已执行任务数:" + orderNum);
+											orderNumMap.put(dateStr, ++orderNum);
+											log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 货道号:" + vendingLanep.getLaneSId() + " 商品编号" + vendingLanep.getProductId() + " 当前库存数量:" + vendingLanep.getCurCap());
+											vendingLanep.setCurCap(vendingLanep.getCurCap() - 1);
+											vendingStock.setNum(vendingStock.getNum() - 1);
+											VendingLanep vendingLanepR = vendingLanepList.get(index);
+											log.debug("模拟订单模块 网点:" + vending.getSiteId() + " 货道号:" + vendingLanep.getLaneSId() + " 商品编号" + vendingLanep.getProductId() + " 修改当前库存数量:" + vendingLanepR.getCurCap());
+											boolean isS = rand.nextBoolean();
+											int j = rand.nextInt(parseSC);
+											int parseN = parseS;
+											if (isS) {
+												parseN += j;
+											} else {
+												parseN -= j;
+											}
+											log.debug("模拟订单模块 等待:" + " " + parseN + " 秒后执行购买任务.");
+											parseGen(parseN * 1000);
+											// parseGen(1);
+										} else {
+											log.error("模拟订单模块 发送1244协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+										}
+									} else {
+										log.error("模拟订单模块 发送1244协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+									}
+								} else {
+									log.error("模拟订单模块 发送1243协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+								}
+							} else {
+								log.error("模拟订单模块 发送1243协议:" + orderApplyJson + " 出错.");
+							}
+						} else if (JSONHead.getString("RetCode").equals("1900")) {
+							vendingLanepList.remove(vendingLanep);
+							log.error("模拟订单模块 发送1241协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+							continue;
+						} else {
+							log.error("模拟订单模块 发送1241协议:" + orderApplyJson + " 响应错误协议:" + respJson);
+						}
+					} else {
+						log.error("模拟订单模块 发送1241协议:" + orderApplyJson + " 出错.");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}
+		}
+	}
+
+	public void parseGen(int second) {
+		try {
+			Thread.sleep(second);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void genOrderFinsh() {
+		// 查看申请状态的订单
+		OrderApply orderApplyP = new OrderApply();
+		orderApplyP.setCurState(GParameter.orderState_apply);
+		List<OrderApply> orderApplyList = this.orderApplyDao.findAll(orderApplyP);
+		for (OrderApply orderApply : orderApplyList) {
+			OrderBox orderBoxP = new OrderBox();
+			orderBoxP.setOrderId(orderApply.getOrderId());
+			List<OrderBox> orderBoxList = this.orderBoxDao.findAll(orderBoxP);
+			for (OrderBox orderBox : orderBoxList) {
+				MsgPushUtils.pushVendingServer(genOutOrderJson(orderApply, orderBox));
+				MsgPushUtils.pushVendingServer(genFetchOrderJson(orderApply, orderBox));
+			}
+		}
+		// 查看提前取走状态的订单
+		orderApplyP.setCurState(GParameter.orderState_advanceFetch);
+		orderApplyList = this.orderApplyDao.findAll(orderApplyP);
+		for (OrderApply orderApply : orderApplyList) {
+			OrderBox orderBoxP = new OrderBox();
+			orderBoxP.setOrderId(orderApply.getOrderId());
+			List<OrderBox> orderBoxList = this.orderBoxDao.findAll(orderBoxP);
+			for (OrderBox orderBox : orderBoxList) {
+				MsgPushUtils.pushVendingServer(genFetchOrderJson(orderApply, orderBox));
+			}
+		}
+	}
+
+	/**
+	 * 生成1241的订单协议
+	 * 
+	 * @param vending
+	 * @param vendingStock
+	 * @return
+	 */
+	public String genApplyOrderJson(Vending vending, VendingStock vendingStock, VendingLanep vendingLanep, String loginId, String applyTime) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1241");
+			JSONHeaderObject.put("Version", "1");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("SiteId", vending.getSiteId());
+			JSONBody.put("LoginId", loginId);
+			JSONBody.put("LoginName", loginId);
+			JSONBody.put("ApplyTime", applyTime);
+			JSONBody.put("PayType", "99");
+			JSONArray JSONArray = new JSONArray();
+
+			JSONArray JSONArrayS = new JSONArray();
+
+			JSONObject JSONLane = new JSONObject();
+			JSONLane.put("ProductId", vendingStock.getProductId());
+			JSONLane.put("LaneSId", vendingLanep.getLaneSId());
+			JSONLane.put("LaneEId", vendingLanep.getLaneEId());
+			JSONLane.put("LNum", "1");
+			JSONArrayS.add(JSONLane);
+
+			JSONBody.put("LaneInfo", JSONArrayS);
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 生成1243的订单协议
+	 * 
+	 * @param vending
+	 * @param vendingStock
+	 * @return
+	 */
+	public String genOutOrderJson(OrderApply orderApply, OrderBox orderBox) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1243");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("OrderId", orderApply.getOrderId());
+			JSONBody.put("OperTime", orderApply.getCreateTime());
+			JSONBody.put("OutId", "1");
+			JSONArray JSONArray = new JSONArray();
+
+			JSONObject JSONDetails = new JSONObject();
+			JSONDetails.put("ProductId", orderBox.getProductId());
+			JSONDetails.put("ProBoxId", orderBox.getProboxId());
+			JSONDetails.put("LaneSId", orderBox.getLaneSId());
+			JSONDetails.put("LaneEId", orderBox.getLaneEId());
+			JSONDetails.put("OutState", "2");
+			JSONDetails.put("SysState", "1");
+			JSONArray.add(JSONDetails);
+			JSONBody.put("LaneInfo", JSONArray);
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 生成1243的订单协议
+	 * 
+	 * @param vending
+	 * @param vendingStock
+	 * @return
+	 */
+	public String genOutOrderJson(Vending vending, VendingStock vendingStock, VendingLanep vendingLanep, String OrderId, String applyTime, OrderBox orderBox) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1243");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("OrderId", OrderId);
+			JSONBody.put("OperTime", applyTime);
+			JSONBody.put("OutId", "1");
+
+			JSONArray JSONArray = new JSONArray();
+			JSONObject JSONDetails = new JSONObject();
+			JSONDetails.put("ProductId", orderBox.getProductId());
+			JSONDetails.put("ProBoxId", orderBox.getProboxId());
+			JSONDetails.put("LaneSId", orderBox.getLaneSId());
+			JSONDetails.put("LaneEId", orderBox.getLaneEId());
+			JSONDetails.put("OutState", "2");
+			JSONDetails.put("SysState", "1");
+			JSONArray.add(JSONDetails);
+			JSONBody.put("LaneInfo", JSONArray);
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 生成1244的订单协议
+	 * 
+	 * @param vending
+	 * @param vendingStock
+	 * @return
+	 */
+	public String genFetchOrderJson(Vending vending, VendingStock vendingStock, VendingLanep vendingLanep, String OrderId, String applyTime) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1244");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("OrderId", OrderId);
+			JSONBody.put("SiteId", vending.getSiteId());
+			JSONBody.put("OperTime", applyTime);
+			JSONBody.put("FetchType", "1");
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 生成1244的订单协议
+	 * 
+	 * @param vending
+	 * @param vendingStock
+	 * @return
+	 */
+	public String genFetchOrderJson(OrderApply orderApply, OrderBox orderBox) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1244");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("OrderId", orderApply.getOrderId());
+			JSONBody.put("SiteId", orderApply.getSiteId());
+			JSONBody.put("OperTime", orderApply.getCreateTime());
+			JSONBody.put("FetchType", "1");
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	public void setVendingDao(VendingDao vendingDao) {
+		this.vendingDao = vendingDao;
+	}
+
+	public void setVendingStockDao(VendingStockDao vendingStockDao) {
+		this.vendingStockDao = vendingStockDao;
+	}
+
+	public void setVendingLanepDao(VendingLanepDao vendingLanepDao) {
+		this.vendingLanepDao = vendingLanepDao;
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setOrderBoxDao(OrderBoxDao orderBoxDao) {
+		this.orderBoxDao = orderBoxDao;
+	}
+
+	public static void main(String[] str) {
+		GenOrderService GenOrderService = new GenOrderService();
+		GenOrderService.genOrder();
+	}
+}

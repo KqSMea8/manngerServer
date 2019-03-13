@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingLsdhandle">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingLsdhandle"
+		id="vendingLsdhandleResultMap">
+		<id property="logid" column="logid" />
+		<result property="lsdhandleId" column="lsdhandleId" />
+		<result property="lsdifferId" column="lsdifferId" />
+		<result property="siteId" column="siteId" />
+		<result property="laneSId" column="laneSId" />
+		<result property="laneEId" column="laneEId" />
+		<result property="productId" column="productId" />
+		<result property="proboxId" column="proboxId" />
+		<result property="handleType" column="handleType" />
+		<result property="cont" column="cont" />
+		<result property="operId" column="operId" />
+		<result property="operTime" column="operTime" />
+		<result property="createTime" column="createTime" />
+		<result property="corpId" column="corpId" />
+
+
+	</resultMap>
+
+	<select id="findAll" resultMap="vendingLsdhandleResultMap">
+		select * from as_vending_lsdhandle where 1=1
+		<!-- and netSate='0' -->
+		<if test="siteId != null and siteId != ''">
+			and siteId=#{siteId}
+		</if>
+		<if test="corpId != null and corpId != '' ">
+			AND corpId=#{corpId}
+		</if>
+	</select>
+
+	<insert id="insert" parameterType="com.lmxf.post.entity.vending.VendingLsdhandle">
+		insert into
+		as_vending_lsdhandle(logid,lsdhandleId,lsdifferId,siteId,laneSId,laneEId,productId,proboxId,handleType,cont,operId,operTime,createTime,corpId)
+		values(#{logid},#{lsdhandleId},#{lsdifferId},#{siteId},#{laneSId},#{laneEId},#{productId},#{proboxId},#{handleType},#{cont},#{operId},#{operTime},#{createTime},#{corpId})
+	</insert>
+</mapper> 

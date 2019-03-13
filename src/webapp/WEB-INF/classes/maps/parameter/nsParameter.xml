@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NsParameter">
+
+	<resultMap type="com.lmxf.post.entity.parameter.NsParameter" id="nsParameterResultMap">
+		<id property="logid" column="logid" />
+		<result property="paraCode" column="paraCode" />
+		<result property="name" column="name" />
+		<result property="value" column="value" />
+		<result property="description" column="description" />
+	</resultMap>
+
+	<select id="findOne" parameterType="com.lmxf.post.entity.parameter.NsParameter" resultMap="nsParameterResultMap">
+		select * from sys_parameter where name=#{name} limit 0,1
+	</select>
+	
+	<select id="findDataPage" parameterType="com.lmxf.post.entity.parameter.NsParameter" resultMap="nsParameterResultMap">
+		select * from sys_parameter
+	</select>
+</mapper> 

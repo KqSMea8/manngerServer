@@ -1,0 +1,306 @@
+package com.lmxf.post.service.core;
+
+import java.util.List;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.service.ServiceException;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.CacheUtils;
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderBox;
+import com.lmxf.post.entity.order.OrderChange;
+import com.lmxf.post.entity.order.OrderProduct;
+import com.lmxf.post.entity.pay.Order;
+import com.lmxf.post.entity.vending.VendingCmd;
+import com.lmxf.post.entity.vending.VendingState;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderBoxDao;
+import com.lmxf.post.repository.order.OrderChangeDao;
+import com.lmxf.post.repository.order.OrderProductDao;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.repository.vending.VendingCmdDao;
+import com.lmxf.post.repository.vending.VendingStateDao;
+import com.lmxf.post.tradepkg.dataSynch.OrderIssuedResp;
+import com.manage.project.system.index.vo.OneMonthReviewVo;
+import com.manage.project.system.index.vo.OperateReviewVo;
+
+public class OrderApplyService {
+	private final static Log log = LogFactory.getLog(OrderApplyService.class);
+	private OrderApplyDao orderApplyDao;
+	private SequenceIdDao sequenceIdDao;
+	private OrderChangeDao orderChangeDao;
+	private OrderIssuedResp orderIssuedResp;
+	private OrderProductDao orderProductDao;
+	private OrderBoxDao orderBoxDao;
+	private VendingStateDao vendingStateDao;
+	private VendingCmdDao vendingCmdDao;
+
+	public void setVendingStateDao(VendingStateDao vendingStateDao) {
+		this.vendingStateDao = vendingStateDao;
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+	public void setOrderChangeDao(OrderChangeDao orderChangeDao) {
+		this.orderChangeDao = orderChangeDao;
+	}
+
+	public void setOrderIssuedResp(OrderIssuedResp orderIssuedResp) {
+		this.orderIssuedResp = orderIssuedResp;
+	}
+
+	public void setOrderProductDao(OrderProductDao orderProductDao) {
+		this.orderProductDao = orderProductDao;
+	}
+
+	public void setOrderBoxDao(OrderBoxDao orderBoxDao) {
+		this.orderBoxDao = orderBoxDao;
+	}
+
+	/**
+	 * 修改支付信息
+	 * 
+	 * @param orderId
+	 * @param payState
+	 * @return
+	 */
+	public void updateByNotify(OrderApply orderApply, String payState) {
+		// 等待支付或支付失败的才处理
+		if (GParameter.payState_success.equals(payState) && !GParameter.payState_success.equals(orderApply.getPayState())) {
+			orderApply.setPayState(GParameter.payState_success);
+			orderApply.setCurState(GParameter.orderCurState_nomarl);
+			int count = orderApplyDao.updateByNotify(orderApply);
+			// 插入订单状态信息表
+			OrderChange orderChange = new OrderChange();
+			orderChange.setLogid(DateUtil.getLogid());
+			orderChange.setChangeId(orderApply.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApply.getCorpId(), "order_change_id", 7));
+			orderChange.setOperAction(GParameter.orderChange_paySuccess);
+			orderChange.setOperCont("售货机:" + orderApply.getSiteName() + " 订单编号:" + orderApply.getOrderId() + " 支付成功!");
+			orderChange.setCorpId(orderApply.getCorpId());
+			orderChange.setOrderId(orderApply.getOrderId());
+			orderChange.setOperId(orderApply.getLoginId());
+			orderChange.setOperName(orderApply.getLoginName());
+			orderChange.setSiteId(orderApply.getSiteId());
+			orderChange.setSiteName(orderApply.getSiteName());
+			orderChange.setOperTime(DateUtil.getNow());
+			orderChange.setCreateTime(DateUtil.getNow());
+			orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+			orderChange.setPocTimes(0);
+			orderChange.setPocResult("wait push");
+			orderChangeDao.insert(orderChange);
+			// 查询商品信息
+			OrderProduct orderProductP = new OrderProduct();
+			orderProductP.setOrderId(orderApply.getOrderId());
+			List<OrderProduct> orderProductList = orderProductDao.findAll(orderProductP);
+			String boxIds = "";
+			int i = 0;
+			// 设置商品货道信息
+			for (OrderProduct orderProduct : orderProductList) {
+				OrderBox orderBoxP = new OrderBox();
+				orderBoxP.setOrderId(orderProduct.getOrderId());
+				orderBoxP.setProductId(orderProduct.getProductId());
+				List<OrderBox> orderBoxList = orderBoxDao.findNum(orderBoxP);
+				orderProduct.setOrderBoxList(orderBoxList);
+				for (OrderBox orderBox : orderBoxList) {
+					if (i == 0)
+						boxIds += orderBox.getLaneSId();
+					else
+						boxIds +=  ","+orderBox.getLaneSId();
+					i++;
+				}
+			}
+			orderApply.setOrderProductList(orderProductList);
+			boolean isPasss = true;
+			VendingState vendingState = this.vendingStateDao.findBySiteId(orderApply.getSiteId());
+			if (vendingState == null) {
+				isPasss = false;
+			} else {
+				if (vendingState.getvAndroid() == null || "".equals(vendingState.getvAndroid().trim())) {
+					isPasss = false;
+				} else if (vendingState.getvAndroid().contains("singlechip.")) {
+					isPasss = false;
+				}
+			}
+			String content = null;
+			// 推送给终端 是否是带系统的售货机 windows,anroid
+			if (isPasss) {
+				log.info("支付成功 侦测到售货机:" + orderApply.getSiteId() + " 为操作系统走订单交互流程."+(vendingState!=null?vendingState.getvAndroid():"no"));
+				content = orderIssuedResp.CreateIssueJson(GParameter.platCode_Terminal, GParameter.issued_orderApply_trade_code, "01", "1", orderApply);
+			} else {
+				log.info("支付成功 侦测到售货机:" + orderApply.getSiteId() + " 为单片机走单排订单交互流程."+(vendingState!=null?vendingState.getvAndroid():"no"));
+				// 推送货道商品库存信息,推送给单片机
+				VendingCmd vendingCmdP = new VendingCmd();
+				vendingCmdP.setCmd(GParameter.vendingdCmd_boxOpen);
+				vendingCmdP.setCmdCode(orderApply.getSiteId());
+				vendingCmdP.setCmdId(orderApply.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApply.getCorpId(), "as_vending_cmd", 7));
+				vendingCmdP.setCmdLazy(GParameter.vendingCmdLazy_no);
+				vendingCmdP.setCmdType(GParameter.vendingdCmdType_box);
+				JSONObject JSONObject = new JSONObject();
+				JSONObject.put("OrderId", orderApply.getOrderId());
+				JSONObject.put("BoxId", boxIds);
+				vendingCmdP.setCont(JSONObject.toString());
+				vendingCmdP.setCorpId(orderApply.getCorpId());
+				vendingCmdP.setCreateTime(DateUtil.getNow());
+				vendingCmdP.setLogid(DateUtil.getLogid());
+				vendingCmdP.setResult("wait");
+				vendingCmdP.setSiteId(orderApply.getSiteId());
+				vendingCmdP.setState(GParameter.vendingCmd_executing);
+				vendingCmdP.setStateTime(DateUtil.getNow());
+				this.vendingCmdDao.insert(vendingCmdP);
+				content = CreateIssueJson(vendingCmdP);
+			}
+			if (content != null) {
+				String deviceId = orderApply.getSiteId();
+				String msgId = orderApply.getLogid();
+				int result = MsgPushUtils.push(content, deviceId, msgId);
+				if (result == 0) {
+					orderApply.setPushState(GParameter.pushState_pushed);
+					orderApply.setpStateTime(DateUtil.getNow());
+					orderApplyDao.updateDownTime(orderApply);
+				}
+			} else {
+				log.error("订单支付成功 推送终端协议为空:" + orderApply.getOrderId());
+			}
+		} else {
+			// 插入订单状态信息表
+			OrderChange orderChange = new OrderChange();
+			orderChange.setLogid(DateUtil.getLogid());
+			orderChange.setChangeId(orderApply.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApply.getCorpId(), "order_change_id", 7));
+			orderChange.setOperAction(GParameter.orderChange_paySuccess);
+			orderChange.setOperCont("售货机:" + orderApply.getSiteName() + " 订单编号:" + orderApply.getOrderId() + " 支付失败或重复支付!");
+			orderChange.setCorpId(orderApply.getCorpId());
+			orderChange.setOrderId(orderApply.getOrderId());
+			orderChange.setOperId(orderApply.getLoginId());
+			orderChange.setOperName(orderApply.getLoginName());
+			orderChange.setSiteId(orderApply.getSiteId());
+			orderChange.setSiteName(orderApply.getSiteName());
+			orderChange.setOperTime(DateUtil.getNow());
+			orderChange.setCreateTime(DateUtil.getNow());
+			orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+			orderChange.setPocTimes(0);
+			orderChange.setPocResult("wait push");
+			orderChangeDao.insert(orderChange);
+		}
+	}
+
+	public String CreateIssueJson(VendingCmd vendingCmdP) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1227");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("SiteId", vendingCmdP.getSiteId());
+			JSONBody.put("CmdId", vendingCmdP.getCmdId());
+			JSONBody.put("CmdCode", vendingCmdP.getCmdCode());
+			JSONBody.put("CmdType", vendingCmdP.getCmdType());
+			JSONBody.put("Cmd", vendingCmdP.getCmd());
+			JSONBody.put("Cont", vendingCmdP.getCont());
+			JSONBody.put("CreateTime", vendingCmdP.getCreateTime());
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * 修改支付信息
+	 * 
+	 * @param orderId
+	 * @param payState
+	 * @return
+	 */
+	public void updateByNotifyRefund(OrderApply orderApply, String rTradeNo) {
+		// 等待支付或支付失败的才处理
+		orderApply.setReturnType(GParameter.returnType_success);
+		orderApply.setReturnMoney(orderApply.getPayPrice());
+		orderApply.setrTradeNo(rTradeNo);
+		orderApplyDao.updateByNotifyRefund(orderApply);
+		// 插入订单状态信息表
+		OrderChange orderChange = new OrderChange();
+		orderChange.setLogid(DateUtil.getLogid());
+		orderChange.setChangeId(orderApply.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApply.getCorpId(), "order_change_id", 7));
+		orderChange.setOperAction(GParameter.orderChange_paySuccess);
+		orderChange.setOperCont("售货机:" + orderApply.getSiteName() + " 订单编号:" + orderApply.getOrderId() + " 退款成功!");
+		orderChange.setCorpId(orderApply.getCorpId());
+		orderChange.setOrderId(orderApply.getOrderId());
+		orderChange.setOperId(orderApply.getLoginId());
+		orderChange.setOperName(orderApply.getLoginName());
+		orderChange.setSiteId(orderApply.getSiteId());
+		orderChange.setSiteName(orderApply.getSiteName());
+		orderChange.setOperTime(DateUtil.getNow());
+		orderChange.setCreateTime(DateUtil.getNow());
+		orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+		orderChange.setPocTimes(0);
+		orderChange.setPocResult("wait push");
+		orderChangeDao.insert(orderChange);
+	}
+
+	public OrderApply findOneByTradeNo(OrderApply orderApply) {
+		OrderApply orderApplyR;
+		try {
+			orderApplyR = orderApplyDao.findOneByTradeNo(orderApply);
+		} catch (Exception e) {
+			throw new ServiceException("根据条件查找下单信息出错！", e);
+		}
+		return orderApplyR;
+	}
+
+	public OrderApply findOneByOrderId(String orderId) {
+		OrderApply orderApplyR;
+		try {
+			OrderApply orderApplyP = new OrderApply();
+			orderApplyP.setOrderId(orderId);
+			orderApplyR = orderApplyDao.findOneByOrderId(orderApplyP);
+		} catch (Exception e) {
+			throw new ServiceException("根据条件查找下单信息出错！", e);
+		}
+		return orderApplyR;
+	}
+
+	public void setVendingCmdDao(VendingCmdDao vendingCmdDao) {
+		this.vendingCmdDao = vendingCmdDao;
+	}
+
+	public static String getOrderId() {
+		String payorderid = null;
+		try {
+			// payorderid =DateUtils.DateNum()+
+			// pkgLogDao.payorderid()+DateUtils.buildRandom(3);
+			// payorderid =DateUtils.DateNum()+ pkgLogDao.payorderid();
+			// payorderid=DateUtils.getUnixTime()+""+DateUtils.buildRandom(4);
+			payorderid = System.nanoTime() + "";
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			// payorderid=DateUtils.getUnixTime()+""+DateUtils.buildRandom(3);
+			payorderid = System.nanoTime() + "";
+		}
+		return payorderid;
+	}
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OrderProduct">
+
+	<resultMap type="com.lmxf.post.entity.order.OrderProduct" id="orderProductResultMap">
+		<id property="logid" column="logid" />
+		<result property="prodetailId" column="prodetailId" />
+		<result property="corpId" column="corpId" />
+		<result property="orderId" column="orderId" />
+		<result property="torderId" column="torderId" />
+		<result property="productId" column="productId" />
+		<result property="productName" column="productName" />
+		<result property="productTypeId" column="productTypeId" />
+		<result property="factoryId" column="factoryId" />
+		<result property="normalPrice" column="normalPrice" />
+		<result property="salePrice" column="salePrice" />
+		<result property="saleNum" column="saleNum" />
+		<result property="outNum" column="outNum" />
+		<result property="reNum" column="reNum" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+
+    <!-- 根据orderId查询 -->
+	<select id="findAll" parameterType="com.lmxf.post.entity.order.OrderProduct" resultMap="orderProductResultMap">
+		select * from as_order_product where orderId =#{orderId}
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.order.OrderProduct" resultMap="orderProductResultMap">
+		select * from as_order_product where prodetailId =#{prodetailId}
+	</select>
+
+	<insert id="insert" parameterType="com.lmxf.post.entity.order.OrderProduct">
+		insert into
+		as_order_product(logid,prodetailId,corpId,orderId,torderId,productId,productName,productTypeId,factoryId,normalPrice,salePrice,saleNum,outNum,reNum,createTime)
+		values(#{logid},#{prodetailId},#{corpId},#{orderId},#{torderId},#{productId},#{productName},#{productTypeId},#{factoryId},#{normalPrice},#{salePrice},#{saleNum},#{outNum},#{reNum},#{createTime})
+	</insert>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.order.OrderProduct">
+		update as_order_product set 
+		productId=#{productId},
+		productName=#{productName},
+		productTypeId=#{productTypeId},
+		factoryId=#{factoryId},
+		normalPrice=#{normalPrice},
+		salePrice=#{salePrice},
+		saleNum=#{saleNum},
+		outNum=#{outNum},
+		reNum=#{reNum}
+		where prodetailId=#{prodetailId}
+	</update>
+	
+	<delete id="delete" parameterType="com.lmxf.post.entity.order.OrderProduct">
+	    delete from as_order_product where orderId=#{orderId}
+	</delete>
+</mapper> 

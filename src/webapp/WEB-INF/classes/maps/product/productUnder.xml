@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductUnder">
+
+	<resultMap type="com.lmxf.post.entity.product.ProductUnder" id="productUnderResultMap">
+		<id property="logid" column="logid" />
+		<result property="underId" column="underId" />
+		<result property="districtId" column="districtId" />
+		<result property="lineId" column="lineId" />
+		<result property="pointId" column="pointId" />
+		<result property="vUnderId" column="vUnderId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="productId" column="productId" />
+		<result property="name" column="name" />
+		<result property="fullName" column="fullName" />
+		<result property="underNum" column="underNum" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="underType" column="underType" />
+		<result property="planTime" column="planTime" />
+		<result property="corpId" column="corpId" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="productUnderResultMap">
+		select * from as_product_under where 1=1
+		<if test="vUnderId != null and vUnderId != ''">
+			and vUnderId=#{vUnderId} 
+	    </if>
+		<if test="siteId != null and siteId != ''">
+			and siteId=#{siteId} 
+	    </if>
+	    <if test="curState != null and curState != ''">
+			and curState=#{curState} 
+	    </if>
+	    
+	    order by createTime
+	</select>
+	
+	<select id="findOneByUnderId" parameterType="String" resultMap="productUnderResultMap">
+		select * from as_product_under where underId=#{underId}
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.product.ProductUnder">
+		update as_product_under set 
+		curState=#{curState},
+		underNum=#{underNum},
+		stateTime=#{stateTime}
+		where underId=#{underId}
+	</update>
+	
+	<select id="findByLineId" resultMap="productUnderResultMap">
+		select * from as_product_under where siteId in(select siteId from as_supply_vending where supplyId in(select supplyId from as_supply_config where supplierId=#{loginId}))
+		<if test="curState != null and curState != ''">
+			and curState=#{curState} 
+	    </if>
+	    <if test="siteId != null and siteId != ''">
+			and siteId=#{siteId} 
+	    </if>
+	</select>
+	
+</mapper> 

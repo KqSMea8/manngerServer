@@ -1,0 +1,168 @@
+package com.lmxf.post.web;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.lmxf.post.core.service.GenOrderService;
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.JSONUtils;
+import com.lmxf.post.core.web.BaseController;
+import com.lmxf.post.service.core.ErrorCodeService;
+import com.lmxf.post.webservice.impl.DataSynchProcess;
+import com.lmxf.post.webservice.impl.InitProcess;
+import com.lmxf.post.webservice.impl.OrderProcess;
+import com.lmxf.post.webservice.impl.PartnerProcess;
+import com.lmxf.post.webservice.impl.SiteProcess;
+import com.lmxf.post.webservice.impl.TransferFailureProcess;
+
+public class ApiController extends BaseController {
+	private final static Log log = LogFactory.getLog(ApiController.class);
+	private ErrorCodeService errorCodeService;
+	private PartnerProcess partnerProcess;
+	private InitProcess initProcess;
+	private DataSynchProcess dataSynchProcess;
+	private OrderProcess orderProcess;
+	private SiteProcess siteProcess;
+	private GenOrderService genOrderService;
+	private TransferFailureProcess transferFailureProcess;
+
+	public ModelAndView list(HttpServletRequest req, HttpServletResponse resp) {
+		return new ModelAndView("success").addObject("resp_xml", "test XML");
+	}
+
+	public void report(HttpServletRequest req, HttpServletResponse resp) throws IllegalAccessException, InvocationTargetException {
+      try{
+			String xml = null;
+			String report_xml = req.getParameter("content");
+			log.info("report_xml:" + report_xml);
+			if (null == report_xml || "".equals(report_xml)) {
+				xml = errorCodeService.getErrorRespJson(1007);
+				log.error("report_xml  is null!");
+			}else{
+				String clientIp = "127.0.0.1";
+				String clientHostname = "localhost";
+				if (null != req.getRemoteAddr())
+					clientIp = req.getRemoteAddr();
+				if (null != req.getRemoteHost())
+					clientHostname = req.getRemoteHost();
+				int clientPort = req.getRemotePort();
+				// json解析协议
+				JSONObject JSONBody = null;
+				try {
+					JSONBody = JSONUtils.getHeader(report_xml);
+				} catch (Exception e) {
+					log.error("resp set is error!");
+				}
+				if(JSONBody != null){
+					if(JSONBody.containsKey("TCode") && JSONBody.getString("TCode") != null && !"".equals(JSONBody.getString("TCode"))){
+						String tcode = JSONBody.getString("TCode");
+						//开放给第三方购买系统接口
+						if(tcode.equals("1001") || tcode.equals("1002") || tcode.equals("1003") || tcode.equals("1004") || tcode.equals("1005") || tcode.equals("1006") || tcode.equals("1007")
+							|| tcode.equals("1021") || tcode.equals("1022") || tcode.equals("1023") || tcode.equals("1024") || tcode.equals("1025")|| tcode.equals("1026") 
+							|| tcode.equals("1027") || tcode.equals("1028") || tcode.equals("1029") || tcode.equals("1030") || tcode.equals("1041") || tcode.equals("1042")
+							|| tcode.equals("1050") || tcode.equals("1051") || tcode.equals("1052") || tcode.equals("1053") || tcode.equals("1060") || tcode.equals("1227")|| tcode.equals("1031")|| tcode.equals("1008")|| tcode.equals("1009")|| tcode.equals("1061") || tcode.equals("1010") || tcode.equals("1011")){
+							partnerProcess.setRemoteAddress(clientHostname, clientIp, clientPort, GParameter.commProtocal_http);
+							xml = partnerProcess.report(report_xml);
+							//终端初始化接口
+						}else if(tcode.equals("1201") || tcode.equals("1202") || tcode.equals("1203") || tcode.equals("1204") || tcode.equals("1205") || tcode.equals("1206")){
+							initProcess.setRemoteAddress(clientHostname, clientIp, clientPort, GParameter.commProtocal_http);
+							xml = initProcess.report(report_xml);
+							//终端数据推送接口
+						}else if(tcode.equals("1222") || tcode.equals("1224") || tcode.equals("1228")){
+							dataSynchProcess.setRemoteAddress(clientHostname, clientIp, clientPort, GParameter.commProtocal_http);
+							xml = dataSynchProcess.report(report_xml);
+							//终端订单模块接口
+						}else if(tcode.equals("1241") || tcode.equals("1242") || tcode.equals("1243") || tcode.equals("1244") || tcode.equals("1245")){
+							orderProcess.setRemoteAddress(clientHostname, clientIp, clientPort, GParameter.commProtocal_http);
+							xml = orderProcess.report(report_xml);
+							//终端上报模块接口
+						}else if(tcode.equals("1282") || tcode.equals("1283") || tcode.equals("1284")){
+							siteProcess.setRemoteAddress(clientHostname, clientIp, clientPort, GParameter.commProtocal_http);
+							xml = siteProcess.report(report_xml);
+						}else if(tcode.equals("1223")){//消息推送失败处理
+							xml = transferFailureProcess.report(report_xml);
+						}else{
+							xml = errorCodeService.getErrorRespJson(GConstent.Trade_Code_No_Define);
+						}
+					}else{
+						xml = errorCodeService.getErrorRespJson(GConstent.Trade_Code_No_Define);
+					}
+				}
+			}
+			if (null == xml) {
+				xml = errorCodeService.getErrorRespJson(1007);
+				log.error("apiProcess.report is null!");
+			}
+			resp.setContentType("application/xml");
+			resp.getWriter().write(xml);
+		} catch (Exception e) {
+			log.error("resp set is error!");
+			resp.setContentType("application/xml");
+			try {
+				resp.getWriter().write(e.getMessage());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				log.error("协议接收错误.");
+			}
+		}
+		return;
+	}
+	
+	public void startSimulator(HttpServletRequest req, HttpServletResponse resp) throws IllegalAccessException, InvocationTargetException {
+		log.debug("开始执行模拟运营程序");
+		genOrderService.genOrderNow();
+		//genOrderService.genOrder();
+		//genOrderService.genOrderFinsh();
+	}
+
+	public PartnerProcess getpartnerProcess() {
+		return partnerProcess;
+	}
+
+	public void setpartnerProcess(PartnerProcess partnerProcess) {
+		this.partnerProcess = partnerProcess;
+	}
+
+	public ErrorCodeService getErrorCodeService() {
+		return errorCodeService;
+	}
+
+	public void setErrorCodeService(ErrorCodeService errorCodeService) {
+		this.errorCodeService = errorCodeService;
+	}
+
+	public void setInitProcess(InitProcess initProcess) {
+		this.initProcess = initProcess;
+	}
+
+	public void setDataSynchProcess(DataSynchProcess dataSynchProcess) {
+		this.dataSynchProcess = dataSynchProcess;
+	}
+
+	public void setOrderProcess(OrderProcess orderProcess) {
+		this.orderProcess = orderProcess;
+	}
+
+	public void setSiteProcess(SiteProcess siteProcess) {
+		this.siteProcess = siteProcess;
+	}
+
+	public void setGenOrderService(GenOrderService genOrderService) {
+		this.genOrderService = genOrderService;
+	}
+
+	public void setTransferFailureProcess(TransferFailureProcess transferFailureProcess) {
+		this.transferFailureProcess = transferFailureProcess;
+	}
+
+}

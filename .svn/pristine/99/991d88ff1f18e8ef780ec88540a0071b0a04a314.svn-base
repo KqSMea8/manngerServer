@@ -1,0 +1,86 @@
+[文件路径: tree/url.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("ts_url");
+</script>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo_url" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、setting 配置信息说明</h2>
+				<ul class="list">
+				<li >普通使用，无必须设置的参数</li>
+               <li class="highlight_red">如果需要灵活控制超链接跳转，请利用 onClick 事件回调函数进行控制</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li class="highlight_red">1、url 属性用于设置 页面跳转的路径</li>
+				<li class="highlight_red">2、target 属性用于设置 页面跳转的窗口目标</li>
+				<li class="highlight_red">3、click 属性用于设置简单的 onClick 事件</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+			
+			<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="ts_url">
+<pre class="brush: js;">
+html部分:
+
+&lt;ul id="treeDemo_url" class="ztree"&gt;&lt;/ul&gt;
+
+js部分:
+
+var zNodes =[
+	{ id:1, pId:0, name:"chinasofti Home", url:"http://www.chinasofti.com", target:"_blank"},
+	{ id:2, pId:0, name:"新浪", url:"http://www.sina.com.cn/", target:"_blank"},
+	{ id:3, pId:0, name:"Nothing...", url:"", target:"_blank", click:"alert('我是不会跳转的...');"}
+];
+
+var setting_url = {
+        id:"#treeDemo_url",//容器id
+        nodes:zNodes,  //数据节点指定
+		data: {
+			simpleData: {
+				enable: true
+			}
+		}
+};
+new biz.tree(setting_url);//创建树
+           </pre>
+
+       </div>
+</div>
+
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+var zNodes =[
+	{ id:1, pId:0, name:"chinasofti Home", url:"http://www.chinasofti.com", target:"_blank"},
+	{ id:2, pId:0, name:"新浪", url:"http://www.sina.com.cn/", target:"_blank"},
+	{ id:3, pId:0, name:"Nothing...", url:"", target:"_blank", click:"alert('我是不会跳转的...');"}
+];
+
+var setting_url = {
+        id:"#treeDemo_url",//容器id
+        nodes:zNodes,  //数据节点指定
+		data: {
+			simpleData: {
+				enable: true
+			}
+		}
+};
+new biz.tree(setting_url);//创建树
+
+</script>

@@ -1,0 +1,1136 @@
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 align=left
+ width=727 style='width:545.35pt;border-collapse:collapse;border:none;
+ margin-left:6.75pt;margin-right:6.75pt'>
+ <tr style='height:17.65pt'>
+  <td width=73 valign=top style='width:54.75pt;border:solid black 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>类型</span></b></p>
+  </td>
+  <td width=144 valign=top style='width:108.3pt;border:solid black 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>属性名称</span></b></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border:solid black 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>含义</span></b></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border:solid black 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=center style='text-align:center;text-indent:0cm'><b><span
+  style='font-size:9.0pt;line-height:150%;font-family:宋体'>默认值</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=73 rowspan=34 valign=top style='width:54.75pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='line-height:normal'><span style='font-size:9.0pt;
+  font-family:黑体'>属性</span></p>
+  </td>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>el</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>指定一个控件或控件的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ID,</span><span
+  style='font-size:9.0pt;font-family:黑体'>必须具有</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>value</span><span
+  style='font-size:9.0pt;font-family:黑体'>或</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>innerHTML</span><span
+  style='font-size:9.0pt;font-family:黑体'>属</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>用户存储</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>dateFmt</span><span
+  style='font-size:9.0pt;font-family:黑体'>格式化后的值</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><a name="OLE_LINK23"></a><a name="OLE_LINK22"><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></a><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Element </span><span
+  style='font-size:9.0pt;font-family:黑体'>或</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> String</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>vel</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>指定一个控件或控件的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ID,</span><span
+  style='font-size:9.0pt;font-family:黑体'>必须具有</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>value</span><span
+  style='font-size:9.0pt;font-family:黑体'>属性</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>用于存储真实值</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(</span><span
+  style='font-size:9.0pt;font-family:黑体'>也就是</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>realDateFmt</span><span
+  style='font-size:9.0pt;font-family:黑体'>和</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>realTimeFmt</span><span
+  style='font-size:9.0pt;font-family:黑体'>格式化后的值</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>)</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Element </span><span
+  style='font-size:9.0pt;font-family:黑体'>或</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> String</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <a name="_Hlk329611490"></a>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>doubleCalendar</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否是双月模式</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>enableKeyboard</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>键盘控制开关</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>enableInputMask</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>文本框输入启用掩码开关</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>autoUpdateOnChanged</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>在修改年月日时分秒等元素时</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>自动更新到</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>el</span><span
+  style='font-size:9.0pt;font-family:黑体'>，默认是关闭的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(</span><span
+  style='font-size:9.0pt;font-family:黑体'>即</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>:</span><span
+  style='font-size:9.0pt;font-family:黑体'>需要点击确定或点击日期才更新</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>)<br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> </span><span style='font-size:9.0pt;
+  font-family:黑体'>不自动更新</span><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'><br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> </span><span style='font-size:9.0pt;
+  font-family:黑体'>自动更新</span><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'><br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(</span><span
+  style='font-size:9.0pt;font-family:黑体'>默认值</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>) </span><span
+  style='font-size:9.0pt;font-family:黑体'>如果有日元素且不隐藏确定按钮时</span><span
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> </span><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false,</span><span
+  style='font-size:9.0pt;font-family:黑体'>其他情况为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>weekMethod</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>周算法：常见算法有两种</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'><br>
+  1. ISO8601:</span><span style='font-size:9.0pt;font-family:黑体'>规定第一个星期四为第一周</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>默认值</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'><br>
+  2. MSExcel:1</span><span style='font-size:9.0pt;font-family:黑体'>月</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>1</span><span
+  style='font-size:9.0pt;font-family:黑体'>日所在的周</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>“ISO8601”</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>position</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>日期选择框显示位置</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>{}</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>lang</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>目前支持中英文两种语言</span><span style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> </span><span lang=EN-US style='font-size:
+  9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span style='font-size:9.0pt;
+  font-family:黑体'>当值为</span><span style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>“zh”
+  </span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span style='font-size:9.0pt;
+  font-family:"黑体"'>，为中文。当值为“en” 为英文。</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'></span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>skin</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>皮肤名称</span><span style='font-size:
+  9.0pt;font-family:"Tahoma","sans-serif"'> </span><span style='font-size:9.0pt;
+  font-family:黑体'>默认自带</span><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> default</span><span style='font-size:
+  9.0pt;font-family:黑体'>和</span><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'>whyGreen</span><span style='font-size:
+  9.0pt;font-family:黑体'>两个皮肤</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>default'</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>dateFmt</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>日期显示格式</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>'yyyy-MM-dd'</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>realDateFmt</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK25"></a><a name="OLE_LINK24"><span style='font-size:9.0pt;
+  font-family:黑体'>计算机可识别的</span></a><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'>,</span><span style='font-size:9.0pt;
+  font-family:黑体'>真正的日期格式</span><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'><br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>无效日期设置</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(disabledDates),</span><span
+  style='font-size:9.0pt;font-family:黑体'>最大日期</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(maxDate),</span><span
+  style='font-size:9.0pt;font-family:黑体'>最小日期</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(minDate)</span><span
+  style='font-size:9.0pt;font-family:黑体'>以及快速日期都必须与它们相匹配</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'><br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>建议使用默认值</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>'yyyy-MM-dd'</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>realTimeFmt</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK27"></a><a name="OLE_LINK26"><span style='font-size:9.0pt;
+  font-family:黑体'>计算机可识别的</span></a><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'>,</span><span style='font-size:9.0pt;
+  font-family:黑体'>真正的时间格式</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>'HH:mm:ss'</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>realFullFmt</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>计算机可识别的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>真正的日期时间格式</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>'%Date
+  %Time'</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>minDate</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>最小日期</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(</span><span
+  style='font-size:9.0pt;font-family:黑体'>注意要与上面的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>real</span><span
+  style='font-size:9.0pt;font-family:黑体'>日期相匹配</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>)</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>'1900-01-01
+  00:00:00'</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>maxDate</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>最大日期</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(</span><span
+  style='font-size:9.0pt;font-family:黑体'>注意要与上面的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>real</span><span
+  style='font-size:9.0pt;font-family:黑体'>日期相匹配</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>)</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>'2099-12-31
+  23:59:59'</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>startDate</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>起始日期</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>既点击日期框时显示的起始日期</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'><br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>为空时</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>使用今天作为起始日期</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(</span><span
+  style='font-size:9.0pt;font-family:黑体'>默认值</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>)<br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>否则使用传入的日期作为起始日期</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(</span><span
+  style='font-size:9.0pt;font-family:黑体'>注意要与上面的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>real</span><span
+  style='font-size:9.0pt;font-family:黑体'>日期相匹配</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>)</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>''</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>firstDayOfWeek</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>周的第一天</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> 0</span><span
+  style='font-size:9.0pt;font-family:黑体'>表示星期日</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> 1</span><span
+  style='font-size:9.0pt;font-family:黑体'>表示星期一</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>0</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isShowWeek</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否显示周</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>highLineWeekDay</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否高亮显示</span><span style='font-size:
+  9.0pt;font-family:"Tahoma","sans-serif"'> </span><span style='font-size:9.0pt;
+  font-family:黑体'>周六</span><span style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>
+  </span><span style='font-size:9.0pt;font-family:黑体'>周日</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><a name="OLE_LINK29"></a><a name="OLE_LINK28"><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span></a></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isShowClear</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否显示清空按钮</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isShowToday</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否显示今天按钮</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>isShowOthers</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>第一行空白处显示上月的日期，末行空白处显示下月的日期</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>否则不显示</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>readOnly</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否只读</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>False</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>errDealMode</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>纠错模式设置</span><span style='font-size:
+  9.0pt;font-family:"Tahoma","sans-serif"'> </span><span style='font-size:9.0pt;
+  font-family:黑体'>可设置</span><span lang=EN-US style='font-size:9.0pt;font-family:
+  "Tahoma","sans-serif"'>3</span><span style='font-size:9.0pt;font-family:黑体'>中模式</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> 0 - </span><span
+  style='font-size:9.0pt;font-family:黑体'>提示</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> 1 - </span><span
+  style='font-size:9.0pt;font-family:黑体'>自动纠错</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'> 2 - </span><span
+  style='font-size:9.0pt;font-family:黑体'>标记</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>0</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>autoPickDate</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> </span><span style='font-size:9.0pt;
+  font-family:黑体'>点日期的时候不自动输入</span><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'>,</span><span style='font-size:9.0pt;
+  font-family:黑体'>而是要通过确定才能输入</span><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'><br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> </span><span style='font-size:9.0pt;
+  font-family:黑体'>即点击日期即可返回日期值</span><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'><br>
+  </span><span style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>(</span><span
+  style='font-size:9.0pt;font-family:黑体'>推荐使用</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>) </span><span
+  style='font-size:9.0pt;font-family:黑体'>如果有时间置为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false </span><span
+  style='font-size:9.0pt;font-family:黑体'>否则置为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>qsEnabled</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否启用快速选择功能</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>True</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>autoShowQS</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否默认显示快速选择</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>False</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>quickSel</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>快速选择数据</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>可以传入</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>5</span><span
+  style='font-size:9.0pt;font-family:黑体'>个快速选择日期</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Null</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>array</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>disabledDates</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>可以使用此功能禁用所指定的一个或多个日期</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Null</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>array</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>disabledDates</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>可以使用此功能禁用所指定的一个或多个日期</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Null</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>array</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>opposite</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>默认为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false, </span><span
+  style='font-size:9.0pt;font-family:黑体'>为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>true</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>无效日期变成有效日期</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>False</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>specialDates</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>特殊日期</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>对指定的日期进行高亮显示</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Null</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>array</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>specialDays</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>殊天</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>,</span><span
+  style='font-size:9.0pt;font-family:黑体'>使用此功能禁用周日至周六所对应的日期进行高亮显示</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'><br>
+  0</span><span style='font-size:9.0pt;font-family:黑体'>至</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>6 </span><span
+  style='font-size:9.0pt;font-family:黑体'>分别代表</span><span style='font-size:
+  9.0pt;font-family:"Tahoma","sans-serif"'> </span><span style='font-size:9.0pt;
+  font-family:黑体'>周日至周六</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Null</span><span
+  style='font-size:9.0pt;font-family:黑体'>（</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>array</span><span
+  style='font-size:9.0pt;font-family:黑体'>）</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=73 rowspan=5 valign=top style='width:54.75pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>事件</span></p>
+  </td>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>onpicking</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:115%'><span
+  style='font-size:9.0pt;line-height:115%;font-family:黑体'>获取选中值之前触发</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>onpicked</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:115%'><span
+  style='font-size:9.0pt;line-height:115%;font-family:黑体'>获取选中值之后触发</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>onclearing</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:115%'><span
+  style='font-size:9.0pt;line-height:115%;font-family:黑体'>清空值之前触发</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>oncleared</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:115%'><span
+  style='font-size:9.0pt;line-height:115%;font-family:黑体'>清空值之后触发</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:195.6pt'>
+  <td width=144 valign=top style='width:108.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:195.6pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>ychanging</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>ychanged</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>Mchanging</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>Mchanged</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>dchanging</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>dchanged</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>Hchanging</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>Hchanged</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>Mchanging</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>Mchanged</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>schanging</span></p>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>schanged</span></p>
+  </td>
+  <td width=292 valign=top style='width:219.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:195.6pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:115%'><span lang=EN-US
+  style='font-size:9.0pt;line-height:115%'>y M d H m s </span><span
+  style='font-size:9.0pt;line-height:115%;font-family:宋体'>分别表示年月日时分秒</span><span
+  lang=EN-US style='font-size:9.0pt;line-height:115%'><br>
+  changing </span><span style='font-size:9.0pt;line-height:115%;font-family:
+  宋体'>事件发生在属性改变之前</span><span lang=EN-US style='font-size:9.0pt;line-height:
+  115%'><br>
+  changed </span><span style='font-size:9.0pt;line-height:115%;font-family:
+  宋体'>事件发生在属性改变之后</span></p>
+  </td>
+  <td width=217 valign=top style='width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:195.6pt'>
+  <p class=MsoNormal align=left style='text-align:left;text-indent:0cm;
+  line-height:normal'><span lang=EN-US style='font-size:9.0pt'>null</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:7.45pt'><span lang=EN-US
+style='font-size:9.0pt;line-height:150%'>&nbsp;</span></p>
+
+</div>

@@ -1,0 +1,135 @@
+package com.lmxf.post.service.order;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderChange;
+import com.lmxf.post.entity.order.OrderProduct;
+import com.lmxf.post.entity.vending.VendingStock;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderChangeDao;
+import com.lmxf.post.repository.order.OrderProductDao;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.repository.vending.VendingStockDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.order.OrderInvalidReq;
+import com.lmxf.post.tradepkg.order.OrderInvalidResp;
+
+public class TradeOrderInvalidService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeOrderInvalidService.class);
+	private OrderInvalidReq orderInvalidReq;
+	private OrderInvalidResp orderInvalidResp;
+	private OrderApplyDao orderApplyDao;
+	private SequenceIdDao sequenceIdDao;
+	private OrderChangeDao orderChangeDao;
+	private OrderProductDao orderProductDao;
+	private VendingStockDao vendingStockDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		OrderApply orderApply = null;
+		Map ret = null;
+		try {
+			ret = orderInvalidReq.parseXml(apply_xml);
+			if (ret.get("code") == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+			} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+				log.error("orderInvalidReq.parseXml is error!");
+				return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+			}
+		} catch (Exception e) {
+			log.error("---parseXml  error-----", e);
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		}
+		orderApply = (OrderApply) ret.get("orderApply");
+		OrderApply orderApplyR = this.orderApplyDao.findOneByOrderId(orderApply);
+		if(null == orderApplyR){
+			return errorCodeDao.getErrorRespJson(GConstent.Order_No_Exsit);
+		}
+		if(!orderApplyR.getCurState().equals(GParameter.orderState_apply)){
+			return errorCodeDao.getErrorRespJson(GConstent.OrderState_No_Change);
+		}
+		String pay_state = orderApplyR.getPayState();
+		if(pay_state.equals(GParameter.payState_success)){//已支付的订单不能取消
+			return errorCodeDao.getErrorRespJson(GConstent.OrderState_No_Change);
+		}
+		//更新订单状态信息
+		orderApplyR.setAbnomarlState(GParameter.abnormalType_customerCancel);
+		orderApplyR.setaStateTime(DateUtil.getNow());
+		orderApplyR.setOrderType(GParameter.orderType_close);
+		orderApplyR.setPassWord("");
+		this.orderApplyDao.update(orderApplyR);
+		//插入订单状态变化信息
+		OrderChange orderChange = new OrderChange();
+		orderChange.setLogid(DateUtil.getLogid());
+		orderChange.setChangeId(orderApplyR.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApplyR.getCorpId(), "order_change_id", 7));
+		orderChange.setCorpId(orderApplyR.getCorpId());
+		orderChange.setOrderId(orderApplyR.getOrderId());
+		orderChange.setOperId(orderApplyR.getLoginId());
+		orderChange.setOperName(orderApplyR.getLoginName());
+		orderChange.setSiteId(orderApplyR.getSiteId());
+		orderChange.setSiteName(orderApplyR.getSiteName());
+		orderChange.setOperAction(GParameter.orderChange_customerCancel);
+		orderChange.setOperTime(DateUtil.getNow());
+		orderChange.setOperCont("售货机:" + orderApplyR.getSiteName() + " 订单编号:" + orderApplyR.getOrderId() + " 客户取消成功!");
+		orderChange.setCreateTime(DateUtil.getNow());
+		orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+		orderChange.setPocTimes(0);
+		orderChange.setPocResult("wait push");
+		orderChange.setProState(GParameter.OrderChangeProState_waitFinsh);
+		this.orderChangeDao.insert(orderChange);
+		//释放库存
+		OrderProduct orderProduct = new OrderProduct();
+		orderProduct.setOrderId(orderApplyR.getOrderId());
+		List<OrderProduct> orderProductList = orderProductDao.findAll(orderProduct);
+		if(null != orderProductList && orderProductList.size() > 0){
+			for (OrderProduct orderProductP : orderProductList) {
+				VendingStock vendingStock = new VendingStock();
+				vendingStock.setSiteId(orderApplyR.getSiteId());
+				vendingStock.setProductId(orderProductP.getProductId());
+				VendingStock vendingStockR = vendingStockDao.findOne(vendingStock);
+				if(null != vendingStockR){
+					vendingStockR.setNum(vendingStockR.getNum() + orderProductP.getSaleNum());
+					vendingStockDao.update(vendingStockR);
+				}
+			}
+		}
+		return orderInvalidResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1);
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+	public void setOrderChangeDao(OrderChangeDao orderChangeDao) {
+		this.orderChangeDao = orderChangeDao;
+	}
+
+	public void setOrderProductDao(OrderProductDao orderProductDao) {
+		this.orderProductDao = orderProductDao;
+	}
+
+	public void setVendingStockDao(VendingStockDao vendingStockDao) {
+		this.vendingStockDao = vendingStockDao;
+	}
+
+	public void setOrderInvalidReq(OrderInvalidReq orderInvalidReq) {
+		this.orderInvalidReq = orderInvalidReq;
+	}
+
+	public void setOrderInvalidResp(OrderInvalidResp orderInvalidResp) {
+		this.orderInvalidResp = orderInvalidResp;
+	}
+
+}

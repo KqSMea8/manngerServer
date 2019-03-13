@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="StockInfo">
+
+	<resultMap type="com.lmxf.post.entity.stock.StockInfo" id="StockInfoResultMap">
+		<result property="logid" column="logid" />
+		<result property="stockId" column="stockId" />
+		<result property="stockName" column="stockName" />
+		<result property="managerName" column="managerName" />
+		<result property="mobile" column="mobile" />
+		<result property="districtId" column="districtId" />
+		<result property="corpId" column="corpId" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<select id="findALl" parameterType="com.lmxf.post.entity.stock.StockInfo" resultMap="StockInfoResultMap">
+		select * from as_stock_info where 1=1
+		<if test="districtId != null and districtId != ''">
+			and districtId=#{districtId} 
+	    </if>
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.stock.StockInfo" resultMap="StockInfoResultMap">
+		select * from as_stock_info where districtId=#{districtId} limit 0,1
+	</select>
+</mapper> 

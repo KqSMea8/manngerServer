@@ -1,0 +1,347 @@
+[文件路径: grid/nav/customNav.html]
+
+
+     <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示自定义grid导航栏功能：根据项目需求灵活设置导航栏展现方式，通过指定事件与grid数据操作的api绑定即可实现完整导航栏功能；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1：在grid顶部自定义导航栏</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom">
+
+                       <div class="nav">
+                           <button  id="customNav_add"  ></button>
+                           <button id="customNav_edit" ></button>
+                           <button id="customNav_view" ></button>
+                           <button id="customNav_del" ></button>
+                           <button id="customNav_refresh" ></button>
+                       </div>
+                       <table id="customNav_rowed"></table>
+                       <div id="customNav_prowed"></div>
+
+                 </div>
+        </div>
+    </div>
+<!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_customNav">
+<pre>
+<font color='#027DD1'>1、在grid顶部自定义导航栏：</font>
+<strong>html部分:</strong>
+
+    &lt;div class="nav"&gt;
+       &lt;button  id="customNav_add" &gt;&lt;/button&gt;
+       &lt;button id="customNav_edit" &gt;&lt;/button&gt;
+       &lt;button id="customNav_view" &gt;&lt;/button&gt;
+       &lt;button id="customNav_del" &gt;&lt;/button&gt;
+       &lt;button id="customNav_refresh" &gt;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;table id="customNav_rowed"&gt;&lt;/table&gt;
+    &lt;div id="customNav_prowed"&gt;&lt;/div&gt;
+
+
+<strong>js部分:</strong>
+  <strong>1)grid初始化</strong>
+    customNavvObj = new biz.grid({
+          id:"#customNav_rowed",
+          data: mydata,
+          datatype: "local",
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},edittype:'datepicker', editoptions:
+                {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},editable:true,formoptions:{ rowpos:2, colpos:1}},
+              {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">navtype:"none"</font>/*导航栏类型设置为none*/,
+         pager: '#customNav_prowed'
+    });
+     var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+
+2)导航栏按钮与grid相关api绑定
+    new biz.button({<font color="red">id:"#customNav_view"</font>, icons: {primary:'ui-icon-search'},label: "查 询" })/*渲染查看按钮，添加图标和文字*/
+    .click(function() { /*给查看按钮绑定单击事件*/
+            var sr = <font color="red">customNavvObj.getGridParam("selrow");</font>/*获取选择行数据*/
+			if(sr){
+                <font color="red">customNavvObj.viewGridRow(sr);</font> /*弹出框查看行数据*/
+            }else{
+                new biz.alert({type:"alert",message:"请选择数据！",title:"注 意"}) ;
+            }
+	});
+
+    new biz.button({<font color="red">id:"#customNav_add"</font>, icons: {primary:'ui-icon-plus'},label: "新 增" }).click(function() {
+             customNavvObj.editGridRow('new',{width:780});
+	});
+    new biz.button({<font color="red">id:"#customNav_edit"</font>, icons: {primary:'ui-icon-pencil'},label: "编 辑" }).click(function() {
+              var sr = customNavvObj.getGridParam("selrow");
+			  if(sr){
+                 <font color="red"> customNavvObj.editGridRow(sr,{width:780});</font>
+              }else{
+                  new biz.alert({type:"alert",message:"请选择数据！",title:"注 意"}) ;
+              }
+	    });
+
+    new biz.button({<font color="red">id:"#customNav_del"</font>, icons: {primary:'ui-icon-trash'},label: "删 除" })  /*渲染删除按钮，添加图标和文字*/
+    .click(function() {
+           var sr = customNavvObj.getGridParam("selrow");
+           if(sr){
+               <font color="red">customNavvObj.delGridRow(sr); </font>/*弹出框删除行数据*/
+           }else{
+               new biz.alert({type:"alert",message:"请选择数据！",title:"注 意"}) ;
+           }
+    });
+
+    new biz.button({<font color="red">id:"#customNav_refresh"</font>, icons: {primary:'ui-icon-refresh'},label: "刷 新" })/*渲染刷新按钮，添加图标和文字*/
+    .click(function() {
+            <font color="red">customNavvObj.trigger("reloadGrid", [{page:1}]);</font>/*刷新grid数据*/
+    });
+</pre>
+    </div>
+
+    <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">自定义导航栏说明</div>
+	</div>
+	<div class="content">
+	<div class="ui-table ui-widget ui-corner-all ui-margin">
+	<div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                   <table id="customNav_rowed2"></table>
+                   <div id="customNav_prowed2"></div>
+    </div>
+    </div>
+	grid有专门的api（navButtonAdd）进行按钮进行定义，包含两个参数：pager和options，如导航栏在grid的bottom位置，pager值同grid的pager值，如在bottom位置，pager值应为grid的id+"_toppager"。
+	例如，在grid工具栏按钮后增加一个名为add的按钮，点击后弹出提示信息，代码如下： <br>
+	new biz.grid({ <br>
+id:”#grid”,pager:”#pager” ,navtype:”bottom” …… }) <br>
+.navButtonAdd('#pager',{   //增加按钮api<br>
+   caption:"Add",   // 按钮名<br>
+   buttonicon:"ui-icon-add",  //按钮图标  <br>
+   onClickButton: function(){    //按钮单击事件<br>
+    alert("Adding Row");})<br>
+	options属性详细说明：
+	<!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_customNav">
+<pre>
+html部分:
+
+    &lt;table id="customNav_rowed2"&gt;&lt;/table&gt;
+    &lt;div id="customNav_prowed2"&gt;&lt;/div&gt;
+
+js部分:
+1)grid初始化
+    customNavvObj2 = new biz.grid({
+          id:"#customNav_rowed2",
+          data: mydata,
+          datatype: "local",
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},edittype:'datepicker', editoptions:
+                {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",editoptions:
+                {value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font style="color:red">navtype:"none"</font>/*-------------导航栏类型设置为top-----------------*/,
+         pager: '#customNav_prowed2',
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+    });
+    customNavvObj2.<font style="color:red">navButtonAdd</font>('#customNav_rowed2_toppager',{ //增加按钮api
+	         caption:"新增按钮", // 按钮名
+	         buttonicon:"ui-icon-add", //按钮图标
+	         onClickButton: function(){ //按钮单击事件
+	             alert("Adding Row");}
+	});
+
+</pre>
+</div>
+	<iframe src="./grid/nav/customNav_navButtonAddOPtion.html" width="100%" scrolling="no" frameborder="0" height="220px;"></iframe>
+			
+</div>						
+
+<script type="text/javascript">
+
+		new biz.button({id:"#customNav_view", icons: {primary:'ui-icon-search'},label: "查 询" }).click(function() {
+            var sr = customNavvObj.getGridParam("selrow");
+			if(sr){
+                customNavvObj.viewGridRow(sr);
+            }else{
+                new biz.alert({type:"alert",message:"请选择数据！",title:"注 意"}) ;
+            }
+	    });
+
+		new biz.button({id:"#customNav_add", icons: {primary:'ui-icon-plus'},label: "新 增" }).click(function() {
+             customNavvObj.editGridRow('new',{width:780});
+	    });
+		new biz.button({id:"#customNav_edit", icons: {primary:'ui-icon-pencil'},label: "编 辑" }).click(function() {
+              var sr = customNavvObj.getGridParam("selrow");
+			  if(sr){
+                  customNavvObj.editGridRow(sr,{width:780});
+              }else{
+                  new biz.alert({type:"alert",message:"请选择数据！",title:"注 意"}) ;
+              }
+	    });
+		new biz.button({id:"#customNav_view", icons: {primary:'ui-icon-document'},label: "查 看" });
+		new biz.button({id:"#customNav_del", icons: {primary:'ui-icon-trash'},label: "删 除" }).click(function() {
+               var sr = customNavvObj.getGridParam("selrow");
+			   if(sr){
+                   customNavvObj.delGridRow(sr);
+               }else{
+                   new biz.alert({type:"alert",message:"请选择数据！",title:"注 意"}) ;
+               }
+	    });
+		
+		new biz.button({id:"#customNav_refresh", icons: {primary:'ui-icon-refresh'},label: "刷 新" }).click(function() {
+                customNavvObj.trigger("reloadGrid", [{page:1}]);
+	    });
+	    var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+     
+     var customNavvObj, mydata = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"14",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"15",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"16",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"17",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"18",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"19",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"21",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"22",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"23",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"24",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"25",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"26",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"27",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"28",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"29",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+         ];
+
+
+
+     customNavvObj = new biz.grid({
+          id:"#customNav_rowed",
+          data: mydata,
+          datatype: "local",
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},edittype:'datepicker', editoptions:
+                {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},editable:true,formoptions:{ rowpos:2, colpos:1}},
+              {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"none" /*导航栏类型*/,
+         pager: '#customNav_prowed'
+        });
+		$("#querya").click(function(){
+		$("#querydiv").slideToggle("slow");
+		$("#querya").html()=='隐藏查询条件'?$("#querya").html('展开查询条件'):$("#querya").html('隐藏查询条件');
+		}); 
+		
+		customNavvObj2 = new biz.grid({
+	         id:"#customNav_rowed2",
+	         data: mydata,
+	         datatype: "local",
+	         colModel:[
+	            {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+	            {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},formoptions:{ rowpos:1, colpos:1}},
+	            {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},edittype:'datepicker', editoptions:
+	               {dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+	            {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+	            {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},editable:true,formoptions:{ rowpos:2, colpos:1}},
+	            {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",editoptions:
+	               {value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+	            {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+	            {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+	        ],
+	        navtype:"top" /*导航栏类型*/,
+	        pager: '#customNav_prowed2',
+	        pView:{
+	           top:200, /*弹出框top位置*/
+	           left:250,/*弹出框left位置*/
+	           width:600,/*宽度*/
+	           resize:false,
+	           recreateForm:true
+	        },
+	        pAdd:{ 
+	           top:200, /*弹出框top位置*/
+	           left:250,/*弹出框left位置*/
+	           width:750,/*宽度*/
+	           resize:true,/*弹出框可缩放大小*/
+	           url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+	           recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+	        pEdit:{
+	        	top:200, /*弹出框top位置*/
+	           left:250,/*弹出框left位置*/
+	           width:750,/*宽度*/
+	        	resize:true,recreateForm:true}
+	        });
+		    customNavvObj2.navButtonAdd('#customNav_rowed2_toppager',{ //增加按钮api
+		         caption:"新增按钮", // 按钮名
+		         buttonicon:"ui-icon-add", //按钮图标
+		         onClickButton: function(){ //按钮单击事件
+		             alert("单击了新增按钮！");}
+		    });
+
+
+ 
+</script>

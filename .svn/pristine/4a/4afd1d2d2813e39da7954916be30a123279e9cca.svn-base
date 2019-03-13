@@ -1,0 +1,191 @@
+[文件路径: grid/advanced/mergeCell.html] 
+
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid合并单元格功能，有两种方式实现：
+		 1、<font color="red">通过数据分组方式，详细请参见数据分组示例；</font>
+		 2、通过api(mergeCells),特定单元格的行、列合并，指定合并其实位置、合并行列数量即可；
+		 <font color="red">注意</font>：通过api(mergeCells)合并单元格根据用户指定行列起始位置、终止位置进行，如数据顺序改变其合并单元格参数须相应调整，否则会混乱!建议使用此功能时取消排序功能。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="colspan_rowed"></table>
+                       <div id="colspan_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_mergeCell">
+<pre>
+<font color='#027DD1'>1.数据：</font>
+<strong>js部分:</strong>
+var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+ ] ;
+ var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-24",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2010-05-24",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-04",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-10-04",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-01",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+ ];
+<font color='#027DD1'>2.合并单元格：</font>
+<strong>js部分:</strong>
+     var colspanObj = new biz.grid({
+          id:"#colspan_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+               {name:'ids',index:'ids',label:"标识",key:true,editable:true, width:55,
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",editable:true,key:false,width:180,
+                   formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name', label:"名称",key:false,width:90,sortable:false},
+               {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editable:true, formoptions:{ rowpos:2, colpos:1},sortable:false},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,sortable:false,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,sortable:false,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"top" /*导航栏类型*/,
+         pager: '#colspan_prowed' /*分页栏id*/ ,
+         pEdit:{
+            width:800,/*宽度*/
+         },
+          pAdd:{ 
+            width:800,/*宽度*/
+          },
+         rowNum:15,
+         <font color="red">gridComplete:function(){</font>//grid数据填充完毕后进行合并单元格处理
+                var mer = [ {rowid:"1",column:'invdate',rowspan:3,valuefunc:cellval1 },
+                          {rowid:"7",column:'name',colspan:2,valuefunc:cellval2},
+                          {rowid:"4",column:'invdate',rowspan:4,valuefunc:cellval1},
+                          {rowid:"11",column:'invdate',rowspan:2,valuefunc:cellval1}];
+                for(var i=0; i< mer.length; i++){
+                    //grid渲染完成前调用合并单元格api方法 new biz.grid("#gridid","方法名",参数1,参数2……)
+                    <font color="red">new biz.grid("#colspan_rowed","mergeCells",{ </font>
+                        <font color="red">rowid:mer[i].rowid,</font>      //起始合并行id
+                        <font color="red">column:mer[i].column,</font>    //起始合并列名称
+                        <font color="red">rowspan:mer[i].rowspan, </font> //合并行单元格数量
+                        <font color="red">colspan:mer[i].colspan,</font>  //合并列单元格数量
+                        <font color="red">valuefunc: mer[i].valuefunc</font>  //合并单元格显示内容函数，参数1：行id，参数2：列名称
+                    });
+                }
+         }
+      });
+
+      function cellval1(rowid,column){
+          var rowdata =  new biz.grid("#colspan_rowed","getRowData",rowid) ;
+          return rowdata[column];
+      }
+     function cellval2(rowid,column){
+          var rowdata =  new biz.grid("#colspan_rowed","getRowData",rowid) ;
+          return rowdata[column] + "&" + rowdata["amount"];
+     }
+</pre>
+    </div>
+
+
+						
+
+<script type="text/javascript">
+var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+ ] ;
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-24",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2010-05-24",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-04",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-10-04",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-01",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+      ];
+
+      var colspanObj = new biz.grid({
+          id:"#colspan_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+               {name:'ids',index:'ids',label:"标识",key:true,editable:true, width:55,
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",editable:true,key:false,width:180,
+                   formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name', label:"名称",key:false,width:90,sortable:false},
+               {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editable:true, formoptions:{ rowpos:2, colpos:1},sortable:false},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,sortable:false,editoptions:{},formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,sortable:false,edittype:"textarea", editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"top" /*导航栏类型*/,
+         pager: '#colspan_prowed' /*分页栏id*/ ,
+         pEdit:{
+            width:800,/*宽度*/
+         },
+          pAdd:{ 
+            width:800,/*宽度*/
+          },
+         rowNum:15,
+         gridComplete:function(){
+              var mer = [ {rowid:"1",column:'invdate',rowspan:3,valuefunc:cellval1 },
+                          {rowid:"7",column:'name',colspan:2,valuefunc:cellval2},
+                          {rowid:"4",column:'invdate',rowspan:4,valuefunc:cellval1},
+                          {rowid:"11",column:'invdate',rowspan:2,valuefunc:cellval1}];
+              for(var i=0; i<mer.length; i++){
+                    new biz.grid("#colspan_rowed","mergeCells",{
+                        rowid:mer[i].rowid,
+                        column:mer[i].column,
+                        rowspan:mer[i].rowspan,
+                        colspan:mer[i].colspan,
+                        valuefunc: mer[i].valuefunc
+                    });
+              }
+         }
+      });
+
+      function cellval1(rowid,column){
+          var rowdata =  new biz.grid("#colspan_rowed","getRowData",rowid) ;
+          return rowdata[column];
+      }
+     function cellval2(rowid,column){
+          var rowdata =  new biz.grid("#colspan_rowed","getRowData",rowid) ;
+          return rowdata[column] + "&" + rowdata["amount"];
+      }
+
+</script>

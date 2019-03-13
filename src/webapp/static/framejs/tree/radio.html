@@ -1,0 +1,151 @@
+[文件路径: tree/radio.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("ts_radio");
+</script>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo_radio" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、setting 配置信息说明</h2>
+				<ul class="list">
+				<li class="highlight_red">使用 radio，必须设置 setting.check 中的各个属性</li>
+				<li><p>radio 分组范围：<input type="radio" id="level" class="radio first" name="radioGroup" checked /><span>同一级内</span>
+						<input type="radio" id="all" class="radio" name="radioGroup"/><span>整棵树内</span><br/>
+						<ul id="code_radio" class="code_radio" style="height:20px;"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li class="highlight_red">1)、如果需要初始化默认节点被勾选，请设置 treeNode.checked 属性.</li>
+				<li class="highlight_red">2)、如果某节点不显示 radio，请设置 treeNode.nocheck 属性.</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+			
+			<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="ts_radio">
+    <pre class="brush: js;">
+html部分:
+
+&lt;ul id="treeDemo_radio" class="ztree"&gt;&lt;/ul&gt;
+
+js部分:
+
+var zNodes =[
+	{ id:1, pId:0, name:"随意勾选 1", open:true},
+	{ id:11, pId:1, name:"随意勾选 1-1", open:true},
+	{ id:111, pId:11, name:"随意勾选 1-1-1"},
+	{ id:112, pId:11, name:"随意勾选 1-1-2"},
+	{ id:12, pId:1, name:"随意勾选 1-2", open:true},
+	{ id:121, pId:12, name:"随意勾选 1-2-1"},
+	{ id:122, pId:12, name:"随意勾选 1-2-2"},
+	{ id:2, pId:0, name:"随意勾选 2", open:true},
+	{ id:21, pId:2, name:"随意勾选 2-1"},
+	{ id:22, pId:2, name:"随意勾选 2-2", open:true},
+	{ id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+	{ id:222, pId:22, name:"随意勾选 2-2-2"},
+	{ id:23, pId:2, name:"随意勾选 2-3"}
+];
+var setting_radio = {
+    id:"#treeDemo_radio",
+    nodes:zNodes,  //数据节点指定
+	check: {
+		enable: true,
+		chkStyle: "radio",
+		radioType: "level"
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	}
+};
+var code_radio;		
+var treeDemo;
+function setCheck() {
+	var type = $("#level").attr("checked")? "level":"all";
+	setting_radio.check.radioType = type;
+	showCode('setting.check.radioType = "' + type + '";');
+	treeDemo =  new biz.tree(setting_radio);//创建树
+}
+function showCode(str) {
+	if (!code_radio) code_radio = $("#code_radio");
+	code_radio.empty();
+	code_radio.append("&lt;li&gt;"+str+"&lt;/li&gt;");
+}
+
+$(document).ready(function(){
+	setCheck();			
+	$("#level").bind("change", setCheck);
+	$("#all").bind("change", setCheck);
+});
+           </pre>
+
+       </div>
+</div>
+
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+var zNodes =[
+	{ id:1, pId:0, name:"随意勾选 1", open:true},
+	{ id:11, pId:1, name:"随意勾选 1-1", open:true},
+	{ id:111, pId:11, name:"随意勾选 1-1-1"},
+	{ id:112, pId:11, name:"随意勾选 1-1-2"},
+	{ id:12, pId:1, name:"随意勾选 1-2", open:true},
+	{ id:121, pId:12, name:"随意勾选 1-2-1"},
+	{ id:122, pId:12, name:"随意勾选 1-2-2"},
+	{ id:2, pId:0, name:"随意勾选 2", open:true},
+	{ id:21, pId:2, name:"随意勾选 2-1"},
+	{ id:22, pId:2, name:"随意勾选 2-2", open:true},
+	{ id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+	{ id:222, pId:22, name:"随意勾选 2-2-2"},
+	{ id:23, pId:2, name:"随意勾选 2-3"}
+];
+var setting_radio = {
+    id:"#treeDemo_radio",
+    nodes:zNodes,  //数据节点指定
+	check: {
+		enable: true,
+		chkStyle: "radio",
+		radioType: "level"
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	}
+};
+var code_radio;		
+var treeDemo;
+function setCheck() {
+	var type = $("#level").attr("checked")? "level":"all";
+	setting_radio.check.radioType = type;
+	showCode('setting.check.radioType = "' + type + '";');
+	treeDemo =  new biz.tree(setting_radio);//创建树
+}
+function showCode(str) {
+	if (!code_radio) code_radio = $("#code_radio");
+	code_radio.empty();
+	code_radio.append("<li>"+str+"</li>");
+}
+
+$(document).ready(function(){
+	setCheck();			
+	$("#level").bind("change", setCheck);
+	$("#all").bind("change", setCheck);
+});
+</script>

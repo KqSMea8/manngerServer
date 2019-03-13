@@ -1,0 +1,599 @@
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="76%"
+ style='width:76.04%;border-collapse:collapse;border:none'>
+ <tr style='height:17.65pt'>
+  <td width="13%" valign=top style='width:13.06%;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><a name="OLE_LINK161"></a><a
+  name="OLE_LINK160"><b><span style='font-size:9.0pt;line-height:150%;
+  font-family:宋体'>属性</span></b></a></p>
+  </td>
+  <td width="20%" valign=top style='width:20.9%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>含义</span></b></p>
+  </td>
+  <td width="66%" valign=top style='width:66.02%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>默认值</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="13%" valign=top style='width:13.06%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGrid</span></p>
+  </td>
+  <td width="20%" valign=top style='width:20.9%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>是否使用</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>模式</span></p>
+  </td>
+  <td width="66%" valign=top style='width:66.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="13%" valign=top style='width:13.06%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridOptions</span></p>
+  </td>
+  <td width="20%" valign=top style='width:20.9%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>属性</span></p>
+  </td>
+  <td width="66%" valign=top style='width:66.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>{ </span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>plusicon
+  : “ui-icon-plus”,<br>
+  minusicon : “ui-icon-minus”,<br>
+  openicon: “ui-icon-carat-1-sw”, <br>
+  expandOnLoad: false, <br>
+  selectOnExpand : false, <br>
+  reloadOnExpand : true </span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>}</span></p>
+  <p class=MsoNormal style='text-indent:21.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>plusicon</span><span
+  style='font-size:9.0pt;font-family:黑体'>：展开</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>图标；</span></p>
+  <p class=MsoNormal style='text-indent:21.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>minusicon</span><span
+  style='font-size:9.0pt;font-family:黑体'>：折叠</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>图标；</span></p>
+  <p class=MsoNormal style='text-indent:21.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>openicon</span><span
+  style='font-size:9.0pt;font-family:黑体'>：展开</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>时</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>minusicon</span><span
+  style='font-size:9.0pt;font-family:黑体'>下面内容图标；</span></p>
+  <p class=MsoNormal style='text-indent:21.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>expandOnLoad</span><span
+  style='font-size:9.0pt;font-family:黑体'>：是否自动展开所有行；</span></p>
+  <p class=MsoNormal style='text-indent:21.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>selectOnExpand</span><span
+  style='font-size:9.0pt;font-family:黑体'>：是否点击展开图标时当前行被选择；</span></p>
+  <p class=MsoNormal style='text-indent:21.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>reloadOnExpand</span><span
+  style='font-size:9.0pt;font-family:黑体'>：是否</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>内容仅加载一次</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="13%" valign=top style='width:13.06%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK159"></a><a name="OLE_LINK158"><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridModel</span></a></p>
+  </td>
+  <td width="20%" valign=top style='width:20.9%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>模型定义</span></p>
+  </td>
+  <td width="66%" valign=top style='width:66.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>[ </span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>{ name :
+  ['name_1','name_2',…,'name_n'], <br>
+  width : [width_1,width_2,…,width_n] , <br>
+  align : ['left','center',…,'right'] , <br>
+  params : [param_1,…,param_n], <br>
+  mapping:['name_1_map','name_2_map',…]}]</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>name</span><span
+  style='font-size:9.0pt;font-family:黑体'>：数组，包含</span><a name="OLE_LINK134"></a><a
+  name="OLE_LINK133"><span lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span></a><span
+  style='font-size:9.0pt;font-family:黑体'>的列标题；</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>width</span><span
+  style='font-size:9.0pt;font-family:黑体'>：数组，包列宽度；</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>align</span><span
+  style='font-size:9.0pt;font-family:黑体'>：数组，包含列对齐方式，值可为</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>left</span><span
+  style='font-size:9.0pt;font-family:黑体'>、</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>center</span><span
+  style='font-size:9.0pt;font-family:黑体'>、</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>right</span><span
+  style='font-size:9.0pt;font-family:黑体'>；</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>params</span><span
+  style='font-size:9.0pt;font-family:黑体'>：数组，额外参数；</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>mapping</span><span
+  style='font-size:9.0pt;font-family:黑体'>：当</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>repeatitems</span><span
+  style='font-size:9.0pt;font-family:黑体'>设置为</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>false</span><span
+  style='font-size:9.0pt;font-family:黑体'>时，在一个应用中把数组中</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>names</span><span
+  style='font-size:9.0pt;font-family:黑体'>映射到</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>names</span><span
+  style='font-size:9.0pt;font-family:黑体'>。</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="13%" valign=top style='width:13.06%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgridtype</span></p>
+  </td>
+  <td width="20%" valign=top style='width:20.9%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>设置次网格数据类型，如不设置使用父</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>grid</span><span
+  style='font-size:9.0pt;font-family:黑体'>的</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>datatype</span><span
+  style='font-size:9.0pt;font-family:黑体'>类型</span></p>
+  </td>
+  <td width="66%" valign=top style='width:66.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>null</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="13%" valign=top style='width:13.06%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridWidth</span></p>
+  </td>
+  <td width="20%" valign=top style='width:20.9%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>次网格列宽度</span></p>
+  </td>
+  <td width="66%" valign=top style='width:66.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>20</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="13%" valign=top style='width:13.06%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridUrl</span></p>
+  </td>
+  <td width="20%" valign=top style='width:20.9%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>获取</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>数据源，附加行</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>将作为参数传递，如需更多参数请在</span><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridModel</span><span
+  style='font-size:9.0pt;font-family:黑体'>中设置</span></p>
+  </td>
+  <td width="66%" valign=top style='width:66.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>“”</span></p>
+  </td>
+ </tr>
+ <tr style='height:3.85pt'>
+  <td width="13%" valign=top style='width:13.06%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:3.85pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ajaxSubgridOptions</span></p>
+  </td>
+  <td width="20%" valign=top style='width:20.9%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:3.85pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>设置请求数据时</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>ajax</span><span
+  style='font-size:9.0pt;font-family:黑体'>请求属性</span></p>
+  </td>
+  <td width="66%" valign=top style='width:66.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:3.85pt'>
+  <p class=MsoNormal style='text-indent:18.0pt;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>{}</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span style='font-size:9.0pt;
+line-height:150%;font-family:宋体'>事件：</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="76%"
+ style='width:76.04%;border-collapse:collapse;border:none'>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>事件</span></b></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>含义</span></b></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>参数</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridBeforeExpand</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>展开前触发</span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>pID</span><span
+  style='font-size:9.0pt;font-family:黑体'>：能添加内容到</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>里的唯一</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>div</span><span
+  style='font-size:9.0pt;font-family:黑体'>元素</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>；</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行数据</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>；</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridRowExpanded</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>行展开触发</span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>同上</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridRowColapsed</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>折叠时触发</span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>同上</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt'>serializeSubGridData</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>提交请求参数到</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>前触发</span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>sPostData:</span><span
+  style='font-size:9.0pt;font-family:黑体'>提交到</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>server</span><span
+  style='font-size:9.0pt;font-family:黑体'>端的提交数据</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span style='font-size:9.0pt;
+line-height:150%;font-family:宋体'>方法：</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="76%"
+ style='width:76.04%;border-collapse:collapse;border:none'>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>事件</span></b></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>含义</span></b></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border:solid windowtext 1.0pt;
+  border-left:none;background:#F2F2F2;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm'><b><span style='font-size:9.0pt;
+  line-height:150%;font-family:宋体'>参数</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>expandSubGridRow</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>展开</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>指定行</span><span style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'> </span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>rowid</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行数据</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>；</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>collapseSubGridRow</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><a
+  name="OLE_LINK163"></a><a name="OLE_LINK162"><span style='font-size:9.0pt;
+  font-family:黑体'>折叠</span></a><span lang=EN-US style='font-size:9.0pt;
+  font-family:"Tahoma","sans-serif"'>Subgrid</span><span style='font-size:9.0pt;
+  font-family:黑体'>指定行</span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>同上</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>toggleSubGridRow</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>触发</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>Subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>指定行</span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>同上</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridJson</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>以</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>json</span><span
+  style='font-size:9.0pt;font-family:黑体'>格式添加</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>行数据</span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>json</span><span
+  style='font-size:9.0pt;font-family:黑体'>：</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>json</span><span
+  style='font-size:9.0pt;font-family:黑体'>数据对象；</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>rowid</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行数据</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span><span
+  style='font-size:9.0pt;font-family:黑体'>；</span></p>
+  </td>
+ </tr>
+ <tr style='height:17.65pt'>
+  <td width="17%" valign=top style='width:17.96%;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subGridXml</span></p>
+  </td>
+  <td width="30%" valign=top style='width:30.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:9.0pt;font-family:黑体'>以</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>xml</span><span
+  style='font-size:9.0pt;font-family:黑体'>格式添加</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>subgrid</span><span
+  style='font-size:9.0pt;font-family:黑体'>行数据</span></p>
+  </td>
+  <td width="52%" valign=top style='width:52.02%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:17.65pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>xml</span><span
+  style='font-size:9.0pt;font-family:黑体'>：</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>xml</span><span
+  style='font-size:9.0pt;font-family:黑体'>数据；</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>rowid</span><span
+  style='font-size:9.0pt;font-family:黑体'>：行数据</span><span lang=EN-US
+  style='font-size:9.0pt;font-family:"Tahoma","sans-serif"'>id</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:18.0pt'><span lang=EN-US
+style='font-size:9.0pt;line-height:150%'>&nbsp;</span></p>
+
+</div>
+

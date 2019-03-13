@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OrderApply">
+
+	<resultMap type="com.lmxf.post.entity.order.OrderApply" id="orderApplyResultMap">
+		<id property="logid" column="logid" />
+		<result property="orderId" column="orderId" />
+		<result property="torderId" column="torderId" />
+		<result property="corpId" column="corpId" />
+		<result property="districtId" column="districtId" />
+		<result property="lineId" column="lineId" />
+		<result property="pointId" column="pointId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="loginId" column="loginId" />
+		<result property="loginName" column="loginName" />
+		<result property="saleChannel" column="saleChannel" />
+		<result property="outState" column="outState" />
+		<result property="pNum" column="pNum" />
+		<result property="favWay" column="favWay" />
+		<result property="buyPrice" column="buyPrice" />
+		<result property="salePrice" column="salePrice" />
+		<result property="payPrice" column="payPrice" />
+		<result property="favPrice" column="favPrice" />
+		<result property="returnMoney" column="returnMoney" />
+		<result property="profitMoney" column="profitMoney" />
+		<result property="payType" column="payType" />
+		<result property="payState" column="payState" />
+		<result property="returnType" column="returnType" />
+		<result property="fetchOverTime" column="fetchOverTime" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="abnomarlState" column="abnomarlState" />
+		<result property="outId" column="outId" />
+		<result property="aStateTime" column="aStateTime" />
+		<result property="orderType" column="orderType" />
+		<result property="passWord" column="passWord" />
+		<result property="encryptionType" column="encryptionType" />
+		<result property="slat" column="slat" />
+		<result property="createTime" column="createTime" />
+		<result property="pTradeNo" column="pTradeNo" />
+		<result property="rTradeNo" column="rTradeNo" />
+		<result property="pushState" column="pushState" />
+		<result property="pStateTime" column="pStateTime" />
+		<result property="imgUrl" column="imgUrl" />
+	</resultMap>
+	
+	<select id="findDataPage" parameterType="com.lmxf.post.entity.order.OrderApply"
+		resultMap="orderApplyResultMap">
+		select * from as_order_apply where 1=1
+		<if test="orderId != null and orderId != '' ">
+			and orderId =#{orderId}
+		</if>
+		<if test="curState != null and curState != '' ">
+			and curState =#{curState}
+		</if>
+		<if test="orderType != null and orderType != '' ">
+			and orderType =#{orderType}
+		</if>
+		<if test="siteId != null and siteId != '' ">
+			and siteId =#{siteId}
+		</if>
+		<if test="loginId != null and loginId != '' ">
+			and loginId =#{loginId}
+		</if>
+		<if test="payState != null and payState != '' ">
+			and payState =#{payState}
+		</if>
+		<if test="createTime != null and createTime != '' ">
+			and createTime<![CDATA[>]]>#{createTime}
+		</if>
+		<if test="passWord != null and passWord != '' ">
+			and passWord<![CDATA[>]]>#{passWord}
+		</if>
+		<if test="saleChannel != null and saleChannel != '' ">
+			and saleChannel =#{saleChannel}
+		</if>
+		order by createTime desc
+	</select>
+	
+	<select id="findCustomerOrder" parameterType="com.lmxf.post.entity.order.OrderApply"
+		resultMap="orderApplyResultMap">
+		select * from as_order_apply where loginId=#{loginId}
+		<if test="loginName != null and loginName != '' ">
+			and loginName =#{loginName}
+		</if>
+		<if test="orderId != null and orderId != '' ">
+			and orderId =#{orderId}
+		</if>
+		<if test="curState != null and curState != '' ">
+			and curState =#{curState}
+		</if>
+		<if test="abnomarlState != null and abnomarlState != '' ">
+			and abnomarlState =#{abnomarlState}
+		</if>
+		<if test="beginTime != null and beginTime != '' ">
+			and createTime <![CDATA[>=]]> CONCAT(#{beginTime},' 00:00:00')
+		</if>
+		<if test="endTime != null and endTime != '' ">
+			and createTime <![CDATA[< ]]>DATE_ADD(CONCAT(#{endTime},' 00:00:00'), INTERVAL 1 DAY) 
+		</if>
+		<if test="payState != null and payState != '' ">
+			and payState =#{payState}
+		</if>
+		order by createTime desc
+		
+	</select>
+	
+	<!-- 根据订单ID查找订单信息 -->
+	<select id="findOneByOrderId" parameterType="com.lmxf.post.entity.order.OrderApply"
+		resultMap="orderApplyResultMap">
+		select * from as_order_apply where  orderId=#{orderId}
+	</select>
+	
+	<select id="findCountByDate" parameterType="com.lmxf.post.entity.order.OrderApply"
+		resultMap="orderApplyResultMap">
+		select count(*) as pNum from as_order_apply where  createTime like  CONCAT(#{createTime},'%')
+	</select>
+	
+	
+	<!-- 根据订单ID查找订单信息 -->
+	<select id="findOneByTorderId" parameterType="com.lmxf.post.entity.order.OrderApply"
+		resultMap="orderApplyResultMap">
+		select * from as_order_apply where torderId=#{torderId}
+	</select>
+	
+	<!-- 根据订单ID查找订单信息 -->
+	<select id="findOne" parameterType="com.lmxf.post.entity.order.OrderApply"
+		resultMap="orderApplyResultMap">
+		select * from as_order_apply  where  orderId=#{orderId} and siteId=#{siteId}
+	</select>
+	
+	<select id="findBoxOpenState" parameterType="com.lmxf.post.entity.order.OrderApply"
+		resultMap="orderApplyResultMap">
+		select * from as_order_apply  where  loginId=#{loginId} and siteId=#{siteId} order by createTime desc limit 0,1
+	</select>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.order.OrderApply">
+	   insert into as_order_apply(logid,orderId,imgUrl,torderId,corpId,districtId,lineId,pointId,siteId,siteName,loginId,loginName,saleChannel,outState,pNum,favWay,buyPrice,salePrice,payPrice,favPrice,returnMoney,profitMoney,payType,payState,returnType,fetchOverTime,curState,stateTime,abnomarlState,outId,aStateTime,orderType,passWord,encryptionType,slat,createTime,pTradeNo,rTradeNo,pushState,pStateTime) values(
+	   #{logid},#{orderId},#{imgUrl},#{torderId},#{corpId},#{districtId},#{lineId},#{pointId},#{siteId},#{siteName},#{loginId},#{loginName},#{saleChannel},#{outState},#{pNum},#{favWay},#{buyPrice},#{salePrice},#{payPrice},#{favPrice},#{returnMoney},#{profitMoney},#{payType},#{payState},#{returnType},#{fetchOverTime},#{curState},#{stateTime},#{abnomarlState},#{outId},#{aStateTime},#{orderType},#{passWord},#{encryptionType},#{slat},#{createTime},#{pTradeNo},#{rTradeNo},#{pushState},#{pStateTime})
+	</insert>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.order.OrderApply">
+	  update as_order_apply set 
+	  outState=#{outState},
+	  returnMoney=#{returnMoney},
+	  profitMoney=#{profitMoney},
+	  payType=#{payType},
+	  payState=#{payState},
+	  returnType=#{returnType},
+	  curState=#{curState},
+	  stateTime=#{stateTime},
+	  abnomarlState=#{abnomarlState},
+	  outId=#{outId},
+	  aStateTime=#{aStateTime},
+	  orderType=#{orderType},
+	  passWord=#{passWord},
+	  encryptionType=#{encryptionType},
+	  slat=#{slat},
+	  pTradeNo=#{pTradeNo},
+	  rTradeNo=#{rTradeNo}
+	  where orderId=#{orderId}
+	</update>
+	
+	<!-- 修改下发时间 -->
+	<update id="updateDownTime" parameterType="com.lmxf.post.entity.order.OrderApply">
+		update as_order_apply set pStateTime=#{pStateTime},pushState=#{pushState} where orderId=#{orderId} 
+	</update>
+	
+	<select id="findOneByTradeNo" parameterType="com.lmxf.post.entity.order.OrderApply" resultMap="orderApplyResultMap">
+		select * from as_order_apply where pTradeNo = #{pTradeNo}
+	</select>
+	
+	<update id="updateByNotify" parameterType="com.lmxf.post.entity.order.OrderApply">
+		update as_order_apply set payState= #{payState},pTradeNo=#{pTradeNo} where orderId=#{orderId} 
+	</update>
+     <update id="updateByNotifyRefund" parameterType="com.lmxf.post.entity.order.OrderApply">
+		update as_order_apply set returnType= #{returnType},returnMoney=#{returnMoney},rTradeNo=#{rTradeNo} where orderId=#{orderId} 
+	</update>
+</mapper> 

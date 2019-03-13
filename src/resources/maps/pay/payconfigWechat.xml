@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PayconfigWechat">
+
+	<resultMap type="com.lmxf.post.entity.pay.PayconfigWechat" id="payconfigWechatResultMap">
+		<id property="logid" column="logid" />
+		<result property="payConfigId" column="payConfigId" />
+		<result property="corpId" column="corpId" />
+		<result property="payAccept" column="payAccept" />
+		<result property="autoReturn" column="autoReturn" />
+		<result property="payType" column="payType" />
+		<result property="contactType" column="contactType" />
+		<result property="AppId" column="AppId" />
+		<result property="AppSecret" column="AppSecret" />
+		<result property="contactCode" column="contactCode" />
+		<result property="apiSecret" column="apiSecret" />
+		<result property="authBack" column="authBack" />
+		<result property="returnNotice" column="returnNotice" />
+		<result property="fetchCodeNotice" column="fetchCodeNotice" />
+		<result property="rate" column="rate" />
+		<result property="createTime" column="createTime" />
+		<result property="title" column="title" />
+		<result property="body" column="body" />
+		<result property="spbillCreateIp" column="spbillCreateIp" />
+		<result property="tradeType" column="tradeType" />
+		<result property="subMchId" column="subMchId" />
+		<result property="feeType" column="feeType" />
+		<result property="deviceInfo" column="deviceInfo" />
+		<result property="license" column="license" />
+	</resultMap>
+
+	<select id="findOneByCorpId" parameterType="String" resultMap="payconfigWechatResultMap">
+		select * from as_payconfig_wechat where corpId=#{corpId}
+	</select>
+	
+</mapper> 

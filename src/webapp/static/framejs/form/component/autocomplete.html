@@ -1,0 +1,347 @@
+[文件路径: form/component/autocomplete.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_autocomplete");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		自动提示组件可以在输入框输入字符，会自动弹出提示框，用户需要构造数据来源；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+	<div class="content">
+	
+			 <div class="ui-table ui-widget ui-corner-all ui-border">    
+				 <table class="table">
+					<tr>
+						<td class="inputLabelTd">简单数据源：</td>
+						<td class="inputTd">
+								<input id='auto_1' type="text" class="text" title="输入'a'或'中'查看效果"/>
+						</td>
+						<td class="inputLabelTd">特殊数据源：</td>
+						<td class="inputTd">
+								<input id='auto_2_name' type="text" class="text" title="数据源是label,value格式"/>
+								<input id='auto_2_value' type="text" class="text" style="width:100px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">多选：</td>
+						<td class="inputTd">
+								
+							<input id="auto_3"  type="text" class="text">
+						</td>
+						<td class="inputLabelTd">分组：</td>
+						<td class="inputTd">
+								<input id='auto_4' type="text" class="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">获取远程数据：</td>
+						<td class="inputTd">
+								
+							<input id="auto_5"  type="text" class="text">
+						</td>
+						
+					</tr>
+			  	</table>
+				
+			 </div>
+
+			 <div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"  name="source_autocomplete">
+		<pre class="brush: js;">
+  <!-----------------------简单数据源：----------------------->  
+ js部分:
+ var availableTags = [
+			"ActionScript",
+			"AppleScript",
+			"Asp",
+			"BASIC",
+			"C",
+			"C++",
+			"Clojure",
+			"COBOL",
+			"ColdFusion",
+			"Erlang",
+			"Fortran",
+			"Groovy",
+			"Haskell",
+			"Java",
+			"中国",
+			"JavaScript",
+			"Lisp",
+			"Perl",
+			"PHP",
+			"Python",
+			"Ruby",
+			"Scala",
+			"Scheme"
+		];
+     //简单数据源
+ 	new biz.autocomplete({
+		id:"#auto_1",
+		source: availableTags//指定数据源
+	});
+  <!-----------------------特殊数据源----------------------->
+html部分:
+
+&lt;input id='auto_2_name' type="text" class="text" title="数据源是label,value格式"/&gt;
+&lt;input id='auto_2_value' type="text" class="text" style="width:100px;"/&gt;
+
+js部分:
+//特殊数据源
+new biz.autocomplete({
+		id:"#auto_2_name",
+		source:[{label: "choice1", value: "value1"}, {label: "choice2", value: "value2"}],
+
+		select: function( event, ui ) {//选择事件，还可以添加focus事件
+                $( "#auto_2_name" ).val( ui.item.label );//显示域赋值
+                $( "#auto_2_value" ).val( ui.item.value );//隐藏域赋值
+				return false;
+		}
+});
+ <!-----------------------多选----------------------->
+js部分:
+function split( val ) {
+		return val.split( /,\s*/ );
+	}
+	function extractLast( term ) {
+		return split( term ).pop();
+	}
+	new biz.autocomplete({
+		id:"#auto_3",
+		minLength: 0,
+		source: function( request, response ) {
+			// delegate back to autocomplete, but extract the last term
+			response( $.ui.autocomplete.filter(
+				availableTags, extractLast( request.term ) ) );
+		},
+		focus: function() {
+			// prevent value inserted on focus
+			return false;
+		},
+		select: function( event, ui ) {
+			var terms = split( this.value );
+			// remove the current input
+			terms.pop();
+			// add the selected item
+			terms.push( ui.item.value );
+			// add placeholder to get the comma-and-space at the end
+			terms.push( "" );
+			this.value = terms.join( ", " );
+			return false;
+		}
+	});
+
+ <!-----------------------分组----------------------->
+  js部分:
+  
+  $.widget( "custom.catcomplete", $.ui.autocomplete, {
+		_renderMenu: function( ul, items ) {
+			var self = this,
+				currentCategory = "";
+			$.each( items, function( index, item ) {
+				if ( item.category != currentCategory ) {
+					ul.append( "&lt;li class='ui-autocomplete-category'&gt;" + item.category + "&lt;/li&gt;" );
+					currentCategory = item.category;
+				}
+				self._renderItem( ul, item );
+			});
+		}
+	});
+	var data = [
+					{ label: "anders", category: "" },
+					{ label: "andreas", category: "" },
+					{ label: "antal", category: "" },
+					{ label: "annhhx10", category: "Products" },
+					{ label: "annk K12", category: "Products" },
+					{ label: "annttop C13", category: "Products" },
+					{ label: "anders andersson", category: "People" },
+					{ label: "andreas andersson", category: "People" },
+					{ label: "andreas johnson", category: "People" }
+				];
+
+		$( "#auto_4" ).catcomplete({
+			delay: 0,
+			source: data
+		});
+ <!-----------------------获取远程数据--------------------->
+
+  js部分:
+	new biz.autocomplete({
+	id:"#auto_5",
+	source: "../FrontEndSampleCenter/form/component/autocompletSource/search.jsp",//数据源URL数据格式参见search.jsp
+	select: function( event, ui ) {
+		alert("选择了:"+ui.item.value );//ui.item.id
+	}
+});
+
+  后台部分:
+ //<xmp class="xmp">	
+ String passedInput = request.getParameter("term");//默认传递的输入值，term是固定值
+  boolean isEmpty = false;
+  if(passedInput==null || "".equals(passedInput.trim())){
+	  isEmpty = true;
+   }
+  ArrayList sourceArray = new ArrayList();
+  sourceArray.add("ActionScript");
+  sourceArray.add("AppleScript");
+  sourceArray.add("Asp");
+  sourceArray.add("BASIC");
+  sourceArray.add("C");
+  sourceArray.add("C++");
+  sourceArray.add("COBOL");
+  sourceArray.add("ColdFusion");
+  sourceArray.add("中国");
+  sourceArray.add("Scheme");
+  ArrayList returnArr = new ArrayList();
+  if(!isEmpty){  
+	  for(int i = 0 ; i<sourceArray.size();i++){
+		  String temp = (String)sourceArray.get(i);
+		  if(temp.toLowerCase().indexOf(passedInput) != -1){
+			  returnArr.add(temp);
+		  }
+	  }
+  }
+  if(returnArr.size()>0){
+	  response.getWriter().write(JSONArray.fromObject(returnArr).toString());
+  }
+ // </xmp>
+</pre>
+</div>
+<!-- 属性列表 -->
+<div class="barTitle2">
+	<div class="content">自动提示组件属性列表</div>
+</div>
+<div class="content">
+<iframe src="./form/component/autocompleteField.htm" width="100%" scrolling="no" frameborder="0" height="600px;"></iframe>
+</div>	
+<!-- api列表 -->
+<div class="barTitle2">
+	<div class="content">自动提示组件api列表</div>
+</div>
+<div class="content">
+<iframe src="./form/component/autocompleteMethod.htm" width="100%" scrolling="no" frameborder="0" height="400px;"></iframe>
+</div>
+	<script>
+     var availableTags = [
+			"ActionScript",
+			"AppleScript",
+			"Asp",
+			"BASIC",
+			"C",
+			"C++",
+			"Clojure",
+			"COBOL",
+			"ColdFusion",
+			"Erlang",
+			"Fortran",
+			"Groovy",
+			"Haskell",
+			"Java",
+			"中国",
+			"JavaScript",
+			"Lisp",
+			"Perl",
+			"PHP",
+			"Python",
+			"Ruby",
+			"Scala",
+			"Scheme"
+		];
+     //简单数据源
+ 	new biz.autocomplete({
+		id:"#auto_1",
+		source: availableTags//指定数据源
+	});
+ 	//特殊数据源
+ 	new biz.autocomplete({
+		id:"#auto_2_name",
+		source:[{label: "choice1", value: "value1"}, {label: "choice2", value: "value2"}],
+
+		select: function( event, ui ) {
+                $( "#auto_2_name" ).val( ui.item.label );
+                $( "#auto_2_value" ).val( ui.item.value );
+				return false;
+		}
+	});
+ 	
+ 	
+ 	//多选
+ 	function split( val ) {
+		return val.split( /,\s*/ );
+	}
+	function extractLast( term ) {
+		return split( term ).pop();
+	}
+	new biz.autocomplete({
+		id:"#auto_3",
+		minLength: 0,
+		source: function( request, response ) {
+			// delegate back to autocomplete, but extract the last term
+			response( $.ui.autocomplete.filter(
+				availableTags, extractLast( request.term ) ) );
+		},
+		focus: function() {
+			// prevent value inserted on focus
+			return false;
+		},
+		select: function( event, ui ) {
+			var terms = split( this.value );
+			// remove the current input
+			terms.pop();
+			// add the selected item
+			terms.push( ui.item.value );
+			// add placeholder to get the comma-and-space at the end
+			terms.push( "" );
+			this.value = terms.join( ", " );
+			return false;
+		}
+	});
+   
+	//分组
+		$.widget( "custom.catcomplete", $.ui.autocomplete, {
+		_renderMenu: function( ul, items ) {
+			var self = this,
+				currentCategory = "";
+			$.each( items, function( index, item ) {
+				if ( item.category != currentCategory ) {
+					ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+					currentCategory = item.category;
+				}
+				self._renderItem( ul, item );
+			});
+		}
+	});
+	var data = [
+					{ label: "anders", category: "" },
+					{ label: "andreas", category: "" },
+					{ label: "antal", category: "" },
+					{ label: "annhhx10", category: "Products" },
+					{ label: "annk K12", category: "Products" },
+					{ label: "annttop C13", category: "Products" },
+					{ label: "anders andersson", category: "People" },
+					{ label: "andreas andersson", category: "People" },
+					{ label: "andreas johnson", category: "People" }
+				];
+
+		$( "#auto_4" ).catcomplete({
+			delay: 0,
+			source: data
+		});
+		
+		//获取远程数据
+	 	new biz.autocomplete({
+			id:"#auto_5",
+			source: "../FrontEndSampleCenter/form/component/autocompletSource/search.jsp",
+			select: function( event, ui ) {
+				alert("选择了:"+ui.item.value );//ui.item.id
+			}
+		});
+
+  </script>

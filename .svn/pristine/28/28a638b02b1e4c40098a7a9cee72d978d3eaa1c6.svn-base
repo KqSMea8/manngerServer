@@ -1,0 +1,45 @@
+[文件路径: layout/fieldset.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_fieldset");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		fieldset布局通过fieldset标签特殊分组功能进行布局。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1</div>
+	</div>
+	<div class="content">
+		<div>fieldset布局,实际效果如下：</div>
+		      
+			<fieldset style="height:50px;"> 
+				<legend>分组1</legend> 
+				 &nbsp;&nbsp;&nbsp;这里是分组一的具体内容 
+			</fieldset> 
+
+			<fieldset style="height:50px;"> 
+				<legend>分组2</legend> 
+				 &nbsp;&nbsp;&nbsp;这里是分组二的具体内容 
+			</fieldset> 
+	  
+		<div class="clear"></div>
+		<div class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div class="code" style="display: none"  name="source_fieldset">
+			<pre class="brush: js;">
+ <!--html部分-->
+    &lt;fieldset style="height:50px;"&gt; 
+		&lt;legend&gt;分组1&lt;/legend&gt; 
+			&nbsp;&nbsp;&nbsp;这里是分组一的具体内容 
+    &lt;/fieldset&gt; 
+
+    &lt;fieldset style="height:50px;"&gt; 
+		&lt;legend&gt;分组2&lt;/legend&gt; 
+			 &nbsp;&nbsp;&nbsp;这里是分组二的具体内容 
+    &lt;/fieldset&gt; 
+			  </pre>
+		</div>
+	</div>

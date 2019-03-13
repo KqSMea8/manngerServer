@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingStock">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingStock" id="vendingStockResultMap">
+		<id property="logid" column="logid" />
+		<result property="wproductId" column="wproductId" />
+		<result property="corpId" column="corpId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="productId" column="productId" />
+		<result property="productName" column="productName" />
+		<result property="num" column="num" />
+		<result property="recoveryNum" column="recoveryNum" />
+		<result property="overdueNum" column="overdueNum" />
+		<result property="typeId" column="typeId" />
+		<result property="salePrice" column="salePrice" />
+		<result property="picUrl" column="picUrl" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="vendingStockResultMap">
+		select * from as_vending_stock where 1=1
+		<if test="siteId != null and siteId != ''">
+			and siteId=#{siteId} 
+	    </if>
+		<if test="typeId != null and typeId != '' ">
+			AND typeId=#{typeId}
+		</if> 
+		<if test="productName != null and productName != '' ">
+			AND productName like CONCAT('%', #{productName}, '%')
+		</if> 
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.vending.VendingStock" resultMap="vendingStockResultMap">
+		select * from as_vending_stock where siteId =#{siteId} and productId=#{productId}
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.vending.VendingStock">
+		update as_vending_stock set num=#{num}
+		where wproductId=#{wproductId}
+	</update>
+	<insert id="insert" parameterType="com.lmxf.post.entity.vending.VendingStock">
+	  insert into as_vending_stock(logid,wproductId,corpId,siteId,siteName,productId,productName,num,recoveryNum,overdueNum,typeId,salePrice,picUrl,createTime) values(#{logid},
+#{wproductId},
+#{corpId},
+#{siteId},
+#{siteName},
+#{productId},
+#{productName},
+#{num},
+#{recoveryNum},
+#{overdueNum},
+#{typeId},
+#{salePrice},
+#{picUrl},
+#{createTime})
+	    
+	    
+	</insert>
+	
+	<delete id="delete" parameterType="com.lmxf.post.entity.vending.VendingStock">
+		delete from as_vending_stock where siteId =#{siteId} and productId=#{productId}
+	</delete>
+</mapper> 

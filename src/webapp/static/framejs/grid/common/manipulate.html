@@ -1,0 +1,354 @@
+[文件路径: grid/common/manipulate.html]
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 举例说明Grid的常用API说明，删除行、更新行、增加一行、清楚数据、统计数据、隐藏（显示）某列、选择（取消）某行、重新载入等操作。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block">
+		   <div class="equal">
+				<div class="row">
+					<div class="cell">
+							<div class="labelcell">删除行：</div>
+							 <div class="valuecell">
+								 <button  id="manipulate_delrow"> </button>
+							</div>
+					</div>
+					<div class="cell">
+							<div class="labelcell">更新行：</div>
+							 <div class="valuecell">
+								 <button  id="manipulate_setrow"> </button>
+							</div>
+					</div>
+                    <div class="cell">
+							 <div class="labelcell">增加行：</div>
+							 <div class="valuecell">
+                                 <button  id="manipulate_addrow"> </button>
+                             </div>
+					</div>
+                    <div class="cell">
+							 <div class="labelcell">清除数据：</div>
+							 <div class="valuecell">
+                                 <button  id="manipulate_clear"> </button>
+                             </div>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="cell">
+							 <div class="labelcell">页脚行操作：</div>
+							 <div class="valuecell">
+                                 <button  id="manipulate_footer"> </button>
+                             </div>
+					</div>
+                    <div class="cell">
+							<div class="labelcell">隐藏列：</div>
+							 <div class="valuecell">
+                                 <select  id="manipulate_hideCol" class="select">
+                                     <option value="ids">标识</option>
+                                     <option value="invdate">有效期</option>
+                                     <option value="name">名称</option>
+                                     <option value="amount">收入</option>
+                                     <option value="tax">缴税</option>
+                                     <option value="total">总量</option>
+                                     <option value="note">备注</option>
+                                 </select>
+							</div>
+					</div>
+                    <div class="cell">
+                            <div class="labelcell">显示列：</div>
+                             <div class="valuecell">
+                                 <select  id="manipulate_showCol" class="select">
+                                     <option value="ids">标识</option>
+                                     <option value="invdate">有效期</option>
+                                     <option value="name">名称</option>
+                                     <option value="amount">收入</option>
+                                     <option value="tax">缴税</option>
+                                     <option value="total">总量</option>
+                                     <option value="note">备注</option>
+                                 </select>
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cell">
+                             <div class="labelcell">取消选中行：</div>
+                             <div class="valuecell">
+                                 <button  id="manipulate_resetSelection"> </button>
+                             </div>
+                    </div>
+                    <div class="cell">
+                            <div class="labelcell">选择行：</div>
+                             <div class="valuecell">
+                                 <select  id="manipulate_setSelection" class="select">
+                                     <option value="1">1</option>
+                                     <option value="4">4</option>
+                                     <option value="7">7</option>
+                                 </select>
+                            </div>
+                    </div>
+                    <div class="cell">
+                             <div class="labelcell">重新加载：</div>
+                             <div class="valuecell">
+                                 <button  id="manipulate_reloadGrid"> </button>
+                             </div>
+                    </div>
+				</div>
+			</div>
+		  </div>
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="manipulate_rowed"></table>
+                       <div id="manipulate_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_manipulate">
+<pre>
+<font color='#027DD1'>1.数据操作：</font>
+<strong>js部分:</strong>
+ <font color='#027DD1'>1）初始化grid：</font>
+ var manipulateObj = new biz.grid({
+          id:"#manipulate_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:200, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:200,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:200, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">footerrow:true,</font> /*-------------在grid最后添加一行，用于如：统计数据展示----------------*/
+         navtype:"top" /*导航栏类型*/,
+         pager: '#manipulate_prowed' /*分页栏id*/
+ });
+
+<font color='#027DD1'>2）.数据操作：</font>
+<strong>html部分:</strong>
+ <xmp class="xmp">
+    <div class="row">
+		<div class="cell">
+				<div class="labelcell">删除行：</div>
+				 <div class="valuecell">
+					 <button  id="manipulate_delrow"> </button>
+				</div>
+		</div>
+		<div class="cell">
+				<div class="labelcell">更新行：</div>
+				 <div class="valuecell">
+					 <button  id="manipulate_setrow"> </button>
+				</div>
+		</div>
+                 <div class="cell">
+				 <div class="labelcell">增加行：</div>
+				 <div class="valuecell">
+                              <button  id="manipulate_addrow"> </button>
+                          </div>
+		</div>
+                 <div class="cell">
+				 <div class="labelcell">清除数据：</div>
+				 <div class="valuecell">
+                              <button  id="manipulate_clear"> </button>
+                          </div>
+		</div>
+	</div>
+             <div class="row">
+                 <div class="cell">
+				 <div class="labelcell">页脚行操作：</div>
+				 <div class="valuecell">
+                              <button  id="manipulate_footer"> </button>
+                          </div>
+		</div>
+                 <div class="cell">
+				<div class="labelcell">隐藏列：</div>
+				 <div class="valuecell">
+                              <select  id="manipulate_hideCol" class="select">
+                                  <option value="ids">标识</option>
+                                  <option value="invdate">有效期</option>
+                                  <option value="name">名称</option>
+                                  <option value="amount">收入</option>
+                                  <option value="tax">缴税</option>
+                                  <option value="total">总量</option>
+                                  <option value="note">备注</option>
+                              </select>
+				</div>
+		</div>
+                 <div class="cell">
+                         <div class="labelcell">显示列：</div>
+                          <div class="valuecell">
+                              <select  id="manipulate_showCol" class="select">
+                                  <option value="ids">标识</option>
+                                  <option value="invdate">有效期</option>
+                                  <option value="name">名称</option>
+                                  <option value="amount">收入</option>
+                                  <option value="tax">缴税</option>
+                                  <option value="total">总量</option>
+                                  <option value="note">备注</option>
+                              </select>
+                         </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="cell">
+                          <div class="labelcell">取消选中行：</div>
+                          <div class="valuecell">
+                              <button  id="manipulate_resetSelection"> </button>
+                          </div>
+                 </div>
+                 <div class="cell">
+                         <div class="labelcell">选择行：</div>
+                          <div class="valuecell">
+                              <select  id="manipulate_setSelection" class="select">
+                                  <option value="1">1</option>
+                                  <option value="4">4</option>
+                                  <option value="7">7</option>
+                              </select>
+                         </div>
+                 </div>
+                 <div class="cell">
+                          <div class="labelcell">重新加载：</div>
+                          <div class="valuecell">
+                              <button  id="manipulate_reloadGrid"> </button>
+                          </div>
+                 </div>
+	</div>
+ </xmp>
+<strong>js部分:</strong>
+     new biz.button({id:"#manipulate_delrow",label: "操作" }).click(function() {
+           /*
+            *删除本地行数据，当grid不能多选时（multiselect:false）参数类型为行id，
+            *能多选时（multiselect:false）参数类型为行id组成数组([id1,id2……])
+            * 与<font color="red">delRowData</font>方法区别：
+            * delRowData只能删除单行数据，且删除数据不能通过getDeled、getJsontosubmit获取
+            * delLocalRow删除的数据能通过getDeled、getJsontosubmit获取；
+            */
+           <font color="red">manipulateObj.delLocalRow([5]); </font>
+    });
+    new biz.button({id:"#manipulate_setrow",label: "操作" }).click(function() {
+            /*设置本地行数据，设置过的单元格显示标示，
+            * 与<font color="red">setRowData</font>方法区别：
+            * setRowData 设置单元格没有样式标示，不能通过getEdited、getJsontosubmit获取
+            * setLocalRow 设置行数据能通过getEdited、getJsontosubmit获取；
+            */
+          <font color="red">manipulateObj.setLocalRow</font>(
+            {id:8,data:{amount:"333.00",tax:"33.00",total:"366.00",note:"note8"}});
+    });
+    new biz.button({id: "#manipulate_addrow",label: "操作" }).click(function() {
+           /*新增本地行数据，设置过的单元格显示标示，
+            * 与<font color="red">addRowData</font>方法区别：
+            * addRowData 设置单元格没有样式标示，不能通过getAdded、getJsontosubmit获取
+            * addLocalRow 设置行数据能通过getAdded、getJsontosubmit获取；
+            */
+           <font color="red">manipulateObj.addLocalRow</font>(
+            {id:99,data:{ids:"99",invdate:"2007-09-01",name:"曾彗星",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"}});
+    });
+    new biz.button({id:"#manipulate_clear",label: "操作" }).click(function() {
+          <font color="red">manipulateObj.clearGridData();</font>/*清除grid数据内容*/
+    });
+    new biz.button({id:"#manipulate_footer",label: "操作" }).click(function() {
+          <font color="red">manipulateObj.footerData("set",{amount:"400.00",tax:"30.00",total:"430.00"});</font>/*设置页脚内容*/
+    });
+    $( "#manipulate_hideCol" ).change(function() {
+          <font color="red">manipulateObj.hideCol($( "#manipulate_hideCol" ).val());</font>/*隐藏指定列*/
+	});
+</pre>
+    </div>
+
+<script type="text/javascript">
+
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",amount:"30000.00",tax:"1000.00",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"}
+      ];
+
+      var manipulateObj = new biz.grid({
+          id:"#manipulate_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:200, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:200,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:200, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         footerrow:true,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#manipulate_prowed' /*分页栏id*/
+    });
+
+    new biz.button({id:"#manipulate_delrow",label: "操作" }).click(function() {
+           var su = manipulateObj.delLocalRow([5]);
+          /*
+           if (su) {
+               new biz.alert({type:"alert",message:"id为5的数据已删除，请自行完成从server端删除此数据！",title:"提 示"}) ;
+           } else {
+               new biz.alert({type:"alert",message:"此数据已删除或不存在",title:"提 示"}) ;
+           }*/
+	});
+    new biz.button({id:"#manipulate_setrow",label: "操作" }).click(function() {
+           // var su = manipulateObj.setRowData(5,{amount:"333.00",tax:"33.00",total:"366.00",note:"<img src='images/user1.gif'/>"});
+            var su = manipulateObj.setLocalRow({id:8,data:{amount:"333.00",tax:"33.00",total:"366.00",note:"note8"}});
+	});
+    new biz.button({id: "#manipulate_addrow",label: "操作" }).click(function() {
+           var su = manipulateObj.addLocalRow({id:99,data:{ids:"99",invdate:"2007-09-01",name:"曾彗星",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"}});
+	});
+    new biz.button({id:"#manipulate_clear",label: "操作" }).click(function() {
+           var su = manipulateObj.clearGridData();
+	});
+    new biz.button({id:"#manipulate_footer",label: "操作" }).click(function() {
+           var su = manipulateObj.footerData("set",{amount:"400.00",tax:"30.00",total:"430.00"});
+	});
+    $( "#manipulate_hideCol" ).change(function() {
+          manipulateObj.hideCol($( "#manipulate_hideCol" ).val());
+	});
+    $( "#manipulate_showCol" ).change(function() {
+          manipulateObj.showCol($( "#manipulate_showCol" ).val());
+	});
+    new biz.button({id:"#manipulate_resetSelection",label: "操作" }).click(function() {
+          manipulateObj.resetSelection();
+	});
+    $( "#manipulate_setSelection" ).change(function() {
+          manipulateObj.setSelection($( "#manipulate_setSelection").val());
+	});
+    new biz.button({id:"#manipulate_reloadGrid",label: "操作" }).click(function() {
+          manipulateObj.trigger("reloadGrid");
+	});
+
+</script>

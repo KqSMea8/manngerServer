@@ -1,0 +1,175 @@
+[文件路径: grid/show/groupHeader.html]
+
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid多表头功能，给grid表头进行分组，支持多次分组；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="groupHeader_rowed"></table>
+                       <div id="groupHeader_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_groupHeader">
+<pre>
+<font color='#027DD1'>1.表头分组：</font>
+<strong>js部分:</strong>
+var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+ var groupHeaderGridObj = new biz.grid({
+          id:"#groupHeader_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"top" /*导航栏类型*/,
+         pager: '#groupHeader_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,url:" http://localhost",recreateForm:true}
+      });
+      <font color="red">第一次分组</font>
+      groupHeaderGridObj.setGroupHeaders({ <font color="red">useColSpanStyle: false</font>,/*不使用合并单元格样式*/
+              groupHeaders:[ {<font color="red">startColumnName: 'invdate'</font>,/*分组起始列*/
+                              <font color="red">numberOfColumns: 5</font>,/*分组列长度*/
+                              <font color="red">titleText: '重要信息'</font>/*分组名称*/} ] });
+      <font color="red">第二次分组</font>
+      groupHeaderGridObj.setGroupHeaders({ useColSpanStyle: true,
+              groupHeaders:[ {startColumnName: 'invdate', numberOfColumns: 2, titleText: '个人信息'},
+                             {startColumnName: 'amount', numberOfColumns: 3, titleText: '费用'} ] });
+
+</pre>
+    </div>
+
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">属性列表</div>
+	</div>
+	<div class="content">
+	对grid表头进行分组，支持多次分组，第一次分组内容在表头最上方，分组内容顺序依次类推。此功能通过调用api（setGroupHeaders）完成，其属性如下：
+	<iframe src="./grid/show/groupHeaderSetGroupHeadersField.htm" width="100%" scrolling="no" frameborder="0" height="100px;"></iframe>
+	groupHeaders属性包含以下子属性定义分组规则：
+	<iframe src="./grid/show/groupHeaderGroupHeadersField.htm" width="100%" scrolling="no" frameborder="0" height="120px;"></iframe>
+	
+	</div>
+
+						
+
+<script type="text/javascript">
+     var taxArr = [
+            { name: '额外税1',value:'10.00'},{name:'额外税2',value:'20.00'},{name:'额外税3',value:'30.00'}
+      ] ;
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",amount:"30000.00",tax:"1000.00",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"}
+      ];
+
+      var groupHeaderObj = new biz.grid({
+          id:"#groupHeader_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                     editoptions:{data:taxArr},/*指定select数据源*/
+                     formatter:false,/*false：编辑框显示name，true：编辑框显示value*/
+                     formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         navtype:"top" /*导航栏类型*/,
+         pager: '#groupHeader_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+ 
+            resize:false,
+            recreateForm:true
+          },
+           pAdd:{ 
+                top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+                resize:true,/*弹出框可缩放大小*/
+                url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         resize:true,url:" http://localhost",recreateForm:true}
+      });
+      groupHeaderObj.setGroupHeaders({ useColSpanStyle: false,
+                groupHeaders:[ {startColumnName: 'invdate', numberOfColumns: 5, titleText: '重要信息'} ] });
+      groupHeaderObj.setGroupHeaders({ useColSpanStyle: true,
+                groupHeaders:[ {startColumnName: 'invdate', numberOfColumns: 2, titleText: '个人信息'},
+                                 {startColumnName: 'amount', numberOfColumns: 3, titleText: '费用'} ] });
+
+
+</script>

@@ -1,0 +1,580 @@
+package com.lmxf.post.service.partner;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.entity.product.ProductInfo;
+import com.lmxf.post.entity.statement.StatementProduct;
+import com.lmxf.post.entity.statement.StatementSupply;
+import com.lmxf.post.entity.supply.SupplyConfig;
+import com.lmxf.post.entity.supply.SupplyOrder;
+import com.lmxf.post.entity.supply.SupplyProduct;
+import com.lmxf.post.entity.supply.SupplyVOrder;
+import com.lmxf.post.entity.supply.SupplyVending;
+import com.lmxf.post.entity.supply.SupplyVproduct;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingCmd;
+import com.lmxf.post.entity.vending.VendingLanep;
+import com.lmxf.post.entity.vending.VendingStock;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.repository.product.ProductInfoDao;
+import com.lmxf.post.repository.statement.StatementProductDao;
+import com.lmxf.post.repository.statement.StatementSupplyDao;
+import com.lmxf.post.repository.stock.StockInfoDao;
+import com.lmxf.post.repository.supply.SupplyConfigDao;
+import com.lmxf.post.repository.supply.SupplyOrderDao;
+import com.lmxf.post.repository.supply.SupplyProductDao;
+import com.lmxf.post.repository.supply.SupplyVOrderDao;
+import com.lmxf.post.repository.supply.SupplyVendingDao;
+import com.lmxf.post.repository.supply.SupplyVproductDao;
+import com.lmxf.post.repository.vending.VendingCmdDao;
+import com.lmxf.post.repository.vending.VendingDao;
+import com.lmxf.post.repository.vending.VendingLanepDao;
+import com.lmxf.post.repository.vending.VendingStockDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.partner.SupplyResultReq;
+import com.lmxf.post.tradepkg.partner.SupplyResultResp;
+
+/**
+ * 
+ * @author 思杰 补货功能 支持一次性站点补货，重新计算站点当前库存,站点货道库存，补货容量等等
+ * 
+ */
+public class TradeSupplyResultService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeSupplyResultService.class);
+	private SupplyResultReq supplyResultReq;
+	private SupplyResultResp supplyResultResp;
+	private SupplyOrderDao supplyOrderDao;
+	private SupplyConfigDao supplyConfigDao;
+	private SupplyVendingDao supplyVendingDao;
+	private SupplyVproductDao supplyVproductDao;
+	private VendingDao vendingDao;
+	private SupplyProductDao supplyProductDao;
+	private VendingLanepDao vendingLanepDao;
+	private VendingStockDao vendingStockDao;
+	private SequenceIdDao sequenceIdDao;
+	private StatementProductDao statementProductDao;
+	private StatementSupplyDao statementSupplyDao;
+	private ProductInfoDao productInfoDao;
+	private VendingCmdDao vendingCmdDao;
+	private SupplyVOrderDao supplyVOrderDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		Map ret = supplyResultReq.parseXml(apply_xml);
+		if (ret.get("code") == null) {
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+			log.error("supplyResultReq.parseXml is error!");
+			return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+		}
+		String vOrderId = (String) ret.get("vOrderId");
+		String sOrderId = (String) ret.get("sOrderId");
+		String isVFinshP = (String) ret.get("isFinsh");// 站点是否完成补货
+		// 获取上报的货道补货信息
+		List<SupplyVproduct> supplyVproductListT = (List<SupplyVproduct>) ret.get("supplyVproductList");
+		if (supplyVproductListT == null || supplyVproductListT.size() <= 0) {
+			return errorCodeDao.getErrorRespJson(GConstent.Supply_VProduct_No_Found);
+		}
+		// 查找补货单
+		SupplyOrder supplyOrder = this.supplyOrderDao.findOneBySOrderId(sOrderId);
+		if (supplyOrder == null) {
+			return errorCodeDao.getErrorRespJson(GConstent.Supply_Order_No_Found);
+		}
+		// 查找补货站点记录
+		SupplyVOrder supplyVOrder = this.supplyVOrderDao.findOneByVOrderId(vOrderId);
+		if (supplyOrder == null) {
+			return errorCodeDao.getErrorRespJson(GConstent.Supply_VOrder_No_Found);
+		}
+		String siteId = supplyVOrder.getSiteId();
+		// 查询补货商品记录
+		SupplyProduct supplyProductPP = new SupplyProduct();
+		supplyProductPP.setsOrderId(sOrderId);
+		List<SupplyProduct> supplyProductList = this.supplyProductDao.findAll(supplyProductPP);
+		if (supplyProductList == null || supplyProductList.size() <= 0) {
+			return errorCodeDao.getErrorRespJson(GConstent.Supply_Product_No_Found);
+		}
+		// 查询补货货道上信息信息
+		SupplyVproduct supplyVproductPP = new SupplyVproduct();
+		supplyVproductPP.setsOrderId(sOrderId);
+		List<SupplyVproduct> supplyVproductList = this.supplyVproductDao.findAll(supplyVproductPP);
+		if (supplyVproductList == null || supplyVproductList.size() <= 0) {
+			return errorCodeDao.getErrorRespJson(GConstent.Supply_VProduct_No_Found);
+		}
+		// 查询站点信息
+		Vending vending = vendingDao.findBySiteId(siteId);
+		if (vending == null) {
+			return errorCodeDao.getErrorRespJson(GConstent.Site_No_Define);
+		}
+		// 查询货道商品库存信息
+		VendingLanep vendingLanepP = new VendingLanep();
+		vendingLanepP.setSiteId(siteId);
+		List<VendingLanep> vendingLanepList = this.vendingLanepDao.findAll(vendingLanepP);
+		if (vendingLanepList == null && vendingLanepList.size() <= 0) {
+			return errorCodeDao.getErrorRespJson(GConstent.Site_Lane_No_Found);
+		}
+		// 查询补货配置站点信息
+		SupplyVending supplyVendingP = new SupplyVending();
+		supplyVendingP.setSiteId(siteId);
+		SupplyVending supplyVending = supplyVendingDao.findOne(supplyVendingP);
+		if (supplyVending == null) {
+			return errorCodeDao.getErrorRespJson(GConstent.Supply_Vending_No_Found);
+		}
+		// 查询补货
+		int supplyNumTotal = 0;
+		for (SupplyVproduct supplyVproductP : supplyVproductListT) {
+			if (0 == supplyVproductP.getrSupplyNum()) {
+				continue;
+			}
+			for (SupplyVproduct supplyVproduct : supplyVproductList) {
+				if (supplyVproduct.getsVendingId().equals(supplyVproductP.getsVendingId())) {
+					// 已完成货道补货直接忽略
+					if (GParameter.supplyVproductState_finish.equals(supplyVproduct.getCurState())) {
+						log.error("补货编号:"+supplyVproduct.getsVendingId()+" 已完成补货.");
+						continue;
+					}
+					// 查询商品信息
+					ProductInfo productInfo = productInfoDao.findByProductId(supplyVproductP.getProductId());
+					try {
+						Calendar c = Calendar.getInstance();
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						Date currdate = df.parse(productInfo.getCreateTime());
+						c.add(Calendar.DATE, productInfo.getValidTime());
+						currdate = c.getTime();
+						supplyVproduct.setInvalidTime(df.format(currdate));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						log.error("商品信息:" + supplyVproductP.getProductId() + " 计算有效期时间出错:" + (productInfo != null ? productInfo.getCreateTime() : ""));
+					}
+					// 判断是正常补货还是换货补货 如果商品不一样则认为是换货补货
+					VendingLanep vendingLanep = null;
+					for (VendingLanep vendingLanepT : vendingLanepList) {
+						if (vendingLanepT.getLaneSId() == supplyVproduct.getLaneSId() && vendingLanepT.getLaneEId() == supplyVproduct.getLaneEId()) {
+							vendingLanep = vendingLanepT;
+							break;
+						}
+					}
+					if (vendingLanep == null) {
+						log.error("补货模块 站点编号:" + supplyVproduct.getSiteId() + " 货道编号:" + supplyVproduct.getLaneSId() + " 无货道配置.");
+						continue;
+					}
+					// 判断是否已下架的商品,商品无下架则校验补货出库数和当前库存数是否匹配如果不匹配则更新
+					if (supplyVproductP.getProductId().equals(vendingLanep.getProductId())) {
+						vendingLanep.setCurCap(supplyVproductP.getCurNum());
+						// 查询未出柜的补货记录信息,判断当前库存是否等于为出柜数量
+						SupplyVproduct supplyVproductPPP = new SupplyVproduct();
+						supplyVproductPPP.setSiteId(siteId);
+						supplyVproductPPP.setProductId(vendingLanep.getProductId());
+						supplyVproductPPP.setLaneSId(vendingLanep.getLaneSId());
+						supplyVproductPPP.setLaneEId(vendingLanep.getLaneEId());
+						// 查询未出柜并且补货完成的补货记录
+						supplyVproductPPP.setCurState(GParameter.supplyVproductState_finish);
+						supplyVproductPPP.setFinshState(GParameter.supplyVproductFinishState_in);
+						List<SupplyVproduct> supplyVproductNoOutList = supplyVproductDao.findNoOutVproductAll(supplyVproductPPP);
+						if (supplyVproductNoOutList != null) {
+							int noOutNum = 0;
+							for (SupplyVproduct supplyVproductS : supplyVproductNoOutList) {
+								noOutNum = noOutNum + (supplyVproductS.getrSupplyNum() - supplyVproductS.getSaleNum());
+							}
+							if (noOutNum != vendingLanep.getCurCap()) {
+								int alreadyNum = vendingLanep.getCurCap() - noOutNum;
+								// 大于0则表示当前库存数大于未出柜数 则售出数增加到差值 模拟减库
+								if (alreadyNum > 0) {
+									for (SupplyVproduct supplyVproductS : supplyVproductNoOutList) {
+										int outNum = alreadyNum - supplyVproductS.getSaleNum();
+										if (outNum > 0) {
+											log.error("补货模块 当前库存数大于补货出库数 站点编号:" + supplyVproduct.getSiteId() + " 货道编号:" + supplyVproduct.getLaneSId() + " 当前库存和补货出货记录数冲正 差值:" + alreadyNum + " 冲正补货记录:" + supplyVproductS.getLogid() + "  SaleNum:"
+													+ supplyVproductS.getSaleNum() + "  剩余未冲正数:" + outNum);
+											alreadyNum = alreadyNum - supplyVproductS.getSaleNum();
+											supplyVproductS.setSaleNum(0);
+											this.supplyVproductDao.update(supplyVproductS);
+										} else {
+											log.error("补货模块 当前库存数大于补货出库数 站点编号:" + supplyVproduct.getSiteId() + " 货道编号:" + supplyVproduct.getLaneSId() + " 当前库存和补货出货记录数冲正 差值:" + alreadyNum + " 冲正补货记录:" + supplyVproductS.getLogid() + "  SaleNum:"
+													+ (supplyVproductS.getSaleNum() + alreadyNum) + "  剩余未冲正数:" + outNum);
+											supplyVproductS.setSaleNum(supplyVproductS.getSaleNum() - alreadyNum);
+											alreadyNum = 0;
+											this.supplyVproductDao.update(supplyVproductS);
+											break;
+										}
+									}
+									if (alreadyNum > 0) {// 如果校验库存数大于0则需要往已出库的补货记录改成未出库
+
+									}
+								} else {// 如果当前库存数小于出柜数则补货记录出柜数要增加 模拟出柜
+									for (SupplyVproduct supplyVproductS : supplyVproductNoOutList) {
+										alreadyNum = Math.abs(alreadyNum);
+										int oNum = (supplyVproductS.getrSupplyNum() - supplyVproductS.getSaleNum());
+										int outNum = alreadyNum - oNum;// 获取可追加的出柜数
+										if (outNum > 0) {
+											log.error("补货模块 当前库存数小于补货出库数 站点编号:" + supplyVproduct.getSiteId() + " 货道编号:" + supplyVproduct.getLaneSId() + " 当前库存和补货出货记录数冲正 差值:" + alreadyNum + " 冲正补货记录:" + supplyVproductS.getLogid() + "  SaleNum:"
+													+ supplyVproductS.getSaleNum() + "  剩余未冲正数:" + (supplyVproductS.getrSupplyNum() - supplyVproductS.getSaleNum()));
+											alreadyNum = alreadyNum - (supplyVproductS.getrSupplyNum() - supplyVproductS.getSaleNum());
+											supplyVproductS.setSaleNum(supplyVproductS.getrSupplyNum());
+											supplyVproductS.setFinshState(GParameter.supplyVproductFinishState_out);
+											this.supplyVproductDao.update(supplyVproductS);
+										} else {
+											log.error("补货模块 当前库存数小于补货出库数 站点编号:" + supplyVproduct.getSiteId() + " 货道编号:" + supplyVproduct.getLaneSId() + " 当前库存和补货出货记录数冲正 差值:" + alreadyNum + " 冲正补货记录:" + supplyVproductS.getLogid() + "  SaleNum:"
+													+ (supplyVproductS.getSaleNum() + alreadyNum) + "  剩余未冲正数:" + outNum);
+											supplyVproductS.setSaleNum(supplyVproductS.getSaleNum() + alreadyNum);
+											alreadyNum = 0;
+											this.supplyVproductDao.update(supplyVproductS);
+											break;
+										}
+									}
+								}
+							}
+						}
+						// 更新补货站点商品信息
+						supplyVproduct.setrSupplyNum(supplyVproductP.getrSupplyNum());
+						if ((supplyVproductP.getCurNum() + supplyVproductP.getrSupplyNum()) <= vendingLanep.getCapacity()) {
+							supplyVproduct.setCurState(GParameter.supplyVproductState_finish);
+						} else if ((supplyVproductP.getCurNum() + supplyVproductP.getrSupplyNum()) > vendingLanep.getCapacity()) {
+							log.error("补货模块 站点编号:" + supplyVproduct.getSiteId() + " 货道编号:" + supplyVproduct.getLaneSId() + " 补货信息最大数:" + (supplyVproductP.getCurNum() + supplyVproductP.getrSupplyNum()) + " 最大容量:" + vendingLanep.getCapacity());
+							continue;
+						}
+						supplyNumTotal += supplyVproductP.getrSupplyNum();
+						supplyVproduct.setStateTime(DateUtil.getNow());
+						supplyVproductDao.update(supplyVproduct);
+						// 更新售货机货道商品库存
+						if (vendingLanep != null) {
+							vendingLanep.setCurCap(supplyVproductP.getCurNum() + supplyVproductP.getrSupplyNum());
+							vendingLanep.setProductSate(GParameter.vendingLanePProductSate_sale);
+							vendingLanepDao.update(vendingLanep);
+						}
+						// 插入货道商品信息
+						int seqId = 0;
+						for (int i = 0; i < supplyVproduct.getrSupplyNum(); i++) {
+							// 插入补货账单售出明细信息
+							seqId = seqId + 1;
+							StatementProduct statementProduct = new StatementProduct();
+							statementProduct.setLogid(DateUtil.getLogid());
+							statementProduct.setStatementPid(vending.getCorpId() + "-" + this.sequenceIdDao.findNextVal(vending.getCorpId(), "statement_product_id", 7));
+							statementProduct.setProductId(supplyVproduct.getProductId());
+							statementProduct.setSiteId(supplyVproduct.getSiteId());
+							statementProduct.setLaneSId(supplyVproduct.getLaneSId());
+							statementProduct.setLaneEId(supplyVproduct.getLaneEId());
+							statementProduct.setsOrderId(supplyVproduct.getsOrderId());
+							statementProduct.setSeqId(seqId);
+							statementProduct.setBuyMoney(supplyVproduct.getBuyPrice());
+							statementProduct.setCurState(GParameter.statementProductCurState_in);
+							statementProduct.setCorpId(vending.getCorpId());
+							statementProduct.setCreateTime(DateUtil.getNow());
+							statementProductDao.insert(statementProduct);
+						}
+					} else {
+						log.error("补货单号:" + sOrderId + " 站点编号:" + siteId + " 货道编号" + supplyVproduct.getLaneSId() + " 商品信息与补货记录的商品信息不一致.");
+					}
+				}else{
+					log.error("补货编号:"+supplyVproduct.getsVendingId()+" 未找到补货记录.");
+				}
+			}
+		}
+		int supplyCurNumToal = 0;
+		for (VendingLanep vendingLanep : vendingLanepList) {
+			supplyCurNumToal += vendingLanep.getCurCap();
+		}
+		// 检查用户是否强制完成站点补货信息
+		for (SupplyVproduct supplyVproduct : supplyVproductList) {
+			if (supplyVproduct.getSiteId().equals(siteId)) {
+				// 判断是否用户强制完成补货单 未完成的补货单货道信息 设置成已完成补货，已出库
+				if (GParameter.supplyOrderState_finish.equals(isVFinshP)) {
+					if (GParameter.supplyVproductState_wait.equals(supplyVproduct.getCurState())) {
+						if (supplyVproduct.getrSupplyNum() == 0) {
+							supplyVproduct.setCurState(GParameter.supplyVproductState_finish);
+							supplyVproduct.setFinshState(GParameter.supplyVproductFinishState_out);
+							supplyVproduct.setStateTime(DateUtil.getNow());
+							this.supplyVproductDao.update(supplyVproduct);
+						}
+					}
+				}
+			}
+		}
+		// 更新线路补货信息
+		int supplyTotalNum=0;//补货总数
+		boolean isFinsh = true;
+		for (SupplyVproduct supplyVproduct : supplyVproductList) {
+			if (GParameter.supplyVproductState_wait.equals(supplyVproduct.getCurState())) {
+				isFinsh = false;
+				break;
+			}
+			supplyTotalNum+=supplyVproduct.getrSupplyNum();
+		}
+		// 判断线路是否补货完成
+		if (isFinsh) {
+			supplyOrder.setCurState(GParameter.supplyOrderState_finish);
+			if (DateUtil.getNow().compareTo(supplyOrder.getSupplyFTime()) > 0) {
+				supplyOrder.setFinshState(GParameter.supplyOrderFinishState_over);
+			} else {
+				supplyOrder.setFinshState(GParameter.supplyOrderFinishState_normal);
+			}
+			supplyOrder.setSupplyRNum(supplyTotalNum);
+			//补货总数与实际出货总数不一样
+			if(supplyTotalNum!=supplyOrder.getOutNum()){
+				supplyOrder.setSupplyDType(GParameter.supplyOrderDType_diff);
+			}
+			TradeSupplyInfoService.mapResult.remove(supplyOrder.getSupplierId());
+		}
+		supplyOrder.setCurPNum(supplyOrder.getCurPNum() + supplyNumTotal);
+		supplyOrder.setStateTime(DateUtil.getNow());
+		supplyOrder.setSupplyFTime(DateUtil.getNow());
+		supplyOrderDao.update(supplyOrder);
+		// 更新线路补货站点记录
+		int vOrderNum = 0;
+		float vOrderPrice = 0;
+		boolean isVFinsh = true;
+		for (SupplyVproduct supplyVproduct : supplyVproductList) {
+			if (supplyVproduct.getSiteId().equals(siteId)) {
+				vOrderNum += supplyVproduct.getrSupplyNum();
+				vOrderPrice += supplyVproduct.getrSupplyNum() * supplyVproduct.getBuyPrice();
+			}
+			if (supplyVproduct.getSiteId().equals(siteId) && GParameter.supplyVproductState_wait.equals(supplyVproduct.getCurState())) {
+				isVFinsh = false;
+				break;
+			}
+		}
+		// 判断站点补货是否完成
+		if (isVFinsh) {
+			supplyVOrder.setCurState(GParameter.supplyVproductState_finish);
+			supplyVOrder.setStateTime(DateUtil.getNow());
+			// 插入补货账单信息
+			StatementSupply statementSupply = new StatementSupply();
+			statementSupply.setSiteId(siteId);
+			statementSupply.setsOrderId(sOrderId);
+			StatementSupply statementSupplyR = this.statementSupplyDao.findOne(statementSupply);
+			if (statementSupplyR == null) {
+				statementSupply.setLogid(DateUtil.getLogid());
+				statementSupply.setsOrderId(supplyOrder.getsOrderId());
+				statementSupply.setSiteId(siteId);
+				statementSupply.setCorpId(supplyOrder.getCorpId());
+				statementSupply.setName(supplyOrder.getName());
+				statementSupply.setDistrictId(vending.getDistrictId());
+				statementSupply.setLineId(supplyOrder.getLineId());
+				statementSupply.setWmId(supplyOrder.getWmId());
+				statementSupply.setSupplyNum(vOrderNum);
+				statementSupply.setBuyMoney(vOrderPrice);
+				statementSupply.setSalteState(GParameter.statementSupplySaleState_unSale);
+				statementSupply.setStatementState(GParameter.statementSupplyState_waitSaleOut);
+				statementSupply.setCurState(GParameter.statementSupplyCurState_unSubmit);
+				statementSupply.setCreateTime(DateUtil.getNow());
+				statementSupplyDao.insert(statementSupply);
+			}
+		}
+		supplyVOrder.setSupplyNum(vOrderNum);
+		this.supplyVOrderDao.update(supplyVOrder);
+		// 修改库存
+		for (SupplyProduct supplyProduct : supplyProductList) {
+			// 更新补货商品记录信息
+			isFinsh = true;
+			int supplyProductNum = 0;
+			for (SupplyVproduct supplyVproduct : supplyVproductList) {
+				if (supplyVproduct.getProductId().equals(supplyProduct.getProductId())) {
+					supplyProductNum += supplyVproduct.getrSupplyNum();
+				}
+				if (supplyVproduct.getProductId().equals(supplyProduct.getProductId()) && GParameter.supplyVproductState_wait.equals(supplyVproduct.getCurState())) {
+					isFinsh = false;
+					break;
+				}
+			}
+			supplyProduct.setSupplyRNum(supplyProductNum);
+			if (isFinsh) {
+				supplyProduct.setCurState(GParameter.supplyVproductState_finish);
+				supplyProduct.setStateTime(DateUtil.getNow());
+			}
+			this.supplyProductDao.update(supplyProduct);
+			// 更新站点商品库存信息
+			int curNum = 0;
+			for (VendingLanep vendingLanep : vendingLanepList) {
+				if (vendingLanep.getProductId().equals(supplyProduct.getProductId())) {
+					curNum += vendingLanep.getCurCap();
+				}
+			}
+			// 更新售货机商品库存
+			VendingStock vendingStockP = new VendingStock();
+			vendingStockP.setSiteId(siteId);
+			vendingStockP.setProductId(supplyProduct.getProductId());
+			VendingStock vendingStock = vendingStockDao.findOne(vendingStockP);
+			if (vendingStock != null) {
+				vendingStock.setNum(curNum);
+				vendingStockDao.update(vendingStock);
+			}
+		}
+		// 更新各库存
+		// 更新补货售货库存
+		int stockLevel = 3;
+		supplyVending.setCurPNum(supplyCurNumToal);
+		int stockLevelV = (int) (((double) supplyVending.getCurPNum() / (double) supplyVending.getMaxPNum()) * 100);
+		if (Integer.parseInt(supplyVending.getFristlevel().split("-")[0]) <= stockLevelV && stockLevelV <= Integer.parseInt(supplyVending.getFristlevel().split("-")[1])) {
+			supplyVending.setStoryLevel(1);
+		} else if (Integer.parseInt(supplyVending.getTwolevel().split("-")[0]) <= stockLevelV && stockLevelV <= Integer.parseInt(supplyVending.getTwolevel().split("-")[1])) {
+			supplyVending.setStoryLevel(2);
+		} else if (Integer.parseInt(supplyVending.getThreelevel().split("-")[0]) <= stockLevelV && stockLevelV <= Integer.parseInt(supplyVending.getThreelevel().split("-")[1])) {
+			supplyVending.setStoryLevel(3);
+		}
+		supplyVendingDao.update(supplyVending);
+		stockLevel = supplyVending.getStoryLevel();
+		// 更新补货配置库存
+		SupplyConfig supplyConfig = supplyConfigDao.findOneBySupplyId(supplyVending.getSupplyId());
+		if (supplyConfig != null) {
+			if (supplyOrder.getCurState().equals(GParameter.supplyOrderState_finish)) {
+				supplyConfig.setPendingNum((supplyConfig.getPendingNum() - 1) > 0 ? (supplyConfig.getPendingNum() - 1) : 0);
+				supplyConfig.setFinshNum(supplyConfig.getFinshNum() + 1);
+			}
+			supplyConfig.setSupplyPnum(supplyConfig.getSupplyPnum() + supplyNumTotal);
+			supplyConfig.setCurPNum(supplyConfig.getCurPNum() + supplyNumTotal);
+			int stockLevelC = (int) (((double) supplyConfig.getCurPNum() / (double) supplyConfig.getMaxPNum()) * 100);
+			if (Integer.parseInt(supplyConfig.getFristlevel().split("-")[0]) <= stockLevelC && stockLevelC <= Integer.parseInt(supplyConfig.getFristlevel().split("-")[1])) {
+				supplyConfig.setStoryLevel(1);
+			} else if (Integer.parseInt(supplyConfig.getTwolevel().split("-")[0]) <= stockLevelC && stockLevelC <= Integer.parseInt(supplyConfig.getTwolevel().split("-")[1])) {
+				supplyConfig.setStoryLevel(2);
+			} else if (Integer.parseInt(supplyConfig.getThreelevel().split("-")[0]) <= stockLevelC && stockLevelC <= Integer.parseInt(supplyConfig.getThreelevel().split("-")[1])) {
+				supplyConfig.setStoryLevel(3);
+			}
+			supplyConfigDao.update(supplyConfig);
+		}
+		// 更新站点库存信息
+		vending.setpCurNum(supplyCurNumToal);
+		vending.setStockLevel(stockLevel);
+		isFinsh = true;
+		for (SupplyVproduct supplyVproduct : supplyVproductList) {
+			if (!GParameter.supplyVproductState_finish.equals(supplyVproduct.getCurState()) && supplyVproduct.getSiteId().equals(siteId)) {
+				isFinsh = false;
+				continue;
+			}
+		}
+		if (isFinsh) {
+			vending.setSupplyState(GParameter.vendingSupplyState_finshSupply);
+			vending.setSupplySTime(DateUtil.getNow());
+		}
+		vendingDao.update(vending);
+		// 推送货道商品库存信息
+		VendingCmd vendingCmdP = new VendingCmd();
+		vendingCmdP.setCmd("0205");
+		vendingCmdP.setCmdCode(vending.getSiteId());
+		vendingCmdP.setCmdId(vending.getCorpId() + "-" + this.sequenceIdDao.findNextVal(vending.getCorpId(), "as_vending_cmd", 7));
+		vendingCmdP.setCmdLazy("1");
+		vendingCmdP.setCmdType("02");
+		vendingCmdP.setCont("");
+		vendingCmdP.setCorpId(vending.getCorpId());
+		vendingCmdP.setCreateTime(DateUtil.getNow());
+		vendingCmdP.setLogid(DateUtil.getLogid());
+		vendingCmdP.setResult("wait");
+		vendingCmdP.setSiteId(vending.getSiteId());
+		vendingCmdP.setState("0");
+		vendingCmdP.setStateTime(DateUtil.getNow());
+		this.vendingCmdDao.insert(vendingCmdP);
+		MsgPushUtils.push(CreateIssueJson(vendingCmdP), vending.getSiteId(), DateUtil.getLogid());
+		return supplyResultResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1);
+	}
+
+	public String CreateIssueJson(VendingCmd vendingCmdP) {
+		try {
+			JSONObject rootObject = new JSONObject();
+
+			JSONObject JSONObject = new JSONObject();
+
+			JSONObject JSONHeaderObject = new JSONObject();
+			JSONHeaderObject.put("BCode", "03");
+			JSONHeaderObject.put("TCode", "1227");
+			JSONHeaderObject.put("Version", "01");
+			JSONHeaderObject.put("IStart", "1");
+
+			JSONObject.put(GConstent.ZxmlHead, JSONHeaderObject);
+
+			JSONObject JSONBody = new JSONObject();
+			JSONBody.put("SiteId", vendingCmdP.getSiteId());
+			JSONBody.put("CmdId", vendingCmdP.getCmdId());
+			JSONBody.put("CmdCode", vendingCmdP.getCmdCode());
+			JSONBody.put("CmdType", vendingCmdP.getCmdType());
+			JSONBody.put("Cmd", vendingCmdP.getCmd());
+			JSONBody.put("Cont", vendingCmdP.getCont());
+			JSONBody.put("CreateTime", vendingCmdP.getCreateTime());
+
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+
+			rootObject.put(GConstent.ZxmlRoot, JSONObject);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+	public void setSupplyResultReq(SupplyResultReq supplyResultReq) {
+		this.supplyResultReq = supplyResultReq;
+	}
+
+	public void setSupplyResultResp(SupplyResultResp supplyResultResp) {
+		this.supplyResultResp = supplyResultResp;
+	}
+
+	public void setSupplyOrderDao(SupplyOrderDao supplyOrderDao) {
+		this.supplyOrderDao = supplyOrderDao;
+	}
+
+	public void setSupplyConfigDao(SupplyConfigDao supplyConfigDao) {
+		this.supplyConfigDao = supplyConfigDao;
+	}
+
+	public void setSupplyVendingDao(SupplyVendingDao supplyVendingDao) {
+		this.supplyVendingDao = supplyVendingDao;
+	}
+
+	public void setSupplyVproductDao(SupplyVproductDao supplyVproductDao) {
+		this.supplyVproductDao = supplyVproductDao;
+	}
+
+	public void setVendingDao(VendingDao vendingDao) {
+		this.vendingDao = vendingDao;
+	}
+
+	public void setSupplyProductDao(SupplyProductDao supplyProductDao) {
+		this.supplyProductDao = supplyProductDao;
+	}
+
+	public void setVendingLanepDao(VendingLanepDao vendingLanepDao) {
+		this.vendingLanepDao = vendingLanepDao;
+	}
+
+	public void setVendingStockDao(VendingStockDao vendingStockDao) {
+		this.vendingStockDao = vendingStockDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+	public void setStatementProductDao(StatementProductDao statementProductDao) {
+		this.statementProductDao = statementProductDao;
+	}
+
+	public void setStatementSupplyDao(StatementSupplyDao statementSupplyDao) {
+		this.statementSupplyDao = statementSupplyDao;
+	}
+
+	public void setProductInfoDao(ProductInfoDao productInfoDao) {
+		this.productInfoDao = productInfoDao;
+	}
+
+	public void setVendingCmdDao(VendingCmdDao vendingCmdDao) {
+		this.vendingCmdDao = vendingCmdDao;
+	}
+
+	public void setSupplyVOrderDao(SupplyVOrderDao supplyVOrderDao) {
+		this.supplyVOrderDao = supplyVOrderDao;
+	}
+
+}

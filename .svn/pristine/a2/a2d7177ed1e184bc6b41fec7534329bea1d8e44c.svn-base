@@ -1,0 +1,243 @@
+[文件路径: tree/async_fun.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("ts_async_fun");
+</script>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo_async_fun" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、reAsyncChildNodes 方法操作说明</h2>
+				<ul class="list">
+				<li class="highlight_red">使用 bizTreeObj.reAsyncChildNodes 方法</li>
+				<li><p>此 Demo 只能同时选中一个父节点<br/>
+					试试看：[ <a id="refreshNode" href="#" onclick="return false;">重新加载</a> ]&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="addNode" href="#" onclick="return false;">追加</a> ]</p>
+				</li>
+				<li><p><span class="highlight_red">“悄悄地”操作只能针对 折叠状态 的父节点</span><br/>
+					试试看：[ <a id="refreshNodeSilent" href="#" onclick="return false;">悄悄地 重新加载</a> ]&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="addNodeSilent" href="#" onclick="return false;">悄悄地 追加</a> ]<br/>
+					async log:<br/>
+					<ul id="log_async_fun" class="log"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、setting 配置信息说明</h2>
+				<ul class="list">
+				<li class="highlight_red">使用 bizTree 提供的 reAsyncChildNodes 方法也必须设置 setting.async 中的各个属性</li>
+				</ul>
+			</li>
+			<li class="title"><h2>3、其他说明</h2>
+				<ul class="list">
+				<li>该示例需要在应用服务器中演示</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+			
+			<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"  name="ts_async_fun">
+    <pre class="brush: js;">
+html部分:
+&lt;ul id="treeDemo_async_fun" class="ztree"&gt;&lt;/ul&gt;
+
+js部分:
+
+	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i&lt;l; i++) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+		}
+		return childNodes;
+	}
+	function beforeClick(treeId, treeNode) {
+		if (!treeNode.isParent) {
+			alert("请选择父节点");
+			return false;
+		} else {
+			return true;
+		}
+	}
+	var log_async_fun, className = "dark";
+	function beforeAsync(treeId, treeNode) {
+		className = (className === "dark" ? "":"dark");
+		showLog("[ "+getTime()+" beforeAsync ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root") );
+		return true;
+	}
+	function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
+		showLog("[ "+getTime()+" onAsyncError ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root") );
+	}
+	function onAsyncSuccess(event, treeId, treeNode, msg) {
+		showLog("[ "+getTime()+" onAsyncSuccess ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root") );
+	}
+	
+	function showLog(str) {
+		if (!log_async_fun) log_async_fun = $("#log_async_fun");
+		log_async_fun.append("&lt;li class='"+className+"'&gt;"+str+"&lt;/li&gt;");
+		if(log_async_fun.children("li").length &gt; 8) {
+			log_async_fun.get(0).removeChild(log_async_fun.children("li")[0]);
+		}
+	}
+	function getTime() {
+		var now= new Date(),
+		h=now.getHours(),
+		m=now.getMinutes(),
+		s=now.getSeconds(),
+		ms=now.getMilliseconds();
+		return (h+":"+m+":"+s+ " " +ms);
+	}
+
+	function refreshNode(e) {
+     	
+		type = e.data.type,
+		silent = e.data.silent,
+		nodes = treeDemo_async_fun.getSelectedNodes();
+		if (nodes.length == 0) {
+			alert("请先选择一个父节点");
+		}
+		for (var i=0, l=nodes.length; i&lt;l; i++) {
+			treeDemo_async_fun.reAsyncChildNodes(nodes[i], type, silent);
+			if (!silent) treeDemo_async_fun.selectNode(nodes[i]);
+		}
+	}
+	var setting_async_fun = {
+        id:"#treeDemo_async_fun",
+		view: {
+			selectedMulti: false
+		},
+		data: {
+			simpleData: {
+			enable: true
+			}
+		},
+		async: {
+			enable: true,
+			url:"../FrontEndSampleCenter/tree/asyncData/getDemoData.jsp",
+			
+			autoParam:["id", "name=n", "level=lv"],
+			otherParam:{"otherParam":"zTreeAsyncTest"},
+			dataFilter: filter
+		},
+		callback: {
+			beforeClick: beforeClick,
+			beforeAsync: beforeAsync,
+			onAsyncError: onAsyncError,
+			onAsyncSuccess: onAsyncSuccess
+		}
+	};
+	var treeDemo_async_fun;
+	$(document).ready(function(){
+	     	treeDemo_async_fun =  new biz.tree(setting_async_fun);//创建树
+			$("#refreshNode").bind("click", {type:"refresh", silent:false}, refreshNode);
+			$("#refreshNodeSilent").bind("click", {type:"refresh", silent:true}, refreshNode);
+			$("#addNode").bind("click", {type:"add", silent:false}, refreshNode);
+			$("#addNodeSilent").bind("click", {type:"add", silent:true}, refreshNode);
+	});
+
+           </pre>
+
+       </div>
+</div>
+
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+		}
+		return childNodes;
+	}
+	function beforeClick(treeId, treeNode) {
+		if (!treeNode.isParent) {
+			alert("请选择父节点");
+			return false;
+		} else {
+			return true;
+		}
+	}
+	var log_async_fun, className = "dark";
+	function beforeAsync(treeId, treeNode) {
+		className = (className === "dark" ? "":"dark");
+		showLog("[ "+getTime()+" beforeAsync ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root") );
+		return true;
+	}
+	function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
+		showLog("[ "+getTime()+" onAsyncError ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root") );
+	}
+	function onAsyncSuccess(event, treeId, treeNode, msg) {
+		showLog("[ "+getTime()+" onAsyncSuccess ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root") );
+	}
+	
+	function showLog(str) {
+		if (!log_async_fun) log_async_fun = $("#log_async_fun");
+		log_async_fun.append("<li class='"+className+"'>"+str+"</li>");
+		if(log_async_fun.children("li").length > 8) {
+			log_async_fun.get(0).removeChild(log_async_fun.children("li")[0]);
+		}
+	}
+	function getTime() {
+		var now= new Date(),
+		h=now.getHours(),
+		m=now.getMinutes(),
+		s=now.getSeconds(),
+		ms=now.getMilliseconds();
+		return (h+":"+m+":"+s+ " " +ms);
+	}
+
+	function refreshNode(e) {
+     	
+		type = e.data.type,
+		silent = e.data.silent,
+		nodes = treeDemo_async_fun.getSelectedNodes();
+		if (nodes.length == 0) {
+			alert("请先选择一个父节点");
+		}
+		for (var i=0, l=nodes.length; i<l; i++) {
+			treeDemo_async_fun.reAsyncChildNodes(nodes[i], type, silent);
+			if (!silent) treeDemo_async_fun.selectNode(nodes[i]);
+		}
+	}
+	var setting_async_fun = {
+        id:"#treeDemo_async_fun",
+		view: {
+			selectedMulti: false
+		},
+		data: {
+			simpleData: {
+			enable: true
+			}
+		},
+		async: {
+			enable: true,
+			url:"../FrontEndSampleCenter/tree/asyncData/getDemoData.jsp",
+			
+			autoParam:["id", "name=n", "level=lv"],
+			otherParam:{"otherParam":"zTreeAsyncTest"},
+			dataFilter: filter
+		},
+		callback: {
+			beforeClick: beforeClick,
+			beforeAsync: beforeAsync,
+			onAsyncError: onAsyncError,
+			onAsyncSuccess: onAsyncSuccess
+		}
+	};
+	var treeDemo_async_fun;
+	$(document).ready(function(){
+	     	treeDemo_async_fun =  new biz.tree(setting_async_fun);//创建树
+			$("#refreshNode").bind("click", {type:"refresh", silent:false}, refreshNode);
+			$("#refreshNodeSilent").bind("click", {type:"refresh", silent:true}, refreshNode);
+			$("#addNode").bind("click", {type:"add", silent:false}, refreshNode);
+			$("#addNodeSilent").bind("click", {type:"add", silent:true}, refreshNode);
+	});
+</script>

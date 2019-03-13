@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingLanep">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingLanep" id="vendingLanepResultMap">
+		<id property="logid" column="logid" />
+		<result property="slaneId" column="slaneId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="laneSId" column="laneSId" />
+		<result property="laneEId" column="laneEId" />
+		<result property="productId" column="productId" />
+		<result property="productPic" column="productPic" />
+		<result property="salePrice" column="salePrice" />
+		<result property="capacity" column="capacity" />
+		<result property="warnCap" column="warnCap" />
+		<result property="curCap" column="curCap" />
+		<result property="productSate" column="productSate" />
+		<result property="pStateTime" column="pStateTime" />
+		<result property="createTime" column="createTime" />
+		<result property="laneSate" column="laneSate" />
+		<result property="lSateTime" column="lSateTime" />
+		<result property="corpId" column="corpId" />
+	</resultMap>
+	
+	<resultMap type="com.lmxf.post.entity.vending.VendingLanep" id="vendingLanepCabinetResultMap">
+		<id property="logid" column="logid" />
+		<result property="slaneId" column="slaneId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="laneSId" column="laneSId" />
+		<result property="laneEId" column="laneEId" />
+		<result property="productId" column="productId" />
+		<result property="productPic" column="productPic" />
+		<result property="salePrice" column="salePrice" />
+		<result property="capacity" column="capacity" />
+		<result property="warnCap" column="warnCap" />
+		<result property="curCap" column="curCap" />
+		<result property="productSate" column="productSate" />
+		<result property="pStateTime" column="pStateTime" />
+		<result property="createTime" column="createTime" />
+		<result property="laneSate" column="laneSate" />
+		<result property="lSateTime" column="lSateTime" />
+		<result property="corpId" column="corpId" />
+		<result property="seqId" column="seqId" />
+		<result property="hangType" column="hangType" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="vendingLanepResultMap">
+		select * from as_vending_lanep where 1=1
+		<if test="siteId != null and siteId != ''">
+			and siteId=#{siteId} 
+	    </if>
+	    <if test="productId != null and productId != ''">
+			and productId=#{productId} 
+	    </if>
+	    <if test="productIds != null and productIds != ''">
+			and productId in 
+			<foreach item="productIds" collection="productIds" open="(" separator="," close=")">
+             #{productIds}
+            </foreach>
+	    </if>
+	    order by laneSId asc
+	</select>
+	
+	<select id="findAllCabinet" resultMap="vendingLanepCabinetResultMap">
+		select c.seqId,c.hangType,p.* from as_vending_lanep as p
+		LEFT JOIN as_vending_lane as l ON p.siteId=l.siteId AND p.laneSId=l.laneId 
+		LEFT JOIN as_vending_cabinet as c ON c.cabinetId=l.cabinetId
+		where 1=1 
+		 <if test="siteId != null and siteId != ''">
+			and p.siteId=#{siteId} 
+	    </if>
+	    <if test="productId != null and productId != ''">
+			and p.productId=#{productId} 
+	    </if>
+	    <if test="productIds != null and productIds != ''">
+			and p.productId in 
+			<foreach item="productIds" collection="productIds" open="(" separator="," close=")">
+             #{productIds}
+            </foreach>
+	    </if>
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.vending.VendingLanep" resultMap="vendingLanepResultMap">
+		select * from as_vending_lanep where siteId=#{siteId} and laneSId=#{laneSId} and laneEId=#{laneEId} 
+	</select>
+	
+	<select id="findOneCabinet" parameterType="com.lmxf.post.entity.vending.VendingLanep" resultMap="vendingLanepResultMap">
+		select c.seqId,c.hangType,p.* from as_vending_lanep as p
+		LEFT JOIN as_vending_lane as l ON p.siteId=l.siteId AND p.laneSId=l.laneId 
+		LEFT JOIN as_vending_cabinet as c ON c.cabinetId=l.cabinetId
+		where p.siteId=#{siteId} and p.laneSId=#{laneSId} and p.laneEId=#{laneEId} limit 0,1
+	</select>
+	
+	
+	
+	<select id="findOneSCM" parameterType="com.lmxf.post.entity.vending.VendingLanep" resultMap="vendingLanepResultMap">
+		select * from as_vending_lanep where siteId=#{siteId} and productId=#{productId} limit 0,1
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.vending.VendingLanep">
+		update as_vending_lanep set curCap=#{curCap}
+		<if test="productSate != null and productSate != ''">
+			,productSate=#{productSate}
+	    </if>
+	    <if test="laneSate != null and laneSate != ''">
+			,laneSate=#{laneSate}
+	    </if>
+		where slaneId=#{slaneId}
+	</update>
+	
+	<update id="updateUnder" parameterType="com.lmxf.post.entity.vending.VendingLanep">
+		update as_vending_lanep set curCap=0
+		where siteId=#{siteId} and productId=#{productId}
+	</update>
+	
+</mapper> 

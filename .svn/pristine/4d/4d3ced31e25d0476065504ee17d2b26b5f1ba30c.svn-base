@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Emp">
+
+	<resultMap type="com.lmxf.post.entity.emp.Emp" id="empResultMap">
+		<id property="logid" column="logid" />
+		<result property="corpId" column="corpId" />
+		<result property="corpName" column="corpName" />
+		<result property="loginId" column="loginId" />
+		<result property="loginName" column="loginName" />
+		<result property="idCard" column="idCard" />
+		<result property="empType" column="empType" />
+		<result property="gender" column="gender" />
+		<result property="mobile" column="mobile" />
+		<result property="email" column="email" />
+		<result property="passWord" column="passWord" />
+		<result property="encodeType" column="encodeType" />
+		<result property="salt" column="salt" />
+		<result property="createTime" column="createTime" />
+		<result property="descrption" column="descrption" />
+		<result property="accessCode" column="accessCode" />
+		<result property="curState" column="curState" />
+		<result property="unableTime" column="unableTime" />
+	</resultMap>
+		
+	<select id="findAll" resultMap="empResultMap">
+		select * from as_emp where 1=1
+		<if test="loginId != null and loginId != ''">
+			and loginId=#{loginId} 
+	    </if>
+		<if test="accessCode != null and accessCode != '' ">
+			AND accessCode=#{accessCode}
+		</if> 
+		<if test="mobile != null and mobile != '' ">
+			AND mobile=#{mobile}
+		</if> 
+		<if test="loginName != null and loginName != '' ">
+			AND loginName=#{loginName}
+		</if> 
+		<if test="passWord != null and passWord != '' ">
+			AND passWord=#{passWord}
+		</if> 
+		<if test="empType != null and empType != '' ">
+			AND empType=#{empType}
+		</if> 
+		<if test="encodeType != null and encodeType != '' ">
+			AND encodeType=#{encodeType}
+		</if> 
+		<if test="salt != null and salt != '' ">
+			AND salt=#{salt}
+		</if> 
+	    order by loginId desc
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.emp.Emp" resultMap="empResultMap">
+		select * from as_emp where loginId=#{loginId} 
+		
+	</select>
+	
+	<select id="findEmp" parameterType="com.lmxf.post.entity.emp.Emp" resultMap="empResultMap">
+		select * from as_emp where loginId=#{loginId} 
+		and accessCode=#{accessCode} 
+	</select>
+	
+	<update id="updateAccessCode" parameterType="com.lmxf.post.entity.emp.Emp">
+		update as_emp set accessCode=#{accessCode} where loginId=#{loginId}
+		 
+	</update>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.emp.Emp">
+	  update as_emp set 
+	  loginId=#{loginId},
+	  mobile=#{mobile},
+	  loginName=#{loginName},
+	  passWord=#{passWord},
+	  encodeType=#{encodeType},
+	  salt=#{salt},
+	  curState=#{curState}
+	  where loginId=#{loginId}
+	</update>
+	  
+	<insert id="insert" parameterType="com.lmxf.post.entity.emp.Emp">
+		INSERT INTO as_emp(
+			logid,
+			corpId,
+			corpName, 
+			loginId, 
+			loginName, 
+			idCard, 
+			empType,
+			gender,
+			mobile,
+			email,
+			passWord,
+			encodeType,
+			salt,
+			createTime,
+			descrption,
+			accessCode,
+			curState
+		) VALUES (
+			#{logid},
+			#{corpId},
+			#{corpName}, 
+			#{loginId},
+			#{loginName}, 
+			#{idCard},
+			#{empType},
+			#{gender},
+			#{mobile},
+			#{email},
+			#{passWord},
+			#{encodeType},
+			#{salt},
+			#{createTime},
+			#{descrption},
+			#{accessCode},
+			#{curState}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="com.lmxf.post.entity.emp.Emp">
+	    delete from as_emp where loginId=#{loginId}
+	</delete>
+</mapper> 

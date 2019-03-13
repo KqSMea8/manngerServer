@@ -1,0 +1,199 @@
+package com.lmxf.post.service.partner;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.web.Page;
+import com.lmxf.post.core.utils.CacheUtils;
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.entity.parameter.Dict;
+import com.lmxf.post.entity.product.ProductInfo;
+import com.lmxf.post.entity.supply.SupplyOrder;
+import com.lmxf.post.entity.supply.SupplyVOrder;
+import com.lmxf.post.entity.supply.SupplyVproduct;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingDistrict;
+import com.lmxf.post.entity.vending.VendingLanep;
+import com.lmxf.post.entity.vending.VendingLine;
+import com.lmxf.post.repository.product.ProductInfoDao;
+import com.lmxf.post.repository.supply.SupplyOrderDao;
+import com.lmxf.post.repository.supply.SupplyVOrderDao;
+import com.lmxf.post.repository.supply.SupplyVproductDao;
+import com.lmxf.post.repository.vending.VendingDao;
+import com.lmxf.post.repository.vending.VendingDistrictDao;
+import com.lmxf.post.repository.vending.VendingLanepDao;
+import com.lmxf.post.repository.vending.VendingLineDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.partner.SupplyInfoReq;
+import com.lmxf.post.tradepkg.partner.SupplyInfoResp;
+
+public class TradeSupplyInfoService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeSupplyInfoService.class);
+	private SupplyInfoReq supplyInfoReq;
+	private SupplyInfoResp supplyInfoResp;
+	private SupplyOrderDao supplyOrderDao;
+	private VendingLineDao vendingLineDao;
+	private VendingDistrictDao vendingDistrictDao;
+	private SupplyVproductDao supplyVproductDao;
+	private VendingDao vendingDao;
+	private VendingLanepDao vendingLanepDao;
+	private SupplyVOrderDao supplyVOrderDao;
+	private ProductInfoDao productInfoDao;
+	public static Map<String,String> mapResult=new HashMap();
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		Map ret = supplyInfoReq.parseXml(apply_xml);
+		if (ret.get("code") == null) {
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+			log.error("supplyInfoReq.parseXml is error!");
+			return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+		}
+		SupplyOrder supplyOrderP = (SupplyOrder) ret.get("supplyOrder");
+		String bcode = (String) ret.get("bcode");
+//        if(mapResult.get(supplyOrderP.getSupplierId())!=null){
+//        	return mapResult.get(supplyOrderP.getSupplierId());
+//        }
+		Page page = new Page("SupplyInfo");
+		Dict dict = (Dict) CacheUtils.get(CacheUtils.errorCodeCache, "issuedPage_size");
+		String pageNum = dict != null ? dict.getDictValue() : null;
+		page.setCurrentPage(Integer.parseInt((String) ret.get("istart")));
+		page.setPageNum(20);
+		if (pageNum != null && !"".equals(pageNum)) {
+			try {
+				page.setPageNum(Integer.parseInt(pageNum));
+			} catch (Exception e) {
+				return errorCodeDao.getErrorRespJson(GConstent.Program_App_Execp);
+			}
+		}
+		List<SupplyOrder> supplyOrderList = supplyOrderDao.findAll(supplyOrderP, page);
+		if (supplyOrderList == null || supplyOrderList.size() < 0) {
+			return errorCodeDao.getErrorRespJson(GConstent.Query_No_Data);
+		}
+		Map<String, Object> vendingLanepMap = new HashMap();
+		for (SupplyOrder supplyOrder : supplyOrderList) {
+			// 查找线路名称及区域名称
+			VendingLine vendingLine = vendingLineDao.findByLineId(supplyOrder.getLineId());
+			if (vendingLine != null) { 
+				supplyOrder.setLineName(vendingLine.getName());
+				VendingDistrict vendingDistrict = vendingDistrictDao.findByDistrictId(vendingLine.getDistrictId());
+				if (vendingDistrict != null) {
+					supplyOrder.setDistrictName(vendingDistrict.getName());
+				}
+				supplyOrder.setVendingLine(vendingLine);
+			} else {
+				log.error("补货单号:" + supplyOrder.getsOrderId() + "  线路:" + supplyOrder.getLineId() + " 无法找到.");
+				continue;
+			}
+			// 查找售货机信息列表
+			SupplyVOrder supplyVOrderP = new SupplyVOrder();
+			supplyVOrderP.setsOrderId(supplyOrder.getsOrderId());
+			List<SupplyVOrder> supplyVOrderList = this.supplyVOrderDao.findAll(supplyVOrderP);
+			for (SupplyVOrder supplyVOrder : supplyVOrderList) {
+				Vending vending = this.vendingDao.findBySiteId(supplyVOrder.getSiteId());
+				if (vending != null) {
+					supplyVOrder.setVending(vending);
+				} else {
+					log.error("补货单号:" + supplyVOrder.getsOrderId() + "  售货机:" + supplyVOrder.getSiteId() + " 无法找到.");
+					continue;
+				}
+				// 查询站点货道商品补货信息
+				SupplyVproduct supplyVProductP = new SupplyVproduct();
+				supplyVProductP.setvOrderId(supplyVOrder.getvOrderId());
+				List<SupplyVproduct> supplyVproductList = this.supplyVproductDao.findAll(supplyVProductP);
+				for (SupplyVproduct supplyVproduct : supplyVproductList) {
+					VendingLanep vendingLanepP = new VendingLanep();
+					vendingLanepP.setSiteId(supplyVproduct.getSiteId());
+					vendingLanepP.setLaneSId(supplyVproduct.getLaneSId());
+					vendingLanepP.setLaneEId(supplyVproduct.getLaneEId());
+					VendingLanep vendingLanep = this.vendingLanepDao.findOneCabinet(vendingLanepP);
+					if (vendingLanep != null) {
+						try {
+							ProductInfo productInfo = productInfoDao.findByProductId(vendingLanep.getProductId());
+							if (productInfo != null) {
+								supplyVproduct.setProductName(productInfo.getName());
+							}
+							String productPic = "{\"ProductPic\":" + vendingLanep.getProductPic() + "}";
+							JSONObject jsonObjectR = JSONObject.fromObject(productPic);
+							JSONArray jsonArray = jsonObjectR.getJSONArray("ProductPic");
+							for (int i = 0; i < jsonArray.size(); i++) {
+								JSONObject jSONObject = (JSONObject) jsonArray.get(i);
+								String os = jSONObject.getString("os");
+								String picUrl = jSONObject.getString("pic");
+								if ((bcode.equals(GParameter.platCode_Platform) && os.equals(GParameter.platCode_Platform))
+										|| (bcode.equals(GParameter.platCode_WeChatOfficialAccountPurchase) && os.equals(GParameter.platCode_WeChatOfficialAccountPurchase))
+										|| (bcode.equals(GParameter.platCode_Terminal) && os.equals(GParameter.platCode_Terminal)) || (bcode.equals(GParameter.platCode_WeChatAppletPurchase) && os.equals(GParameter.platCode_WeChatAppletPurchase))
+										|| (bcode.equals(GParameter.platCode_WeChatOfficialAccountReplenishment) && os.equals(GParameter.platCode_WeChatOfficialAccountReplenishment))
+										|| (bcode.equals(GParameter.platCode_AndroidPurchase) && os.equals(GParameter.platCode_AndroidPurchase))
+										|| (bcode.equals(GParameter.platCode_AndroidReplenishment) && os.equals(GParameter.platCode_AndroidReplenishment))
+										|| (bcode.equals(GParameter.platCode_MessageTransfer) && os.equals(GParameter.platCode_MessageTransfer))) {
+									supplyVproduct.setProductPic(picUrl);
+									continue;
+								}
+							}
+						} catch (Exception e) {
+							log.error("解析图片json失败 货道编码:" + vendingLanep.getLogid());
+						}
+						supplyVproduct.setVendingLanep(vendingLanep);
+					} else {
+						log.error("补货单号:" + supplyVOrder.getsOrderId() + "  售货机:" + supplyVOrder.getSiteId() + " 货道号:" + supplyVproduct.getLaneSId() + " 无法找到.");
+						continue;
+					}
+				}
+				supplyVOrder.setSupplyVProductList(supplyVproductList);
+			}
+			supplyOrder.setSupplyVOrderList(supplyVOrderList);
+		}
+		String result=supplyInfoResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, page.getTotalCount(), supplyOrderList.size(), supplyOrderList);
+//		mapResult.put(supplyOrderP.getSupplierId(),result);
+		
+		return result;
+	}
+
+	public void setSupplyInfoReq(SupplyInfoReq supplyInfoReq) {
+		this.supplyInfoReq = supplyInfoReq;
+	}
+
+	public void setSupplyInfoResp(SupplyInfoResp supplyInfoResp) {
+		this.supplyInfoResp = supplyInfoResp;
+	}
+
+	public void setSupplyOrderDao(SupplyOrderDao supplyOrderDao) {
+		this.supplyOrderDao = supplyOrderDao;
+	}
+
+	public void setVendingLineDao(VendingLineDao vendingLineDao) {
+		this.vendingLineDao = vendingLineDao;
+	}
+
+	public void setProductInfoDao(ProductInfoDao productInfoDao) {
+		this.productInfoDao = productInfoDao;
+	}
+
+	public void setVendingDistrictDao(VendingDistrictDao vendingDistrictDao) {
+		this.vendingDistrictDao = vendingDistrictDao;
+	}
+
+	public void setSupplyVproductDao(SupplyVproductDao supplyVproductDao) {
+		this.supplyVproductDao = supplyVproductDao;
+	}
+
+	public void setVendingDao(VendingDao vendingDao) {
+		this.vendingDao = vendingDao;
+	}
+
+	public void setVendingLanepDao(VendingLanepDao vendingLanepDao) {
+		this.vendingLanepDao = vendingLanepDao;
+	}
+
+	public void setSupplyVOrderDao(SupplyVOrderDao supplyVOrderDao) {
+		this.supplyVOrderDao = supplyVOrderDao;
+	}
+
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+	default-lazy-init="true">
+
+	<description>Apache CXF的 SOAP Web Service配置</description>
+	
+	<!-- jax-ws endpoint定义  -->
+	<!-- 第三方模块入口(1001-1100)-->
+	<jaxws:endpoint address="/soap/partnerService">
+		<jaxws:implementor ref="partnerEntry" />
+	</jaxws:endpoint>
+	<!-- 初始化模块入口(1201-1220)-->
+	<jaxws:endpoint address="/soap/initService">
+		<jaxws:implementor ref="initEntry" />
+	</jaxws:endpoint>	
+	<!-- 数据推送模块入口(1221-1230)-->
+	<jaxws:endpoint address="/soap/dataSynchService">
+		<jaxws:implementor ref="dataSynchEntry" />
+	</jaxws:endpoint>
+	<!-- 终端订单模块入口(1241-1250)-->
+	<jaxws:endpoint address="/soap/orderService">
+		<jaxws:implementor ref="orderEntry" />
+	</jaxws:endpoint>	
+	<!-- 上报模块入口(1282-1284)-->
+	<jaxws:endpoint address="/soap/siteService">
+		<jaxws:implementor ref="siteEntry" />
+	</jaxws:endpoint>
+
+</beans>

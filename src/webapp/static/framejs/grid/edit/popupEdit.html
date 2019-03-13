@@ -1,0 +1,219 @@
+
+[文件路径: grid/edit/popupEdit.html]
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid弹出框编辑功能，包含设置编辑类型、指定编辑字段在弹出框位置、弹出框位置&大小、编辑数据提交url等相关内容；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                <font color="red">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp默认编辑类型为text</font>
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="popupEdit_rowed"></table>
+                       <div id="popupEdit_prowed"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_popupEdit">
+<pre>
+<font color='#027DD1'>1、弹出框编辑数据：</font>
+<strong>js部分:</strong>
+      var testData = [
+             {ids:"1",birthday:"1975-05-24",name:"王室",note:"note",sex:"male",intrest:"basketball",birthland:"guandong"} ,
+             {ids:"2",birthday:"1980-05-25",name:"张图",note:"note2",sex:"male",intrest:"football",birthland:"guangxi"},
+             {ids:"3",birthday:"1987-09-01",name:"于海",note:"note3",sex:"male",intrest:"pingpong,dance",birthland:"beijing"},
+             {ids:"4",birthday:"1973-10-04",name:"李辉",note:"note",sex:"female",intrest:"dance,football",birthland:"zhejiang"},
+             {ids:"5",birthday:"1988-10-05",name:"张岚",note:"note2",sex:"female",intrest:"football",birthland:"shanxi"},
+             {ids:"6",birthday:"1978-09-06",name:"宋钟",note:"note3",sex:"male",intrest:"pingpong",birthland:"sichuan"},
+             {ids:"7",birthday:"1987-10-04",name:"聂田",note:"note",sex:"female",intrest:"basketball",birthland:"chongqing"},
+             {ids:"8",birthday:"1985-10-03",name:"钟宇飞",note:"note2",sex:"male",intrest:"dance,basketball",birthland:"shanghai"}
+      ];
+      var checkboxArr = [
+             {label: "踢足球", name: "intrest", value: "football"},
+             {label: "打篮球", name: "intrest", value: "basketball"},
+             {label: "打乒乓球", name: "intrest", value: "pingpong"},
+             {label: "跳舞 ", name: "intrest", value: "dance"}
+   	  ];
+      var radioArr = [
+            {label: "男", name: "sex", value: "male"},
+            {label: "女", name: "sex", value: "female"}
+      ];
+      var selectArr = [
+            { name: '广西',value:'guangxi'},{name:'广东',value:'guandong'},{ name: '北京',value:'beijing'},
+            {name:'浙江',value:'zhejiang'},{ name: '陕西',value:'shanxi'},{name:'四川',value:'sichuan'},
+            { name: '重庆',value:'chongqing'},{name:'上海',value:'shanghai'}
+      ] ;
+      var popupEditObj = new biz.grid({
+          id:"#popupEdit_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,
+                  <font color='red'>editable:true</font>/*可编辑*/,
+                  <font color='red'>formoptions:{ rowpos:1, colpos:1}</font>/*编辑位置在弹出框第一行第一列*/},
+               {name:'birthday',index:'birthday',label:"出生日期",key:false,width:180,editable:true,editrules:{date:true},
+                   <font color='red'>edittype:'datepicker'</font>/*编辑类型为datepicker*/, 
+                   <font color='red'>editoptions:{dateFormat:"yy-mm-dd"}</font>/*编辑属性设置*/,
+                   <font color='red'>formoptions:{ rowpos:1, colpos:2}</font>/*编辑位置在弹出框第一行第二列*/},
+               {name:'name',index:'name',label:"名称",key:false,width:90,
+                   editable:false/*不可编辑*/},
+               {name:'sex',label:"性别",index:'sex', width:80, align:"right",
+                   <font color='red'>edittype:'radio'</font>/*编辑类型为radio*/,
+                   <font color='red'>editoptions:{data:radioArr}</font>,/*指定数据源*/
+                   editable:true,
+                   formoptions:{ rowpos:2, colpos:1}/*编辑位置在弹出框第二行第一列*/},
+               {name:'intrest',label:"兴趣",index:'intrest', width:180, align:"right",editable:true,
+                   <font color='red'>edittype:'checkbox'</font>,/*编辑类型为checkbox*/
+                   <font color='red'>editoptions:{data:checkboxArr}</font>,
+                   formoptions:{ rowpos:2, colpos:2}/*编辑位置在弹出框第二行第二列*/},
+               {name:'birthland',label:"出生地",index:'birthland', width:120,align:"right",editable:true,
+                   <font color='red'>edittype:'select'</font>,/*编辑类型为select*/
+                   <font color='red'>editoptions:{data:selectArr}</font>,
+                   formatter:true,formoptions:{ rowpos:3, colpos:1}/*编辑位置在弹出框第三行第一列*/},
+               {name:'note',index:'note', label:"备注",width:200, sortable:false,editable:true,
+                   <font color='red'>edittype:"textarea"</font>,
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}/*编辑位置在弹出框第三行第二列*/}
+         ],
+         editway:"popup",/*编辑类型为弹出框编辑*/
+         navtype:"top" /*导航栏类型*/,
+         pager: '#popupEdit_prowed' /*分页栏id*/,
+         pView:{
+             top:200, /*弹出框top位置*/
+             left:250,/*弹出框left位置*/
+             width:600,/*宽度*/
+             resize:false,
+             recreateForm:true
+          },
+          pAdd:{ 
+             top:200, /*弹出框top位置*/
+             left:250,/*弹出框left位置*/
+             width:750,/*宽度*/
+             resize:true,/*弹出框可缩放大小*/
+             url:"http://localhost/add",/*新增数据提交url，如不设置使用editurl*/
+             recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+             top:200, /*弹出框top位置*/
+             left:250,/*弹出框left位置*/
+             width:750,/*宽度*/
+             resize:true,url:"http://localhost/edit",recreateForm:true}
+      });
+</pre>
+    </div>
+
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">查看功能API属性列表</div>
+	</div>
+	<div class="content">
+	查看功能使用到此api：viewGridRow(rowid, properties)，rowid为查看目标行id值，properties说明如下：
+	<iframe src="./grid/edit/popup_viewPara.htm" width="100%" scrolling="no" frameborder="0" height="450px;"></iframe>
+	</div>
+	
+	<div class="barTitle2">
+		<div class="content">编辑功能API属性列表</div>
+	</div>
+	<div class="content">
+	编辑功能使用到此api：editGridRow (rowid, properties)，rowid为查看目标行id值，properties用法举例：“editGridRow('new',{width:800});”属性列表如下：
+	<iframe src="./grid/edit/popup_editPara.htm" width="100%" scrolling="no" frameborder="0" height="1550px;"></iframe>
+	</div>
+	<div class="barTitle2">
+		<div class="content">新增功能API属性列表</div>
+	</div>
+	<div class="content">
+	新增功能使用到此api：addGridRow (“new”, properties)， properties内容请参见编辑功能属性说明
+	</div>
+   <div class="barTitle2">
+		<div class="content">删除功能API属性列表</div>
+	</div>
+	<div class="content">
+	删除功能使用到此api：delGridRow (rowid, options)，rowid为行id， options属性说明如下:
+	<iframe src="./grid/edit/popup_deletePara.htm" width="100%" scrolling="no" frameborder="0" height="1000px;"></iframe>
+	
+	</div>
+						
+
+<script type="text/javascript">
+	 var testData = [
+             {ids:"1",birthday:"1975-05-24",name:"王室",note:"note",sex:"male",intrest:"basketball",birthland:"guandong"} ,
+             {ids:"2",birthday:"1980-05-25",name:"张图",note:"note2",sex:"male",intrest:"football",birthland:"guangxi"},
+             {ids:"3",birthday:"1987-09-01",name:"于海",note:"note3",sex:"male",intrest:"pingpong,dance",birthland:"beijing"},
+             {ids:"4",birthday:"1973-10-04",name:"李辉",note:"note",sex:"female",intrest:"dance,football",birthland:"zhejiang"},
+             {ids:"5",birthday:"1988-10-05",name:"张岚",note:"note2",sex:"female",intrest:"football",birthland:"shanxi"},
+             {ids:"6",birthday:"1978-09-06",name:"宋钟",note:"note3",sex:"male",intrest:"pingpong",birthland:"sichuan"},
+             {ids:"7",birthday:"1987-10-04",name:"聂田",note:"note",sex:"female",intrest:"basketball",birthland:"chongqing"},
+             {ids:"8",birthday:"1985-10-03",name:"钟宇飞",note:"note2",sex:"male",intrest:"dance,basketball",birthland:"shanghai"}
+      ];
+      var checkboxArr = [
+             {label: "踢足球", name: "intrest", value: "football"},
+             {label: "打篮球", name: "intrest", value: "basketball"},
+             {label: "打乒乓球", name: "intrest", value: "pingpong"},
+             {label: "跳舞 ", name: "intrest", value: "dance"}
+   	  ];
+      var radioArr = [
+            {label: "男", name: "sex", value: "male"},
+            {label: "女", name: "sex", value: "female"}
+      ];
+      var selectArr = [
+            { name: '广西',value:'guangxi'},{name:'广东',value:'guandong'},{ name: '北京',value:'beijing'},
+            {name:'浙江',value:'zhejiang'},{ name: '陕西',value:'shanxi'},{name:'四川',value:'sichuan'},
+            { name: '重庆',value:'chongqing'},{name:'上海',value:'shanghai'}
+      ] ;
+
+
+      var popupEditObj = new biz.grid({
+          id:"#popupEdit_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'birthday',index:'birthday',label:"出生日期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:70,editable:false},
+               {name:'sex',label:"性别",index:'sex', width:80, align:"right",edittype:'radio',editoptions:{data:radioArr},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'intrest',label:"兴趣",index:'intrest', width:180, align:"right",editable:true,edittype:'checkbox',editoptions:{data:checkboxArr},
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'birthland',label:"出生地",index:'birthland', width:120,align:"right",editable:true,edittype:'select',editoptions:{data:selectArr},
+                   formatter:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         editway:"popup",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#popupEdit_prowed' /*分页栏id*/,
+         pView:{
+             top:200, /*弹出框top位置*/
+             left:250,/*弹出框left位置*/
+             width:600,/*宽度*/
+             resize:false,
+             recreateForm:true
+          },
+          pAdd:{ 
+             top:200, /*弹出框top位置*/
+             left:250,/*弹出框left位置*/
+             width:750,/*宽度*/
+             resize:true,/*弹出框可缩放大小*/
+             url:"http://localhost/add",/*新增数据提交url，如不设置使用editurl*/
+             recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+          pEdit:{
+             top:200, /*弹出框top位置*/
+             left:250,/*弹出框left位置*/
+             width:750,/*宽度*/
+             resize:true,url:"http://localhost/edit",recreateForm:true}
+      });
+</script>

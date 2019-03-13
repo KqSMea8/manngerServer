@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingLane">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingLane" id="vendingLaneResultMap">
+		<id property="logid" column="logid" />
+		<result property="slaneId" column="slaneId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="laneId" column="laneId" />
+		<result property="cabinetType" column="cabinetType" />
+		<result property="deviceId" column="deviceId" />
+		<result property="laneCode" column="laneCode" />
+		<result property="row" column="row" />
+		<result property="col" column="col" />
+		<result property="arrange" column="arrange" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="createTime" column="createTime" />
+		<result property="corpId" column="corpId" />
+	</resultMap>
+	
+	<select id="findAll" parameterType="com.lmxf.post.entity.vending.VendingLane" resultMap="vendingLaneResultMap">
+		select * from as_vending_lane where 1=1
+		<if test="siteId != null and siteId != '' ">
+			and siteId =#{siteId}
+		</if>
+		order by laneId asc
+	</select>
+	
+	<select id="update" parameterType="com.lmxf.post.entity.vending.VendingLane" >
+		update as_vending_lane set curState=#{curState},stateTime=#{stateTime}
+		where slaneId=#{slaneId}
+	</select>
+</mapper>

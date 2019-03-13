@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="defaultCache">
+
+	<diskStore path="../temp/vendingserver/ehcache" />
+
+	<!-- 默认缓存配置. 自动失效：最后一次访问时间间隔300秒失效，若没有访问过自创建时间600秒失效。-->
+	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
+		overflowToDisk="true" statistics="true"/>
+	
+	<!-- 系统缓存 -->
+	<cache name="dict_cache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true"/>
+	
+	<!-- 用户缓存 -->
+	<cache name="error_code_cache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true"/>
+	
+	<!-- 站点缓存 -->
+	<cache name="product_cache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true"/>
+	
+	<!-- 集团缓存 -->
+	<cache name="product_class_cache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true"/>
+
+    	
+</ehcache>

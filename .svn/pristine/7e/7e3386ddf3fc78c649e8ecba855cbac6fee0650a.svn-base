@@ -1,0 +1,186 @@
+[文件路径: grid/search/search.html]
+
+    <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid在初始化时进行数据查找，即传递条件参数到server端，server端根据接受到的条件参数组织返回数据。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+
+    <div class="content">
+         <div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block">
+             <div class="equal">
+                  <div class="row">
+                      <div class="cell">
+                               <div class="labelcell">有效期：</div>
+                               <div class="valuecell">
+                                   <select  id="search_invdate" class="select">
+                                       <option value="2010-06-24">2010-06-24</option>
+                                       <option value="2010-09-24">2010-09-24</option>
+                                        <option value="2010-04-24">2010-04-24</option>
+                                   </select>
+                               </div>
+                      </div>
+
+                      <div class="cell">
+                              <div class="labelcell">名称：</div>
+                               <div class="valuecell">
+                                   <select  id="search_name" class="select">
+                                       <option value="测试1">测试1</option>
+                                       <option value="测试2">测试2</option>
+                                   </select>
+                              </div>
+                      </div>
+                      <div class="querycell">
+                           <button id="search_load_btn"></button>
+                      </div>
+                  </div>
+             </div>
+         </div>
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+             <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                   <table id="search_rowed"></table>
+                   <div id="search_prowed"></div>
+             </div>
+        </div>
+    </div>
+<!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_search">
+<pre>
+<font color=red>此示例为通过url加载数据，可以通过发送到url请求参数了解筛选条件处理方式；（建议在火狐下用firebug查看）</font>
+<font color='#027DD1'>1.设置初始化数据筛选条件：</font>
+<strong>js部分:</strong>
+     var searchGridObj = new biz.grid({
+          id:"#search_rowed",/*html部分table id*/
+          url: "http://localhost:8080/get/",/*请求数据的远程地址*/
+          datatype: "json",/*数据类型，设置为json数据，默认为json*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          <font color="red">postData:{"invdate":$("#search_invdate").val(),"name":$("#search_name").val()},/*把下拉框值作为筛选条件传递到url*/</font>
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+               edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+               editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         search:true,
+         sortname:"ids",
+         sortorder:"desc",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#search_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,recreateForm:true}
+    });
+    
+<font color='#027DD1'>2.根据下拉框值动态筛选数据：</font>
+<strong>js部分:</strong>
+     $( "#sorting_load_btn" ).button({ icons: {primary:'ui-icon-refresh'},label: "重新加载" }).click(function() {
+            <font color="red">/*提交请求参数前重新获取下拉框值作为筛选条件*/</font>
+            searchGridObj.setGridParam({postData:{"invdate":$("#search_invdate").val(),"name":$("#search_name").val()}});
+            searchGridObj.trigger("reloadGrid");
+     });
+</pre>
+
+						
+
+<script type="text/javascript">
+     var gridObj = new biz.grid({
+          id:"#search_rowed",/*html部分table id*/
+          url: "http://localhost:8080/get/",/*请求数据的远程地址*/
+          datatype: "json",/*数据类型，设置为json数据，默认为json*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          postData:{"invdate":$("#search_invdate").val(),"name":$("#search_name").val()},
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+               edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+               editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         search:true,
+         sortname:"ids",
+         sortorder:"desc",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#search_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+ 
+            resize:false,
+            recreateForm:true
+          },
+           pAdd:{ 
+                top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+                resize:true,/*弹出框可缩放大小*/
+                url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         resize:true,recreateForm:true}
+    });
+   $( "#search_load_btn" ).button({ icons: {primary:'ui-icon-refresh'},label: "重新加载" }).click(function() {
+            gridObj.setGridParam({postData:{"invdate":$("#search_invdate").val(),"name":$("#search_name").val()}});
+            gridObj.trigger("reloadGrid");
+    });
+</script>

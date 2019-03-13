@@ -1,0 +1,203 @@
+package com.lmxf.post.entity.order;
+
+/**
+ * 订单商品货道
+ * @author Administrator
+ *
+ */
+public class OrderBox {
+	
+	private String logid;
+	private String proboxId;
+	private String corpId;
+	private String prodetailId;
+	private String orderId;
+	private String torderId;
+	private String siteId;
+	private String siteName;
+	private int laneSId;
+	private int laneEId;
+	private String productId;
+	private String productName;
+	private float buyPrice;
+	private float salePrice;
+	private float payPrice;
+	private float favPrice;
+	private float returnPrice;
+	private float profitMoney;
+	private String supplyId;
+	private String outState;
+	private String sysState;
+	private String stateTime;
+	private String createTime;
+	private int outIndex;
+	private String correctState;
+	
+	
+	public String getCorrectState() {
+		return correctState;
+	}
+	public void setCorrectState(String correctState) {
+		this.correctState = correctState;
+	}
+	public String getSysState() {
+		return sysState;
+	}
+	public void setSysState(String sysState) {
+		this.sysState = sysState;
+	}
+	private String num;
+	private int saleNum;
+	
+	
+	public int getSaleNum() {
+		return saleNum;
+	}
+	public void setSaleNum(int saleNum) {
+		this.saleNum = saleNum;
+	}
+	public String getNum() {
+		return num;
+	}
+	public void setNum(String num) {
+		this.num = num;
+	}
+	public String getLogid() {
+		return logid;
+	}
+	public void setLogid(String logid) {
+		this.logid = logid;
+	}
+	public String getProboxId() {
+		return proboxId;
+	}
+	public void setProboxId(String proboxId) {
+		this.proboxId = proboxId;
+	}
+	public String getCorpId() {
+		return corpId;
+	}
+	public void setCorpId(String corpId) {
+		this.corpId = corpId;
+	}
+	public String getProdetailId() {
+		return prodetailId;
+	}
+	public void setProdetailId(String prodetailId) {
+		this.prodetailId = prodetailId;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+	public String getTorderId() {
+		return torderId;
+	}
+	public void setTorderId(String torderId) {
+		this.torderId = torderId;
+	}
+	public String getSiteId() {
+		return siteId;
+	}
+	public void setSiteId(String siteId) {
+		this.siteId = siteId;
+	}
+	public String getSiteName() {
+		return siteName;
+	}
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
+	}
+	public int getLaneSId() {
+		return laneSId;
+	}
+	public void setLaneSId(int laneSId) {
+		this.laneSId = laneSId;
+	}
+	public int getLaneEId() {
+		return laneEId;
+	}
+	public void setLaneEId(int laneEId) {
+		this.laneEId = laneEId;
+	}
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public float getBuyPrice() {
+		return buyPrice;
+	}
+	public void setBuyPrice(float buyPrice) {
+		this.buyPrice = buyPrice;
+	}
+	public float getSalePrice() {
+		return salePrice;
+	}
+	public void setSalePrice(float salePrice) {
+		this.salePrice = salePrice;
+	}
+	public float getPayPrice() {
+		return payPrice;
+	}
+	public void setPayPrice(float payPrice) {
+		this.payPrice = payPrice;
+	}
+	public float getFavPrice() {
+		return favPrice;
+	}
+	public void setFavPrice(float favPrice) {
+		this.favPrice = favPrice;
+	}
+	public float getReturnPrice() {
+		return returnPrice;
+	}
+	public void setReturnPrice(float returnPrice) {
+		this.returnPrice = returnPrice;
+	}
+	public float getProfitMoney() {
+		return profitMoney;
+	}
+	public void setProfitMoney(float profitMoney) {
+		this.profitMoney = profitMoney;
+	}
+	public String getSupplyId() {
+		return supplyId;
+	}
+	public void setSupplyId(String supplyId) {
+		this.supplyId = supplyId;
+	}
+	public String getOutState() {
+		return outState;
+	}
+	public void setOutState(String outState) {
+		this.outState = outState;
+	}
+	public String getStateTime() {
+		return stateTime;
+	}
+	public void setStateTime(String stateTime) {
+		this.stateTime = stateTime;
+	}
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	public int getOutIndex() {
+		return outIndex;
+	}
+	public void setOutIndex(int outIndex) {
+		this.outIndex = outIndex;
+	}
+}

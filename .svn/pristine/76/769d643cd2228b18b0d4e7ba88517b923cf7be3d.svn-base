@@ -1,0 +1,206 @@
+package com.lmxf.post.service.core;
+
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.service.ServiceException;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.CacheUtils;
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.MsgPushUtils;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderBox;
+import com.lmxf.post.entity.order.OrderChange;
+import com.lmxf.post.entity.order.OrderProduct;
+import com.lmxf.post.entity.pay.Order;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderBoxDao;
+import com.lmxf.post.repository.order.OrderChangeDao;
+import com.lmxf.post.repository.order.OrderProductDao;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.tradepkg.dataSynch.OrderIssuedResp;
+import com.manage.project.system.index.vo.OneMonthReviewVo;
+import com.manage.project.system.index.vo.OperateReviewVo;
+
+public class OrderApplyService {
+	private final static Log log = LogFactory.getLog(OrderApplyService.class);
+	private OrderApplyDao orderApplyDao;
+	private SequenceIdDao sequenceIdDao;
+	private OrderChangeDao orderChangeDao;
+	private OrderIssuedResp orderIssuedResp;
+	private OrderProductDao orderProductDao;
+	private OrderBoxDao orderBoxDao;
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+	public void setOrderChangeDao(OrderChangeDao orderChangeDao) {
+		this.orderChangeDao = orderChangeDao;
+	}
+
+	public void setOrderIssuedResp(OrderIssuedResp orderIssuedResp) {
+		this.orderIssuedResp = orderIssuedResp;
+	}
+
+	public void setOrderProductDao(OrderProductDao orderProductDao) {
+		this.orderProductDao = orderProductDao;
+	}
+
+	public void setOrderBoxDao(OrderBoxDao orderBoxDao) {
+		this.orderBoxDao = orderBoxDao;
+	}
+
+	/**
+	 * 修改支付信息
+	 * 
+	 * @param orderId
+	 * @param payState
+	 * @return
+	 */
+	public void updateByNotify(OrderApply orderApply, String payState) {
+		// 等待支付或支付失败的才处理
+		if (GParameter.payState_success.equals(payState) && !GParameter.payState_success.equals(orderApply.getPayState())) {
+			orderApply.setPayState(GParameter.payState_success);
+			int count = orderApplyDao.updateByNotify(orderApply);
+			// 插入订单状态信息表
+			OrderChange orderChange = new OrderChange();
+			orderChange.setLogid(DateUtil.getLogid());
+			orderChange.setChangeId(orderApply.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApply.getCorpId(), "order_change_id", 7));
+			orderChange.setOperAction(GParameter.orderChange_paySuccess);
+			orderChange.setOperCont("售货机:" + orderApply.getSiteName() + " 订单编号:" + orderApply.getOrderId() + " 支付成功!");
+			orderChange.setCorpId(orderApply.getCorpId());
+			orderChange.setOrderId(orderApply.getOrderId());
+			orderChange.setOperId(orderApply.getLoginId());
+			orderChange.setOperName(orderApply.getLoginName());
+			orderChange.setSiteId(orderApply.getSiteId());
+			orderChange.setSiteName(orderApply.getSiteName());
+			orderChange.setOperTime(DateUtil.getNow());
+			orderChange.setCreateTime(DateUtil.getNow());
+			orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+			orderChange.setPocTimes(0);
+			orderChange.setPocResult("wait push");
+			orderChangeDao.insert(orderChange);
+			// 查询商品信息
+			OrderProduct orderProductP = new OrderProduct();
+			orderProductP.setOrderId(orderApply.getOrderId());
+			List<OrderProduct> orderProductList = orderProductDao.findAll(orderProductP);
+			// 设置商品货道信息
+			for (OrderProduct orderProduct : orderProductList) {
+				OrderBox orderBoxP = new OrderBox();
+				orderBoxP.setOrderId(orderProduct.getOrderId());
+				orderBoxP.setProductId(orderProduct.getProductId());
+				List<OrderBox> orderBoxList = orderBoxDao.findNum(orderBoxP);
+				orderProduct.setOrderBoxList(orderBoxList);
+			}
+			orderApply.setOrderProductList(orderProductList);
+			// 推送给终端
+			String content = orderIssuedResp.CreateIssueJson(GParameter.platCode_Terminal, GParameter.issued_orderApply_trade_code, "01", "1", orderApply);
+			String deviceId = orderApply.getSiteId();
+			String msgId = orderApply.getLogid();
+			int result = MsgPushUtils.push(content, deviceId, msgId);
+			if (result == 0) {
+				orderApply.setPushState(GParameter.pushState_pushed);
+				orderApply.setpStateTime(DateUtil.getNow());
+				orderApplyDao.updateDownTime(orderApply);
+			}
+		} else {
+			// 插入订单状态信息表
+			OrderChange orderChange = new OrderChange();
+			orderChange.setLogid(DateUtil.getLogid());
+			orderChange.setChangeId(orderApply.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApply.getCorpId(), "order_change_id", 7));
+			orderChange.setOperAction(GParameter.orderChange_paySuccess);
+			orderChange.setOperCont("售货机:" + orderApply.getSiteName() + " 订单编号:" + orderApply.getOrderId() + " 支付失败或重复支付!");
+			orderChange.setCorpId(orderApply.getCorpId());
+			orderChange.setOrderId(orderApply.getOrderId());
+			orderChange.setOperId(orderApply.getLoginId());
+			orderChange.setOperName(orderApply.getLoginName());
+			orderChange.setSiteId(orderApply.getSiteId());
+			orderChange.setSiteName(orderApply.getSiteName());
+			orderChange.setOperTime(DateUtil.getNow());
+			orderChange.setCreateTime(DateUtil.getNow());
+			orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+			orderChange.setPocTimes(0);
+			orderChange.setPocResult("wait push");
+			orderChangeDao.insert(orderChange);
+		}
+	}
+
+	/**
+	 * 修改支付信息
+	 * 
+	 * @param orderId
+	 * @param payState
+	 * @return
+	 */
+	public void updateByNotifyRefund(OrderApply orderApply, String rTradeNo) {
+		// 等待支付或支付失败的才处理
+		orderApply.setReturnType(GParameter.returnType_success);
+		orderApply.setReturnMoney(orderApply.getPayPrice());
+		orderApply.setrTradeNo(rTradeNo);
+		orderApplyDao.updateByNotifyRefund(orderApply);
+		// 插入订单状态信息表
+		OrderChange orderChange = new OrderChange();
+		orderChange.setLogid(DateUtil.getLogid());
+		orderChange.setChangeId(orderApply.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApply.getCorpId(), "order_change_id", 7));
+		orderChange.setOperAction(GParameter.orderChange_paySuccess);
+		orderChange.setOperCont("售货机:" + orderApply.getSiteName() + " 订单编号:" + orderApply.getOrderId() + " 退款成功!");
+		orderChange.setCorpId(orderApply.getCorpId());
+		orderChange.setOrderId(orderApply.getOrderId());
+		orderChange.setOperId(orderApply.getLoginId());
+		orderChange.setOperName(orderApply.getLoginName());
+		orderChange.setSiteId(orderApply.getSiteId());
+		orderChange.setSiteName(orderApply.getSiteName());
+		orderChange.setOperTime(DateUtil.getNow());
+		orderChange.setCreateTime(DateUtil.getNow());
+		orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+		orderChange.setPocTimes(0);
+		orderChange.setPocResult("wait push");
+		orderChangeDao.insert(orderChange);
+	}
+
+	public OrderApply findOneByTradeNo(OrderApply orderApply) {
+		OrderApply orderApplyR;
+		try {
+			orderApplyR = orderApplyDao.findOneByTradeNo(orderApply);
+		} catch (Exception e) {
+			throw new ServiceException("根据条件查找下单信息出错！", e);
+		}
+		return orderApplyR;
+	}
+
+	public OrderApply findOneByOrderId(String orderId) {
+		OrderApply orderApplyR;
+		try {
+			OrderApply orderApplyP = new OrderApply();
+			orderApplyP.setOrderId(orderId);
+			orderApplyR = orderApplyDao.findOneByOrderId(orderApplyP);
+		} catch (Exception e) {
+			throw new ServiceException("根据条件查找下单信息出错！", e);
+		}
+		return orderApplyR;
+	}
+
+	public static String getOrderId() {
+		String payorderid = null;
+		try {
+			// payorderid =DateUtils.DateNum()+
+			// pkgLogDao.payorderid()+DateUtils.buildRandom(3);
+			// payorderid =DateUtils.DateNum()+ pkgLogDao.payorderid();
+			// payorderid=DateUtils.getUnixTime()+""+DateUtils.buildRandom(4);
+			payorderid = System.nanoTime() + "";
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			// payorderid=DateUtils.getUnixTime()+""+DateUtils.buildRandom(3);
+			payorderid = System.nanoTime() + "";
+		}
+		return payorderid;
+	}
+}

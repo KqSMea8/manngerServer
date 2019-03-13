@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdvertDevice">
+
+	<resultMap type="com.lmxf.post.entity.increment.AdvertDevice" id="advertDeviceResultMap">
+		<id property="logid" column="logid" />
+		<result property="advDeviceId" column="advDeviceId" />
+		<result property="advertId" column="advertId" />
+		<result property="corpId" column="corpId" />
+		<result property="deviceId" column="deviceId" />
+		<result property="playerPlat" column="playerPlat" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="createTime" column="createTime" />
+		
+	</resultMap>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.increment.AdvertDevice" resultMap="advertDeviceResultMap">
+		select * from as_advert_device where advDeviceId=#{advDeviceId}
+	</select>
+	<select id="findAll" parameterType="com.lmxf.post.entity.increment.AdvertDevice" resultMap="advertDeviceResultMap">
+		select * from as_advert_device where deviceId=#{deviceId} and curState=#{curState}
+	</select>
+</mapper> 

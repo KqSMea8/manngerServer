@@ -1,0 +1,93 @@
+[文件路径: tree/async.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("ts_async");
+</script>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo_async" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、setting 配置信息说明</h2>
+				<ul class="list">
+				<li class="highlight_red">使用异步加载，必须设置 setting.async 中的各个属性</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li class="highlight_red">异步加载功能对于 treeNode 节点数据没有特别要求，如果采用简单 JSON 数据，请设置 setting.data.simple 中的属性</li>
+				<li class="highlight_red">如果异步加载每次都只返回单层的节点数据，那么可以不设置简单 JSON 数据模式</li>
+
+				</ul>
+			</li>
+			<li class="title"><h2>3、其他说明</h2>
+				<ul class="list">
+				<li>该示例需要在应用服务器中演示</li>
+
+
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+			
+			<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="ts_async">
+<pre class="brush: js;">
+html部分:
+
+&lt;ul id="treeDemo_async" class="ztree"&gt;&lt;/ul&gt;
+
+js部分:
+
+var setting_async = {
+    id:"#treeDemo_async",//容器id
+    data: {
+		simpleData: {
+		enable: true
+		}
+	},
+    async: {
+		enable: true,
+		url:"/tree/asyncData/getDemoData.jsp",//指定url，该URL会在应用服务器环境中返回数据
+		autoParam:[ "id"]
+		//1、将需要作为参数提交的属性名称，制作成 Array 即可，例如：["id", "name"]
+        //2、可以设置提交时的参数名称，例如 server 只接受 zId : ["id=zId"]
+		
+	}
+};
+new biz.tree(setting_async);//创建树
+
+           </pre>
+
+       </div>
+</div>
+
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+
+var setting_async = {
+    id:"#treeDemo_async",//容器id
+    data: {
+		simpleData: {
+		enable: true
+		}
+	},
+    async: {
+		enable: true,
+		url:"../FrontEndSampleCenter/tree/asyncData/getDemoData.jsp",
+		autoParam:[ "id"]
+	}
+};
+new biz.tree(setting_async);//创建树
+
+</script>

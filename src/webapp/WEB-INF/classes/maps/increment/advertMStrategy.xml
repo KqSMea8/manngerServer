@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdvertMStrategy">
+
+	<resultMap type="com.lmxf.post.entity.increment.AdvertMStrategy" id="advertMStrategyResultMap">
+		<id property="logid" column="logid" />
+		<result property="mstrategyId" column="mstrategyId" />
+		<result property="strategyId" column="strategyId" />
+		<result property="advertId" column="advertId" />
+		<result property="corpId" column="corpId" />
+		<result property="seqId" column="seqId" />
+		<result property="materialId" column="materialId" />
+		<result property="mediaName" column="mediaName" />
+		<result property="mediaUrl" column="mediaUrl" />
+		<result property="mediaSUrl" column="mediaSUrl" />
+		<result property="mediaType" column="mediaType" />
+		<result property="playerTime" column="playerTime" />
+		<result property="playerTimes" column="playerTimes" />
+		<result property="createTime" column="createTime" />
+
+	</resultMap>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.increment.AdvertMStrategy" resultMap="advertMStrategyResultMap">
+		select * from as_advert_mstrategy where mstrategyId=#{mstrategyId}
+	</select>
+	<select id="findAll" parameterType="com.lmxf.post.entity.increment.AdvertMStrategy" resultMap="advertMStrategyResultMap">
+		select * from as_advert_mstrategy where strategyId=#{strategyId} 
+	</select>
+</mapper> 

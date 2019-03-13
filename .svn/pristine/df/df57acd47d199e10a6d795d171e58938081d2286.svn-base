@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingPerson">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingPerson" id="vendingPersonResultMap">
+		<id property="logid" column="logid" />
+		<result property="configId" column="configId" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="loginId" column="loginId" />
+		<result property="loginName" column="loginName" />
+		<result property="mobile" column="mobile" />
+		<result property="email" column="email" />
+		<result property="empType" column="empType" />
+		<result property="curState" column="curState" />
+		<result property="downState" column="downState" />
+		<result property="downTime" column="downTime" />
+		<result property="createTime" column="createTime" />
+		<result property="corpId" column="corpId" />
+		<result property="corpName" column="corpName" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="vendingPersonResultMap">
+		select * from as_vending_person where 1=1
+		<if test="loginId != null and loginId != ''">
+			and loginId=#{loginId} 
+	    </if>
+	</select>
+	
+	<select id="findAllIssuedAll" parameterType="com.lmxf.post.entity.vending.VendingPerson"
+		resultMap="vendingPersonResultMap">
+		select * from as_vending_person  where siteId=#{siteId} and curState='1'
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.vending.VendingPerson">
+		update as_vending_person set 
+		loginName=#{loginName},
+		mobile=#{mobile},
+		email=#{email},
+		downState=#{downState},
+		downTime=#{downTime},
+		curState=#{curState}
+		where configId=#{configId}
+	</update>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.vending.VendingPerson" resultMap="vendingPersonResultMap">
+		select *
+		from as_vending_person where siteId=#{siteId} and loginId=#{loginId}
+	</select>
+	
+	<!-- 修改下发时间 -->
+	<update id="updateDownTime" parameterType="com.lmxf.post.entity.vending.VendingPerson">
+		update as_vending_person set downTime=#{downTime},downState=#{downState} where loginId=#{loginId} and siteId=#{siteId}
+	</update>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.vending.VendingPerson">
+	   insert into as_vending_person(logid,configId,siteId,siteName,loginId,loginName,mobile,email,empType,curState,downState,downTime,createTime,corpId,corpName) values(
+	   #{logid},#{configId},#{siteId},#{siteName},#{loginId},#{loginName},#{mobile},#{email},#{empType},#{curState},#{downState},#{downTime},#{createTime},#{corpId},#{corpName})
+	</insert>
+</mapper>

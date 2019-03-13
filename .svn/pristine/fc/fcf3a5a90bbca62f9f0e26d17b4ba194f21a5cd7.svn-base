@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Vending">
+
+	<resultMap type="com.lmxf.post.entity.vending.Vending" id="vendingResultMap">
+		<id property="logid" column="logid" />
+		<result property="siteId" column="siteId" />
+		<result property="siteCode" column="siteCode" />
+		<result property="siteName" column="siteName" />
+		<result property="factoryId" column="factoryId" />
+		<result property="cabinetType" column="cabinetType" />
+		<result property="deviceId" column="deviceId" />
+		<result property="districtId" column="districtId" />
+		<result property="lineId" column="lineId" />
+		<result property="pointId" column="pointId" />
+		<result property="longitude" column="longitude" />
+		<result property="latitude" column="latitude" />
+		<result property="payType" column="payType" />
+		<result property="mediaType" column="mediaType" />
+		<result property="onlineTime" column="onlineTime" />
+		<result property="initTime" column="initTime" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="netWork" column="netWork" />
+		<result property="netSate" column="netSate" />
+		<result property="netTime" column="netTime" />
+		<result property="sellState" column="sellState" />
+		<result property="sellTime" column="sellTime" />
+		<result property="laneNum" column="laneNum" />
+		<result property="pMaxNum" column="pMaxNum" />
+		<result property="pCurNum" column="pCurNum" />
+		<result property="stockLevel" column="stockLevel" />
+		<result property="corpId" column="corpId" />
+		<result property="mConfigId" column="mConfigId" />
+		<result property="configFile" column="configFile" />
+		<result property="createTime" column="createTime" />
+		<result property="address" column="address" />
+		<result property="supplyState" column="supplyState" />
+		<result property="supplySTime" column="supplySTime" />
+		<result property="underState" column="underState" />
+		<result property="underSTime" column="underSTime" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="vendingResultMap">
+		select * from as_vending where 1=1
+		<!--  and netSate='0' -->
+		<if test="siteId != null and siteId != ''">
+			and siteId=#{siteId} 
+	    </if>
+		<if test="corpId != null and corpId != '' ">
+			AND corpId=#{corpId}
+		</if> 
+	    <if test="latitude != null and latitude != '' ">
+		 and longitude is not null and latitude is not null	order by 6371.004*ACOS(SIN(#{latitude}/180*PI())*SIN(latitude/180*PI())+COS(#{latitude}/180*PI())*COS(latitude/180*PI())*COS((#{longitude}-longitude)/180*PI()))
+		</if>
+	</select>
+	
+	<select id="findAllLimit" resultMap="vendingResultMap">
+		select * from as_vending where 1=1
+		<!--  and netSate='0' -->
+		<if test="siteId != null and siteId != ''">
+			and siteId=#{siteId} 
+	    </if>
+		<if test="corpId != null and corpId != '' ">
+			AND corpId=#{corpId}
+		</if> 
+	    <if test="latitude != null and latitude != '' ">
+			and longitude is not null and latitude is not null order by 6371.004*ACOS(SIN(#{latitude}/180*PI())*SIN(latitude/180*PI())+COS(#{latitude}/180*PI())*COS(latitude/180*PI())*COS((#{longitude}-longitude)/180*PI()))
+		</if>
+		limit 0,20
+	</select>
+	
+	<select id="findBySiteId" parameterType="String" resultMap="vendingResultMap">
+		select * from as_vending where siteId=#{siteId}
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.vending.Vending">
+		update as_vending set pCurNum=#{pCurNum},stockLevel=#{stockLevel},netSate=#{netSate},netTime=#{netTime},longitude=#{longitude},latitude=#{latitude},
+		supplyState=#{supplyState},supplySTime=#{supplySTime},underState=#{underState},underSTime=#{underSTime}
+		<if test="curState != null and curState != '' ">
+			,curState=#{curState}
+		</if>
+		<if test="netWork != null and netWork != '' ">
+			,netWork=#{netWork}
+		</if>
+		where siteId=#{siteId}
+	</update>
+
+    <update id="updateSupplyOrUnder" parameterType="com.lmxf.post.entity.vending.Vending">
+		update as_vending set supplyState=#{supplyState},supplySTime=#{supplySTime},underState=#{underState},underSTime=#{underSTime}
+		where siteId=#{siteId}
+	</update>
+	
+	<select id="findNetState" parameterType="com.lmxf.post.entity.vending.Vending" resultMap="vendingResultMap">
+		select count(*) as laneNum from as_vending where netSate=#{netSate} and corpId=#{corpId}
+	</select>
+</mapper> 

@@ -1,0 +1,161 @@
+[文件路径: grid/advanced/treeGrid.html]
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid表现分层数据功能，类似tree组件数据间可以存在父子节点，节点能展开或收起，对能更直观展示和操作数据。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="treeGrid_rowed"></table>
+                       <div id="treeGrid_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_treeGrid">
+<pre>
+<font color='#027DD1'>1.数据格式：</font>
+<strong>js部分:</strong>
+ <font color='#027DD1'>1).静态数据：</font>
+    treegrid数据格式在基本数据格式上增加几个属性描述节点间的关系和状态：
+    <font color="red">level</font>  当前节点level值，如为0则为根节点；
+    <font color="red">parent</font>  指定当前节点父节点，应为id值
+    <font color="red">isLeaf</font>  是否叶子节点
+    <font color="red">expanded</font>  是否展开
+
+    var treeData = [
+                {id:"1",name:"Cash",num:"100",debit:"400.00",credit:"250.00",balance:"150.00",
+                  level:0,parent:"",isLeaf:"true",expanded:"false"},
+                {id:"2",name:"Cash 1",num:"1",debit:"300.00",credit:"200.00",balance:"100.00",
+                  level:1,parent:"1",rgt:"5",isLeaf:"false",expanded:"false"},
+                {id:"3",name:"Sub Cash 1",num:"1",debit:"300.00",credit:"200.00",balance:"100.00",
+                  level:2,parent:"2",isLeaf:"true",expanded:"false"},
+                {id:"4",name:"Cash 2",num:"2",debit:"100.00",credit:"50.00",balance:"50.00",
+                  level:1,parent:"1",isLeaf:"true",expanded:"false"},
+                {id:"5",name:"Bank's",num:"200",debit:"1500.00",credit:"1000.00",balance:"500.00",
+                  level:0,parent:"",isLeaf:"false",expanded:"false"},
+                {id:"6",name:"Bank 1",num:"1",debit:"500.00",credit:"0.00",balance:"500.00",
+                  level:5,parent:"5",isLeaf:"false",expanded:"false"},
+                {id:"7",name:"Bank 2",num:"2",debit:"1000.00",credit:"0.00",balance:"0.00",
+                  level:6,parent:"6",isLeaf:"true",expanded:"false"},
+                {id:"8",name:"Fixed asset",num:"300",debit:"0.00",credit:"1000.00",balance:"-1000.00",
+                  level:0,parent:"",isLeaf:"true",expanded:"false"}
+     ];
+
+<font color='#027DD1'>2).动态数据：</font>
+    同静态数据格式类型，在动态加载行数据对象添加描述节点间的关系和状态属性即可：
+
+    { page:"xxx", //当前页
+      total:"yyy",//总页数
+      records:"zzz",//总记录数
+      rows:[//详细行数据
+       {列名1:列值1, 列名2:列值2……,<font color="red">level</font>:level值,<font color="red">parent</font>:parent值,<font color="red">isLeaf</font>:isLeaf值,<font color="red">expanded</font>:expanded值},
+       {列名1:列值1, 列名2:列值2……,level:level值,parent:parent值,isLeaf:isLeaf值,expanded:expanded值}
+        ……]
+    }
+
+<font color='#027DD1'>3).grid初始化：</font>
+<strong>js部分:</strong>
+
+     var treeGridObj = new biz.grid({
+          id:"#treeGrid_rowed",/*html部分table id*/
+          <font color="red">/*初始化没有data设置，空数据*/</font>
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:"id",index:"id", width:1,hidden:true,key:true, editable:true},
+             {name:"name",index:"name", width:150, editable:true},
+             {name:"num",index:"acc_num", width:80, align:"center",editable:true},
+             {name:"debit",index:"debit", width:80, align:"right",editable:true},
+             {name:"credit",index:"credit", width:80,align:"right",editable:true},
+             {name:"balance",index:"balance", width:80,align:"right",editable:true}
+         ],
+         <font color="red">treeGrid: true,</font>/*设置为treeGrid*/
+         <font color="red">treeGridModel: "adjacency",</font>/*设置treeGrid模型为层级性*/
+         <font color="red">sortname:"name",</font>/*排序字段*/
+         <font color="red">ExpandColumn : 'name',</font>/*展开列名称*/
+         navtype:"top" /*导航栏类型*/,
+         pager: "#treeGrid_prowed" /*分页栏id*/
+      });
+
+<font color='#027DD1'>4).填充数据：</font>
+<strong>js部分:</strong>
+    /*添加treegrid节点，此addChildNode只能单个节点添加*/
+    for(var i=0;i< treeData.length ;i++){
+          parentid = treeData[i].level==0?"":treeData[i].level;
+          treeGridObj.<font color="red">addChildNode</font>(treeData[i].id,parentid,treeData[i]);
+    }
+</pre>
+    </div>
+
+    <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">树形grid相关属性</div>
+	</div>
+	<div class="content">
+
+	<iframe src="./grid/advanced/treeGrid_Prop.html" width="100%" scrolling="no" frameborder="0" height="400px;"></iframe>
+同时还提供如下api：（后面使用record参数实际 gridobj.getRowData(rowid)
+	<iframe src="./grid/advanced/treeGrid_Prop1.html" width="100%" scrolling="no" frameborder="0" height="1020px;"></iframe>
+			
+</div>	
+
+<script type="text/javascript">
+      var treeData = [
+                {id:"1",name:"Cash",num:"100",debit:"400.00",credit:"250.00",balance:"150.00",
+                  level:0,parent:"",isLeaf:"true",expanded:"false"},
+                {id:"2",name:"Cash 1",num:"1",debit:"300.00",credit:"200.00",balance:"100.00",
+                  level:1,parent:"1",rgt:"5",isLeaf:"false",expanded:"false"},
+                {id:"3",name:"Sub Cash 1",num:"1",debit:"300.00",credit:"200.00",balance:"100.00",
+                  level:2,parent:"2",isLeaf:"true",expanded:"false"},
+                {id:"4",name:"Cash 2",num:"2",debit:"100.00",credit:"50.00",balance:"50.00",
+                  level:1,parent:"1",isLeaf:"true",expanded:"false"},
+                {id:"5",name:"Bank's",num:"200",debit:"1500.00",credit:"1000.00",balance:"500.00",
+                  level:0,parent:"",isLeaf:"false",expanded:"false"},
+                {id:"6",name:"Bank 1",num:"1",debit:"500.00",credit:"0.00",balance:"500.00",
+                  level:5,parent:"5",isLeaf:"false",expanded:"false"},
+                {id:"7",name:"Bank 2",num:"2",debit:"1000.00",credit:"0.00",balance:"0.00",
+                  level:6,parent:"6",isLeaf:"true",expanded:"false"},
+                {id:"8",name:"Fixed asset",num:"300",debit:"0.00",credit:"1000.00",balance:"-1000.00",
+                  level:0,parent:"",isLeaf:"true",expanded:"false"}
+      ];
+      var treeGridObj = new biz.grid({
+          id:"#treeGrid_rowed",/*html部分table id*/
+          //data:treeData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:"id",index:"id", width:1,hidden:true,key:true, editable:true},
+             {name:"name",index:"name", width:150, editable:true},
+             {name:"num",index:"acc_num", width:80, align:"center",editable:true},
+             {name:"debit",index:"debit", width:80, align:"right",editable:true},
+             {name:"credit",index:"credit", width:80,align:"right",editable:true},
+             {name:"balance",index:"balance", width:80,align:"right",editable:true}
+         ],
+         treeGrid: true,
+         treeGridModel: "adjacency",
+         sortname:"name",
+         ExpandColumn : 'name',
+         navtype:"top" /*导航栏类型*/,
+         pager: '#treeGrid_prowed' /*分页栏id*/
+      });
+
+    for(var i=0;i<treeData.length ;i++){
+          parentid = treeData[i].level==0?"":treeData[i].level;
+          treeGridObj.jqGrid("addChildNode", treeData[i].id,parentid,treeData[i]);
+    }
+
+</script>

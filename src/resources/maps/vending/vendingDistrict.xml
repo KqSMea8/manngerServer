@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingDistrict">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingDistrict" id="vendingDistrictResultMap">
+		<id property="logid" column="logid" />
+		<result property="districtId" column="districtId" />
+		<result property="name" column="name" />
+		<result property="code" column="code" />
+		<result property="manager" column="manager" />
+		<result property="mobile" column="mobile" />
+		<result property="description" column="description" />
+		<result property="createTime" column="createTime" />
+		<result property="corpId" column="corpId" />
+	</resultMap>
+	
+	<select id="findByDistrictId" parameterType="String" resultMap="vendingDistrictResultMap">
+		select * from as_vending_district where districtId=#{districtId}
+	</select>
+	
+</mapper> 

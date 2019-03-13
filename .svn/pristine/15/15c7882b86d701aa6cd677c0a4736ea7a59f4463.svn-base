@@ -1,0 +1,299 @@
+[文件路径: tree/checkbox_fun.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("ts_checkbox_fun");
+</script>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo_checkbox_fun" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、beforeCheck / onCheck 事件回调函数控制</h2>
+				<ul class="list">
+				<li>利用 beforeCheck / onCheck 事件回调函数 可以控制是否允许 更改 节点勾选状态，这里简单演示如何监控此事件</li>
+				<li><p>这里还演示了 checkNode / checkAllNodes 方法触发 beforeCheck / onCheck 事件回调函数的情况，试试看：<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="autoCallbackTrigger" /> setting.check.autoCheckTrigger: <span id="autoCheckTriggerValue">false</span><br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="callbackTrigger" checked /> 执行勾选方法是否触发 callback <br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;单节点--[ <a id="checkTrue" href="#" title="不想勾选我就不勾选你..." onclick="return false;">勾选</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="checkFalse" href="#" title="不想取消勾选我就不取消你..." onclick="return false;">取消勾选</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="toggle" href="#" title="你想怎样？..." onclick="return false;">勾选 切换</a> ]<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;单节点 ( 影响父子 )--[ <a id="checkTruePS" href="#" title="不想勾选我就不勾选你..." onclick="return false;">勾选</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="checkFalsePS" href="#" title="不想取消勾选我就不取消你..." onclick="return false;">取消勾选</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="togglePS" href="#" title="你想怎样？..." onclick="return false;">勾选 切换</a> ]<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;全部节点--[ <a id="checkAllTrue" href="#" title="不管你有多NB，统统都要听我的！！" onclick="return false;">勾选</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="checkAllFalse" href="#" title="不管你有多NB，统统都要听我的！！" onclick="return false;">取消勾选</a> ]</p>
+				</li>
+				<li><p><span class="highlight_red">使用 tree.checkNode / checkAllNodes 方法</span><br/>
+					beforeCheck / onCheck log:<br/>
+					<ul id="log_checkbox_fun" class="log" style="height:130px;"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、setting 配置信息说明</h2>
+				<ul class="list">
+				<li>同 "checkbox 勾选操作" 中的说明</li>
+				</ul>
+			</li>
+			<li class="title"><h2>3、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li>同 "checkbox 勾选操作" 中的说明</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+			
+			<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none" name="ts_checkbox_fun">
+    <pre class="brush: js;">
+html部分:
+
+&lt;ul id="treeDemo_checkbox_fun" class="ztree"&gt;&lt;/ul&gt;
+
+js部分:
+
+var zNodes =[
+	{ id:1, pId:0, name:"随意勾选 1", open:true},
+	{ id:11, pId:1, name:"随意勾选 1-1"},
+	{ id:12, pId:1, name:"随意勾选 1-2", open:true},
+	{ id:121, pId:12, name:"随意勾选 1-2-1"},
+	{ id:122, pId:12, name:"随意勾选 1-2-2"},
+	{ id:2, pId:0, name:"禁止勾选 2", open:true, doCheck:false},
+	{ id:21, pId:2, name:"禁止勾选 2-1", doCheck:false},
+	{ id:22, pId:2, name:"禁止勾选 2-2", checked:true, open:true, doCheck:false},
+	{ id:221, pId:22, name:"禁止勾选 2-2-1", doCheck:false},
+	{ id:222, pId:22, name:"禁止勾选 2-2-2", checked:true, doCheck:false},
+	{ id:23, pId:2, name:"禁止勾选 2-3", doCheck:false}
+];
+
+var code, log_checkbox_fun, className = "dark";
+function beforeCheck(treeId, treeNode) {
+	className = (className === "dark" ? "":"dark");
+	showLog("[ "+getTime()+" beforeCheck ]&nbsp;&nbsp;&nbsp;&nbsp;" + treeNode.name );
+	return (treeNode.doCheck !== false);
+}
+function onCheck(e, treeId, treeNode) {
+	showLog("[ "+getTime()+" onCheck ]&nbsp;&nbsp;&nbsp;&nbsp;" + treeNode.name );
+}		
+function showLog(str) {
+	if (!log_checkbox_fun) log_checkbox_fun = $("#log_checkbox_fun");
+	log_checkbox_fun.append("&lt;li class='"+className+"'&gt;"+str+"&lt;/li&gt;");
+	if(log_checkbox_fun.children("li").length > 6) {
+		log_checkbox_fun.get(0).removeChild(log_checkbox_fun.children("li")[0]);
+	}
+}
+function getTime() {
+	var now= new Date(),
+	h=now.getHours(),
+	m=now.getMinutes(),
+	s=now.getSeconds(),
+	ms=now.getMilliseconds();
+	return (h+":"+m+":"+s+ " " +ms);
+}
+
+function checkNode(e) {
+	
+	type = e.data.type,
+	nodes = treeDemo.getSelectedNodes();
+	if (type.indexOf("All")<0 && nodes.length == 0) {
+		alert("请先选择一个节点");
+	}
+
+	if (type == "checkAllTrue") {
+		treeDemo.checkAllNodes(true);
+	} else if (type == "checkAllFalse") {
+		treeDemo.checkAllNodes(false);
+	} else {
+		var callbackFlag = $("#callbackTrigger").attr("checked");
+		for (var i=0, l=nodes.length; i&lt;l; i++) {
+			if (type == "checkTrue") {
+				treeDemo.checkNode(nodes[i], true, false, callbackFlag);
+			} else if (type == "checkFalse") {
+				treeDemo.checkNode(nodes[i], false, false, callbackFlag);
+			} else if (type == "toggle") {
+				treeDemo.checkNode(nodes[i], null, false, callbackFlag);
+			}else if (type == "checkTruePS") {
+				treeDemo.checkNode(nodes[i], true, true, callbackFlag);
+			} else if (type == "checkFalsePS") {
+				treeDemo.checkNode(nodes[i], false, true, callbackFlag);
+			} else if (type == "togglePS") {
+				treeDemo.checkNode(nodes[i], null, true, callbackFlag);
+			}
+		}
+	}
+}
+
+function setAutoTrigger(e) {
+  /*设置自动关联勾选时是否触发 beforeCheck / onCheck 事件回调函数。[setting.check.enable = true 且 setting.check.chkStyle = "checkbox" 时生效]
+    1、如果设置 setting.check.chkboxType = { "Y": "", "N": "" }，将不会有任何自动关联勾选的操作。
+    2、如果开启触发，对于节点较多的树将会影响性能，因为所有被联动勾选的操作都会触发事件回调函数，请根据需要决定是否使用此功能
+    默认值: false
+    */
+   
+	treeDemo.setting.check.autoCheckTrigger = $("#autoCallbackTrigger").attr("checked");
+	$("#autoCheckTriggerValue").html(treeDemo.setting.check.autoCheckTrigger ? "true" : "false");
+}
+var setting_checkbox_fun = {
+    id:"#treeDemo_checkbox_fun",
+     nodes:zNodes,  //数据节点指定
+	view: {
+		selectedMulti: false
+	},
+	check: {
+		enable: true
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeCheck: beforeCheck,
+		onCheck: onCheck
+	}
+};
+var treeDemo;
+$(document).ready(function(){
+	treeDemo =  new biz.tree(setting_checkbox_fun);//创建树
+	$("#checkTrue").bind("click", {type:"checkTrue"}, checkNode);
+	$("#checkFalse").bind("click", {type:"checkFalse"}, checkNode);
+	$("#toggle").bind("click", {type:"toggle"}, checkNode);
+	$("#checkTruePS").bind("click", {type:"checkTruePS"}, checkNode);
+	$("#checkFalsePS").bind("click", {type:"checkFalsePS"}, checkNode);
+	$("#togglePS").bind("click", {type:"togglePS"}, checkNode);
+	$("#checkAllTrue").bind("click", {type:"checkAllTrue"}, checkNode);
+	$("#checkAllFalse").bind("click", {type:"checkAllFalse"}, checkNode);
+
+	$("#autoCallbackTrigger").bind("change", {}, setAutoTrigger);
+});
+           </pre>
+
+       </div>
+</div>
+
+       <!--源代码部分end-->
+
+<script type="text/javascript">
+var zNodes =[
+	{ id:1, pId:0, name:"随意勾选 1", open:true},
+	{ id:11, pId:1, name:"随意勾选 1-1"},
+	{ id:12, pId:1, name:"随意勾选 1-2", open:true},
+	{ id:121, pId:12, name:"随意勾选 1-2-1"},
+	{ id:122, pId:12, name:"随意勾选 1-2-2"},
+	{ id:2, pId:0, name:"禁止勾选 2", open:true, doCheck:false},
+	{ id:21, pId:2, name:"禁止勾选 2-1", doCheck:false},
+	{ id:22, pId:2, name:"禁止勾选 2-2", checked:true, open:true, doCheck:false},
+	{ id:221, pId:22, name:"禁止勾选 2-2-1", doCheck:false},
+	{ id:222, pId:22, name:"禁止勾选 2-2-2", checked:true, doCheck:false},
+	{ id:23, pId:2, name:"禁止勾选 2-3", doCheck:false}
+];
+
+var code, log_checkbox_fun, className = "dark";
+function beforeCheck(treeId, treeNode) {
+	className = (className === "dark" ? "":"dark");
+	showLog("[ "+getTime()+" beforeCheck ]&nbsp;&nbsp;&nbsp;&nbsp;" + treeNode.name );
+	return (treeNode.doCheck !== false);
+}
+function onCheck(e, treeId, treeNode) {
+	showLog("[ "+getTime()+" onCheck ]&nbsp;&nbsp;&nbsp;&nbsp;" + treeNode.name );
+}		
+function showLog(str) {
+	if (!log_checkbox_fun) log_checkbox_fun = $("#log_checkbox_fun");
+	log_checkbox_fun.append("<li class='"+className+"'>"+str+"</li>");
+	if(log_checkbox_fun.children("li").length > 6) {
+		log_checkbox_fun.get(0).removeChild(log_checkbox_fun.children("li")[0]);
+	}
+}
+function getTime() {
+	var now= new Date(),
+	h=now.getHours(),
+	m=now.getMinutes(),
+	s=now.getSeconds(),
+	ms=now.getMilliseconds();
+	return (h+":"+m+":"+s+ " " +ms);
+}
+
+function checkNode(e) {
+	
+	type = e.data.type,
+	nodes = treeDemo.getSelectedNodes();
+	if (type.indexOf("All")<0 && nodes.length == 0) {
+		alert("请先选择一个节点");
+	}
+
+	if (type == "checkAllTrue") {
+		treeDemo.checkAllNodes(true);
+	} else if (type == "checkAllFalse") {
+		treeDemo.checkAllNodes(false);
+	} else {
+		var callbackFlag = $("#callbackTrigger").attr("checked");
+		for (var i=0, l=nodes.length; i<l; i++) {
+			if (type == "checkTrue") {
+				treeDemo.checkNode(nodes[i], true, false, callbackFlag);
+			} else if (type == "checkFalse") {
+				treeDemo.checkNode(nodes[i], false, false, callbackFlag);
+			} else if (type == "toggle") {
+				treeDemo.checkNode(nodes[i], null, false, callbackFlag);
+			}else if (type == "checkTruePS") {
+				treeDemo.checkNode(nodes[i], true, true, callbackFlag);
+			} else if (type == "checkFalsePS") {
+				treeDemo.checkNode(nodes[i], false, true, callbackFlag);
+			} else if (type == "togglePS") {
+				treeDemo.checkNode(nodes[i], null, true, callbackFlag);
+			}
+		}
+	}
+}
+
+function setAutoTrigger(e) {
+  /*设置自动关联勾选时是否触发 beforeCheck / onCheck 事件回调函数。[setting.check.enable = true 且 setting.check.chkStyle = "checkbox" 时生效]
+    1、如果设置 setting.check.chkboxType = { "Y": "", "N": "" }，将不会有任何自动关联勾选的操作。
+    2、如果开启触发，对于节点较多的树将会影响性能，因为所有被联动勾选的操作都会触发事件回调函数，请根据需要决定是否使用此功能
+    默认值: false
+    */
+   
+	treeDemo.setting.check.autoCheckTrigger = $("#autoCallbackTrigger").attr("checked");
+	$("#autoCheckTriggerValue").html(treeDemo.setting.check.autoCheckTrigger ? "true" : "false");
+}
+var setting_checkbox_fun = {
+    id:"#treeDemo_checkbox_fun",
+     nodes:zNodes,  //数据节点指定
+	view: {
+		selectedMulti: false
+	},
+	check: {
+		enable: true
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeCheck: beforeCheck,
+		onCheck: onCheck
+	}
+};
+var treeDemo;
+$(document).ready(function(){
+	treeDemo =  new biz.tree(setting_checkbox_fun);//创建树
+	$("#checkTrue").bind("click", {type:"checkTrue"}, checkNode);
+	$("#checkFalse").bind("click", {type:"checkFalse"}, checkNode);
+	$("#toggle").bind("click", {type:"toggle"}, checkNode);
+	$("#checkTruePS").bind("click", {type:"checkTruePS"}, checkNode);
+	$("#checkFalsePS").bind("click", {type:"checkFalsePS"}, checkNode);
+	$("#togglePS").bind("click", {type:"togglePS"}, checkNode);
+	$("#checkAllTrue").bind("click", {type:"checkAllTrue"}, checkNode);
+	$("#checkAllFalse").bind("click", {type:"checkAllFalse"}, checkNode);
+
+	$("#autoCallbackTrigger").bind("change", {}, setAutoTrigger);
+});
+</script>

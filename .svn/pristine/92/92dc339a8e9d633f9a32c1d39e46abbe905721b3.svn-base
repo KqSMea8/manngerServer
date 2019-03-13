@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SupplyVproduct">
+
+	<resultMap type="com.lmxf.post.entity.supply.SupplyVproduct" id="supplyVproductResultMap">
+		<id property="logid" column="logid" />
+		<result property="sVendingId" column="sVendingId" />
+		<result property="sOrderId" column="sOrderId" />
+		<result property="vOrderId" column="vOrderId" />
+		<result property="corpId" column="corpId" />
+		<result property="districtId" column="districtId" />
+		<result property="lineId" column="lineId" />
+		<result property="pointId" column="pointId" />
+		<result property="siteId" column="siteId" />
+		<result property="laneSId" column="laneSId" />
+		<result property="laneEId" column="laneEId" />
+		<result property="productId" column="productId" />
+		<result property="supplyNum" column="supplyNum" />
+		<result property="rSupplyNum" column="rSupplyNum" />
+		<result property="saleNum" column="saleNum" />
+		<result property="finshState" column="finshState" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="invalidTime" column="invalidTime" />
+		<result property="invalidState" column="invalidState" />
+		<result property="buyPrice" column="buyPrice" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="supplyVproductResultMap">
+		select * from as_supply_vproduct where 1=1
+		<if test="siteId != null and siteId != ''">
+			and siteId=#{siteId} 
+	    </if>
+		<if test="sOrderId != null and sOrderId != '' ">
+			AND sOrderId=#{sOrderId}
+		</if> 
+		<if test="vOrderId != null and vOrderId != '' ">
+			AND vOrderId=#{vOrderId}
+		</if> 
+		<if test="productId != null and productId != ''">
+			and productId=#{productId} 
+	    </if>
+	    <if test="laneSId != null and laneSId != ''">
+			and laneSId=#{laneSId} 
+	    </if>
+	    <if test="laneEId != null and laneEId != ''">
+			and laneEId=#{laneEId} 
+	    </if>
+		<if test="curState != null and curState != '' ">
+			AND curState=#{curState}
+		</if> 
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.supply.SupplyVproduct" resultMap="supplyVproductResultMap">
+		select * from as_supply_vproduct where siteId=#{siteId} and productId=#{productId} and laneSId=#{laneSId} and laneEId=#{laneEId} and finshState='1' and curState='2' and invalidState='2'
+		order by stateTime limit 0,1
+	</select>
+	
+	<select id="findSupplyInfo" parameterType="com.lmxf.post.entity.supply.SupplyVproduct" resultMap="supplyVproductResultMap">
+		select * from as_supply_vproduct where sOrderId=#{sOrderId} and siteId=#{siteId} and productId=#{productId} and laneSId=#{laneSId} and laneEId=#{laneEId} and curState='1'
+		order by stateTime desc limit 0,1
+	</select>
+	
+	<select id="findSiteInfoBySOrderId" parameterType="String" resultMap="supplyVproductResultMap">
+		select siteId, sOrderId from as_supply_vproduct where sOrderId=#{sOrderId} group by siteId
+	</select>
+	
+	<select id="findSupplyTotalBySiteId" parameterType="String" resultMap="supplyVproductResultMap">
+		select sum(rSupplyNum) as rSupplyNum, sum(rSupplyNum*buyPrice) as buyPrice from as_supply_vproduct where siteId=#{siteId}
+	</select>
+	
+	
+	<select id="findProductBySOrderId" parameterType="String" resultMap="supplyVproductResultMap">
+		select sum(rSupplyNum) as rSupplyNum, productId from as_supply_vproduct where sOrderId=#{sOrderId} group by productId
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.supply.SupplyVproduct">
+		update as_supply_vproduct set 
+		rSupplyNum=#{rSupplyNum},
+		curState=#{curState},
+		stateTime=#{stateTime},
+		invalidTime=#{invalidTime},
+		finshState=#{finshState},
+		saleNum=#{saleNum}
+		where sVendingId=#{sVendingId}
+	</update>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.supply.SupplyVproduct">
+	   insert into as_supply_vproduct(logid,sOrderId,corpId,sVendingId,districtId,lineId,pointId,siteId,laneSId,laneEId,productId,supplyNum,rSupplyNum,saleNum,curState,stateTime,finshState,invalidTime,invalidState,buyPrice,createTime) values(
+	   #{logid},#{sOrderId},#{corpId},#{sVendingId},#{districtId},#{lineId},#{pointId},#{siteId},#{laneSId},#{laneEId},#{productId},#{supplyNum},#{rSupplyNum},#{saleNum},#{curState},#{stateTime},#{finshState},#{invalidTime},#{invalidState},#{buyPrice},#{createTime})
+	</insert>
+	
+	<select id="findSupplyVproduct" parameterType="com.lmxf.post.entity.supply.SupplyVproduct" resultMap="supplyVproductResultMap">
+		select * from as_supply_vproduct where siteId=#{siteId} and productId=#{productId}  and finshState=#{finshState} and curState=#{curState} and invalidState=#{invalidState}
+		<if test="damageLaneSId != null and damageLaneSId != ''">
+			and laneSId not in 
+			<foreach item="damageLaneSId" collection="damageLaneSId" open="(" separator="," close=")">
+             #{damageLaneSId}
+            </foreach>
+	    </if>
+		order by stateTime
+	</select>
+	
+	<select id="findNoOutVproduct" parameterType="com.lmxf.post.entity.supply.SupplyVproduct" resultMap="supplyVproductResultMap">
+		select * from as_supply_vproduct where siteId=#{siteId} and productId=#{productId} and laneSId=#{laneSId} and laneEId=#{laneEId}  and finshState='1' and curState='2'
+	</select>
+	
+	<select id="findNoOutVproductAll" parameterType="com.lmxf.post.entity.supply.SupplyVproduct" resultMap="supplyVproductResultMap">
+		select * from as_supply_vproduct where siteId=#{siteId} and productId=#{productId} and laneSId=#{laneSId} and laneEId=#{laneEId}  and finshState=#{finshState} and curState=#{curState} order by createTime
+	</select>
+</mapper> 

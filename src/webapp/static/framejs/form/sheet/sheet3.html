@@ -1,0 +1,144 @@
+   [文件路径: form/sheet/sheet3.html]
+   <script type="text/javascript">
+SyntaxHighlighter.highlight("source_sheet3");
+</script>
+   <div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		双列表单详细页面，主要用于展现表单的详细内容。<font color='red'>（本示例主要说明表单整体布局，对于表单内部具体组件可能采用原始用法，规范的封装后用法请参见各组件详细说明）</font>
+	</div>
+<div class="main">
+    <div class="barTitle">
+	   <div class="content">	
+		  <a href= "javascript:;" onfocus="this.blur()" > </a> <span>双列表单详细页面</span>	
+		 </div>
+	</div>
+   <hr class="barTitleHr"/>
+    <div class="ui-table ui-widget ui-corner-all ui-border">    
+	   <table class="table forview">
+				      <tr>
+							<td class="inputLabelTd">姓名</td>
+							<td class="inputTd">王小白</td>
+
+							<td class="inputLabelTd">性别</td>
+							<td class="inputTd">男</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">曾用名</td>
+							<td class="inputTd">王阿黄</td>
+
+							<td class="inputLabelTd">婚姻状况</td>
+							<td class="inputTd">已婚</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">出生日期</td>
+							<td class="inputTd">1984-07-24</td>
+							<td class="inputLabelTd">爱好</td>
+							<td class="inputTd">足球</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">籍贯</td>
+							<td class="inputTd">江苏</td>
+							<td class="inputLabelTd">民族</td>
+							<td class="inputTd">汉族</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">学历</td>
+							<td class="inputTd">研究生</td>
+							<td class="inputLabelTd">电话</td>
+							<td class="inputTd">13800000000</td>
+						</tr>
+						<tr>
+							<td class="inputLabelTd">邮政编码</td>
+							<td class="inputTd">0010011</td>
+							<td class="inputLabelTd">其它信息</td>
+							<td class="inputTd">0010011</td>
+						</tr>
+		  </table>
+		   <table class="table foottable">
+						<tfoot class="footTd" >
+							<tr>
+							  <td class="inputTd">
+							        <button id="return_button_sheet3"></button>
+									
+								</td>
+							</tr>
+						</tfoot>
+			 </table>
+	</div>
+
+</div>
+
+<!--源代码部分start-->
+     	<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+		<div  class="code" style="display: none"    name="source_sheet3">
+           <pre class="brush: js;">
+ <!--html部分-->
+ &lt;div class="main"&gt;
+    &lt;div class="barTitle"&gt;
+	   &lt;div class="content"&gt;	
+		  &lt;a href= "javascript:;" onfocus="this.blur()" &gt; &lt;/a&gt; &lt;span&gt;双列表单详细页面&lt;/span&gt;	
+		 &lt;/div&gt;
+	&lt;/div&gt;
+   &lt;hr class="barTitleHr"/&gt;
+    &lt;div class="ui-table ui-widget ui-corner-all ui-border"&gt;    
+	   &lt;table class="<font color='red'>table forview</font>"&gt;
+		  &lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;姓名&lt;/td&gt;
+				&lt;td class="inputTd"&gt;王小白&lt;/td&gt;
+
+				&lt;td class="inputLabelTd"&gt;性别&lt;/td&gt;
+				&lt;td class="inputTd"&gt;男&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;曾用名&lt;/td&gt;
+				&lt;td class="inputTd"&gt;王阿黄&lt;/td&gt;
+
+				&lt;td class="inputLabelTd"&gt;婚姻状况&lt;/td&gt;
+				&lt;td class="inputTd"&gt;已婚&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;出生日期&lt;/td&gt;
+				&lt;td class="inputTd"&gt;1984-07-24&lt;/td&gt;
+				&lt;td class="inputLabelTd"&gt;爱好&lt;/td&gt;
+				&lt;td class="inputTd"&gt;足球&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;籍贯&lt;/td&gt;
+				&lt;td class="inputTd"&gt;江苏&lt;/td&gt;
+				&lt;td class="inputLabelTd"&gt;民族&lt;/td&gt;
+				&lt;td class="inputTd"&gt;汉族&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;学历&lt;/td&gt;
+				&lt;td class="inputTd"&gt;研究生&lt;/td&gt;
+				&lt;td class="inputLabelTd"&gt;电话&lt;/td&gt;
+				&lt;td class="inputTd"&gt;13800000000&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="inputLabelTd"&gt;邮政编码&lt;/td&gt;
+				&lt;td class="inputTd"&gt;0010011&lt;/td&gt;
+				&lt;td class="inputLabelTd"&gt;其它信息&lt;/td&gt;
+				&lt;td class="inputTd"&gt;0010011&lt;/td&gt;
+			&lt;/tr&gt;
+	  &lt;/table&gt;
+	   &lt;table class="table foottable"&gt;
+					&lt;tfoot class="footTd" &gt;
+						&lt;tr&gt;
+						  &lt;td class="inputTd"&gt;
+								&lt;button id="return_button_sheet3"&gt;&lt;/button&gt;			
+							&lt;/td&gt;
+						&lt;/tr&gt;
+					&lt;/tfoot&gt;
+		 &lt;/table&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+ 	   </div>
+ <!--源代码部分end-->
+<script type="text/javascript">
+	 new biz.button({id:"#return_button_sheet3",icons: {primary: "ui-icon-arrowthick-1-w"},label: "返 回" ,text: true }).click(function() { 
+	});
+</script>

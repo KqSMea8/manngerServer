@@ -1,0 +1,109 @@
+package com.lmxf.post.service.order;
+
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderChange;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderChangeDao;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.order.OrderFetchReq;
+import com.lmxf.post.tradepkg.order.OrderFetchResp;
+
+public class TradeOrderFetchService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeOrderFetchService.class);
+	private OrderFetchReq orderFetchReq;
+	private OrderFetchResp orderFetchResp;
+	private OrderApplyDao orderApplyDao;
+	private SequenceIdDao sequenceIdDao;
+	private OrderChangeDao orderChangeDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		OrderApply orderApply = null;
+		Map ret = null;
+		try {
+			ret = orderFetchReq.parseXml(apply_xml);
+			if (ret.get("code") == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+			} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+				log.error("orderInvalidReq.parseXml is error!");
+				return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+			}
+		} catch (Exception e) {
+			log.error("---parseXml  error-----", e);
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		}
+		orderApply = (OrderApply) ret.get("orderApply");
+		OrderApply orderApplyR = this.orderApplyDao.findOneByOrderId(orderApply);
+		if(null == orderApplyR){
+			return errorCodeDao.getErrorRespJson(GConstent.Order_No_Exsit);
+		}
+		if(!orderApplyR.getCurState().equals(GParameter.orderState_advanceFetch)){
+			return errorCodeDao.getErrorRespJson(GConstent.OrderState_No_Change);
+		}
+		//更新订单状态信息
+		orderApplyR.setCurState(GParameter.orderState_customerfetch);
+		orderApplyR.setStateTime(orderApply.getStateTime());
+		orderApplyR.setOrderType(GParameter.orderType_close);
+		this.orderApplyDao.update(orderApplyR);
+		//插入订单状态变化信息
+		OrderChange orderChange = new OrderChange();
+		orderChange.setLogid(DateUtil.getLogid());
+		orderChange.setChangeId(orderApplyR.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApplyR.getCorpId(), "order_change_id", 7));
+		orderChange.setCorpId(orderApplyR.getCorpId());
+		orderChange.setOrderId(orderApplyR.getOrderId());
+		orderChange.setOperId(orderApplyR.getLoginId());
+		orderChange.setOperName(orderApplyR.getLoginName());
+		orderChange.setSiteId(orderApplyR.getSiteId());
+		orderChange.setSiteName(orderApplyR.getSiteName());
+		orderChange.setOperAction(GParameter.orderChange_customerFetch);
+		orderChange.setOperTime(orderApply.getStateTime());
+		orderChange.setOperCont("售货机:" + orderApplyR.getSiteName() + " 订单编号:" + orderApplyR.getOrderId() + " 客户取货成功!");
+		orderChange.setCreateTime(DateUtil.getNow());
+		orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+		orderChange.setPocTimes(0);
+		orderChange.setPocResult("wait push");
+		this.orderChangeDao.insert(orderChange);
+		//插入订单状态变化信息
+		orderChange.setLogid(DateUtil.getLogid());
+		orderChange.setChangeId(orderApplyR.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApplyR.getCorpId(), "order_change_id", 7));
+		orderChange.setOperAction(GParameter.orderChange_end);
+		orderChange.setOperTime(orderApply.getStateTime());
+		orderChange.setOperCont("售货机:" + orderApplyR.getSiteName() + " 订单编号:" + orderApplyR.getOrderId() + " 已结单!");
+		orderChange.setCreateTime(DateUtil.getNow());
+		orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+		orderChange.setPocTimes(0);
+		orderChange.setPocResult("wait push");
+		this.orderChangeDao.insert(orderChange);
+		return orderFetchResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1);
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+	public void setOrderChangeDao(OrderChangeDao orderChangeDao) {
+		this.orderChangeDao = orderChangeDao;
+	}
+
+	public void setOrderFetchReq(OrderFetchReq orderFetchReq) {
+		this.orderFetchReq = orderFetchReq;
+	}
+
+	public void setOrderFetchResp(OrderFetchResp orderFetchResp) {
+		this.orderFetchResp = orderFetchResp;
+	}
+
+}

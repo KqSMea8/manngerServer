@@ -1,0 +1,292 @@
+[文件路径: grid/common/setmethods.html]
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示设置grid相关信息api功能，包括：标题、列标题、高度、宽度、grid参数等。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block">
+		   <div class="equal">
+				<div class="row">
+					<div class="cell">
+							 <div class="labelcell">设置标题：</div>
+							 <div class="valuecell">
+                                 <select  id="setmethods_setCaption" class="select">
+                                     <option value="标题1">标题1</option>
+                                     <option value="标题2">标题2</option>
+                                 </select>
+                             </div>
+					</div>
+					<div class="cell">
+							<div class="labelcell">设置单元格值：</div>
+							 <div class="valuecell">
+                                 <select  id="setmethods_setCell" class="select">
+                                     <option value="ids">标识</option>
+                                     <option value="invdate">有效期</option>
+                                     <option value="name">名称</option>
+                                     <option value="amount">收入</option>
+                                     <option value="tax">缴税</option>
+                                     <option value="total">总量</option>
+                                     <option value="note">备注</option>
+                                 </select>
+							</div>
+					</div>
+					<div class="cell">
+							<div class="labelcell">设置高度：</div>
+							 <div class="valuecell">
+                                 <select  id="setmethods_setGridHeight" class="select">
+                                     <option value="auto">auto</option>
+                                     <option value="400">400px</option>
+                                     <option value="30%">30%</option>
+                                 </select>
+							</div>
+					</div>
+				</div>
+                <div class="row">
+					<div class="cell">
+							 <div class="labelcell">设置宽度：</div>
+                             <select  id="setmethods_setGridWidth" class="select">
+                                     <option value="auto">auto</option>
+                                     <option value="400">700px</option>
+                                     <option value="50%">50%</option>
+                             </select>
+					</div>
+
+					<div class="cell">
+							<div class="labelcell">设置列标题：</div>
+							 <div class="valuecell">
+                                 <select  id="setmethods_setLabel" class="select">
+                                     <option value="ids">标识</option>
+                                     <option value="invdate">有效期</option>
+                                     <option value="name">名称</option>
+                                     <option value="amount">收入</option>
+                                     <option value="tax">缴税</option>
+                                     <option value="total">总量</option>
+                                     <option value="note">备注</option>
+                                 </select>
+							</div>
+					</div>
+                    <div class="cell">
+							 <div class="labelcell">设置参数：</div>
+							 <div class="valuecell">
+                                 <select  id="setmethods_setGridParam" class="select">
+                                     <option value="sortname">排序字段</option>
+                                     <option value="sortorder">排序方式</option>
+                                     <option value="rowNum">当前页数据</option>
+                                 </select>
+                             </div>
+					</div>
+				</div>
+			</div>
+		  </div>
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="setmethods_rowed"></table>
+                       <div id="setmethods_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none">
+<pre>
+<font color='#027DD1'>1.初始化grid：</font>
+<strong>js部分:</strong>
+ var setmethodsObj = new biz.grid({
+          id:"#setmethods_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:200, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:200,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:200, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         sortname:"name",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#setmethods_prowed' /*分页栏id*/
+      });
+
+<font color='#027DD1'>2.获取数据操作：</font>
+<strong>html部分:</strong>
+ <xmp class="xmp">
+    <div class="row">
+        <div class="cell">
+                 <div class="labelcell">设置标题：</div>
+                 <div class="valuecell">
+                     <select  id="setmethods_setCaption" class="select">
+                         <option value="标题1">标题1</option>
+                         <option value="标题2">标题2</option>
+                     </select>
+                 </div>
+        </div>
+        <div class="cell">
+                <div class="labelcell">设置单元格值：</div>
+                 <div class="valuecell">
+                     <select  id="setmethods_setCell" class="select">
+                         <option value="ids">标识</option>
+                         <option value="invdate">有效期</option>
+                         <option value="name">名称</option>
+                         <option value="amount">收入</option>
+                         <option value="tax">缴税</option>
+                         <option value="total">总量</option>
+                         <option value="note">备注</option>
+                     </select>
+                </div>
+        </div>
+        <div class="cell">
+                <div class="labelcell">设置高度：</div>
+                 <div class="valuecell">
+                     <select  id="setmethods_setGridHeight" class="select">
+                         <option value="auto">auto</option>
+                         <option value="400">400px</option>
+                         <option value="30%">30%</option>
+                     </select>
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+                 <div class="labelcell">设置宽度：</div>
+                 <select  id="setmethods_setGridWidth" class="select">
+                         <option value="auto">auto</option>
+                         <option value="400">700px</option>
+                         <option value="50%">50%</option>
+                 </select>
+        </div>
+
+        <div class="cell">
+                <div class="labelcell">设置列标题：</div>
+                 <div class="valuecell">
+                     <select  id="setmethods_setLabel" class="select">
+                         <option value="ids">标识</option>
+                         <option value="invdate">有效期</option>
+                         <option value="name">名称</option>
+                         <option value="amount">收入</option>
+                         <option value="tax">缴税</option>
+                         <option value="total">总量</option>
+                         <option value="note">备注</option>
+                     </select>
+                </div>
+        </div>
+        <div class="cell">
+                 <div class="labelcell">设置参数：</div>
+                 <div class="valuecell">
+                     <select  id="setmethods_setGridParam" class="select">
+                         <option value="sortname">排序字段</option>
+                         <option value="sortorder">排序方式</option>
+                         <option value="rowNum">当前页数据</option>
+                     </select>
+                 </div>
+        </div>
+    </div>
+ </xmp>
+<strong>js部分:</strong>
+     $( "#setmethods_setCaption" ).change(function() {
+           <font color="red">setmethodsObj.setCaption($( "#setmethods_setCaption" ).val());</font>/*设置grid标题*/
+	});
+    $( "#setmethods_setCell" ).change(function() {
+          <font color="red">setmethodsObj.setCell(1,$( "#setmethods_setCell" ).val(),"新单元格值","dirty-cell");</font>/*设置单元格值、样式*/
+	});
+    $( "#setmethods_setGridHeight" ).change(function() {
+          <font color="red">setmethodsObj.setGridHeight($( "#setmethods_setGridHeight" ).val()); </font>/*设置高度*/
+	});
+    $( "#setmethods_setGridWidth" ).change(function() {
+          <font color="red">setmethodsObj.setGridWidth($( "#setmethods_setGridWidth" ).val()); </font>/*设置宽度*/
+	});
+    $( "#setmethods_setLabel" ).change(function() {
+           <font color="red">setmethodsObj.setLabel($( "#setmethods_setLabel" ).val(),"新标题");</font>/*设置列标题*/
+	});
+    $( "#setmethods_setGridParam" ).change(function() {
+           var name = $("#setmethods_setGridParam" ).val(),
+               value = (name=="sortname") ? "invdate": (name=="sortorder") ? "desc":2,
+               paramObj = {};paramObj[name] = value;
+           /*设置grid参数，部分参数不能通过此方法设置，
+            *部分参数设置后必须触发reloadGrid事件才能生效，详细参加属性说明文档
+            */
+           <font color="red">setmethodsObj.setGridParam(paramObj).trigger("reloadGrid");</font>
+	});
+</pre>
+    </div>
+
+<script type="text/javascript">
+
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",amount:"30000.00",tax:"1000.00",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"12",invdate:"2007-09-01",name:"于海",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"}
+      ];
+
+      var setmethodsObj = new biz.grid({
+          id:"#setmethods_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:200, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:200,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:200, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         sortname:"name",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#setmethods_prowed' /*分页栏id*/
+      });
+
+    $( "#setmethods_setCaption" ).change(function() {
+           setmethodsObj.setCaption($( "#setmethods_setCaption" ).val());
+	});
+    $( "#setmethods_setCell" ).change(function() {
+           setmethodsObj.setCell(1,$( "#setmethods_setCell" ).val(),"新单元格值","dirty-cell");
+	});
+    $( "#setmethods_setGridHeight" ).change(function() {
+           setmethodsObj.setGridHeight($( "#setmethods_setGridHeight" ).val());
+	});
+    $( "#setmethods_setGridWidth" ).change(function() {
+           setmethodsObj.setGridWidth($( "#setmethods_setGridWidth" ).val());
+	});
+    $( "#setmethods_setLabel" ).change(function() {
+           setmethodsObj.setLabel($( "#setmethods_setLabel" ).val(),"新标题");
+	});
+    $( "#setmethods_setGridParam" ).change(function() {
+           var name = $("#setmethods_setGridParam" ).val(),
+               value = (name=="sortname") ? "invdate": (name=="sortorder") ? "desc":2,
+               paramObj = {};paramObj[name] = value;
+           setmethodsObj.setGridParam(paramObj).trigger("reloadGrid");
+	});
+
+</script>

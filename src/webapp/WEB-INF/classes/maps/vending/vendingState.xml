@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingState">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingState" id="vendingStateResultMap">
+		<id property="logid" column="logid" />
+		<result property="siteId" column="siteId" />
+		<result property="siteName" column="siteName" />
+		<result property="seqId" column="seqId" />
+		<result property="vFirmware" column="vFirmware" />
+		<result property="vVCS" column="vVCS" />
+		<result property="ipAddress" column="ipAddress" />
+		<result property="signalValue" column="signalValue" />
+		<result property="iccid" column="iccid" />
+		<result property="contime" column="contime" />
+		<result property="loseContime" column="loseContime" />
+		<result property="resoution" column="resoution" />
+		<result property="screenType" column="screenType" />
+		<result property="vAndroid" column="vAndroid" />
+		<result property="vBaseband" column="vBaseband" />
+		<result property="reportTime" column="reportTime" />
+		<result property="netSate" column="netSate" />
+		<result property="corpId" column="corpId" />
+	</resultMap>
+	
+	<select id="findBySiteId" parameterType="String" resultMap="vendingStateResultMap">
+		select * from as_vending_state where siteId=#{siteId}
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.vending.VendingState">
+		update as_vending_state set seqId=#{seqId},vFirmware=#{vFirmware},vVCS=#{vVCS},signalValue=#{signalValue},iccid=#{iccid},resoution=#{resoution},screenType=#{screenType},vAndroid=#{vAndroid},vBaseband=#{vBaseband}
+		where siteId=#{siteId}
+	</update>
+	
+	<insert id="insert" parameterType="com.lmxf.post.entity.vending.VendingState">
+	   insert into as_vending_state(logid,siteId,siteName,seqId,vFirmware,vVCS,ipAddress,signalValue,iccid,contime,loseContime,resoution,screenType,vAndroid,vBaseband,reportTime,netSate,corpId) values(
+	   #{logid},#{siteId},#{siteName},#{seqId},#{vFirmware},#{vVCS},#{ipAddress},#{signalValue},#{iccid},#{contime},#{loseContime},#{resoution},#{screenType},#{vAndroid},#{vBaseband},#{reportTime},#{netSate},#{corpId})
+	</insert>
+	
+	<insert id="insertvendingState" parameterType="com.lmxf.post.entity.vending.VendingState">
+	   insert into as_vending_state(logid,siteName,ipAddress,contime,loseContime,reportTime,netSate,corpId) values(
+	   #{logid},#{siteName},#{ipAddress},#{contime},#{loseContime},#{reportTime},#{netSate},#{corpId})
+	</insert>
+</mapper>

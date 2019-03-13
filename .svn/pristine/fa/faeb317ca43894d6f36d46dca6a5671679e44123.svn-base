@@ -1,0 +1,13 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Object</span><span class="path">setting.</span>treeObj</h2>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>tree 容器的 jQuery 对象，主要功能：便于操作。</p>
+			<p class="highlight_red">请勿进行初始化 或 修改，属于内部参数。</p>
+		</div>
+	</div>
+
+</div>
+</div>

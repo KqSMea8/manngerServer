@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ErrorCode">
+
+	<resultMap type="com.lmxf.post.entity.config.ErrorCode" id="errorCodeResultMap">
+		<id property="logid" column="logid" />
+		<result property="errorId" column="errorId" />
+		<result property="platCode" column="platCode" />
+		<result property="retCode" column="retCode" />
+		<result property="retDesc" column="retDesc" />
+		<result property="errLevel" column="errLevel" />
+	</resultMap>
+ 
+	
+	<select id="findOne" parameterType="String" resultMap="errorCodeResultMap">
+		select * from sys_error_code where  retCode= #{retCode} 
+	</select>
+	<select id="findError" parameterType="String" resultMap="errorCodeResultMap">
+		select * from sys_error_code where  retCode= #{retCode} 
+	</select>
+	<select id="checkOne" parameterType="com.lmxf.post.entity.config.ErrorCode" resultMap="errorCodeResultMap">
+		select * from sys_error_code where platCode=#{platCode} and retCode= #{retCode} 
+	</select>
+	
+	<select id="findAll" resultMap="errorCodeResultMap">
+		select retCode,retDesc from sys_error_code
+	</select>
+	
+	</mapper> 
+

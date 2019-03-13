@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+	default-lazy-init="true">
+	
+	<bean id="errorCodeDao" class="com.lmxf.post.repository.config.ErrorCodeDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="tradeDefineDao" class="com.lmxf.post.repository.config.TradeDefineDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+    <bean id="sequenceIdDao" class="com.lmxf.post.repository.parameter.SequenceIdDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+    <bean id="dictDao" class="com.lmxf.post.repository.parameter.DictDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="nsParameterDao" class="com.lmxf.post.repository.parameter.NsParameterDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="corpDao" class="com.lmxf.post.repository.config.CorpDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="favourableObjectDao" class="com.lmxf.post.repository.add.FavourableObjectDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingDao" class="com.lmxf.post.repository.vending.VendingDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingStockDao" class="com.lmxf.post.repository.vending.VendingStockDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingDistrictDao" class="com.lmxf.post.repository.vending.VendingDistrictDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingLineDao" class="com.lmxf.post.repository.vending.VendingLineDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingLanepDao" class="com.lmxf.post.repository.vending.VendingLanepDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="orderApplyDao" class="com.lmxf.post.repository.order.OrderApplyDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="orderProductDao" class="com.lmxf.post.repository.order.OrderProductDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="orderBoxDao" class="com.lmxf.post.repository.order.OrderBoxDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="orderChangeDao" class="com.lmxf.post.repository.order.OrderChangeDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="supplyVproductDao" class="com.lmxf.post.repository.supply.SupplyVproductDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="supplyProductDao" class="com.lmxf.post.repository.supply.SupplyProductDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="supplyOrderDao" class="com.lmxf.post.repository.supply.SupplyOrderDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="supplyConfigDao" class="com.lmxf.post.repository.supply.SupplyConfigDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="supplyVendingDao" class="com.lmxf.post.repository.supply.SupplyVendingDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="productOnlineDao" class="com.lmxf.post.repository.product.ProductOnlineDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="productUnderDao" class="com.lmxf.post.repository.product.ProductUnderDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="productLunderDao" class="com.lmxf.post.repository.product.ProductLunderDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="productInfoDao" class="com.lmxf.post.repository.product.ProductInfoDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="productClassifyDao" class="com.lmxf.post.repository.product.ProductClassifyDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="empDao" class="com.lmxf.post.repository.emp.EmpDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="statementSupplyDao" class="com.lmxf.post.repository.statement.StatementSupplyDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="statementProductDao" class="com.lmxf.post.repository.statement.StatementProductDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingPersonDao" class="com.lmxf.post.repository.vending.VendingPersonDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingCmdDao" class="com.lmxf.post.repository.vending.VendingCmdDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingEventDao" class="com.lmxf.post.repository.vending.VendingEventDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingStateDao" class="com.lmxf.post.repository.vending.VendingStateDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingLaneDao" class="com.lmxf.post.repository.vending.VendingLaneDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="stockProductDao" class="com.lmxf.post.repository.stock.StockProductDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="stockWarehouseDao" class="com.lmxf.post.repository.stock.StockWarehouseDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="payconfigWechatDao" class="com.lmxf.post.repository.pay.PayconfigWechatDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="payconfigAlipayDao" class="com.lmxf.post.repository.pay.PayconfigAlipayDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="stockInfoDao" class="com.lmxf.post.repository.stock.StockInfoDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="userDao" class="com.lmxf.post.repository.emp.UserDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="productVUnderDao" class="com.lmxf.post.repository.product.ProductVUnderDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="supplyVOrderDao" class="com.lmxf.post.repository.supply.SupplyVOrderDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingLsdifferDao" class="com.lmxf.post.repository.vending.VendingLsdifferDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="vendingLsdhandleDao" class="com.lmxf.post.repository.vending.VendingLsdhandleDao">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
+	</bean>
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VendingLine">
+
+	<resultMap type="com.lmxf.post.entity.vending.VendingLine" id="vendingLineResultMap">
+		<id property="logid" column="logid" />
+		<result property="districtId" column="districtId" />
+		<result property="lineId" column="lineId" />
+		<result property="name" column="name" />
+		<result property="lineNum" column="lineNum" />
+		<result property="onlineNum" column="onlineNum" />
+		<result property="description" column="description" />
+		<result property="createTime" column="createTime" />
+		<result property="corpId" column="corpId" />
+	</resultMap>
+	
+	<select id="findByLineId" parameterType="String" resultMap="vendingLineResultMap">
+		select * from as_vending_line where lineId=#{lineId}
+	</select>
+	
+</mapper> 

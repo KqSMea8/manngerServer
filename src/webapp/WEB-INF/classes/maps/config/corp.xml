@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Corp">
+
+	<resultMap type="com.lmxf.post.entity.config.Corp" id="corpResultMap">
+		<id property="logid" column="logid" />
+		<result property="corpId" column="corpId" />
+		<result property="corpName" column="corpName" />
+		<result property="address" column="address" />
+		<result property="tel" column="tel" />
+		<result property="leader" column="leader" />
+		<result property="leaderMobile" column="leaderMobile" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<select id="findOne" parameterType="String" resultMap="corpResultMap">
+		select * from as_corp where corpId= #{corpId}
+	</select>
+ 
+</mapper> 
+

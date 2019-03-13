@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+	default-lazy-init="false">
+
+	<description>Spring公共配置 </description>
+	<!--
+		<context:component-scan base-package="com.lmxf.post"> <context:exclude-filter type="annotation"
+		expression="org.springframework.stereotype.Controller" /> </context:component-scan>
+	-->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+
+	<!--  <context:property-placeholder
+		ignore-unresolvable="true" location="classpath*:/application.properties" />-->
+	<bean class="com.lmxf.post.security.DecryptPropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:application.properties</value>
+			</list>
+		</property>
+		<property name="passwordEncoder">
+			<bean class="com.lmxf.post.security.crypto.DesPasswordEncoder">
+				<property name="PASSWORD_CRYPT_KEY">
+					<bean class="com.lmxf.post.core.service.ReadFile">
+						<constructor-arg value="static/plat_security_key.jpg" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="fileEncoding" value="utf-8" />
+	</bean>
+
+
+	<!-- 数据源配置, 使用DBCP数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="false">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="validationQuery" value="SELECT 1" />
+        <property name="testOnBorrow" value="true"/>
+	</bean>
+
+	<!--由spring管理mybatis的事物 , 配置事务管理器，注意这里的dataSource和SqlSessionFactoryBean的dataSource要一致，不然事务就没有作用了 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 定义拦截器，用来指定事物属性，级别，和异常处理 -->
+	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager"></property>
+		<property name="transactionAttributes">
+			<props>
+				<!--
+					PROPAGATION_SUPPORTS: 如果已经存在事务,则加入事务;如果没有事务,则以非事务的方式执行; PROPAGATION_MANDATORY: 使用当前事务, 如果没有, 则抛出异常; PROPAGATION_REQUIRED: 新建事务,如果当前有事务, 则挂起; P
+					ROPAGATION_NOT_SUPPORTED:以非事务的方式执行, 如果当前有事务, 则挂起; PROPAGATION_NEVER:以非事务的方式执行, 如果当前有事务,则抛出异常; +/-Exception</prop> + 表示异常出现时事物提交 - 表示异常出现时事务回滚
+				-->
+				<prop key="find*">PROPAGATION_SUPPORTS,readOnly</prop>
+				<prop key="get*">PROPAGATION_SUPPORTS,readOnly</prop>
+				<prop key="session*">PROPAGATION_NEVER</prop>
+				<prop key="del*"> PROPAGATION_SUPPORTS</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="trade*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 用来定义那些类需要采用事物管理 spring 事物的动态代理类 BeanNameAutoProxyCreator 根据类名自动代理，接受表达式 -->
+	<bean id="BeanProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<!-- 对类名以MybatisService结尾的类进行代理 -->
+			<value>*Service,*ictDao</value>
+		</property>
+		<!-- 对代理类进行加载拦截器(实现通知的过程) -->
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+	<!-- myBatis文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis.xml" />
+		<property name="mapperLocations" value="classpath*:maps/**/*.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="cxfClient" class="com.lmxf.post.core.utils.CxfClient">
+	</bean>
+	<bean id="SpringContextUtil" class="com.lmxf.post.core.utils.SpringContextUtil" />
+	
+	<!--国际化的工具类 -->
+	<bean id="messageSourceHelper" class="com.lmxf.post.core.utils.MessageSourceHelper">
+		<property name="messageSource" ref="messageSource"/>
+	</bean>
+	<!-- 定义国家化资源消息 -->
+	 <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/classes/i18n/message</value>
+			</list>
+		</property>
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<property name="cacheSeconds" value="-1"></property>
+	</bean> 
+	
+	<bean id="springContextHolder" class="com.lmxf.post.core.utils.SpringContextHolder">
+	</bean>
+	
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:${ehcache.configFile}" />
+	</bean>
+	
+	<bean id="cacheBusinessService" class="com.lmxf.post.service.core.CacheBusinessService">
+		<property name="dictDao" ref="dictDao" />
+		<property name="errorCodeDao" ref="errorCodeDao" />
+		<property name="productInfoDao" ref="productInfoDao" />
+		<property name="productClassifyDao" ref="productClassifyDao" />
+	</bean>
+	
+</beans>

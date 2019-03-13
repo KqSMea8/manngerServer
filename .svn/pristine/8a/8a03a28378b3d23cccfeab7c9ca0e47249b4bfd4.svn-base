@@ -1,0 +1,50 @@
+package com.lmxf.post.tradepkg.partner;
+
+import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingState;
+import com.lmxf.post.tradepkg.common.RespHead;
+
+public class VendingInfoResp extends RespHead {
+
+	public String CreateJson(Object... parm) {
+		List<Vending> typeList = (List<Vending>) parm[4];
+		try {
+			JSONObject rootObject = super.getJSONObject((String) parm[0], (String) parm[1], (Integer) parm[2], (Integer) parm[3]);
+			JSONObject JSONBody = new JSONObject();
+			JSONArray JSONBoxArray = new JSONArray();
+			JSONObject JSONbox = null;
+			for (int i = 0; i < typeList.size(); i++) {
+				JSONbox = new JSONObject();
+				VendingState vendingState = typeList.get(i).getVendingState();
+				JSONbox.put("SiteId", "" + typeList.get(i).getSiteId());
+				JSONbox.put("SiteCode", "" + typeList.get(i).getSiteCode());
+				JSONbox.put("SiteName", "" + typeList.get(i).getSiteName());
+				JSONbox.put("Latitude", "" + typeList.get(i).getLatitude());
+				JSONbox.put("Longitude", "" + typeList.get(i).getLongitude());
+				JSONbox.put("NetSate", "" + typeList.get(i).getNetSate());
+				JSONbox.put("PayType", "" + typeList.get(i).getPayType());
+				JSONbox.put("FayWay", "" + typeList.get(i).getFayWay());
+				JSONbox.put("Discount", "" + typeList.get(i).getDiscount());
+				JSONbox.put("SeqId", "" + (vendingState != null ? vendingState.getSeqId() : ""));
+				JSONbox.put("SiteCode", "" + typeList.get(i).getSiteCode());
+				JSONbox.put("CabinetType", "" + typeList.get(i).getPayType());
+				JSONBoxArray.add(JSONbox);
+			}
+			JSONBody.put("SiteInfo", JSONBoxArray);
+			JSONObject JSONObject = (JSONObject) rootObject.get(GConstent.ZxmlRoot);
+			JSONObject.put(GConstent.ZxmlBody, JSONBody);
+			return rootObject.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
+	}
+
+}

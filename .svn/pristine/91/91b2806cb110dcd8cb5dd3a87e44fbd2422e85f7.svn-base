@@ -1,0 +1,135 @@
+[文件路径: form/component/text.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("source_text");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		录入框包含普通文本框、密码框组件、多行输入文本框，各组件功能点如下：
+		<li>普通文本框：能设置最多录入字符数；</li>
+		<li>密码框：不会显示真实的输入内容；</li>
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+	<div class="content">
+		<div>各种文本框，实际效果如下：</div>
+	 </div>
+	<div class="ui-table ui-widget ui-corner-all ui-border">    
+				 <table class="table">
+					<tr>
+						<td class="inputLabelTd">普通文本框：</td>
+						<td class="inputTd">
+								<input id='t0' type="text" class="text"/>
+						</td>
+					</tr>
+					<tr>
+
+						<td class="inputLabelTd">密码框：</td>
+						<td class="inputTd">
+								<input id='t1' type="password" class="password" value="123456"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">自定义长度：</td>
+						<td class="inputTd">
+								<input id='t2' type="text" class="text" style="width:300px;"/>改变输入框宽度
+						</td>
+					</tr>
+
+					<tr>
+						<td class="inputLabelTd">多行输入文本框：</td>
+						<td class="inputTd">
+						    <textarea id="text-textarea" class="textarea" ></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td class="inputLabelTd">整数录入框：</td>
+						<td class="inputTd">
+						    <input id="text-number" class="text" ></input>只能输入2~8之间的整数
+						</td>
+					
+					</tr>
+					<tr>
+						<td class="inputLabelTd">小数录入框：</td>
+						<td class="inputTd">
+						    <input id="text-precision" class="text" ></input>只保留小数后2位（四舍五入原则）
+						</td>
+					</tr>
+			  	</table>
+				
+		
+    </div>
+	<div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none"  name="source_text">
+			<pre class="brush: js;">
+
+  <!-----------------------1.普通文本框------------------------>
+  html部分：
+  &lt;input  type="text" class="text"/&gt; &lt;!--注意加上样式class="text"--&gt;
+  
+  <!-----------------------2.密码框------------------------>
+  html部分：
+  &lt;input type="password" class="password" value="123456"/&gt;
+  &lt;!--注意加上类型type="password"和样式class="password"--&gt;
+   
+  <!-----------------------3.自定义长度------------------------>
+  html部分：
+  &lt;input type="text" class="text" style="width:300px;"/&gt; 
+  &lt;!--通过添加style可覆盖默认的宽度，默认是198px、宽度类似--&gt;
+
+  <!-----------------------4.多行输入文本框------------------------>
+  html部分：
+  &lt;textarea id="text-textarea" class="textarea"&gt;&lt;/textarea&gt; 
+  &lt;!--textarea控件通过添加class="textarea"可使用默认的宽度、高度，默认是height: 85px;width:328px;。
+  另外也可以通过 添加rows="5" cols="60" 而不使用class="textarea"来控制高度和宽度。--&gt;
+ 
+ <!-----------------------5.整数录入框------------------------>
+  html部分：
+  &lt;input id="text-number" class="text"&gt;&lt;/input&gt; 
+  
+  js部分:
+	
+	new biz.number({
+		id:"#text-number",
+		minNum:2,//指定最小值
+		maxNum:8,//指定最大值
+		fix:true//是否自动更正
+	});
+ <!-----------------------6.小数录入框------------------------>
+  html部分：
+  &lt;input id="text-precision" class="text"&gt;&lt;/input&gt; 
+  
+  js部分:
+	new biz.number({
+		id:"#text-precision",
+		precision:2,//精度，按四舍五入原则保留小数点后2位
+		fix:true//是否自动更正
+	});
+			</pre>
+ 		</div>
+   
+   	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">数字输入框属性列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/numberField.htm" width="100%" scrolling="no" frameborder="0" height="230px;"></iframe>
+	</div>
+<script>
+	new biz.number({
+		id:"#text-number",
+		minNum:2,
+		maxNum:8,
+		fix:true
+	});
+	new biz.number({
+		id:"#text-precision",
+		precision:2,
+		fix:true
+	});
+</script>

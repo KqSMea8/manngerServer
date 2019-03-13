@@ -1,0 +1,64 @@
+    [文件路径: layout/horizontal.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("layout_horizontal");
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+
+	</div>
+	<div class="content">
+		<p>横栏布局即通过横向划分布局整个页面内容，例如把整个页面划分为上、中、下三栏或者上、下两栏，每栏高度可根据栏内容自适应也可自定义。</p>
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1</div>
+	</div>
+	<div class="content">
+		<div>三栏布局：上、中、下，宽度为百分比宽度；实际效果如下：</div>
+		<div class="effect">
+			<div class="dp100" style="background-color:#999;height:5em;">上5em</div>
+			<div class="dp100" style="background-color:#888;height:10em;">中10em</div>
+			<div class="dp100" style="background-color:#777;height:5em;">下5em</div>
+		</div>
+		<div class="clear"></div>
+		<div  class=" sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div  class="code" style="display: none" name="layout_horizontal">
+			<pre class="brush: js;">
+ <!--html部分-->
+ &lt;div class=&quot;dp100&quot; style=&quot;background-color:#999;height:5em;&quot;&gt;上5em&lt;/div&gt;
+ &lt;div class=&quot;dp100&quot; style=&quot;background-color:#888;height:10em;&quot;&gt;中10em&lt;/div&gt;
+ &lt;div class=&quot;dp100&quot; style=&quot;background-color:#777;height:5em;&quot;&gt;下5em&lt;/div&gt;</pre>
+		</div>
+	</div>
+	<!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">示例2</div>
+	</div>
+	<div class="content">
+		<div>三栏布局：上、中、下，宽度为绝对宽度；实际效果如下：</div>
+		<div class="effect">
+			<div class="dl70" style="background-color:#999;height:5em;">上5em</div>
+			<div class="dl70" style="background-color:#888;height:10em;">中10em</div>
+			<div class="dl70" style="background-color:#777;height:5em;">下5em</div>
+		</div>
+		<div class="clear"></div>
+		<div   class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div  class="code" style="display: none" name="layout_horizontal">
+			<pre class="brush: js;">
+ <!--html部分-->
+ &lt;div class=&quot;dl70&quot; style=&quot;background-color:#999;height:5em;&quot;&gt;上5em&lt;/div&gt;
+ &lt;div class=&quot;dl70&quot; style=&quot;background-color:#888;height:10em;&quot;&gt;中10em&lt;/div&gt;
+ &lt;div class=&quot;dl70&quot; style=&quot;background-color:#777;height:5em;&quot;&gt;下5em&lt;/div&gt;
+ </pre>
+		</div>
+	</div>
+   <!-- 布局组件样式列表 -->
+	<div class="barTitle2">
+		<div class="content">样式列表（适用横栏、竖组栏、复杂布局）</div>
+	</div>
+	<div class="content">
+	<iframe src="./layout/layoutField.htm" width="100%" scrolling="no" frameborder="0" height="400px;"></iframe>
+	</div>
+
+

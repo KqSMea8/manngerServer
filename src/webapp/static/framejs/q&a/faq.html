@@ -1,0 +1,193 @@
+
+<div class="main" >
+      <div class="barTitle"> 
+		<div class="content">		
+           <a href= "#" > </a> <span>避免在链接中使用#号</span>		
+		</div>
+	  </div>
+ 
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<div class="content">
+		               当链接中不需要写链接地址时，很多人习惯写上href="#"。但实际上IE浏览器会把href="#"当做锚点链接，从而会导致很多意想之外的问题。
+					   <br/>最常见的就是当在页面底部点击该链接时，会跳到页面顶部。 有时候还会导致页面错位。所以当没有链接地址时，尽量使用href="javascript:;"代替。
+					   <br/>例如 <br/>
+					      <div class="code" style="margin-right:20px;">
+						    &lt;a href=&quot;javascript:;&quot;&gt;链接文字  &lt;/a&gt;
+						 </div>  
+					
+                         <br/>当链接中需要使用点击事件时，那么即不要使用href="#"也不要使用href="javascript:;"。例如下面两种都是不正确的写法：
+						 <div class="code" style="margin-right:20px;">
+					
+							 &lt;a href=&quot;javascript:;&quot; onclick=&quot;openWin()&quot;&gt;链接文字&lt;/a&gt;或者&lt;a href="#" onclick="openWin()"&gt;链接文字&lt;/a&gt;
+						 </div>  
+						  <br/>
+						正确的写法有两种。第一种是去掉href="#"： 
+						 <div class="code" style="margin-right:20px;">
+						  &lt;a onclick="openWin()"&gt;链接文字 &lt;/a&gt;
+						  </div>  
+						   <br/>
+						  这种方式的onclick中也可直接写函数体内容。
+						 例如：  
+						  <div class="code" style="margin-right:20px;">
+						  &lt;a onclick="top.Dialog.open({URL:'lesson/bug.html',Title:'bug列表'});"&gt;链接文字 &lt;/a&gt;
+						  </div>  
+						 
+						 但是唯一的一个缺点是IE6中如果没有href那么鼠标悬浮在链接时不会有hover效果。
+						  <br/>
+						   <br/>
+						 另一种方式是函数名写在href中。代码如下： 
+						  <div class="code" style="margin-right:20px;">
+						 &lt;a href="javascript:openWin()"&gt;链接文字 &lt;/a&gt;
+						   </div>  
+						 这样就既有hover效果，又会使点击事件生效。不过只能使用函数名，不能把函数体写在里面。 
+	               </div>
+			</table>
+			
+	  </div>
+
+	  <div class="barTitle"> 
+		<div class="content">		
+           <a href= "#" > </a> <span>去除链接虚线</span>		
+		</div>
+	  </div>
+	
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<div class="content">
+		               链接默认是带有虚线的，在某些时候可能会影响显示效果。例如点击右边图片效果（虚框）： 
+					    <a href= "javascript:;" ><img src="./indexDepend/search.png"> </a> 
+						<br/>
+					   要去除链接虚线有两种方式，一种是一个个去除，方法是在a标签中加入hidefocus=true 或者 onfocus="this.blur()"。例如上面的效果改进代码如下： 
+					     <div class="code" style="margin-right:20px;">
+		
+						  &lt;a href= "javascript:;" hidefocus="true" &gt;&lt;img src="search.png"&gt; &lt;/a&gt;
+					    </div>  
+						效果： <a href= "javascript:;" hidefocus=true ><img src="./indexDepend/search.png"> </a> 
+	               </div>
+			</table>
+			
+	  </div>
+
+	  <div class="barTitle"> 
+		<div class="content">		
+           <a href= "#" > </a> <span>屏蔽右键</span>		
+		</div>
+	  </div>
+ 
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<div class="content">
+		               要屏蔽右键只需写如下代码：
+                        <div class="code" style="margin-right:20px;">
+		
+						  $("body").bind("contextmenu",function(){
+						     return false;
+						  })
+					    </div>  
+	               </div>
+			</table>
+	  </div>
+
+	  <div class="barTitle"> 
+		<div class="content">		
+           <a href= "#" > </a> <span>如何修改默认皮肤标题栏中的图标</span>		
+		</div>
+	  </div>
+ 
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<div class="content" style="margin-right:20px;">
+		               因为标题中的图标统一定义在css文件中，文件路径：template5.0\WebApp\styles\skin\default目录下的theme.cs
+					   若想在每个页面用不同的小图标，可用覆盖的方式实现：在页面中定义：
+					   .barTitle .content a{
+							background:url( "{<font color=red>你的图片</font>}")   left   no-repeat; 
+						}
+                        <div class="code">
+
+					    </div>  
+	               </div>
+			</table>
+	  </div>
+
+	  <div class="barTitle"> 
+		<div class="content">		
+           <a href= "#" > </a> <span>如何更换皮肤样式</span>		
+		</div>
+	  </div>
+ 
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<div class="content" style="margin-right:20px;">
+		               我们默认提供三套皮肤：蓝色、灰白、橘色，要切换可以有以下几种方法：<br/>
+					   （1）修改web.xml中的参数：
+					   <div  class="code">
+                             <pre>
+&lt;context-param&gt;
+	&lt;param-name&gt;csstheme&lt;/param-name&gt;
+	&lt;param-value&gt;<font color=red>default</font>&lt;/param-value&gt;&lt;!--default:蓝色；gray：灰白；orange：橘色---&gt;
+&lt;/context-param&gt;
+   </pre>
+   <br/>
+   （2）使用API动态切换：
+					   <div  class="code">
+                             <pre>
+修改工程中WEB-INF\classes\下的bizframework.properties文件，加上属性设置：customTheme = true;
+在页面中调用：
+<font color=red>biz.utils.switchTheme(csstheme);</font>
+   </pre>
+ 	   </div>	
+
+	               </div>
+			</table>
+	  </div>
+
+<div class="barTitle"> 
+		<div class="content">		
+           <a href= "#" > </a> <span>如果日期控件的显示的格式包含时分秒时，则需要点击两次才能选中</span>		
+		</div>
+	  </div>
+ 
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<div class="content" style="margin-right:20px;">            
+autoPickDate属性：
+为false时 点日期的时候不自动输入,而是要通过确定才能输入
+ 为true时 即点击日期即可返回日期值
+ 为null时(推荐使用) 如果有时间置为false 否则置为true
+ 
+	               </div>
+			</table>
+	  </div>
+	  
+	  
+	  <div class="barTitle"> 
+		<div class="content">		
+           <a href= "#" > </a> <span>快速选择后,再点击textbox(或input)时不弹出控件,要移开焦点即要点一下其他控件后再点才会弹出</span>		
+		</div>
+	  </div>
+ 
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<div class="content" style="margin-right:20px;">            
+控件是使用onfocus触发的,当快速选择后,焦点还在textbox(或input),此时点控件当然不会触发onfocus事件,这是正常现象,如果你不习惯这样,你可以改为onclick触发.
+
+	               </div>
+			</table>
+	  </div>
+
+ <div class="barTitle"> 
+		<div class="content">		
+           <a href= "#" > </a> <span>360浏览器的支持</span>		
+		</div>
+	  </div>
+ 
+      <div class="ui-table ui-widget ui-corner-all ui-border">    
+			 <table class="table">
+					<div class="content" style="margin-right:20px;">            
+360浏览器当前版本默认是以IE7渲染，而IE7本身对CSS的支持不规范，使用360浏览器只有在启用高速渲染模式（使用IE8内核渲染）时，页面样式才会没有错位现象，设置详细：
+点击"工具"—>"启用高速渲染模式".
+	               </div>
+			</table>
+	  </div>
+ </div>

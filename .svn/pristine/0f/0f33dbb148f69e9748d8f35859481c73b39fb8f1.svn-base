@@ -1,0 +1,357 @@
+[文件路径: grid/show/sort.html]
+
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid排序功能，设置grid初始化排序字段、排序方式；设置指定列是否可排序、排序方式、排序类型。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin" id="querydiv" style="display:block">
+		   <div class="equal">
+				<div class="row">
+					<div class="cell">
+							 <div class="labelcell">排序字段：</div>
+							 <div class="valuecell">
+                                 <select  id="sorting_sortname" class="select">
+                                     <option value="ids">标识</option>
+                                     <option value="invdate">有效期</option>
+                                      <option value="name">名称</option>
+							     </select>
+                             </div>
+					</div>
+
+					<div class="cell">
+							<div class="labelcell">排序方式：</div>
+							 <div class="valuecell">
+								 <select  id="sorting_order" class="select">
+                                     <option value="asc">升序</option>
+                                     <option value="desc">降序</option>
+							     </select>
+							</div>
+					</div>
+					<div class="querycell">
+						 <button id="sorting_load_btn"></button>
+					</div>
+
+				</div>
+			</div>
+		  </div>
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="sorting_rowed"></table>
+                       <div id="sorting_prowed"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none"  name="gridSource_sort">
+<pre>
+<font color='#027DD1'>1.初始化排序：</font>
+<strong>js部分:</strong>
+ <font color="red">sorttype支持的排序类型详情，请参看grid属性说明文档；所有字段默认都可排序；</font>
+ var sortGridObj = new biz.grid({
+          id:"#sorting_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+               formoptions:{ rowpos:1, colpos:1},<font color="red">sorttype:"int"/*设置标识字段按int类型排序*/</font>},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+               edittype:'datepicker',<font color="red">sorttype:"date",/*设置有效期字段按date类型排序*/</font>
+               editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,
+              edittype:"select",<font color="red">sorttype:"text",  /*设置名称字段按text类型排序*/</font> editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"text",formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              <font color="red">sortable:false,/*设置备注字段不可排序*/</font>
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         <font color="red">sortname:"ids",/*初始化排序字段*/</font>
+         <font color="red">sortorder:"desc",/*初始化排序方式，升序or降序*/ </font>
+         navtype:"top" /*导航栏类型*/,
+         pager: '#sorting_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,url:" http://localhost",recreateForm:true}
+ });
+
+<font color='#027DD1'>2.动态设置排序：</font>
+<strong>html部分:</strong>
+ <xmp class="xmp">
+    <div class="cell">
+       <div class="labelcell">排序字段：</div>
+            <div class="valuecell">
+                 <select  id="sorting_sortname" class="select">
+                     <option value="ids">标识</option>
+                     <option value="invdate">有效期</option>
+                     <option value="name">名称</option>
+                 </select>
+            </div>
+       </div>
+       <div class="cell">
+            <div class="labelcell">排序方式：</div>
+             <div class="valuecell">
+                 <select  id="sorting_order" class="select">
+                     <option value="asc">升序</option>
+                     <option value="desc">降序</option>
+                 </select>
+            </div>
+       </div>
+       <div class="querycell">
+            <button id="sorting_load_btn"></button>
+       </div>
+ </xmp>
+<strong>js部分:</strong>
+     $( "#sorting_load_btn" ).button({ icons: {primary:'ui-icon-refresh'},label: "重新加载" }).click(function() {
+             <font color="red">/*根据下拉框值设置grid的sortname、sortorder属性值*/</font>
+             sortGridObj.setGridParam({"sortname":$("#sorting_sortname").val(),"sortorder":$("#sorting_order").val()});
+             <font color="red">/*重新加载grid数据*/</font>
+             sortGridObj.trigger("reloadGrid");
+	 });
+</pre>
+    </div>
+<!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">显示name利用code排序示例</div>
+	</div>
+
+    <div class="content">
+
+        <div class="ui-table ui-widget ui-corner-all ui-margin"  style="display:block">
+            &nbsp&nbsp 示例中省份列实际数据为code，通过格式化显示为省份名称，点击此列表头排序时实际按照省份code排序
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="sorting_rowed2"></table>
+                       <div id="sorting_prowed2"></div>
+
+                 </div>
+
+        </div>
+    </div>
+<!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none">
+<pre>
+<strong>js部分:</strong>
+<!-----------------------1.数据源：--------------------->
+ var sortData2 = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",code:"guangdong",province:"广东",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",code:"guanggxi",province:"广西",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",code:"beijing",province:"北京",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",code:"shanghai",province:"上海",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",code:"yunnan",province:"云南",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",code:"tianjin",province:"天津",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",code:"shanxi",province:"陕西",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",code:"zhejing",province:"浙江",total:"320.00"}
+ ];
+ <!-----------------------2.初始化：--------------------->
+ var sortGridObj2 = new biz.grid({
+          id:"#sorting_rowed2",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editvalid:true,
+          rowNum:7,
+          autoencode:true,
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editoptions:{readonly:false}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:true},
+               {<font style="color:red">name:'province'</font>,label:"省份名称",index:'province', align:"right",hidden:true}, <font style="color:red">/*此列为省份名称，隐藏*/</font>
+               {<font style="color:red">name:'code'</font>,label:"省份",index:'code',<font style="color:red">formatter:nameelem/*格式化*/,unformat:namevalue/*反格式化*/ }, /*此列实际为省份code*/</font>
+               {name:'total',label:"总量",index:'total'},
+               {name:'note',index:'note', label:"备注"}
+         ],
+         <font style="color:red">sortname:"code"</font>,/*按code排序*/
+         sortorder:"desc",
+         editway:"cell",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#sorting_prowed2' /*分页栏id*/
+  });
+ <!-----------------------2.格式化&反格式化：--------------------->
+ /*格式化函数：即实际在单元格显示的内容，把省份的实际值code放在span标签的code属性里供反格式化获取*/
+ function <font style="color:red">nameelem (cellvalue, options, rowObject)</font> {
+      var string = '&lt;span code=' + cellvalue + '&gt;' +rowObject.province +' &lt;/span&gt;';
+      return string;
+ }
+ /*反格式化函数：即获取单元格实际值*/
+ function <font style="color:red">namevalue(cellvalue, options, cell)</font> {
+      return $("span",cell).attr("code");
+ }
+</pre>
+    </div>
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">属性列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./grid/show/sortField.htm" width="100%" scrolling="no" frameborder="0" height="180px;"></iframe>
+	</div>
+						
+
+<script type="text/javascript">
+
+	 var lastid;
+     var lastiCol;
+     
+     var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+         ];
+
+
+
+      var sortGridObj = new biz.grid({
+          id:"#sorting_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},sorttype:"int",
+               formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},sorttype:"date",
+               edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+               edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+               editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"text"
+               ,formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',/*列name，必填属性且须唯一*/
+              index:'note',/*排序时使用名称*/
+              label:"备注",/*列名称，显示在表头处，为空则使用此列name值*/
+              width:100, /*列宽度单位px*/
+              sortable:false,/*列是否可排序*/
+              editable:true, /*列是否可编辑*/
+              edittype:"textarea",/*以textarea方式编辑*/
+              editoptions:{rows:"2"},/*编辑属性*/
+              formoptions:{ rowpos:3, colpos:2}/*编辑时此列数据具体位置，第三行第二列*/}
+         ],
+         sortname:"ids",
+         sortorder:"desc",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#sorting_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+            resize:false,
+            recreateForm:true
+         },
+         pAdd:{ 
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+            resize:true,/*弹出框可缩放大小*/
+            url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+            recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         	top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         	resize:true,url:" http://localhost",recreateForm:true}
+          
+         
+    });
+
+    $( "#sorting_load_btn" ).button({ icons: {primary:'ui-icon-refresh'},label: "重新加载" }).click(function() {
+    	sortGridObj.setGridParam({"sortname":$("#sorting_sortname").val(),"sortorder":$("#sorting_order").val()});
+    	sortGridObj.trigger("reloadGrid");
+	});
+    var sortData2 = [
+                    {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",code:"guangdong",province:"广东",total:"31000.00"} ,
+                    {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",code:"guanggxi",province:"广西",total:"320.00"},
+                    {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",code:"beijing",province:"北京",total:"430.00"},
+                    {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",code:"shanghai",province:"上海",total:"210.00"},
+                    {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",code:"yunnan",province:"云南",total:"320.00"},
+                    {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",code:"tianjin",province:"天津",total:"430.00"},
+                    {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",code:"shanxi",province:"陕西",total:"210.00"},
+                    {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",code:"zhejing",province:"浙江",total:"320.00"}
+      ];
+     function nameelem (cellvalue, options, rowObject) {
+          var string = '<span code=' + cellvalue + '>' +rowObject.province +' </span>';
+          return string;
+      }
+
+      function namevalue(cellvalue, options, cell) {
+          return $("span",cell).attr("code");
+      }
+     var sortGridObj2 = new biz.grid({
+          id:"#sorting_rowed2",/*html部分table id*/
+          data: sortData2,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editvalid:true,
+          rowNum:7,
+          autoencode:true,
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editoptions:{readonly:false}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:true},
+               {name:'province',label:"省份名称",index:'province', align:"right",hidden:true},
+               {name:'code',label:"省份",index:'code',formatter:nameelem,unformat:namevalue },
+               {name:'total',label:"总量",index:'total'},
+               {name:'note',index:'note', label:"备注"}
+         ],
+         sortname:"code",
+         sortorder:"desc",
+         editway:"cell",
+         navtype:"top" /*导航栏类型*/,
+         pager: '#sorting_prowed2' /*分页栏id*/
+      });
+
+</script>

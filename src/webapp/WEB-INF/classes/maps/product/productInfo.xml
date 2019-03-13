@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductInfo">
+
+	<resultMap type="com.lmxf.post.entity.product.ProductInfo" id="productInfoResultMap">
+		<id property="logid" column="logid" />
+		<result property="productId" column="productId" />
+		<result property="productCode" column="productCode" />
+		<result property="name" column="name" />
+		<result property="fullName" column="fullName" />
+		<result property="typeId" column="typeId" />
+		<result property="salePrice" column="salePrice" />
+		<result property="validTime" column="validTime" />
+		<result property="bagType" column="bagType" />
+		<result property="picJson" column="picJson" />
+		<result property="factoryName" column="factoryName" />
+		<result property="spec" column="spec" />
+		<result property="nutrition" column="nutrition" />
+		<result property="desOne" column="desOne" />
+		<result property="desTwo" column="desTwo" />
+		<result property="desThree" column="desThree" />
+		<result property="corpId" column="corpId" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+
+	<select id="findByProductId" parameterType="String" resultMap="productInfoResultMap">
+		select * from as_product_info where productId=#{productId}
+	</select>
+	
+	<select id="findDataPage" parameterType="com.lmxf.post.entity.product.ProductInfo" resultMap="productInfoResultMap">																						
+		select * from as_product_info t where 1=1
+		
+		<if test="corpId != null and corpId != '' ">
+			AND t.corpId=#{corpId}
+		</if>
+		
+	</select>
+
+	<select id="findByProductCode" parameterType="String" resultMap="productInfoResultMap">
+		select * from as_product_info where productCode=#{productCode}
+	</select>
+</mapper> 

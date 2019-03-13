@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SupplyConfig">
+
+	<resultMap type="com.lmxf.post.entity.supply.SupplyConfig" id="supplyConfigResultMap">
+		<id property="logid" column="logid" />
+		<result property="supplyId" column="supplyId" />
+		<result property="corpId" column="corpId" />
+		<result property="name" column="name" />
+		<result property="lineId" column="lineId" />
+		<result property="wmId" column="wmId" />
+		<result property="supplierId" column="supplierId" />
+		<result property="num" column="num" />
+		<result property="type" column="type" />
+		<result property="advTime" column="advTime" />
+		<result property="finshTime" column="finshTime" />
+		<result property="pendingNum" column="pendingNum" />
+		<result property="finshNum" column="finshNum" />
+		<result property="supplyPnum" column="supplyPnum" />
+		<result property="sproductNum" column="sproductNum" />
+		<result property="strategy" column="strategy" />
+		<result property="curPNum" column="curPNum" />
+		<result property="maxPNum" column="maxPNum" />
+		<result property="storyLevel" column="storyLevel" />
+		<result property="fristlevel" column="fristlevel" />
+		<result property="twolevel" column="twolevel" />
+		<result property="threelevel" column="threelevel" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<select id="findAll" resultMap="supplyConfigResultMap">
+		select * from as_supply_config where 1=1
+		<if test="supplyId != null and supplyId != ''">
+			and supplyId=#{supplyId} 
+	    </if>
+	</select>
+	
+	<select id="findOneBySupplyId" parameterType="String" resultMap="supplyConfigResultMap">
+		select * from as_supply_config where supplyId=#{supplyId}
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.supply.SupplyConfig">
+		update as_supply_config set 
+		pendingNum=#{pendingNum},
+		finshNum=#{finshNum},
+		supplyPnum=#{supplyPnum},
+		sproductNum=#{sproductNum},
+		curPNum=#{curPNum},
+		storyLevel=#{storyLevel}
+		where supplyId=#{supplyId}
+	</update>
+	
+	<select id="findSupplyConfig" resultMap="supplyConfigResultMap">
+		select * from as_supply_config where 1=1
+		<if test="supplierId != null and supplierId != ''">
+			and supplierId=#{supplierId} 
+	    </if>
+	    order by createTime
+	</select>
+</mapper> 

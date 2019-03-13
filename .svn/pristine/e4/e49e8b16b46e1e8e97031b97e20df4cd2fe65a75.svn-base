@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SupplyVOrder">
+
+	<resultMap type="com.lmxf.post.entity.supply.SupplyVOrder" id="supplyVOrderResultMap">
+		<id property="vOrderId" column="vOrderId" />
+		<result property="logid" column="logid" />
+		<result property="sOrderId" column="sOrderId" />
+		<result property="supplierId" column="supplierId" />
+		
+		<result property="corpId" column="corpId" />
+		<result property="supplyId" column="supplyId" />
+		<result property="curState" column="curState" />
+		<result property="stateTime" column="stateTime" />
+		<result property="siteId" column="siteId" />
+		<result property="lineId" column="lineId" />
+		<result property="supplyNum" column="supplyNum" />
+		<result property="createTime" column="createTime" />
+
+	</resultMap>
+	
+	<select id="findAll" resultMap="supplyVOrderResultMap">
+		select * from as_supply_vorder where 1=1
+		<if test="lineId != null and lineId != ''">
+			and lineId=#{lineId}
+	    </if>
+		<if test="curState != null and curState != '' ">
+			AND curState=#{curState}
+		</if> 
+		<if test="siteId != null and siteId != '' ">
+			AND siteId=#{siteId}
+		</if>
+		<if test="sOrderId != null and sOrderId != '' ">
+			AND sOrderId=#{sOrderId}
+		</if>  
+		<if test="supplierId != null and supplierId != '' ">
+			AND supplierId=#{supplierId}
+		</if> 
+	</select>
+	
+	<select id="findOneByVOrderId" parameterType="String" resultMap="supplyVOrderResultMap">
+		select * from as_supply_vorder where vOrderId=#{vOrderId}
+	</select>
+	
+	<update id="update" parameterType="com.lmxf.post.entity.supply.SupplyVOrder">
+		update as_supply_vorder set 
+		supplyNum=#{supplyNum},
+		curState=#{curState},
+		stateTime=#{stateTime}
+		where vOrderId=#{vOrderId}
+	</update>
+	
+</mapper> 

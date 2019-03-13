@@ -1,0 +1,288 @@
+[文件路径: grid/advanced/scrolling.html]
+
+
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 <font color="red">展示grid通过滚动条分页加载数据功能</font>，分以下三种情况：<br/>
+         1、静态数据；  <br/>
+         2、分页动态加载数据，滚动条到当前页末尾时向server请求下一页数据；  <br/>
+         3、一次加载数据，仅向server请求一次后转化为静态数据操作方式（datatype设为local）；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">静态数据</div>
+	</div>
+    
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="scrolling_rowed1"></table>
+                       <div id="scrolling_prowed1"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none">
+<pre>
+<font color='#027DD1'>1.静态数据：</font>
+<strong>js部分:</strong>
+ var groupingObj = new biz.grid({
+          id:"#scrolling_rowed1",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                 editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">rowNum:5,</font>//单页5条数据
+         <font color="red">height: 150,</font>//设置grid高度，保证出现滚动条
+         <font color="red">scroll:1,</font>/*如果本属性可用，pager元素被禁用，改用垂直滚动条来动态加载数据。当设置为true时，grid会在第一次加载的时候，
+                   把所有的数据取出到客户端，当scroll被设置为一个数字，grid将只显示可见的几行数据。*/
+         navtype:"top" /*导航栏类型*/,
+         pager: '#scrolling_prowed1' /*分页栏id*/
+      });
+</pre>
+    </div>
+
+  <!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">2、滚动条加载数据</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="scrolling_rowed2"></table>
+                       <div id="scrolling_prowed2"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none">
+<pre>
+<font color='#027DD1'>1.初始化分组grid：</font>
+<strong>js部分:</strong>
+ var groupingObj = new biz.grid({
+          id:"#scrolling_rowed2",/*html部分table id*/
+          url: "http://localhost:8080/getjson",/*数据源*/
+          datatype: "json",/*数据类型，设置为json*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                 editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">rowNum:5,</font>//单页5条数据
+         <font color="red">height: 150,</font>//设置grid高度，保证出现滚动条
+         <font color="red">scroll:1,</font>/*如果本属性可用，pager元素被禁用，改用垂直滚动条来动态加载数据。当设置为true时，grid会在第一次加载的时候，
+                   把所有的数据取出到客户端，当scroll被设置为一个数字，grid将只显示可见的几行数据。
+         navtype:"top" /*导航栏类型*/,
+         pager: '#scrolling_prowed2' /*分页栏id*/
+      });
+</pre>
+    </div>
+
+  <!-- 示例3 -->
+	<div class="barTitle2">
+		<div class="content">3、一次加载</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+
+                       <table id="scrolling_rowed3"></table>
+                       <div id="scrolling_prowed3"></div>
+
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none">
+<pre>
+<font color='#027DD1'>1.初始化分组grid：</font>
+<strong>js部分:</strong>
+ var groupingObj = new biz.grid({
+          id:"#scrolling_rowed3",/*html部分table id*/
+          url: "http://localhost:8080/getjson",/*数据源*/
+          datatype: "json",/*数据类型，设置为json*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                 editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">rowNum:5,</font>//单页5条数据
+         <font color="red">height: 150,</font>//设置grid高度，保证出现滚动条
+         <font color="red">scroll:1,</font>/*如果本属性可用，pager元素被禁用，改用垂直滚动条来动态加载数据。当设置为true时，grid会在第一次加载的时候，
+                   把所有的数据取出到客户端，当scroll被设置为一个数字，grid将只显示可见的几行数据。*/
+         <font color="red">loadonce:true,</font>//是否grid只从服务器加载一次数据。加载数据完成之后，datatype就被指定为local，并且以后所有的操作都是基于客户端的操作。
+         <font color="red">rowTotal: 2000,</font>//loadonce为true时，此参数值作为参数发送到server端，指定需下载数据总量；
+         navtype:"top" /*导航栏类型*/,
+         pager: '#scrolling_prowed3' /*分页栏id*/
+      });
+</pre>
+    </div>
+
+
+						
+
+<script type="text/javascript">
+
+	 var lastid;
+     var lastiCol;
+     
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"test",note:"note",amount:"300.00",tax:"10.00",total:"310.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"11",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"12",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"13",invdate:"2007-09-01",name:"test3",note:"note",amount:"400.00",tax:"30.00",total:"430.00"}
+      ];
+      new biz.grid({
+          id:"#scrolling_rowed1",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                 editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         rowNum:5,
+         height: 150,
+         scroll:1,
+         scrollrows:true,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#scrolling_prowed1' /*分页栏id*/
+      });
+     new biz.grid({
+          id:"#scrolling_rowed2",/*html部分table id*/
+          url: "http://localhost:8080/getjson",/*数据源*/
+          datatype: "json",/*数据类型，设置为json*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                 editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         rowNum:10,
+         height: 150,
+         scroll:1,
+         scrollrows:true,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#scrolling_prowed2' /*分页栏id*/
+      });
+      new biz.grid({
+          id:"#scrolling_rowed3",/*html部分table id*/
+          url: "http://localhost:8080/getjson",/*数据源*/
+          datatype: "json",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+             {name:'act',index:'act', label:"Actions",width:75,sortable:false,hidden:true},
+             {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},sorttype:"int",
+                 formoptions:{ rowpos:1, colpos:1}},
+             {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},sorttype:"date",
+                 edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+             {name:'name',index:'name', label:"名称",key:false,width:90,editable:false,sorttype:"text",
+                 edittype:"select",editoptions:{value:"FE:name1;IN:name2;TN:name3;AR:name4"}},
+             {name:'amount',label:"缴税总量",index:'amount', width:100, align:"right",editrules:{required:true},
+                 editable:true,formoptions:{ rowpos:2, colpos:1}},
+             {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,edittype:"select",
+                 editoptions:{value:"FE:20.00;IN:30.00;TN:40.00;AR:60.00"},formoptions:{ rowpos:2, colpos:2}},
+             {name:'total',label:"总量",index:'total', width:70,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+             {name:'note',index:'note', label:"备注", width:100, sortable:false,editable:true, edittype:"textarea",
+                 formoptions:{ rowpos:3, colpos:2}}
+         ],
+         rowNum:10,
+         height: 150,
+         scroll:1,
+         loadonce:true,
+         rowTotal: 2000,
+         scrollrows:true,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#scrolling_prowed3' /*分页栏id*/
+      });
+
+
+</script>

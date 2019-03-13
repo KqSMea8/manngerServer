@@ -1,0 +1,301 @@
+package com.lmxf.post.service.partner;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderBox;
+import com.lmxf.post.entity.order.OrderChange;
+import com.lmxf.post.entity.order.OrderProduct;
+import com.lmxf.post.entity.statement.StatementProduct;
+import com.lmxf.post.entity.statement.StatementSupply;
+import com.lmxf.post.entity.supply.SupplyConfig;
+import com.lmxf.post.entity.supply.SupplyVending;
+import com.lmxf.post.entity.supply.SupplyVproduct;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingLanep;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderBoxDao;
+import com.lmxf.post.repository.order.OrderChangeDao;
+import com.lmxf.post.repository.order.OrderProductDao;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.repository.statement.StatementProductDao;
+import com.lmxf.post.repository.statement.StatementSupplyDao;
+import com.lmxf.post.repository.supply.SupplyConfigDao;
+import com.lmxf.post.repository.supply.SupplyVendingDao;
+import com.lmxf.post.repository.supply.SupplyVproductDao;
+import com.lmxf.post.repository.vending.VendingDao;
+import com.lmxf.post.repository.vending.VendingLanepDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.partner.OrderOpenReq;
+import com.lmxf.post.tradepkg.partner.OrderOpenResp;
+
+public class TradeOrderOpenService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeOrderOpenService.class);
+
+	private OrderOpenReq orderOpenReq;
+	private OrderOpenResp orderOpenResp;
+	private OrderBoxDao orderBoxDao;
+	private OrderApplyDao orderApplyDao;
+	private SequenceIdDao sequenceIdDao;
+	private OrderChangeDao orderChangeDao;
+	private SupplyVproductDao supplyVproductDao;
+	private StatementProductDao statementProductDao;
+	private StatementSupplyDao statementSupplyDao;
+	private VendingLanepDao vendingLanepDao;
+	private OrderProductDao orderProductDao;
+	private SupplyVendingDao supplyVendingDao;
+	private SupplyConfigDao supplyConfigDao;
+	private VendingDao vendingDao;
+	
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		OrderApply orderApply = null;
+		Map ret = null;
+		try {
+			ret = orderOpenReq.parseXml(apply_xml);
+			if (ret.get("code") == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+			} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+				log.error("orderOpenReq.parseXml is error!");
+				return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+			}
+		} catch (Exception e) {
+			log.error("---parseXml  error-----", e);
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		}
+		orderApply = (OrderApply) ret.get("orderApply");
+		OrderApply orderApplyR = this.orderApplyDao.findOneByOrderId(orderApply);
+		if(null == orderApplyR){
+			return errorCodeDao.getErrorRespJson(GConstent.Order_No_Exsit);
+		}
+		if(!orderApplyR.getCurState().equals(GParameter.orderState_apply)){
+			return errorCodeDao.getErrorRespJson(GConstent.OrderState_No_Change);
+		}
+		//更新订单状态信息
+		orderApplyR.setCurState(GParameter.orderState_customerfetch);
+		orderApplyR.setStateTime(orderApply.getStateTime());
+		this.orderApplyDao.update(orderApplyR);
+		//插入订单状态变化信息
+		OrderChange orderChange = new OrderChange();
+		orderChange.setLogid(DateUtil.getLogid());
+		orderChange.setChangeId(orderApplyR.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApplyR.getCorpId(), "order_change_id", 7));
+		orderChange.setCorpId(orderApplyR.getCorpId());
+		orderChange.setOrderId(orderApplyR.getOrderId());
+		orderChange.setOperId(orderApplyR.getLoginId());
+		orderChange.setOperName(orderApplyR.getLoginName());
+		orderChange.setSiteId(orderApplyR.getSiteId());
+		orderChange.setSiteName(orderApplyR.getSiteName());
+		orderChange.setOperAction(GParameter.orderState_customerfetch);
+		orderChange.setOperTime(DateUtil.getNow());
+		orderChange.setOperCont("售货机:" + orderApplyR.getSiteName() + " 订单编号:" + orderApplyR.getOrderId() + " 客户已取货!");
+		orderChange.setCreateTime(DateUtil.getNow());
+		orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+		orderChange.setPocTimes(0);
+		orderChange.setPocResult("wait push");
+		orderChange.setProState(GParameter.OrderChangeProState_waitFinsh);
+		this.orderChangeDao.insert(orderChange);
+		//更新订单商品货道信息
+		int outTotal = 0;
+		List<OrderBox> orderBoxList = orderApply.getOrderBoxList();
+		if(orderBoxList != null && orderBoxList.size() > 0){
+			for(OrderBox orderBox : orderBoxList){
+				orderBox.setOrderId(orderApplyR.getOrderId());
+				orderBox.setOutIndex(1);
+				OrderBox orderBoxR = orderBoxDao.findOrderBox(orderBox);
+				//更新补货站点商品信息
+				String supplyId = "";
+				if(orderBox.getOutState().equals(GParameter.orderBoxOutState_normalOut) || orderBox.getOutState().equals(GParameter.orderBoxOutState_abnormalOut)){
+					SupplyVproduct supplyVproductP = new SupplyVproduct();
+					supplyVproductP.setSiteId(orderApplyR.getSiteId());
+					supplyVproductP.setProductId(orderBoxR.getProductId());
+					SupplyVproduct supplyVproduct = supplyVproductDao.findOne(supplyVproductP);
+					if(null != supplyVproduct){
+						supplyVproduct.setSaleNum((supplyVproduct.getSaleNum() - 1) > 0 ? (supplyVproduct.getSaleNum() - 1) : 0);
+						if(supplyVproduct.getSaleNum() == supplyVproduct.getrSupplyNum()){
+							supplyVproduct.setFinshState(GParameter.supplyVproductFinishState_out);
+						}
+						supplyVproductDao.update(supplyVproduct);
+					}
+					outTotal = outTotal + 1;
+					supplyId = supplyVproduct.getsOrderId();
+					//更新补货账单明细信息
+					StatementProduct statementProductP = new StatementProduct();
+					statementProductP.setProductId(orderBoxR.getProductId());
+					statementProductP.setSiteId(orderApplyR.getSiteId());
+					statementProductP.setLaneSId(orderBoxR.getLaneSId());
+					statementProductP.setLaneEId(orderBoxR.getLaneEId());
+					StatementProduct statementProduct = statementProductDao.findOneOut(statementProductP);
+					if(statementProduct != null){
+						statementProduct.setOrderId(orderApplyR.getOrderId());
+						statementProduct.setProboxId(orderBoxR.getProboxId());
+						statementProduct.setOutType(GParameter.outType_sale);
+						statementProduct.setPayType(orderApplyR.getPayType());
+						statementProduct.setTradeNo(orderApplyR.getpTradeNo());
+						statementProduct.setSalePMoney(orderBoxR.getSalePrice());
+						statementProduct.setSaleRMoney(orderBoxR.getPayPrice());
+						statementProduct.setSaleFMoney(orderBoxR.getFavPrice());
+						statementProduct.setpTradeNo(orderApplyR.getpTradeNo());
+						statementProduct.setCurState(GParameter.statementProductCurState_out);
+						statementProductDao.update(statementProduct);
+					}
+					//更新补货账单信息
+					StatementSupply statementSupplyP = new StatementSupply();
+					statementSupplyP.setSiteId(orderApplyR.getSiteId());
+					statementSupplyP.setsOrderId(orderApplyR.getOrderId());
+					StatementSupply statementSupply = statementSupplyDao.findOne(statementSupplyP);
+					if(statementSupply != null){
+						if(statementSupply.getSaleNum() == 0){
+							statementSupply.setTradeSTime(DateUtil.getNow());
+							statementSupply.setSalteState(GParameter.statementSupplySaleState_inSale);
+						}
+						statementSupply.setSaleNum(statementSupply.getSaleNum() + 1);
+						statementSupply.setSalePMoney(statementSupply.getSalePMoney() + orderBoxR.getSalePrice());
+						statementSupply.setSaleRMoney(statementSupply.getSaleRMoney() + orderBoxR.getPayPrice());
+						statementSupply.setSaleFMoney(statementSupply.getSaleFMoney() + orderBoxR.getFavPrice());
+						statementSupplyDao.update(statementSupply);
+					}
+				}
+				//更新订单商品货道信息
+				if(orderBoxR != null){
+					orderBoxR.setSupplyId(supplyId);
+					orderBoxR.setOutState(orderBox.getOutState());
+					orderBoxR.setStateTime(DateUtil.getNow());
+					orderBoxDao.update(orderBoxR);
+				}
+				//更新售货机货道商品库存
+				VendingLanep vendingLanepT = new VendingLanep();
+				vendingLanepT.setSiteId(orderBoxR.getSiteId());
+				vendingLanepT.setLaneSId(orderBoxR.getLaneSId());
+				vendingLanepT.setLaneEId(orderBoxR.getLaneEId());
+				VendingLanep vendingLanep = vendingLanepDao.findOne(vendingLanepT);
+				if(vendingLanep != null){
+					vendingLanep.setCurCap((vendingLanep.getCurCap() - 1) > 0 ? (vendingLanep.getCurCap() - 1) : 0);
+					vendingLanepDao.update(vendingLanep);
+				}
+			}
+		}
+		//更新订单商品信息
+		OrderProduct orderProductP = new OrderProduct();
+		orderProductP.setOrderId(orderApplyR.getOrderId());
+		List<OrderProduct> orderProductList = orderProductDao.findAll(orderProductP);
+		if(orderProductList != null && orderProductList.size() > 0){
+			for(OrderProduct orderProduct : orderProductList){
+				//查找商品出柜数量
+				OrderBox orderBoxP = new OrderBox();
+				orderBoxP.setOrderId(orderProduct.getOrderId());
+				orderBoxP.setProductId(orderProduct.getProductId());
+				int outNum = orderBoxDao.findOutNum(orderBoxP);
+				//更新订单商品出柜数量
+				orderProduct.setOutNum(outNum);
+				orderProductDao.update(orderProduct);
+			}
+		}
+		//更新各库存
+		//更新补货售货机库存
+		int stockLevel = 3;
+		SupplyVending supplyVendingP = new SupplyVending();
+		supplyVendingP.setSiteId(orderApplyR.getSiteId());
+		List<SupplyVending> supplyVendingList = supplyVendingDao.findAll(supplyVendingP);
+		if(supplyVendingList != null && supplyVendingList.size() > 0){
+			for(SupplyVending supplyVending : supplyVendingList){
+				supplyVending.setCurPNum((supplyVending.getCurPNum() - outTotal) > 0 ? (supplyVending.getCurPNum() - outTotal) : 0);
+				int stockLevelV = supplyVending.getCurPNum()/supplyVending.getMaxPNum()*100;
+				if(Integer.parseInt(supplyVending.getFristlevel().split("-")[0]) <= stockLevelV && stockLevelV <= Integer.parseInt(supplyVending.getFristlevel().split("-")[1])){
+					supplyVending.setStoryLevel(1);
+				}else if(Integer.parseInt(supplyVending.getTwolevel().split("-")[0]) <= stockLevelV && stockLevelV <= Integer.parseInt(supplyVending.getTwolevel().split("-")[1])){
+					supplyVending.setStoryLevel(2);
+				}else if(Integer.parseInt(supplyVending.getThreelevel().split("-")[0]) <= stockLevelV && stockLevelV <= Integer.parseInt(supplyVending.getThreelevel().split("-")[1])){
+					supplyVending.setStoryLevel(3);
+				}
+				supplyVendingDao.update(supplyVending);
+				stockLevel = supplyVending.getStoryLevel();
+				//更新补货配置库存
+				SupplyConfig supplyConfig = supplyConfigDao.findOneBySupplyId(supplyVending.getSupplyId());
+				if(supplyConfig != null){
+					supplyConfig.setCurPNum((supplyConfig.getCurPNum() - outTotal) > 0 ? (supplyConfig.getCurPNum() - outTotal) : 0);
+					int stockLevelC = supplyConfig.getCurPNum()/supplyConfig.getMaxPNum()*100;
+					if(Integer.parseInt(supplyConfig.getFristlevel().split("-")[0]) <= stockLevelC && stockLevelC <= Integer.parseInt(supplyConfig.getFristlevel().split("-")[1])){
+						supplyConfig.setStoryLevel(1);
+					}else if(Integer.parseInt(supplyConfig.getTwolevel().split("-")[0]) <= stockLevelC && stockLevelC <= Integer.parseInt(supplyConfig.getTwolevel().split("-")[1])){
+						supplyConfig.setStoryLevel(2);
+					}else if(Integer.parseInt(supplyConfig.getThreelevel().split("-")[0]) <= stockLevelC && stockLevelC <= Integer.parseInt(supplyConfig.getThreelevel().split("-")[1])){
+						supplyConfig.setStoryLevel(3);
+					}
+					supplyConfigDao.update(supplyConfig);
+				}
+			}
+		}
+		//更新站点库存
+		Vending vending = vendingDao.findBySiteId(orderApplyR.getSiteId());
+		if(vending != null){
+			vending.setpCurNum((vending.getpCurNum() - outTotal) > 0 ? (vending.getpCurNum() - outTotal) : 0);
+			vending.setStockLevel(stockLevel);
+			vendingDao.update(vending);
+		}
+		return orderOpenResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1);
+	}
+
+	public void setOrderOpenReq(OrderOpenReq orderOpenReq) {
+		this.orderOpenReq = orderOpenReq;
+	}
+
+	public void setOrderOpenResp(OrderOpenResp orderOpenResp) {
+		this.orderOpenResp = orderOpenResp;
+	}
+
+	public void setOrderBoxDao(OrderBoxDao orderBoxDao) {
+		this.orderBoxDao = orderBoxDao;
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+	public void setOrderChangeDao(OrderChangeDao orderChangeDao) {
+		this.orderChangeDao = orderChangeDao;
+	}
+
+	public void setSupplyVproductDao(SupplyVproductDao supplyVproductDao) {
+		this.supplyVproductDao = supplyVproductDao;
+	}
+
+	public void setStatementProductDao(StatementProductDao statementProductDao) {
+		this.statementProductDao = statementProductDao;
+	}
+
+	public void setStatementSupplyDao(StatementSupplyDao statementSupplyDao) {
+		this.statementSupplyDao = statementSupplyDao;
+	}
+
+	public void setVendingLanepDao(VendingLanepDao vendingLanepDao) {
+		this.vendingLanepDao = vendingLanepDao;
+	}
+
+	public void setOrderProductDao(OrderProductDao orderProductDao) {
+		this.orderProductDao = orderProductDao;
+	}
+
+	public void setSupplyVendingDao(SupplyVendingDao supplyVendingDao) {
+		this.supplyVendingDao = supplyVendingDao;
+	}
+
+	public void setSupplyConfigDao(SupplyConfigDao supplyConfigDao) {
+		this.supplyConfigDao = supplyConfigDao;
+	}
+
+	public void setVendingDao(VendingDao vendingDao) {
+		this.vendingDao = vendingDao;
+	}
+	
+}

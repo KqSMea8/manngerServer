@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdvertStrategy">
+
+	<resultMap type="com.lmxf.post.entity.increment.AdvertStrategy" id="advertStrategyResultMap">
+		<id property="logid" column="logid" />
+		<result property="strategyId" column="strategyId" />
+		<result property="advertId" column="advertId" />
+		<result property="corpId" column="corpId" />
+		<result property="seqId" column="seqId" />
+		<result property="strategyPoint" column="strategyPoint" />
+		<result property="strategyType" column="strategyType" />
+		<result property="playSTime" column="playSTime" />
+		<result property="playEtime" column="playEtime" />
+		<result property="materialNum" column="materialNum" />
+		<result property="playerTime" column="playerTime" />
+		<result property="createTime" column="createTime" />
+
+
+	</resultMap>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.increment.AdvertStrategy" resultMap="advertStrategyResultMap">
+		select * from as_advert_strategy where strategyId=#{strategyId}
+	</select>
+	<select id="findAll" parameterType="com.lmxf.post.entity.increment.AdvertStrategy" resultMap="advertStrategyResultMap">
+		select * from as_advert_strategy where advertId=#{advertId}
+	</select>
+</mapper> 

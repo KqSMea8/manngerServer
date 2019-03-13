@@ -1,0 +1,461 @@
+<script type="text/javascript">
+
+	new biz.checkbox({
+		id:"#check_ins1",
+		data:[{'label':'生育','name':'type','value':'0'},{'label':'养老','name':'type','value':'1'},{'label':'医疗','name':'type','value':'2'}]
+	});
+
+
+  new biz.select({
+		id:"#select_1",
+		data:[
+		  {'name':'','value':''},
+		  {'name':'博士后','value':'degree_6'},
+		  {'name':'博士','value':'degree_5'},
+		  {'name':'硕士','value':'degree_4'},
+		  {'name':'本科','value':'degree_3'},
+		  {'name':'专科','value':'degree_2'},
+		  {'name':'高中','value':'degree_1'},
+		  {'name':'初中','value':'degree_0'}
+		]
+
+	});
+	new biz.validate({id:"#form2",rules:{
+	    required2: {required: true,rangelength:[5,10]},
+	    number2:{number: true},
+	    digits2:{digits: true},
+	    naturalnum2:{naturalnum: true},
+	    stringEN2:{stringEN: true},
+	    alnum2:{alnum: true},	    
+	    idcardno2:{idcardno: true},
+	    postalcode2:{postalcode: true}
+	}});
+	new biz.validate({id:"#required",required: true,rangelength:[5,10]});
+	new biz.validate({id:"#number",number: true});
+	new biz.validate({id:"#digits",digits: true}) ;
+    new biz.validate({id:"#naturalnum",naturalnum: true});
+    new biz.validate({id:"#stringEN",stringEN: true});
+    new biz.validate({id:"#alnum",alnum: true});
+    new biz.validate({id:"#idcardno",idcardno: true});
+    new biz.validate({id:"#postalcode",postalcode: true});
+    new biz.validate({id:"#email",email: true});
+    new biz.validate({id:"#port",port: true});
+    new biz.validate({id:"#ip",ip: true});
+    new biz.validate({id:"#url",url: true}) ;
+    new biz.validate({id:"#hanzi",stringCH: true}) ;
+    new biz.validate({id:"#confirm_password",equalTo:"#t_password"}) ;
+    new biz.validate({id:"#check_ins1",required: true}) ;
+    new biz.validate({id:"#select_1",required: true}) ;
+
+   new biz.button({id:"#submit_button"}).click(function() {
+    return;
+   });
+
+
+SyntaxHighlighter.highlight("source_validate_1");
+SyntaxHighlighter.highlight("source_validate_2");
+SyntaxHighlighter.highlight("source_validate_3");
+</script>
+[文件路径: form/component/validate.html]
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 表单组件验证有两种添加校验方式：
+		 1、表单基本录入组件内容的验证(id属性对应input元素)，对当个录入组件添加校验规则；
+		 2、对form表单所有录入组件统一添加验证(id属性对应form元素)，此种方式提供丰富的属性设置；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">单个录入组件添加校验</div>
+	</div>
+	<div class="content">
+		<div class="ui-table ui-widget ui-corner-all ui-border">
+		   <form id="form">
+				 <table class="table">
+						<tr>
+							<td class="inputLabelTd">必填</td>
+							<td class="inputTd">
+							 <input id="required" class="text" name="name"/>
+							</td>
+
+							<td class="inputLabelTd">数字</td>
+							<td class="inputTd">
+							 <input id="number"  class ="text" name="number"/></td>
+						
+						</tr>
+						<tr>
+						    <td class="inputLabelTd">整数</td>
+							<td class="inputTd"><input id="digits" class ="text" name="digits" /></td>
+							<td class="inputLabelTd">自然数</td>
+							<td class="inputTd"><input id="naturalnum" class ="text" name="naturalnum" /></td>
+							
+						</tr>
+						<tr>
+						    <td class="inputLabelTd">字母</td>
+							<td class="inputTd"><input id="stringEN" class ="text"  name="stringEN" /></td>
+							<td class="inputLabelTd">字母数字</td>
+							<td class="inputTd"><input id="alnum" class ="text" name="alnum" /></td>
+							
+						</tr>
+						<tr>
+						    <td class="inputLabelTd">身份证</td>
+							<td class="inputTd"><input id="idcardno" class ="text" name="idcardno" /></td>
+							<td class="inputLabelTd">邮政编码</td>
+							<td class="inputTd"><input id="postalcode" class ="text" name="postalcode" /></td>
+							
+
+						</tr>
+						<tr>
+						   <td class="inputLabelTd">邮箱</td>
+							<td class="inputTd"><input id="email" class ="text" name="email" /></td>
+							<td class="inputLabelTd">端口</td>
+							<td class="inputTd"><input id="port" class ="text" name="port" /></td>
+							
+						</tr>
+						<tr>
+						   <td class="inputLabelTd">IP地址</td>
+							<td class="inputTd"><input id="ip" class ="text" name="ip" /></td>
+							<td class="inputLabelTd">url</td>
+							<td class="inputTd"><input id="url" class ="text" name="url" /></td>
+						</tr>
+						<tr>
+						   <td class="inputLabelTd">汉字</td>
+							<td class="inputTd"><input id="hanzi" class ="text" name="hanzi" /></td>
+							<td class="inputLabelTd">密码</td>
+							
+							
+							<td class="inputTd">输入密码<input id="t_password" class="password" type="password" /><br/>
+							确认密码<input id='confirm_password' type="password" class="password" /></td>
+						
+						</tr>
+						<tr>
+						    <td class="inputLabelTd">爱好</td>
+							<td class="inputTd"> 
+							  <div id="check_ins1"></div>
+							</td>
+							<td class="inputLabelTd">民族</td>
+							<td class="inputTd">
+							  <select id="select_1" name="select_1" class="select" ></select>
+							</td>
+						</tr>
+						
+	
+		        </table>
+		        <table class="table foottable">
+					<tfoot class="footTd">
+						<tr>
+							<td class="inputTd">
+								<input id = "submit_button" class="submit" type="submit" value="提交验证" />
+		            		</td>
+		            		
+						</tr>
+					</tfoot>
+				</table>
+			 </form>
+		</div>
+
+
+		<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div  class="code" style="display: none" name="source_validate_1">
+		<pre class="brush: js;">
+  注意：要想使用校验功能，控件必须放在form中；id可与name不一致。
+<!-----------------------1.必填：----------------------->   
+ html部分:
+ &lt;input id="required" class="text" name="name"/&gt;
+ &lt;!--注意加上样式class="text" 其中text：输入框的样式；--&gt; 
+ 
+ js部分:
+ new biz.validate({id:"#required",required: true,rangelength:[5,10]});//这里还规定了输入字符要在5~10之间。
+ 
+<!-----------------------2.数字：----------------------->   
+ html部分:
+&lt;input id="number"  class ="text" name="number" /&gt;
+
+ js部分:
+ 
+ new biz.validate({id:"#number",number: true});
+
+<!-----------------------3.整数：----------------------->   
+ html部分:
+&lt;input id="digits" class ="text" name="digits" /&gt;
+
+ js部分:
+ 
+new biz.validate({id:"#digits",digits: true}) ;
+
+<!-----------------------4.自然数：----------------------->   
+html部分:
+&lt;input id="naturalnum" class ="text" name="naturalnum" /&gt;
+
+js部分:
+new biz.validate({id:"#naturalnum",naturalnum: true});
+
+<!-----------------------5.字母：----------------------->   
+html部分:
+&lt;input id="stringEN" class ="text"  name="stringEN" /&gt;
+
+js部分:
+new biz.validate({id:"#stringEN",stringEN: true});
+
+<!-----------------------6.字母数字：----------------------->   
+html部分:
+&lt;input id="alnum" class ="text" name="alnum" /&gt;
+
+js部分:
+new biz.validate({id:"#alnum",alnum: true});
+
+<!-----------------------7.身份证：----------------------->   
+html部分:
+&lt;input id="idcardno" class ="text" name="idcardno" /&gt;
+
+js部分:
+new biz.validate({id:"#idcardno",idcardno: true});
+
+<!-----------------------8.邮政编码：----------------------->   
+html部分:
+&lt;input id="postalcode" class ="text" name="postalcode" /&gt;
+
+js部分:
+ new biz.validate({id:"#postalcode",postalcode: true});
+
+<!-----------------------9.邮箱：---------------------->   
+html部分:
+&lt;input id="email" class ="text" name="email" /&gt;
+
+js部分:
+new biz.validate({id:"#email",email: true});
+
+<!-----------------------10.端口：----------------------->   
+html部分:
+&lt;input id="port" class ="text" name="port" /&gt;
+
+js部分:
+new biz.validate({id:"#port",port: true});
+
+<!-----------------------11.IP地址：----------------------->   
+html部分:
+&lt;input id="ip" class ="text" name="ip" /&gt;
+
+js部分:
+new biz.validate({id:"#ip",ip: true});
+
+<!-----------------------12.url：------------------------>   
+html部分:<
+&lt;input id="url" class ="text" name="url" /&gt;
+
+js部分:
+new biz.validate({id:"#url",url: true});
+//URL校验规则：要带有协议，如：http、https、ftp；主机地址要有.隔开，localhost校验不能通过
+
+<!-----------------------13.汉字：----------------------->   
+
+js部分:
+new biz.validate({id:"#hanzi",stringCH: true}) ;
+
+<!-----------------------14.密码确认：------------------------>   
+密码确认框js部分:
+new biz.validate({id:"#confirm_password",equalTo:"#t_password"}) ;
+//equalTo 必须是密码框的Id
+
+<!-----------------------15.复选框必选验证：---------------------->   
+js部分:
+new biz.validate({id:"#check_ins1",required: true}) ;
+
+<!-----------------------16.下拉列表必选验证：----------------------->   
+js部分:
+new biz.validate({id:"#select_1",required: true}) ;
+	</pre>
+		</div>
+	<!-- 示例2 -->
+	<div class="barTitle2">
+		<div class="content">通过form统一添加校验</div>
+	</div>
+	<div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-border">
+            <form id="form2">
+				 <table class="table">
+						<tr>
+							<td class="inputLabelTd">必填</td>
+							<td class="inputTd">
+							 <input  class="text" name="required2"/>
+							</td>
+							<td class="inputLabelTd">数字</td>
+							<td class="inputTd">
+							 <input class ="text" name="number2" /></td>
+
+						</tr>
+						<tr>
+						    <td class="inputLabelTd">整数</td>
+							<td class="inputTd"><input class ="text" name="digits2" /></td>
+							<td class="inputLabelTd">自然数</td>
+							<td class="inputTd"><input class ="text" name="naturalnum2" /></td>
+
+						</tr>
+						<tr>
+						    <td class="inputLabelTd">字母</td>
+							<td class="inputTd"><input class ="text"  name="stringEN2" /></td>
+							<td class="inputLabelTd">字母数字</td>
+							<td class="inputTd"><input class ="text" name="alnum2" /></td>
+
+						</tr>
+						<tr>
+						    <td class="inputLabelTd">身份证</td>
+							<td class="inputTd"><input  class ="text" name="idcardno2" /></td>
+							<td class="inputLabelTd">邮政编码</td>
+							<td class="inputTd"><input  class ="text" name="postalcode2" /></td>
+						</tr>
+		        </table>
+			 </form>
+		</div>
+    </div>
+    <div class="clear"></div>
+    <div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+    <div  class="code" style="display: none" name="source_validate_1">
+	<pre class="brush: js;">
+    注意：可不定义input的id值，所有校验通过name值匹配；
+ <!-----------------------html部分：----------------------->  
+  &lt;form id="form2"&gt;
+             &lt;table class="table"&gt;
+                    &lt;tr&gt;
+                        &lt;td class="inputLabelTd"&gt;必填&lt;/td&gt;
+                        &lt;td class="inputTd"&gt;
+                         &lt;input  class="text" name="required2"/&gt;
+                        &lt;/td&gt;
+                        &lt;td class="inputLabelTd"&gt;数字&lt;/td&gt;
+                        &lt;td class="inputTd"&gt;
+                         &lt;input   class ="text" name="number2" /&gt;&lt;/td&gt;
+
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td class="inputLabelTd"&gt;整数&lt;/td&gt;
+                        &lt;td class="inputTd"&gt;&lt;input  class ="text" name="digits2" /&gt;&lt;/td&gt;
+                        &lt;td class="inputLabelTd"&gt;自然数&lt;/td&gt;
+                        &lt;td class="inputTd"&gt;&lt;input  class ="text" name="naturalnum2" /&gt;&lt;/td&gt;
+
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td class="inputLabelTd"&gt;字母&lt;/td&gt;
+                        &lt;td class="inputTd"&gt;&lt;input  class ="text"  name="stringEN2" /&gt;&lt;/td&gt;
+                        &lt;td class="inputLabelTd"&gt;字母数字&lt;/td&gt;
+                        &lt;td class="inputTd"&gt;&lt;input  class ="text" name="alnum2" /&gt;&lt;/td&gt;
+
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td class="inputLabelTd"&gt;身份证&lt;/td&gt;
+                        &lt;td class="inputTd"&gt;&lt;input  class ="text" name="idcardno2" /&gt;&lt;/td&gt;
+                        &lt;td class="inputLabelTd"&gt;邮政编码&lt;/td&gt;
+                        &lt;td class="inputTd"&gt;&lt;input  class ="text" name="postalcode2" /&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+            &lt;/table&gt;
+  &lt;/form&gt;
+ <!-----------------------js部分：----------------------->  
+    new biz.validate({id:"#form2",rules:{
+        required2: {required: true,rangelength:[5,10]}, //对应name为required2的input
+        number2:{number: true},
+        digits2:{digits: true},
+        naturalnum2:{naturalnum: true},
+        stringEN2:{stringEN: true},
+        alnum2:{alnum: true},
+        idcardno2:{idcardno: true},
+        postalcode2:{postalcode: true}
+    }});
+        </pre>
+    </div>	
+    
+    
+    <!-- 示例3 -->
+	<div class="barTitle2">
+		<div class="content">远程校验的用法（即remote属性的用法）</div>
+	</div>
+	<div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-border">
+            <form id="form3">
+				 <table class="table">
+						<tr>
+						    <td class="inputLabelTd">姓名</td>
+                            <td class="inputTd">
+                               <input  class="text" name="toCheckName" id="toCheckName"/>
+                               <font color=red>发送请求验证姓名是否重复，如果输入“jack”说明重复，提示错误（需要在应用服务器中运行）</font>
+                            </td>
+
+						</tr>
+						
+		        </table>
+			 </form>
+		</div>
+    </div>
+<div class="clear"></div>
+    <div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+    <div  class="code" style="display: none" name="source_validate_3">
+	<pre class="brush: js;">
+ 注意：可不定义input的id值，所有校验通过name值匹配；
+ <!-----------------------html部分：----------------------->  
+
+  &lt;form id="form3"&gt;
+         &lt;input  class="text" name="toCheckName" id="toCheckName"/&gt;
+  &lt;/form&gt;
+
+ <!-----------------------js部分：----------------------->  
+   new biz.validate({
+    id:"#toCheckName",
+    remote: {
+           url: "./checkName.jsp", //后台处理程序    
+           type: "get",  //数据发送方式   
+           dataType: "json",       //接受数据格式       
+           data: {                     //要传递的数据   
+               checkName:  function () {
+                   return $("#toCheckName").val();
+               }
+		   }
+     }
+   }) ;
+   
+  <!-----------------------模拟后台（即checkName.jsp）：----------------------->  
+<%
+ String name = request.getParameter("checkName");
+ boolean exits = false;//姓名存在
+ if(!"jack".equals(name)){
+	   exits = true;
+ }
+ response.getWriter().write(""+exits); 
+%>
+        </pre>
+    </div>	
+    
+    
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">属性列表</div>
+	</div>
+	<div class="content">
+	校验规则列表：
+	<iframe src="./form/component/validateField.htm" width="100%" scrolling="no" frameborder="0" height="830px;"></iframe>
+	</div>
+	<div class="content">
+	form统一校验属性列表：
+	<iframe src="./form/component/validateForm.htm" width="100%" scrolling="no" frameborder="0" height="1050px;"></iframe>
+	</div>
+	<div class="content">
+	全局方法列表：
+	<iframe src="./form/component/validateMethod.htm" width="100%" scrolling="no" frameborder="0" height="550px;"></iframe>
+	</div>
+<script type="text/javascript">
+
+new biz.validate({
+    id:"#toCheckName",
+    remote: {
+           url: "./checkName.jsp", //后台处理程序    
+           type: "get",  //数据发送方式   
+           dataType: "json",       //接受数据格式       
+           data: {                     //要传递的数据   
+               checkName:  function () {
+                   return $("#toCheckName").val();
+               }
+		   }
+     }
+ }) ;
+
+</script>

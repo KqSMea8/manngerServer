@@ -1,0 +1,499 @@
+package com.lmxf.post.service.partner;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.exception.SystemException;
+import com.lmxf.post.core.utils.CacheUtils;
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.VerifiCodeUtils;
+import com.lmxf.post.core.utils.encode.BaseEncrypt;
+import com.lmxf.post.core.utils.encode.Encrypt;
+import com.lmxf.post.core.utils.encode.EncryptProvider;
+import com.lmxf.post.core.utils.pay.OrderPayUtils;
+import com.lmxf.post.core.utils.pay.PayUtils;
+import com.lmxf.post.entity.add.FavourableObject;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderBox;
+import com.lmxf.post.entity.order.OrderChange;
+import com.lmxf.post.entity.order.OrderProduct;
+import com.lmxf.post.entity.parameter.Dict;
+import com.lmxf.post.entity.parameter.SequenceId;
+import com.lmxf.post.entity.product.ProductOnline;
+import com.lmxf.post.entity.supply.SupplyVproduct;
+import com.lmxf.post.entity.vending.Vending;
+import com.lmxf.post.entity.vending.VendingLanep;
+import com.lmxf.post.entity.vending.VendingStock;
+import com.lmxf.post.repository.add.FavourableObjectDao;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderBoxDao;
+import com.lmxf.post.repository.order.OrderChangeDao;
+import com.lmxf.post.repository.order.OrderProductDao;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.repository.product.ProductOnlineDao;
+import com.lmxf.post.repository.supply.SupplyVproductDao;
+import com.lmxf.post.repository.vending.VendingDao;
+import com.lmxf.post.repository.vending.VendingLanepDao;
+import com.lmxf.post.repository.vending.VendingStockDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.partner.OrderApplyReq;
+import com.lmxf.post.tradepkg.partner.OrderApplyResp;
+
+/**
+ * 订单申请
+ * 
+ * @author Administrator
+ * 
+ */
+public class TradeOrderApplyService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeOrderApplyService.class);
+	private OrderApplyReq orderApplyReq;
+	private OrderApplyResp orderApplyResp;
+	private OrderApplyDao orderApplyDao;
+	private SequenceIdDao sequenceIdDao;
+	private VendingDao vendingDao;
+	private OrderChangeDao orderChangeDao;
+	private OrderProductDao orderProductDao;
+	private VendingStockDao vendingStockDao;
+	private FavourableObjectDao favourableObjectDao;
+	private SupplyVproductDao supplyVproductDao;
+	private ProductOnlineDao productOnlineDao;
+	private OrderBoxDao orderBoxDao;
+	private VendingLanepDao vendingLanepDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) throws SystemException {
+		OrderApply orderApply = null;
+		Map ret = null;
+		try {
+			ret = orderApplyReq.parseXml(apply_xml);
+			if (ret.get("code") == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+			} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+				log.error("orderApplyReq.parseXml is error!");
+				return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+			}
+		} catch (Exception e) {
+			log.error("---parseXml  error-----", e);
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		}
+		orderApply = (OrderApply) ret.get("orderApply");
+		OrderApply orderApplyP = new OrderApply();
+		orderApplyP.setLoginId(orderApply.getLoginId());
+		orderApplyP.setPayState(GParameter.payState_wait);
+		orderApplyP.setOrderType(GParameter.orderType_normal);
+		List<OrderApply> orderApplyList = orderApplyDao.findAll(orderApplyP);
+		if (null != orderApplyList && orderApplyList.size() > 0) {
+			return errorCodeDao.getErrorRespJson(GConstent.Unpaid_Order_Exist);
+		} else {
+			//=============校验订单是否能购买业务逻辑
+			Vending vending = vendingDao.findBySiteId(orderApply.getSiteId());
+			if (vending == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Site_No_Define);
+			}
+//			if (!GParameter.siteNetState_online.equals(vending.getNetSate())) {
+//				return errorCodeDao.getErrorRespJson(GConstent.Site_NetState_OffLine);
+//			}
+			List<OrderProduct> orderProductList = orderApply.getOrderProductList();
+			// 判断购买商品数是否大于商品可售卖库存
+			float salePrice = 0;
+			// 查询商品货道信息
+			VendingLanep vendingLanepP = new VendingLanep();
+			vendingLanepP.setSiteId(orderApply.getSiteId());
+			List<VendingLanep> vendingLanepList = this.vendingLanepDao.findAll(vendingLanepP);
+			// 查询站点商品货道信息
+			VendingStock vendingStockP = new VendingStock();
+			vendingStockP.setSiteId(orderApply.getSiteId());
+			List<VendingStock> vendingStockList = vendingStockDao.findAll(vendingStockP);
+			//站点停用的货道号
+			List<Integer> damgeLaneSIdList=new ArrayList();
+			// 验证商品信息是否可以购买
+			if (null != orderProductList && orderProductList.size() > 0) {
+				for (OrderProduct orderProduct : orderProductList) {
+					// 验证站点库存是否有库存
+					VendingStock vendingStockR = null;
+					for (VendingStock vendingStockPP : vendingStockList) {
+						if (vendingStockPP.getProductId().equals(orderProduct.getProductId())) {
+							vendingStockR = vendingStockPP;
+							break;
+						}
+					}
+					if (null != vendingStockR) {
+						if (orderProduct.getSaleNum() > vendingStockR.getNum()) {
+							return errorCodeDao.getErrorRespJson(GConstent.Product_Num_Lack);
+						}
+					} else {
+						return errorCodeDao.getErrorRespJson(GConstent.Product_NumZero);
+					}
+					// 计算支付价
+					BigDecimal salePriceB = new BigDecimal(vendingStockR.getSalePrice() + "");
+					BigDecimal saleNumB = new BigDecimal(orderProduct.getSaleNum() + "");
+					salePriceB = salePriceB.multiply(saleNumB);
+					BigDecimal salePriceTotalB = new BigDecimal(salePrice + "");
+					salePriceTotalB = salePriceTotalB.add(salePriceB);
+					salePrice = salePriceTotalB.floatValue();
+					// 验证货道是否有库存(排除损坏或停用的货道)
+					int paidamageLanePNum = 0;// 排除停用后的货道库存数量
+					for (VendingLanep vendingLanep : vendingLanepList) {
+						// 如果购买的商品的所在货道有正常的并且库存大于0的就验证通过
+						if (vendingLanep.getProductId().equals(orderProduct.getProductId()) && GParameter.vendingLanepLaneState_nomarl.equals(vendingLanep.getLaneSate()) && vendingLanep.getCurCap() > 0) {
+							paidamageLanePNum += vendingLanep.getCurCap();
+						}
+						if(!GParameter.vendingLanepLaneState_nomarl.equals(vendingLanep.getLaneSate())){
+							damgeLaneSIdList.add(vendingLanep.getLaneSId());
+						}
+					}
+					if (paidamageLanePNum < orderProduct.getSaleNum()) {
+						return errorCodeDao.getErrorRespJson(GConstent.Product_Num_Lack);
+					}
+				}
+			}
+			//=======================正式处理订单
+			orderApply.setLogid(DateUtil.getLogid());
+			orderApply.setOrderId(vending.getCorpId() + "-" + this.sequenceIdDao.findNextVal(vending.getCorpId(), "order_apply_id", 7));
+			orderApply.setTorderId("");
+			orderApply.setCorpId(vending.getCorpId());
+			orderApply.setDistrictId(vending.getDistrictId());
+			orderApply.setLineId(vending.getLineId());
+			orderApply.setPointId(vending.getPointId());
+			orderApply.setSiteId(vending.getSiteId());
+			orderApply.setSiteName(vending.getSiteName());
+			orderApply.setOutState(GParameter.outState_no);
+			orderApply.setpNum(orderApply.getpNum());
+			orderApply.setPayState(GParameter.payState_wait);
+			orderApply.setReturnType(GParameter.returnType_none);
+			orderApply.setPushState(GParameter.pushState_unpush);
+			orderApply.setpStateTime(DateUtil.getNow());
+			Dict dict = (Dict) CacheUtils.get(CacheUtils.errorCodeCache, "fetchTime_over");
+			String fetch_overTime = dict != null ? dict.getDictValue() : null;
+			if (null == fetch_overTime || "".equals(fetch_overTime)) {
+				fetch_overTime = GParameter.fetchTime_over;
+			}
+			Calendar c = Calendar.getInstance();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			c = Calendar.getInstance();
+			c.setTime(new Date());
+			c.add(Calendar.HOUR_OF_DAY, Integer.parseInt(fetch_overTime));
+			fetch_overTime = df.format(c.getTime());
+			orderApply.setFetchOverTime(fetch_overTime);
+			orderApply.setCurState(GParameter.orderState_apply);
+			orderApply.setStateTime(DateUtil.getNow());
+			orderApply.setAbnomarlState(GParameter.abnormalType_none);
+			orderApply.setaStateTime(DateUtil.getNow());
+			orderApply.setOrderType(GParameter.orderType_normal);
+			orderApply.setCreateTime(DateUtil.getNow());
+			// 生成密码
+			String password = VerifiCodeUtils.getInstance().getPassword();
+			orderApply.setPassWord(password);
+			dict = (Dict) CacheUtils.get(CacheUtils.errorCodeCache, "encodeType_password");
+			String encodeType = dict != null ? dict.getDictValue() : null;
+			if (encodeType == null || "".equals(encodeType)) {
+				encodeType = "1";// 1:NONE 2:3DES 3:AES 4:SHA256 5:MD5
+			}
+			orderApply.setEncryptionType(encodeType);
+			orderApply.setSlat(BaseEncrypt.getSalt());
+			int type = Integer.parseInt(encodeType);
+			Encrypt encrypt = EncryptProvider.getEncrypt(type);
+			String pwd = encrypt.doEncrypt(orderApply.getPassWord(), orderApply.getSlat());
+			if (null != pwd) {
+				orderApply.setPassWord(pwd);
+			}
+			// 判断60天内订单密码是否重复，重复则重新生成
+			OrderApply orderApplyT = new OrderApply();
+			orderApplyT.setPassWord(orderApply.getPassWord());
+			String create_time = DateUtil.formatDate(DateUtil.getDate(new Date(), -60));
+			orderApplyT.setCreateTime(create_time);
+			List<OrderApply> list = orderApplyDao.findAll(orderApplyT);
+			if (null != list && list.size() > 1) {
+				password = VerifiCodeUtils.getInstance().getPassword();
+				orderApply.setPassWord(password);
+				pwd = encrypt.doEncrypt(orderApply.getPassWord(), orderApply.getSlat());
+				if (null != pwd) {
+					orderApply.setPassWord(pwd);
+				}
+			}
+			orderApply.setSalePrice(salePrice);
+			// 查询站点优惠信息
+			FavourableObject favourableObjectP = new FavourableObject();
+			favourableObjectP.setCorpId(vending.getCorpId());
+			favourableObjectP.setFavObjId(vending.getSiteId());
+			favourableObjectP.setValidSTime(DateUtil.getDate());
+			favourableObjectP.setFavType(GParameter.favType_vending);
+			favourableObjectP.setPayType(orderApply.getPayType());
+			FavourableObject favourableObjectSite = favourableObjectDao.findOne(favourableObjectP);
+			if (favourableObjectSite != null) {
+				orderApply.setFavWay(favourableObjectSite.getFavWay());
+				if (favourableObjectSite.getFavWay().equals(GParameter.favWay_discount)) {
+					BigDecimal salePriceB = new BigDecimal(orderApply.getSalePrice() + "");
+					BigDecimal numB = new BigDecimal(favourableObjectSite.getDiscount() + "");
+					salePriceB = salePriceB.multiply(numB);
+					orderApply.setPayPrice(salePriceB.floatValue());
+				} else if (favourableObjectSite.getFavWay().equals(GParameter.favWay_reduce)) {
+					BigDecimal salePriceB = new BigDecimal(orderApply.getSalePrice() + "");
+					BigDecimal numB = new BigDecimal(favourableObjectSite.getDiscount() + "");
+					salePriceB = salePriceB.subtract(numB);
+					orderApply.setPayPrice(salePriceB.floatValue());
+				}
+				BigDecimal salePriceB = new BigDecimal(orderApply.getSalePrice() + "");
+				BigDecimal numB = new BigDecimal(orderApply.getPayPrice() + "");
+				salePriceB = salePriceB.subtract(numB);
+				orderApply.setFavPrice(salePriceB.floatValue());
+			}
+			// 添加订单商品信息
+			BigDecimal buyPriceTotal = new BigDecimal("0.0");
+			BigDecimal payPriceTotal = new BigDecimal("0.0");
+			SequenceId orderProductId = this.sequenceIdDao.findOne(orderApply.getCorpId(), "order_product_id");
+			SequenceId orderBoxId = this.sequenceIdDao.findOne(orderApply.getCorpId(), "order_box_id");
+			if (null != orderProductList && orderProductList.size() > 0) {
+				for (OrderProduct orderProduct : orderProductList) {
+					orderProduct.setLogid(DateUtil.getLogid());
+					orderProduct.setProdetailId(orderApply.getCorpId() + "-" + super.getGenPriKey(orderProductId.getPriKey()));
+					orderProduct.setCorpId(orderApply.getCorpId());
+					orderProduct.setOrderId(orderApply.getOrderId());
+					orderProduct.setTorderId(orderApply.getTorderId());
+					ProductOnline productOnline = productOnlineDao.findByProductId(orderProduct.getProductId());
+					if (null != productOnline) {
+						orderProduct.setProductName(productOnline.getName());
+						orderProduct.setProductTypeId(productOnline.getTypeId());
+						orderProduct.setFactoryId(productOnline.getFactoryName());
+						orderProduct.setNormalPrice(productOnline.getSalePrice());
+						orderProduct.setSalePrice(productOnline.getSalePrice());
+					}
+					if (null == favourableObjectSite) {
+						favourableObjectP.setCorpId(vending.getCorpId());
+						favourableObjectP.setFavObjId(orderProduct.getProductId());
+						favourableObjectP.setValidSTime(DateUtil.getDate());
+						favourableObjectP.setFavType(GParameter.favType_product);
+						favourableObjectP.setPayType(orderApply.getPayType());
+						FavourableObject favourableObjectProduct = favourableObjectDao.findOne(favourableObjectP);
+						if (favourableObjectProduct != null) {
+							orderApply.setFavWay(favourableObjectProduct.getFavWay());
+							if (favourableObjectProduct.getFavWay().equals(GParameter.favWay_discount)) {
+								BigDecimal salePriceB = new BigDecimal(orderProduct.getSalePrice() + "");
+								BigDecimal numB = new BigDecimal(favourableObjectProduct.getDiscount() + "");
+								salePriceB = salePriceB.multiply(numB);
+								orderProduct.setSalePrice(salePriceB.floatValue());
+							} else if (favourableObjectProduct.getFavWay().equals(GParameter.favWay_reduce)) {
+								BigDecimal salePriceB = new BigDecimal(orderProduct.getSalePrice() + "");
+								BigDecimal numB = new BigDecimal(favourableObjectProduct.getDiscount() + "");
+								salePriceB = salePriceB.subtract(numB);
+								orderProduct.setSalePrice(salePriceB.floatValue());
+							}
+						}
+						BigDecimal salePriceB = new BigDecimal(orderProduct.getSalePrice() + "");
+						BigDecimal numB = new BigDecimal(orderProduct.getSaleNum() + "");
+						salePriceB = salePriceB.multiply(numB);
+						payPriceTotal = payPriceTotal.add(salePriceB);
+						orderApply.setPayPrice(payPriceTotal.floatValue());
+
+						BigDecimal salePriceBB = new BigDecimal(orderApply.getSalePrice() + "");
+						BigDecimal numBB = new BigDecimal(orderApply.getPayPrice() + "");
+						orderApply.setFavPrice(salePriceBB.subtract(numBB).floatValue());
+					} else {
+						BigDecimal favPrice = new BigDecimal(orderApply.getSalePrice() + "");
+						BigDecimal pNum = new BigDecimal(orderApply.getSalePrice() + "");
+						BigDecimal saleNum = new BigDecimal(orderApply.getSalePrice() + "");
+						BigDecimal salePriceB = new BigDecimal(orderProduct.getSalePrice() + "");
+						favPrice = favPrice.multiply(pNum).multiply(saleNum);
+						orderProduct.setSalePrice(salePriceB.subtract(favPrice).floatValue());
+					}
+					orderProduct.setCreateTime(DateUtil.getNow());
+					orderProductDao.insert(orderProduct);
+					// 更新库存
+					VendingStock vendingStock = new VendingStock();
+					vendingStock.setSiteId(orderApply.getSiteId());
+					vendingStock.setProductId(orderProduct.getProductId());
+					VendingStock vendingStockR = vendingStockDao.findOne(vendingStock);
+					if (null != vendingStockR) {
+						vendingStockR.setNum((vendingStockR.getNum() - orderProduct.getSaleNum()) > 0 ? (vendingStockR.getNum() - orderProduct.getSaleNum()) : 0);
+						vendingStockDao.update(vendingStockR);
+					}
+					// 查询补货货道信息来得出进价
+					SupplyVproduct supplyVproductP = new SupplyVproduct();
+					supplyVproductP.setSiteId(orderApply.getSiteId());
+					supplyVproductP.setProductId(orderProduct.getProductId());
+					supplyVproductP.setCurState(GParameter.supplyVproductState_finish);
+					supplyVproductP.setInvalidState(GParameter.supplyVproductInvalidState_noOver);
+					supplyVproductP.setFinshState(GParameter.supplyVproductFinishState_in);
+					//是否有损坏的货道
+					if(damgeLaneSIdList.size()>0){
+						Integer[] damageLaneSId=new Integer[damgeLaneSIdList.size()];
+						int i=0;
+						for(Integer laneSIds:damgeLaneSIdList){
+							damageLaneSId[i]=laneSIds;
+							i++;
+						}
+						supplyVproductP.setDamageLaneSId(damageLaneSId);
+					}
+					List<SupplyVproduct> supplyVproductList = supplyVproductDao.findSupplyVproduct(supplyVproductP);
+					int noOutTotalNum = 0;// 计算未出库总数
+					for (SupplyVproduct supplyVproduct : supplyVproductList) {
+						noOutTotalNum += supplyVproduct.getrSupplyNum() - supplyVproduct.getSaleNum();
+					}
+					if (noOutTotalNum < orderProduct.getSaleNum()) {
+						log.error("订单申请模块  站点编号:" + orderApply.getSiteId() + " 商品编号:" + orderProduct.getProductId() + " 在货道补货记录流水中没有足够的库存 库存数为:" + noOutTotalNum + " 无法分配出库货道.");
+						throw new SystemException(GConstent.SupplyVProduct_No_Product, "" + GConstent.SupplyVProduct_No_Product);
+					}
+					int vproductIndex = 0;
+					SupplyVproduct supplyVproduct = supplyVproductList.get(vproductIndex);
+					// 查询未出库的货道出库数量
+					int noOutNum = supplyVproduct.getrSupplyNum() - supplyVproduct.getSaleNum();
+					// 插入订单商品货道信息
+					for (int i = 1; i <= orderProduct.getSaleNum(); i++) {
+						// 查询采购价
+						if (noOutNum == 0 && i > 1) {
+							vproductIndex++;
+							supplyVproduct = supplyVproductList.get(vproductIndex);
+						}
+						noOutNum--;
+						OrderBox orderBox = new OrderBox();
+						orderBox.setLogid(DateUtil.getLogid());
+						orderBox.setProboxId(orderApply.getCorpId() + "-" + super.getGenPriKey(orderBoxId.getPriKey()));
+						orderBox.setCorpId(orderApply.getCorpId());
+						orderBox.setProdetailId(orderProduct.getProdetailId());
+						orderBox.setOrderId(orderApply.getOrderId());
+						orderBox.setTorderId(orderApply.getTorderId());
+						orderBox.setSiteId(orderApply.getSiteId());
+						orderBox.setSiteName(orderApply.getSiteName());
+						orderBox.setLaneSId(supplyVproduct.getLaneSId());
+						orderBox.setLaneEId(supplyVproduct.getLaneEId());
+						orderBox.setProductId(orderProduct.getProductId());
+						orderBox.setProductName(orderProduct.getProductName());
+						orderBox.setBuyPrice(supplyVproduct.getBuyPrice());
+						orderBox.setSalePrice(orderProduct.getNormalPrice());
+						orderBox.setPayPrice(orderProduct.getSalePrice());
+						BigDecimal salePriceB = new BigDecimal(orderBox.getSalePrice() + "");
+						BigDecimal payPriceB = new BigDecimal(orderBox.getPayPrice() + "");
+						BigDecimal buyPriceB = new BigDecimal(orderBox.getBuyPrice() + "");
+						orderBox.setFavPrice(salePriceB.subtract(payPriceB).floatValue());
+						orderBox.setProfitMoney(payPriceB.subtract(buyPriceB).floatValue());
+						orderBox.setSupplyId(supplyVproduct.getsOrderId());
+						orderBox.setOutIndex(0);
+						orderBox.setOutState(GParameter.orderBoxOutState_in);
+						orderBox.setStateTime(DateUtil.getNow());
+						orderBox.setCreateTime(DateUtil.getNow());
+						orderBoxDao.insert(orderBox);
+						buyPriceTotal = buyPriceTotal.add(buyPriceB);
+					}
+				}
+			}
+			this.sequenceIdDao.update(orderProductId);
+			this.sequenceIdDao.update(orderBoxId);
+			// 申请支付
+			Map<String, String> payResult = OrderPayUtils.applyOrderPayInfo(orderApply);
+			if (payResult.get("code").equals("0000")) {
+				if (orderApply.getPayType().equals(GParameter.payType_weChat)) {
+					orderApply.setImgUrl(payResult.get("QRUrl"));
+					orderApply.setCodeUrl(payResult.get("QRCode"));
+				}
+				if (orderApply.getPayType().equals(GParameter.payType_Alipay)) {
+					orderApply.setImgUrl(payResult.get("QRUrl"));
+					orderApply.setCodeUrl(payResult.get("QRCode"));
+				}
+				if (orderApply.getPayType().equals(GParameter.payType_weChatG)) {
+					orderApply.setAppId(payResult.get("AppId"));
+					orderApply.setTimeStamp(payResult.get("TimeStamp"));
+					orderApply.setNonceStr(payResult.get("NonceStr"));
+					orderApply.setPckage(payResult.get("Package"));
+					orderApply.setSignType(payResult.get("SignType"));
+					orderApply.setPaySign(payResult.get("PaySign"));
+				}
+				if (orderApply.getPayType().equals(GParameter.payType_weChatApp)) {
+					orderApply.setAppId(payResult.get("AppId"));
+					orderApply.setTimeStamp(payResult.get("TimeStamp"));
+					orderApply.setNonceStr(payResult.get("NonceStr"));
+					orderApply.setPckage(payResult.get("Package"));
+					orderApply.setSignType(payResult.get("SignType"));
+					orderApply.setPaySign(payResult.get("PaySign"));
+				}
+			} else {
+				throw new SystemException(GConstent.OrderApply_PayInfo_Error, "" + GConstent.OrderApply_PayInfo_Error);
+			}
+			orderApply.setBuyPrice(buyPriceTotal.floatValue());
+			orderApply.setProfitMoney(payPriceTotal.subtract(buyPriceTotal).floatValue());
+			orderApplyDao.insert(orderApply);
+			// 插入订单状态信息表
+			OrderChange orderChange = new OrderChange();
+			orderChange.setLogid(DateUtil.getLogid());
+			orderChange.setChangeId(orderApply.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApply.getCorpId(), "order_change_id", 7));
+			orderChange.setCorpId(orderApply.getCorpId());
+			orderChange.setOrderId(orderApply.getOrderId());
+			orderChange.setOperId(orderApply.getLoginId());
+			orderChange.setOperName(orderApply.getLoginName());
+			orderChange.setSiteId(orderApply.getSiteId());
+			orderChange.setSiteName(orderApply.getSiteName());
+			orderChange.setOperAction(GParameter.orderChange_apply);
+			orderChange.setOperTime(DateUtil.getNow());
+			orderChange.setOperCont("售货机:" + orderApply.getSiteName() + " 订单编号:" + orderApply.getOrderId() + " 申请成功!");
+			orderChange.setCreateTime(DateUtil.getNow());
+			orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+			orderChange.setPocTimes(0);
+			orderChange.setPocResult("wait push");
+			this.orderChangeDao.insert(orderChange);
+		}
+		return orderApplyResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1, orderApply);
+	}
+
+	public void setOrderApplyReq(OrderApplyReq orderApplyReq) {
+		this.orderApplyReq = orderApplyReq;
+	}
+
+	public void setOrderApplyResp(OrderApplyResp orderApplyResp) {
+		this.orderApplyResp = orderApplyResp;
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+	public void setVendingDao(VendingDao vendingDao) {
+		this.vendingDao = vendingDao;
+	}
+
+	public void setOrderChangeDao(OrderChangeDao orderChangeDao) {
+		this.orderChangeDao = orderChangeDao;
+	}
+
+	public void setOrderProductDao(OrderProductDao orderProductDao) {
+		this.orderProductDao = orderProductDao;
+	}
+
+	public void setVendingStockDao(VendingStockDao vendingStockDao) {
+		this.vendingStockDao = vendingStockDao;
+	}
+
+	public void setFavourableObjectDao(FavourableObjectDao favourableObjectDao) {
+		this.favourableObjectDao = favourableObjectDao;
+	}
+
+	public void setSupplyVproductDao(SupplyVproductDao supplyVproductDao) {
+		this.supplyVproductDao = supplyVproductDao;
+	}
+
+	public void setProductOnlineDao(ProductOnlineDao productOnlineDao) {
+		this.productOnlineDao = productOnlineDao;
+	}
+
+	public void setOrderBoxDao(OrderBoxDao orderBoxDao) {
+		this.orderBoxDao = orderBoxDao;
+	}
+
+	public void setVendingLanepDao(VendingLanepDao vendingLanepDao) {
+		this.vendingLanepDao = vendingLanepDao;
+	}
+
+}

@@ -1,0 +1,117 @@
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.0pt;
+	line-height:150%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:10.0pt;
+	line-height:150%;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Times New Roman","serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=662
+ style='width:496.15pt;margin-left:5.4pt;background:#F2F2F2;border-collapse:
+ collapse;border:none'>
+ <tr>
+  <td width=662 valign=top style='width:496.15pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>new
+  biz.grid({</span></p>
+  <p class=MsoNormal style='text-indent:21.0pt;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>&nbsp;&nbsp;&nbsp;&nbsp;
+  </span><span style='font-size:10.5pt;font-family:宋体;color:black'>……</span></p>
+  <p class=MsoNormal style='text-indent:20.45pt;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:red'>url</span><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>:
+  , &quot;omProduct/listOmProduct&quot;,/*</span><span style='font-size:10.5pt;
+  font-family:宋体;color:black'>远程获取数据地址</span><span lang=X-NONE
+  style='font-size:10.5pt;font-family:"Courier New";color:black'>*/</span></p>
+  <p class=MsoNormal style='text-indent:20.45pt;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:red'>datatype</span><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>: <a
+  name="OLE_LINK3"></a><a name="OLE_LINK2">&quot;json&quot;</a>,/*</span><span
+  style='font-size:10.5pt;font-family:宋体;color:black'>数据类型，设置为</span><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>json*/</span></p>
+  <p class=MsoNormal style='text-indent:20.45pt;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>colModel:[</span></p>
+  <p class=MsoNormal style='text-indent:31.5pt;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>&nbsp;&nbsp;
+  &nbsp;&nbsp;{ name: &quot;</span><span style='font-size:10.5pt;font-family:
+  宋体;color:red'>列名</span><span lang=X-NONE style='font-size:10.5pt;font-family:
+  "Courier New";color:red'>1</span><span lang=X-NONE style='font-size:10.5pt;
+  font-family:"Courier New";color:black'>&quot;</span><span style='font-size:
+  10.5pt;font-family:宋体;color:black'>，……</span><span lang=X-NONE
+  style='font-size:10.5pt;font-family:"Courier New";color:black'>},</span></p>
+  <p class=MsoNormal style='text-indent:31.5pt;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>&nbsp;&nbsp;&nbsp;&nbsp;
+  { name: &quot;</span><span style='font-size:10.5pt;font-family:宋体;color:red'>列名</span><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:red'>2</span><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>&quot;</span><span
+  style='font-size:10.5pt;font-family:宋体;color:black'>，……</span><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>},</span></p>
+  <p class=MsoNormal style='text-indent:31.5pt;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>&nbsp;&nbsp;&nbsp;&nbsp;
+  </span><span style='font-size:10.5pt;font-family:宋体;color:black'>……</span></p>
+  <p class=MsoNormal style='text-indent:20.45pt;line-height:normal'><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>]</span></p>
+  <p class=MsoNormal style='text-indent:0cm;line-height:normal'><span
+  style='font-size:10.5pt;font-family:宋体;color:black'>……</span><span
+  lang=X-NONE style='font-size:10.5pt;font-family:"Courier New";color:black'>})</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-indent:24.0pt'><span lang=EN-US>&nbsp;</span></p>
+
+</div>

@@ -1,0 +1,201 @@
+package com.lmxf.post.service.order;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.putils.utils.DateUtil;
+
+import com.lmxf.post.core.utils.GConstent;
+import com.lmxf.post.core.utils.GParameter;
+import com.lmxf.post.core.utils.pay.PayUtils;
+import com.lmxf.post.entity.order.OrderApply;
+import com.lmxf.post.entity.order.OrderBox;
+import com.lmxf.post.entity.order.OrderChange;
+import com.lmxf.post.entity.order.OrderProduct;
+import com.lmxf.post.entity.stock.StockProduct;
+import com.lmxf.post.entity.stock.StockWarehouse;
+import com.lmxf.post.repository.order.OrderApplyDao;
+import com.lmxf.post.repository.order.OrderBoxDao;
+import com.lmxf.post.repository.order.OrderChangeDao;
+import com.lmxf.post.repository.order.OrderProductDao;
+import com.lmxf.post.repository.parameter.SequenceIdDao;
+import com.lmxf.post.repository.stock.StockProductDao;
+import com.lmxf.post.repository.stock.StockWarehouseDao;
+import com.lmxf.post.service.core.TradeProcess;
+import com.lmxf.post.tradepkg.order.OrderRecoverReq;
+import com.lmxf.post.tradepkg.order.OrderRecoverResp;
+
+public class TradeOrderRecoverService extends TradeProcess {
+	private final static Log log = LogFactory.getLog(TradeOrderRecoverService.class);
+	private OrderRecoverReq orderRecoverReq;
+	private OrderRecoverResp orderRecoverResp;
+	private OrderApplyDao orderApplyDao;
+	private SequenceIdDao sequenceIdDao;
+	private OrderChangeDao orderChangeDao;
+	private OrderProductDao orderProductDao;
+	private StockProductDao stockProductDao;
+	private StockWarehouseDao stockWarehouseDao;
+	private OrderBoxDao orderBoxDao;
+
+	@SuppressWarnings("rawtypes")
+	public String tradeProcess(String apply_xml) {
+		OrderApply orderApply = null;
+		Map ret = null;
+		try {
+			ret = orderRecoverReq.parseXml(apply_xml);
+			if (ret.get("code") == null) {
+				return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+			} else if (ret.get("code") != null && Integer.parseInt(ret.get("code").toString()) != 0) {
+				log.error("orderRecoverReq.parseXml is error!");
+				return errorCodeDao.getErrorRespJson(Integer.parseInt(ret.get("code").toString()));
+			}
+		} catch (Exception e) {
+			log.error("---parseXml  error-----", e);
+			return errorCodeDao.getErrorRespJson(GConstent.Xml_Parse_Error);
+		}
+		orderApply = (OrderApply) ret.get("orderApply");
+		OrderApply orderApplyR = this.orderApplyDao.findOneByOrderId(orderApply);
+		if(null == orderApplyR){
+			return errorCodeDao.getErrorRespJson(GConstent.Order_No_Exsit);
+		}
+		if(!orderApplyR.getCurState().equals(GParameter.orderState_advanceFetch)){
+			return errorCodeDao.getErrorRespJson(GConstent.OrderState_No_Change);
+		}
+		//更新订单状态信息
+		orderApplyR.setCurState(GParameter.orderState_recovery);
+		orderApplyR.setStateTime(orderApply.getStateTime());
+		orderApplyR.setOrderType(GParameter.orderType_close);
+		orderApplyR.setReturnMoney(orderApplyR.getPayPrice());
+		this.orderApplyDao.update(orderApplyR);
+		//更新订单商品信息
+		OrderProduct orderProductP = new OrderProduct();
+		orderProductP.setOrderId(orderApplyR.getOrderId());
+		List<OrderProduct> orderProductList = orderProductDao.findAll(orderProductP);
+		if(orderProductList != null && orderProductList.size() > 0){
+			for(OrderProduct orderProduct : orderProductList){
+				//更新订单商品回收数量
+				orderProduct.setReNum(orderProduct.getOutNum());
+				orderProductDao.update(orderProduct);
+			}
+		}
+		//更新订单商品货道信息
+		OrderBox orderBoxP = new OrderBox();
+		orderBoxP.setOrderId(orderApplyR.getOrderId());
+		List<OrderBox> orderBoxList = orderBoxDao.findAll(orderBoxP);
+		if(orderBoxList != null && orderBoxList.size() > 0){
+			for(OrderBox orderBox : orderBoxList){
+				//更新订单商品回收数量
+				orderBox.setReturnPrice(orderBox.getPayPrice());;
+				orderBoxDao.update(orderBox);
+			}
+		}
+		//插入订单状态变化信息
+		OrderChange orderChange = new OrderChange();
+		orderChange.setLogid(DateUtil.getLogid());
+		orderChange.setChangeId(orderApplyR.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApplyR.getCorpId(), "order_change_id", 7));
+		orderChange.setCorpId(orderApplyR.getCorpId());
+		orderChange.setOrderId(orderApplyR.getOrderId());
+		orderChange.setOperId(orderApplyR.getLoginId());
+		orderChange.setOperName(orderApplyR.getLoginName());
+		orderChange.setSiteId(orderApplyR.getSiteId());
+		orderChange.setSiteName(orderApplyR.getSiteName());
+		orderChange.setOperAction(GParameter.orderChange_recovery);
+		orderChange.setOperTime(DateUtil.getNow());
+		orderChange.setOperCont("售货机:" + orderApplyR.getSiteName() + " 订单编号:" + orderApplyR.getOrderId() + " 已回收!");
+		orderChange.setCreateTime(DateUtil.getNow());
+		orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+		orderChange.setPocTimes(0);
+		orderChange.setPocResult("wait push");
+		orderChange.setProState(GParameter.OrderChangeProState_waitFinsh);
+		this.orderChangeDao.insert(orderChange);
+		
+		//更新库存量
+		for(OrderProduct orderProduct : orderProductList){
+			StockProduct stockProduct=stockProductDao.findByProductId(orderProduct.getProductId());
+			if(null != stockProduct){
+				stockProduct.setCurNum(orderProduct.getReNum()+stockProduct.getCurNum());
+				stockProductDao.update(stockProduct);	
+			}	
+		}
+		//更新仓库商品库存量
+		for(OrderProduct orderProduct : orderProductList){
+			StockWarehouse stockWarehouse=new StockWarehouse();
+			stockWarehouse.setProductId(orderProduct.getProductId());
+			stockWarehouse.setCorpId(orderProduct.getCorpId());
+			StockWarehouse stockWarehouseP=stockWarehouseDao.findByProductId(stockWarehouse);
+			if(null != stockWarehouseP){
+				stockWarehouseP.setCurNum(orderProduct.getReNum()+stockWarehouseP.getCurNum());
+				stockWarehouseP.setCreateTime(DateUtil.getNow());
+				stockWarehouseDao.update(stockWarehouseP);
+			}
+		}
+		//退款
+		String xml = "";
+		try {
+			xml = PayUtils.refundPayResult(orderApplyR);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(!"".equals(xml) && "0000".equals(PayUtils.getField(xml, "retcode"))){
+			//插入订单状态变化信息
+			orderChange = new OrderChange();
+			orderChange.setLogid(DateUtil.getLogid());
+			orderChange.setChangeId(orderApplyR.getCorpId() + "-" + this.sequenceIdDao.findNextVal(orderApplyR.getCorpId(), "order_change_id", 7));
+			orderChange.setCorpId(orderApplyR.getCorpId());
+			orderChange.setOrderId(orderApplyR.getOrderId());
+			orderChange.setOperId(orderApplyR.getLoginId());
+			orderChange.setOperName(orderApplyR.getLoginName());
+			orderChange.setSiteId(orderApplyR.getSiteId());
+			orderChange.setSiteName(orderApplyR.getSiteName());
+			orderChange.setOperAction(GParameter.orderChange_refund);
+			orderChange.setOperTime(DateUtil.getNow());
+			orderChange.setOperCont("售货机:" + orderApplyR.getSiteName() + " 订单编号:" + orderApplyR.getOrderId() + " 退款成功!");
+			orderChange.setCreateTime(DateUtil.getNow());
+			orderChange.setPocState(GParameter.OrderChangeProc_waitPush);
+			orderChange.setPocTimes(0);
+			orderChange.setPocResult("wait push");
+			orderChange.setProState(GParameter.OrderChangeProState_waitFinsh);
+			this.orderChangeDao.insert(orderChange);
+		}
+		return orderRecoverResp.CreateJson(GConstent.SUCCESS_CODE, GConstent.SUCCESS_MSG, 1, 1);
+	}
+
+	public void setOrderApplyDao(OrderApplyDao orderApplyDao) {
+		this.orderApplyDao = orderApplyDao;
+	}
+
+	public void setSequenceIdDao(SequenceIdDao sequenceIdDao) {
+		this.sequenceIdDao = sequenceIdDao;
+	}
+
+	public void setOrderChangeDao(OrderChangeDao orderChangeDao) {
+		this.orderChangeDao = orderChangeDao;
+	}
+
+	public void setOrderRecoverReq(OrderRecoverReq orderRecoverReq) {
+		this.orderRecoverReq = orderRecoverReq;
+	}
+
+	public void setOrderRecoverResp(OrderRecoverResp orderRecoverResp) {
+		this.orderRecoverResp = orderRecoverResp;
+	}
+
+	public void setOrderProductDao(OrderProductDao orderProductDao) {
+		this.orderProductDao = orderProductDao;
+	}
+
+	public void setStockProductDao(StockProductDao stockProductDao) {
+		this.stockProductDao = stockProductDao;
+	}
+
+	public void setStockWarehouseDao(StockWarehouseDao stockWarehouseDao) {
+		this.stockWarehouseDao = stockWarehouseDao;
+	}
+
+	public void setOrderBoxDao(OrderBoxDao orderBoxDao) {
+		this.orderBoxDao = orderBoxDao;
+	}
+
+}

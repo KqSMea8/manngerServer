@@ -1,0 +1,219 @@
+[文件路径: layout/tab.html]
+<script type="text/javascript">
+SyntaxHighlighter.highlight("tab_top");
+SyntaxHighlighter.highlight("tab_bottom");
+SyntaxHighlighter.highlight("tab_vertical");
+
+</script>
+	<!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		标签页布局是通过标签页组件进行布局的方式，标签页由标签和内容区组成，每个标签对应一个内容区，所有标签顺序排列展示给用户，内容区叠加放置每次只有一个内容区可见，当标签被选中时显示对应内容区。标签页的标签位置可以在上方、下方、左侧。
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1(标签页在上方)</div>
+	</div>
+	<div class="content">
+		<div>标签页布局,实际效果如下：</div>
+		 <div id="tabs_top" style="border:1px solid #cccccc;height:100px;width:300px;">
+								<ul>
+									<li><a href="#tabs-1">标签页1</a></li>
+									<li><a href="#tabs-2">标签页2</a></li>
+									<li><a href="#tabs-3">标签页3</a></li>
+								</ul>
+								<div id="tabs-1">	
+								    <p>标签1内容</p>
+								</div>
+								<div id="tabs-2">
+                                    <p>标签2内容</p>
+								</div>
+								<div id="tabs-3">
+                                    <p>标签3内容</p>
+								</div>
+		 </div>
+	
+
+		<div class="clear"></div>
+		<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+		<div  class="code" style="display: none"  name="tab_top">
+			<pre  class="brush: js;">
+ <!--html部分-->
+ &lt;div id="tabs_top" style="border:1px solid #cccccc;height:100px;width:300px;" &gt;
+ &lt;!--这里设置了固定的高度和宽度，要想设置成充满整个区域，只需设置为height:'100%';width:'100%';--&gt;
+   &lt;ul&gt;
+     &lt;li&gt;&lt;a href="#tabs-1"&gt;标签页1&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="#tabs-2"&gt;标签页2&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="#tabs-3"&gt;标签页3&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+     &lt;div id="tabs-1"&gt;
+	   &lt;p&gt;标签1内容&lt;/p&gt;
+	 &lt;/div&gt;
+	 &lt;div id="tabs-2"&gt;
+	   &lt;p&gt;标签2内容&lt;/p&gt;
+	 &lt;/div&gt;
+     &lt;div id="tabs-3"&gt;
+       &lt;p&gt;标签3内容&lt;/p&gt;
+	 &lt;/div&gt;
+&lt;/div&gt;
+		
+ <!--js部分-->
+new biz.tabs({
+    id: "#tabs_top",//容器div控件Id
+    position:"top",
+    collapsible:true//实现可折叠的标签页
+});
+			</pre>
+ 		</div>
+	</div>
+
+
+		<!-- 示例2 -->
+		<div class="barTitle2">
+			<div class="content">示例2(标签页在下方)</div>
+		</div>
+		<div class="content">
+			<div>效果如下：</div>
+			 <div id="tabs_bottom"  style="border:1px solid #cccccc;width:300px;">
+								<ul>
+									<li><a href="#tabs-1">标签页1</a></li>
+									<li><a href="#tabs-2">标签页2</a></li>
+									<li><a href="#tabs-3">标签页3</a></li>
+								</ul>
+							
+								<div id="tabs-1">
+									<p>标签1内容</p>
+									<p>标签1内容</p>
+									<p>标签1内容</p>
+									<p>标签1内容</p>
+
+								
+								</div>
+								<div id="tabs-2">
+									<p>标签2内容</p>
+								</div>
+								<div id="tabs-3">
+									<p>标签3内容</p>
+								</div>
+			</div>
+
+			<div class="clear"></div>
+			<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+			<div  class="code" style="display: none"  name="tab_bottom">
+				<pre  class="brush: js;">
+ <!--html部分-->
+	&lt;div id="tabs_bottom"  style="border:1px solid #cccccc;width:300px;" &gt;
+		&lt;ul&gt;
+			&lt;li&gt;&lt;a href="#tabs-1"&gt;标签页1&lt;/a&gt;&lt;/li&gt;
+		    &lt;li&gt;&lt;a href="#tabs-2"&gt;标签页2&lt;/a&gt;&lt;/li&gt;
+		    &lt;li&gt;&lt;a href="#tabs-3"&gt;标签页3&lt;/a&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+			&lt;div id="tabs-1"&gt;
+		      &lt;p&gt;标签1内容&lt;/p&gt;
+		    &lt;/div&gt;
+			&lt;div id="tabs-2"&gt;
+		      &lt;p&gt;标签2内容&lt;/p&gt;
+			&lt;/div&gt;
+			&lt;div id="tabs-3"&gt;
+			  &lt;p&gt;标签3内容&lt;/p&gt;
+			&lt;/div&gt;
+	 &lt;/div&gt;			
+ <!--js部分-->
+new biz.tabs({
+	 id: "#tabs_bottom",//容器div控件Id
+	 position:"bottom"
+});
+				</pre>
+			</div>
+		</div>
+
+		<!-- 示例3 -->
+		<div class="barTitle2">
+			<div class="content">示例3(纵向标签页)</div>
+		</div>
+		<div class="content">
+			<div>效果如下：</div>
+			 <div id="verticaltabs" style="border:1px solid #cccccc;width:300px;">
+								<ul style="width:70px;">
+									<li><a href="#tabs-1">标签页1</a></li>
+									<li ><a href="#tabs-2">标签页2</a></li>
+									<li ><a href="#tabs-3">标签页3</a></li>
+								</ul>
+								<div id="tabs-1">
+						
+									<p>标签1内容</p>
+								</div>
+								<div id="tabs-2">
+						
+									<p>标签2内容</p>
+								</div>
+								<div id="tabs-3">
+						
+									<p>标签3内容</p>
+								</div>
+			</div>
+
+			<div class="clear"></div>
+			<div  class="sourceBar iconPlus mt1"><a href="#source1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码</a></div>
+			<div  class="code" style="display: none"  name="tab_vertical">
+				<pre class="brush: js;">
+ <!--html部分-->
+	&lt;div id="verticaltabs"  style="border:1px solid #cccccc;width:300px;" &gt;
+		&lt;ul style="width:70px;" &gt;
+		  &lt;li&gt;&lt;a href="#tabs-1"&gt;标签页1&lt;/a&gt;&lt;/li&gt;
+		  &lt;li&gt;&lt;a href="#tabs-2"&gt;标签页2&lt;/a&gt;&lt;/li&gt;
+		  &lt;li&gt;&lt;a href="#tabs-3"&gt;标签页3&lt;/a&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;div class="tabs-spacer"&gt;&lt;/div&gt;
+		 &lt;div id="tabs-1"&gt;
+			&lt;p&gt;标签1内容&lt;/p&gt;
+		 &lt;/div&gt;
+		 &lt;div id="tabs-2"&gt;
+		    &lt;p&gt;标签2内容&lt;/p&gt;
+		 &lt;/div&gt;
+			&lt;div id="tabs-3"&gt;
+		     &lt;p&gt;标签3内容&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+ <!--js部分-->
+  new biz.tabs({
+           id: "#verticaltabs",
+           position:"left"
+   });
+				</pre>
+			</div>
+		</div>
+
+	 <!-- tab组件方法列表 -->
+	<div class="barTitle2">
+		<div class="content">tab组件方法列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./layout/tabMethod.htm" width="100%" scrolling="no" frameborder="0" height="350px;"></iframe>
+	</div>
+	 <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">tab组件属性列表</div>
+	</div>
+	<div class="content">
+	<iframe src="./layout/tabField.htm" width="100%" scrolling="no" frameborder="0" height="780px;"></iframe>
+	</div>
+<script type="text/javascript">
+
+    new biz.tabs({
+                     id: "#tabs_top",
+                     position:"top",
+                     collapsible:true//实现可折叠的标签页
+	});
+    new biz.tabs({
+                     id: "#tabs_bottom",
+                     position:"bottom"
+	});
+    new biz.tabs({
+                     id: "#verticaltabs",
+                     position:"left"
+    });
+
+</script>

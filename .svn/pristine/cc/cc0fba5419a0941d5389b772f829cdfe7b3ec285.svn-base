@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SequenceId">
+
+	<resultMap type="com.lmxf.post.entity.parameter.SequenceId" id="sequenceIdResultMap">
+		<id property="logid" column="logid" />
+		<result property="id" column="id" />
+		<result property="description" column="description" />
+		<result property="name" column="name" />
+		<result property="corpId" column="corpId" />
+	</resultMap>
+	<select id="nextval" parameterType="com.lmxf.post.entity.parameter.SequenceId" resultType="int" >
+		select nextval(#{corpId},#{name})
+	</select>
+	<select id="currval" parameterType="String" resultType="int" >
+		select currval(#{name})
+	</select>
+	
+	<select id="findOne" parameterType="com.lmxf.post.entity.parameter.SequenceId" resultMap="sequenceIdResultMap" >
+		select name,id,corpId from sys_sequence_id where name=#{name} and corpId=#{corpId} for update
+	</select>
+	
+	<select id="update" parameterType="com.lmxf.post.entity.parameter.SequenceId" resultType="int" >
+		update sys_sequence_id set id=#{id} where name=#{name} and corpId=#{corpId}
+	</select>
+</mapper> 

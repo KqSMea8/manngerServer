@@ -1,0 +1,15 @@
+
+	<!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">grid列数据编辑类型详细渲染列表--edittype</div>
+	</div>
+	<div class="content">
+	 行编辑、行内嵌套编辑暂时不支持select、checkbox、radio编辑类型。
+	<iframe src="./grid/edit/gridCommEdittype.htm" width="100%" scrolling="no" frameborder="0" height="450px;"></iframe>
+	</div>
+	<div class="barTitle2">
+		<div class="content">grid列数据编辑类型详细渲染列表--editrules</div>
+	</div>
+	<div class="content">
+	<iframe src="./form/component/validateField.htm" width="100%" scrolling="no" frameborder="0" height="900px;"></iframe>
+	</div>

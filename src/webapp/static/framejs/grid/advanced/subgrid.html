@@ -1,0 +1,234 @@
+[文件路径: grid/advanced/subgrid.html]
+   <!-- 概述 -->
+	<div class="barTitle2">
+		<div class="content">概述</div>
+	</div>
+	<div class="content">
+		 展示grid行内嵌套grid功能，嵌套grid数据可根据当前行数据信息组织；同时用户可根据实际需要按照此实现方式在行内嵌套任意元素；
+	</div>
+	<!-- 示例1 -->
+	<div class="barTitle2">
+		<div class="content">示例1：行内嵌套grid</div>
+	</div>
+
+    <div class="content">
+        <div class="ui-table ui-widget ui-corner-all ui-margin">
+                 <div  class="ui-table ui-widget ui-corner-all ui-nomargin-bottom nav">
+                        <table id="subgrid_rowed"></table>
+                       <div id="subgrid_prowed"></div>
+                 </div>
+
+        </div>
+    </div>
+    <!--源代码部分-->
+    <div class="clear"></div>
+	<div  class="sourceBar iconPlus mt1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源代码说明</a></div>
+	<div  class="code" style="display: none" name="gridSource_subgrid">
+<pre>
+<font color='#027DD1'>1、grid行内嵌套grid：</font>
+<strong>js部分:</strong>
+ <font color='#027DD1'> 1）grid初始化</font>
+ var subgridObj = new biz.grid({
+          id:"#subgrid_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:55,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:180,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         <font color="red">subGrid:true,</font>/*定义此grid为嵌套grid*/
+         navtype:"top" /*导航栏类型*/,
+         pager: '#subgrid_prowed' /*分页栏id*/,
+         /*展开subgrid行处理方式*/
+         <font color="red">subGridRowExpanded:</font> function(subgrid_id, row_id) {  <font color="red">editrow(subgrid_id, row_id)</font>;}
+ });
+
+ <font color='#027DD1'> 2）行内grid初始化</font>
+  <font color="red">/*根据行id组件返回数据*/</font>
+  function <font color="red">initData(rowid)</font>{
+        var subgridData1 = [
+             {num:"1",item:"三星",qty:"2",unit:"1500.00",total:"3000.00"} ,
+             {num:"2",item:"htc",qty:"1",unit:"2000.00",total:"2000.00"},
+             {num:"3",item:"黑莓",qty:"2",unit:"4000.00",total:"8000.00"},
+             {num:"4",item:"小米",qty:"3",unit:"1500.00",total:"4500.00"}
+        ];
+        var subgridData2 = [
+             {num:"1",item:"飞利浦",qty:"2",unit:"1500.00",total:"1000.00"} ,
+             {num:"2",item:"朵唯",qty:"2",unit:"2000.00",total:"4000.00"}
+        ];
+         var subgridData3 = [
+             {num:"1",item:"诺基亚",qty:"2",unit:"1500.00",total:"3000.00"} ,
+             {num:"2",item:"华为",qty:"1",unit:"2000.00",total:"2000.00"},
+             {num:"3",item:"中兴",qty:"2",unit:"4000.00",total:"8000.00"}
+        ];
+        switch(rowid){
+             case "1" :
+                    return  subgridData1;break;
+             case "2" :
+                    return  subgridData2;break;
+            case "3" :
+                    return  subgridData3;break;
+            case "4" :
+                    return  subgridData2;break;
+            case "5" :
+                    return  subgridData3;break;
+            case "6" :
+                    return  subgridData1;break;
+            case "7" :
+                    return  subgridData1;break;
+            case "8" :
+                    return  subgridData3;break;
+        }
+  }
+  function editrow(subgrid_id, row_id){
+         <font color="red">/*根据参数组件嵌套grid相关id*/</font>
+         var subgrid_table_id, pager_id; subgrid_table_id = subgrid_id+"_t"; pager_id = "p_"+subgrid_table_id;
+         <font color="red">/*在嵌套行位置添加grid元素*/</font>
+         $("#"+subgrid_id).html("&lt;table id='"+subgrid_table_id+"' class='scroll'&gt;&lt;/table&gt;&lt;div id='"+pager_id+"' class='scroll'&gt;&lt;/div&gt;");
+          var subdata = <font color="red">initData(row_id) ;/*根据行id参数组件嵌套grid数据*/ </font>
+          <font color="red">/*嵌套grid初始化*/</font>
+         new biz.grid({
+               id:"#"+subgrid_table_id,
+               data:subdata,<font color="red">/*如通过server端加载数据可如此设置 url:"getData?id="+row_id*/</font>
+               datatype: "local",/*数据类型，设置为本地数据*/
+               colModel: [ {name:"num",label:"序号",index:"num",width:80,key:true},
+                             {name:"item",label:"条目",index:"item",width:130},
+                             {name:"qty",label:"数量",index:"qty",width:70,align:"right"},
+                             {name:"unit",label:"单位价格",index:"unit",width:70,align:"right"},
+                             {name:"total",label:"总价格",index:"total",width:70,align:"right",sortable:false} ],
+                rowNum:20, pager: pager_id, sortname: 'num', sortorder: "asc", pagerpos:"left"/*分页栏位置为左边*/
+         });
+     }
+</pre>
+</div>
+ <!-- 属性列表 -->
+	<div class="barTitle2">
+		<div class="content">嵌套grid相关属性说明</div>
+	</div>
+	<div class="content">
+
+	<iframe src="./grid/advanced/subgrid_prop.html" width="100%" scrolling="no" frameborder="0" height="1220px;"></iframe>
+		
+    </div>	
+
+<script type="text/javascript">
+     function initData(rowid){
+        var subgridData1 = [
+             {num:"1",item:"三星",qty:"2",unit:"1500.00",total:"3000.00"} ,
+             {num:"2",item:"htc",qty:"1",unit:"2000.00",total:"2000.00"},
+             {num:"3",item:"黑莓",qty:"2",unit:"4000.00",total:"8000.00"},
+             {num:"4",item:"小米",qty:"3",unit:"1500.00",total:"4500.00"}
+        ];
+        var subgridData2 = [
+             {num:"1",item:"飞利浦",qty:"2",unit:"1500.00",total:"1000.00"} ,
+             {num:"2",item:"朵唯",qty:"2",unit:"2000.00",total:"4000.00"}
+        ];
+         var subgridData3 = [
+             {num:"1",item:"诺基亚",qty:"2",unit:"1500.00",total:"3000.00"} ,
+             {num:"2",item:"华为",qty:"1",unit:"2000.00",total:"2000.00"},
+             {num:"3",item:"中兴",qty:"2",unit:"4000.00",total:"8000.00"}
+        ];
+        switch(rowid){
+             case "1" :
+                    return  subgridData1;break;
+             case "2" :
+                    return  subgridData2;break;
+            case "3" :
+                    return  subgridData3;break;
+            case "4" :
+                    return  subgridData2;break;
+            case "5" :
+                    return  subgridData3;break;
+            case "6" :
+                    return  subgridData1;break;
+            case "7" :
+                    return  subgridData1;break;
+            case "8" :
+                    return  subgridData3;break;
+        }
+     }
+     function editrow(subgrid_id, row_id){
+        var subgrid_table_id, pager_id; subgrid_table_id = subgrid_id+"_t"; pager_id = "p_"+subgrid_table_id;
+         $("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
+         var subdata = initData(row_id) ;
+         new biz.grid({
+               id:"#"+subgrid_table_id,
+               data:subdata,
+               datatype: "local",/*数据类型，设置为本地数据*/
+               colModel: [ {name:"num",label:"序号",index:"num",width:80,key:true},
+                             {name:"item",label:"条目",index:"item",width:130},
+                             {name:"qty",label:"数量",index:"qty",width:70,align:"right"},
+                             {name:"unit",label:"单位价格",index:"unit",width:70,align:"right"},
+                             {name:"total",label:"总价格",index:"total",width:70,align:"right",sortable:false} ],
+                rowNum:20, pager: pager_id, sortname: 'num', sortorder: "asc",pagerpos:"left"/*分页栏位置为左边*/
+         });
+     }
+
+      var testData = [
+             {ids:"1",invdate:"2010-05-24",name:"王室",note:"note",amount:"30000.00",tax:"1000.00",total:"31000.00"} ,
+             {ids:"2",invdate:"2010-05-25",name:"张图",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"3",invdate:"2007-09-01",name:"于海",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"4",invdate:"2007-10-04",name:"李辉",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"5",invdate:"2007-10-05",name:"张岚",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+             {ids:"6",invdate:"2007-09-06",name:"宋钟",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+             {ids:"7",invdate:"2007-10-04",name:"聂田",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+             {ids:"8",invdate:"2007-10-03",name:"钟宇飞",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"}
+      ];
+
+      var subgridObj = new biz.grid({
+          id:"#subgrid_rowed",/*html部分table id*/
+          data: testData,/*数组数据*/
+          datatype: "local",/*数据类型，设置为本地数据*/
+          editurl:"http://localhost:8080/edit/" ,/*新增、编辑、删除数据交互地址*/
+          colModel:[
+               {name:'ids',index:'ids',label:"标识",key:true, width:35,editable:true,editoptions:{readonly:false},
+                   formoptions:{ rowpos:1, colpos:1}},
+               {name:'invdate',index:'invdate',label:"有效期",key:false,width:100,editable:true,editrules:{date:true},
+                   edittype:'datepicker', editoptions:{dateFormat:"yy-mm-dd"},formoptions:{ rowpos:1, colpos:2}},
+               {name:'name',index:'name',label:"名称",key:false,width:90,editable:false},
+               {name:'amount',label:"收入",index:'amount', width:100, align:"right",editrules:{required:true},
+                   editable:true,formoptions:{ rowpos:2, colpos:1}},
+               {name:'tax',label:"缴税",index:'tax', width:80, align:"right",editable:true,
+                   formoptions:{ rowpos:2, colpos:2}},
+               {name:'total',label:"总量",index:'total', width:100,align:"right",editable:true,formoptions:{ rowpos:3, colpos:1}},
+               {name:'note',index:'note', label:"备注",width:100, sortable:false,editable:true,edittype:"textarea",
+                   editoptions:{rows:"2"},formoptions:{ rowpos:3, colpos:2}}
+         ],
+         subGrid: true,
+         navtype:"top" /*导航栏类型*/,
+         pager: '#subgrid_prowed' /*分页栏id*/,
+         pView:{
+            top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:600,/*宽度*/
+ 
+            resize:false,
+            recreateForm:true
+          },
+           pAdd:{ 
+                top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+                resize:true,/*弹出框可缩放大小*/
+                url:" http://localhost",/*新增数据提交url，如不设置使用editurl*/
+                recreateForm:true/*每次新增数据重新创建弹出框*/},/*增加数据弹出框属性*/
+         pEdit:{
+         top:200, /*弹出框top位置*/
+            left:250,/*弹出框left位置*/
+            width:750,/*宽度*/
+         resize:true,recreateForm:true},
+         //展开subgrid行处理方式
+         subGridRowExpanded: function(subgrid_id, row_id) {  editrow(subgrid_id, row_id);}
+      });
+</script>
